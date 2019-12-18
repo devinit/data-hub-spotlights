@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import mapbox from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface BaseMapProps {
   accessToken: string;
@@ -7,6 +8,7 @@ interface BaseMapProps {
   height?: string;
   background?: string;
   options: Partial<mapbox.MapboxOptions>;
+  showNavigationControls?: boolean;
 }
 
 const BaseMap: FunctionComponent<BaseMapProps> = props => {
@@ -20,9 +22,11 @@ const BaseMap: FunctionComponent<BaseMapProps> = props => {
         ...props.options
       });
 
-      console.log(map);
+      if (props.showNavigationControls) {
+        map.addControl(new mapbox.NavigationControl());
+      }
     }
-  });
+  }, []);
 
   return (
     <div ref={ mapNode } style={ { width: props.width, height: props.height } }>
@@ -40,7 +44,8 @@ BaseMap.defaultProps = {
   options: {
     minZoom: 6,
     zoom: 6.1
-  }
+  },
+  showNavigationControls: true
 };
 
 export { BaseMap };
