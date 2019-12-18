@@ -9,6 +9,7 @@ interface BaseMapProps {
   background?: string;
   options: Partial<mapbox.MapboxOptions>;
   showNavigationControls?: boolean;
+  onLoad?: (map: mapbox.Map, event: mapbox.MapboxEvent<any>) => void;
 }
 
 const BaseMap: FunctionComponent<BaseMapProps> = props => {
@@ -25,6 +26,12 @@ const BaseMap: FunctionComponent<BaseMapProps> = props => {
       if (props.showNavigationControls) {
         map.addControl(new mapbox.NavigationControl());
       }
+
+      map.on('load', (event) => {
+        if (props.onLoad) {
+          props.onLoad(map, event);
+        }
+      });
     }
   }, []);
 

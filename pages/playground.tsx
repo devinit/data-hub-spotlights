@@ -1,6 +1,6 @@
 import merge from 'deepmerge';
 import fetch from 'isomorphic-unfetch';
-import { MapboxOptions } from 'mapbox-gl';
+import { Map, MapboxEvent, MapboxOptions } from 'mapbox-gl';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
@@ -166,6 +166,28 @@ const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) 
     minZoom: 6,
     zoom: 6.1
   };
+  const onMapLoad = (map: Map, _event: MapboxEvent) => {
+    map.addLayer({
+      'id': 'highlight',
+      'source': 'composite',
+      'source-layer': 'uga_admbnda_adm1_ubos_v2-aa9ehp',
+      'maxzoom': 7,
+      'type': 'fill',
+      // filter: ['==', 'ADM1_EN', 'KOTIDO'],
+      'paint': {
+          'fill-color': {
+              property: 'ADM1_EN',
+              type: 'categorical',
+              default: '#b3adad',
+              stops: [
+                  [ 'KOTIDO', '#8f1b13' ]
+              ]
+          },
+          'fill-opacity': 0.75,
+          'fill-outline-color': '#ffffff'
+      }
+    });
+  };
 
   return (
     <PageSection>
@@ -178,6 +200,7 @@ const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) 
       <BaseMap
         accessToken="pk.eyJ1IjoiZWR3aW5tcCIsImEiOiJjazFsdHVtcG0wOG9mM2RueWJscHhmcXZqIn0.cDR43UvfMaOY9cNJsEKsvg"
         options={ baseMapOptions }
+        onLoad={ onMapLoad }
       />
     </PageSection>
   );
