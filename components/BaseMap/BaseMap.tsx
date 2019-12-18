@@ -2,14 +2,16 @@ import React, { FunctionComponent, useEffect, useRef } from 'react';
 import mapbox from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-interface BaseMapProps {
+export interface CoreMapProps {
   accessToken: string;
   width?: string;
   height?: string;
   background?: string;
-  options: Partial<mapbox.MapboxOptions>;
   showNavigationControls?: boolean;
   onLoad?: (map: mapbox.Map, event: mapbox.MapboxEvent<any>) => void;
+}
+interface BaseMapProps extends CoreMapProps {
+  options: Partial<mapbox.MapboxOptions>;
 }
 
 const BaseMap: FunctionComponent<BaseMapProps> = props => {
