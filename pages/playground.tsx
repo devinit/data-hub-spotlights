@@ -1,11 +1,15 @@
-import fetch from 'isomorphic-unfetch';
-import { NextPage } from 'next';
-import React, { useEffect } from 'react';
 import merge from 'deepmerge';
+import fetch from 'isomorphic-unfetch';
+import { MapboxOptions } from 'mapbox-gl';
+import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import React, { useEffect } from 'react';
 import { DefaultLayoutData, Footer, Navigation } from '../components/DefaultLayout';
 import { EChartsBaseChart } from '../components/EChartsBaseChart';
-import { PageSection } from '../components/PageSection';
 import { toBasicAxisData } from '../components/EChartsBaseChart/utils';
+import { PageSection } from '../components/PageSection';
+
+const BaseMap = dynamic(() => import('../components/BaseMap').then(mod => mod.BaseMap));
 
 interface PlaygroundProps {
   setData?: (data: DefaultLayoutData) => void;
@@ -156,6 +160,13 @@ const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) 
     }
   ];
 
+  const baseMapOptions: Partial<MapboxOptions> = {
+    style: 'mapbox://styles/edwinmp/ck42rrx240t8p1cqpkhgy2g0m',
+    center: [ 32.655221, 1.344666 ],
+    minZoom: 6,
+    zoom: 6.1
+  };
+
   return (
     <PageSection>
       <h1>Visualisation Playground</h1>
@@ -164,6 +175,10 @@ const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) 
       <EChartsBaseChart options={ options3 } height="500px"/>
       <EChartsBaseChart options={ options4 } height="800px"/>
       <EChartsBaseChart options={ options5 } height="800px"/>
+      <BaseMap
+        accessToken="pk.eyJ1IjoiZWR3aW5tcCIsImEiOiJjazFsdHVtcG0wOG9mM2RueWJscHhmcXZqIn0.cDR43UvfMaOY9cNJsEKsvg"
+        options={ baseMapOptions }
+      />
     </PageSection>
   );
 };
