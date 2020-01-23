@@ -1,25 +1,26 @@
 import { NextPage } from 'next';
 import React, { useEffect } from 'react';
-import { DefaultLayoutData } from '../../components/DefaultLayout';
-import { PageScaffoldData, SpotlightPage, fetchScaffoldData, fetchSpotlightPage } from '../../utils';
+import { PageScaffoldData } from '../../components/DefaultLayout';
+import { PageSection } from '../../components/PageSection';
+import { SpotlightPage, fetchScaffoldData, fetchSpotlightPage } from '../../utils';
 
 interface SpotlightProps {
-  setData?: (data: DefaultLayoutData) => void;
+  setData?: (data: PageScaffoldData) => void;
   scaffold: PageScaffoldData;
   page: SpotlightPage;
 }
 
-const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold }) => {
+const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
   useEffect(() => {
     if (setData) {
-      setData({ ...scaffold });
+      setData({ ...scaffold, title: page.title });
     }
   }, [ setData, scaffold ]);
 
   return (
-    <div>
-      Spotlight Visualisations Go Here
-    </div>
+    <>
+      <PageSection>Spotlight Visualisations Go Here</PageSection>
+    </>
   );
 };
 

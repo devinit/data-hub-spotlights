@@ -1,10 +1,5 @@
 import fetch from 'isomorphic-unfetch';
-import { Footer, Navigation } from '../components/DefaultLayout';
-
-export interface PageScaffoldData {
-  navigation: Navigation;
-  footer: Footer;
-}
+import { PageScaffoldData } from '../components/DefaultLayout';
 
 export interface SpotlightPage {
   title: string;

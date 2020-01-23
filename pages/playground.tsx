@@ -2,7 +2,7 @@ import merge from 'deepmerge';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
-import { DefaultLayoutData } from '../components/DefaultLayout';
+import { PageScaffoldData } from '../components/DefaultLayout';
 import { EChartsBaseChart } from '../components/EChartsBaseChart';
 import { toBasicAxisData } from '../components/EChartsBaseChart/utils';
 import { Legend, LegendItem } from '../components/Legend';
@@ -13,10 +13,10 @@ import { SpotlightTab } from '../components/SpotlightTab';
 import { TabContainer } from '../components/SpotlightTab/TabContainer';
 import { TabContent } from '../components/SpotlightTab/TabContent';
 import { TabContentHeader } from '../components/SpotlightTab/TabContentHeader';
-import { PageScaffoldData, fetchScaffoldData } from '../utils';
+import { fetchScaffoldData } from '../utils';
 
 interface PlaygroundProps {
-  setData?: (data: DefaultLayoutData) => void;
+  setData?: (data: PageScaffoldData) => void;
   scaffold: PageScaffoldData;
 }
 

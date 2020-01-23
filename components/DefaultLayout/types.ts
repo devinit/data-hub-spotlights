@@ -1,4 +1,5 @@
-export interface DefaultLayoutData {
+export interface PageScaffoldData {
+  title?: string;
   navigation: Navigation;
   footer: Footer;
 }
