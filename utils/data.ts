@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 import fetch from 'isomorphic-unfetch';
 import { PageScaffoldData } from '../components/DefaultLayout';
 
@@ -28,6 +29,15 @@ export interface SpotlightIndicator {
   source?: string;
 }
 
+export interface FetchIndicatorDataOptions {
+  indicators: string[];
+  geocodes?: string[];
+  startYear?: number;
+  endYear?: number;
+  limit?: number;
+  offset?: number;
+}
+
 export const fetchScaffoldData = async (): Promise<PageScaffoldData> => {
   const res_navigation = await fetch(`${process.env.ASSETS_SOURCE_URL}api/spotlights/navigation/`);
   const navigation = await res_navigation.json();
@@ -43,3 +53,18 @@ export const fetchSpotlightPage = async (slug: string): Promise<SpotlightPage> =
 
   return data;
 };
+
+export const GET_INDICATOR_DATA = gql`
+  query GetIndicatorData($indicators: [String]!, $geocodes: [String] = [], $startYear: Int = 0, $endYear: Int = 9999, $limit: Int = 100, $page: Int = 0) {
+    data(indicators:$indicators, geocodes:$geocodes, startYear:$startYear, endYear:$endYear, limit:$limit, page:$page) {
+      indicator
+      data {
+        geocode
+        name
+        value
+        year
+        meta
+      }
+    }
+  }
+`;

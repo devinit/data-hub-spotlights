@@ -1,8 +1,9 @@
+import { useQuery } from '@apollo/react-hooks';
 import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import { PageScaffoldData } from '../../components/DefaultLayout';
 import { PageSection } from '../../components/PageSection';
-import { SpotlightPage, fetchScaffoldData, fetchSpotlightPage } from '../../utils';
+import { GET_INDICATOR_DATA, SpotlightPage, fetchScaffoldData, fetchSpotlightPage } from '../../utils';
 
 interface SpotlightProps {
   setData?: (data: PageScaffoldData) => void;
@@ -16,6 +17,12 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
       setData({ ...scaffold, title: page.title });
     }
   }, [ setData, scaffold ]);
+  const { data, loading, error } = useQuery(GET_INDICATOR_DATA, {
+    variables: {
+      indicators: [ 'uganda_poverty_headcount' ],
+      geocodes: [ 'UG.d102' ]
+    } });
+  console.log(loading, data, error && error.message);
 
   return (
     <>
