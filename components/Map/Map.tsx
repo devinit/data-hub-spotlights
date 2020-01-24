@@ -8,12 +8,13 @@ interface MapProps {
   mapCenter?: L.LatLng;
   zoom?: number;
   layers: L.TileLayer[];
+  mapID: string;
 }
 
-const Map = ({ saveMapState, width, height, layers, mapCenter, zoom }: MapProps) => {
+const Map = ({ saveMapState, width, height, layers, mapCenter, zoom, mapID }: MapProps) => {
   useEffect(() => {
     // create map
-    const map = L.map('map', {
+    const map = L.map(mapID, {
       center: mapCenter,
       zoom,
       layers
@@ -21,7 +22,7 @@ const Map = ({ saveMapState, width, height, layers, mapCenter, zoom }: MapProps)
     saveMapState(L, map);
   }, []);
 
-  return <div id="map" style={ { width, height } } />;
+  return <div id={ mapID } style={ { width, height } } />;
 };
 
 Map.defaultProps = {

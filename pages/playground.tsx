@@ -25,9 +25,13 @@ const SpotlightMenu = dynamic(
   () => import('../components/SpotlightMenu').then(mod => mod.SpotlightMenu),
   { ssr: false });
 
-const MapContainerWithoutSSR = dynamic(
+const UgandaMapContainerWithoutSSR = dynamic(
     () => import('../components/UgandaContainer').then(mod => mod.UgandaContainer),
     { ssr: false });
+
+const KenyaMapContainerWithoutSSR = dynamic(
+  () => import('../components/KenyaContainer').then(mod => mod.KenyaContainer),
+  { ssr: false });
 
 const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) => {
   useEffect(() => {
@@ -254,7 +258,11 @@ const Playground: NextPage<PlaygroundProps> = ({ footer, navigation, setData }) 
       </div>
 
       <div style={ { display: 'block', float: 'left', width: '100%' } }>
-        <MapContainerWithoutSSR />
+        <UgandaMapContainerWithoutSSR />
+      </div>
+
+      <div style={ { display: 'block', float: 'left', width: '100%' } }>
+        <KenyaMapContainerWithoutSSR />
       </div>
 
     </PageSection>
