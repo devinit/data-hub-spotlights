@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Select } from '../Select';
 import { Map } from '../Map/Map';
 import kenyanCounties from './geoJSON/kenyan-counties.json';
-import ugandasubcounties from '../UgandaContainer/geoJSON/subcounty.json';
+import kenyaSubcounties from './geoJSON/kenya-subcounty-proposal.json';
 import * as distance from 'jaro-winkler';
 import * as turf from '@turf/turf';
 import L from 'leaflet';
@@ -32,7 +32,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
     mapCenter: new L.LatLng(0.2601, 37.2757),
-    zoom: 6,
+    zoom: 7,
     layer: 'https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA',
     mapID: 'map2'
   });
@@ -71,8 +71,8 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     for (const subcounty in subcounties) {
       if (subcounties[subcounty]) {
         options.push({
-          value: subcounties[subcounty].properties.SName2016,
-          label: subcounties[subcounty].properties.SName2016
+          value: subcounties[subcounty].properties.ADMIN2,
+          label: subcounties[subcounty].properties.ADMIN2
         });
       }
     }
@@ -81,7 +81,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   }
 
   function handleDistrictChange(selectedOption: any) {
-    const districtSubcounties = findSelectedDistrictSubcounties(selectedOption.value, ugandasubcounties);
+    const districtSubcounties = findSelectedDistrictSubcounties(selectedOption.value, kenyaSubcounties);
     const subcountyOptions = loadSubcountySelect(districtSubcounties);
 
     setState(prevState => {
@@ -147,25 +147,26 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   }
 
   function showOneUgandaDistrict() {
-    const districtSubcounties = findSelectedDistrictSubcounties(state.selectedDistrict, ugandasubcounties);
+    const districtSubcounties = findSelectedDistrictSubcounties(state.selectedDistrict, kenyaSubcounties);
     clean_map();
     for (const key in districtSubcounties) {
       if (districtSubcounties[key]) {
         redrawMap(districtSubcounties[key]);
       }
     }
+
     const center: any = getCenterOfFeatureCollection(districtSubcounties);
     if (state.map) {
       const map = state.map;
       map.flyTo([
         center.geometry.coordinates[1],
         center.geometry.coordinates[0]
-      ], 10);
+      ], 8);
     }
   }
 
   function showUgandaDistrictSubcounties() {
-    const districtSubcounties = findSelectedDistrictSubcounties(state.selectedDistrict, ugandasubcounties);
+    const districtSubcounties = findSelectedDistrictSubcounties(state.selectedDistrict, kenyaSubcounties);
     clean_map();
 
     for (const subcounty in districtSubcounties) {
@@ -194,7 +195,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     const subcounties = allSubcounties.features;
     for (const subcounty in subcounties) {
       if (subcounties[subcounty]) {
-        const current_district = subcounties[subcounty].properties.DName2016;
+        const current_district = subcounties[subcounty].properties.ADMIN1;
         const similarity = distance(district.toLowerCase(), current_district.toLowerCase());
         if (similarity > 0.9) {
           selectedGeometry.push(subcounties[subcounty]);
@@ -209,9 +210,13 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     const points = [];
     for (const key in districtSubcounties) {
       if (districtSubcounties[key]) {
-        for (const item in districtSubcounties[key].geometry.coordinates[0][0]) {
-          if (districtSubcounties[key].geometry.coordinates[0][0]) {
-            points.push(turf.point(districtSubcounties[key].geometry.coordinates[0][0][item]));
+        const similarity = distance(state.selectedDistrict.toLowerCase(), 'isiolo');
+        const coordinates_array = (similarity > 0.9) ?
+        districtSubcounties[key].geometry.coordinates[0][0] : districtSubcounties[key].geometry.coordinates[0];
+        for (const item in coordinates_array) {
+          if (coordinates_array[item] instanceof Array) {
+            console.log('Value is ' + JSON.stringify(coordinates_array[item]));
+            points.push(turf.point(coordinates_array[item]));
           }
         }
       }
