@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<header
+  className="header"
+  role="banner"
+>
+  <div
+    className="row"
+  >
+    <a
+      className="branding"
+      href="/"
+    >
+      Development Initiatives
+    </a>
+  </div>
+</header>
+`;
