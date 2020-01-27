@@ -1,5 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import ReactSelect, { Props as SelectProps, Styles } from 'react-select';
+import ReactSelect, { GroupedOptionsType, OptionsType, Props as SelectProps, Styles } from 'react-select';
+
+export type SelectOptions =
+  GroupedOptionsType<{ label: string; value: string; }> | OptionsType<{ label: string; value: string; }> | undefined;
 
 const Select: FunctionComponent<SelectProps> = (props) => {
   const borderColor = '#8f1b13';
