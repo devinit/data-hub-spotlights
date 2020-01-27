@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormField renders correctly 1`] = `
+<div
+  className="form-field form-field--inline-block"
+/>
+`;
+
+exports[`FormField renders with children correctly 1`] = `
+<div
+  className="form-field form-field--inline-block"
+>
+  <div>
+    My Child
+  </div>
+</div>
+`;
