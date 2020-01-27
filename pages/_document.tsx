@@ -19,7 +19,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link href={ `${ASSETS_SOURCE_URL}assets/css/screen.min.css` } rel="stylesheet"/>
+          <link href={ `${ASSETS_SOURCE_URL}assets/css/spotlights.min.css` } rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700" rel="stylesheet"/>
           <script dangerouslySetInnerHTML={ { __html: iconScript } }/>
           <noscript><link href={ `${ASSETS_SOURCE_URL}assets/icons/icon.fallback.css` } rel="stylesheet"/></noscript>
