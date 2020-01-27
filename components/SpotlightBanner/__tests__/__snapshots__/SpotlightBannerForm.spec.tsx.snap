@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightBannerForm renders children correctly 1`] = `
+<div
+  className="spotlight-banner__form"
+>
+  <div>
+    My Child
+  </div>
+</div>
+`;
+
+exports[`SpotlightBannerForm renders correctly 1`] = `
+<div
+  className="spotlight-banner__form"
+/>
+`;

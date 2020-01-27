@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightBanner renders correctly 1`] = `
+<div
+  className="spotlight-banner"
+/>
+`;
+
+exports[`SpotlightBanner renders only SpotlightBannerAside & SpotlightBannerMain 1`] = `
+<div
+  className="spotlight-banner"
+>
+  <div
+    className="spotlight-banner__aside"
+  />
+  <div
+    className="spotlight-banner__main"
+  />
+</div>
+`;

@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightBannerAside renders correctly 1`] = `
+<div
+  className="spotlight-banner__aside"
+/>
+`;
+
+exports[`SpotlightBannerAside renders with children correctly 1`] = `
+<div
+  className="spotlight-banner__aside"
+>
+  <div>
+    My Child
+  </div>
+</div>
+`;
