@@ -171,7 +171,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
           state.selectedSubcounty.toLowerCase(),
           subCounties[subcounty].properties.ADMIN2.toLowerCase()
         );
-        if (similarity > 0.9) {
+        if (similarity === 1) {
           redrawMap(subCounties[subcounty]);
           const center: any = getCenterOfSubcountyFeatureCollection(subCounties[subcounty]);
           console.log('The center is ' + JSON.stringify(center));
@@ -187,7 +187,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       if (subcounties[subcounty]) {
         const current_district = subcounties[subcounty].properties.ADMIN1;
         const similarity = distance(district.toLowerCase(), current_district.toLowerCase());
-        if (similarity > 0.9) {
+        if (similarity === 1) {
           selectedGeometry.push(subcounties[subcounty]);
         }
       }
@@ -201,7 +201,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     for (const key in subCounties) {
       if (subCounties[key]) {
         const similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
-        const coordinates_array = (similarity > 0.9) ?
+        const coordinates_array = (similarity === 1) ?
         subCounties[key].geometry.coordinates[0][0] : subCounties[key].geometry.coordinates[0];
         for (const item in coordinates_array) {
           if (coordinates_array[item] instanceof Array) {
@@ -217,8 +217,11 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   function getCenterOfSubcountyFeatureCollection(subCounties: any) {
     const points = [];
     console.log('subcounties are ' + JSON.stringify(subCounties));
-    const similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
-    const coords = (similarity > 0.9) ?
+    // Isiolo county data is structured different hence this check
+    const county_similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
+    const subcounty_similarity = distance(state.selectedSubcounty.toLowerCase(), 'isiolo south');
+
+    const coords = (county_similarity === 1) && (subcounty_similarity !== 1) ?
     subCounties.geometry.coordinates[0][0] : subCounties.geometry.coordinates[0];
     for (const item in coords) {
       if (coords[item] && (coords[item] instanceof Array)) {
