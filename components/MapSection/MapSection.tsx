@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { PageSection } from '../PageSection';
-import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
+import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerForm, SpotlightBannerMain } from '../SpotlightBanner';
 import { SpotlightTheme } from '../../utils';
 import { Select, SelectOptions } from '../Select';
 import { FormField } from '../FormField';
@@ -47,15 +47,17 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ themes: themeData }) =
           <Select options={ themes } onChange={ onSelectTheme }/>
         </SpotlightBannerAside>
         <SpotlightBannerMain>
-          <FormField>
-            <label className="form-label">Indicator</label>
-            <Select isDisabled={ !indicators || !indicators.length } options={ indicators }/>
-          </FormField>
-          <FormField>
-            <label className="form-label">Year</label>
-            <Select isDisabled={ !indicators || !indicators.length }/>
-          </FormField>
-          <FormField><button type="button" className="button">Update</button></FormField>
+          <SpotlightBannerForm>
+            <FormField>
+              <label className="form-label">Indicator</label>
+              <Select isDisabled={ !indicators || !indicators.length } options={ indicators }/>
+            </FormField>
+            <FormField>
+              <label className="form-label">Year</label>
+              <Select isDisabled={ !indicators || !indicators.length }/>
+            </FormField>
+            <FormField><button type="button" className="button">Update</button></FormField>
+          </SpotlightBannerForm>
         </SpotlightBannerMain>
       </SpotlightBanner>
     </PageSection>
