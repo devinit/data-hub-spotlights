@@ -111,7 +111,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     } else if (flag === 'district') {
       showOneKenyaCounty();
     } else if (flag === 'subcounty') {
-      showUgandaKenyaSubcounties();
+      showKenyaSubcounties();
     }
   }
 
@@ -161,7 +161,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     }
   }
 
-  function showUgandaKenyaSubcounties() {
+  function showKenyaSubcounties() {
     const subCounties = findSelectedCountySubcounties(state.selectedCounty, kenyaSubcounties);
     clean_map();
 
@@ -174,13 +174,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         if (similarity > 0.9) {
           redrawMap(subCounties[subcounty]);
           const center: any = getCenterOfSubcountyFeatureCollection(subCounties[subcounty]);
-          if (state.map) {
-            const map = state.map;
-            map.flyTo([
-              center.geometry.coordinates[1],
-              center.geometry.coordinates[0]
-            ], 11);
-          }
+          console.log('The center is ' + JSON.stringify(center));
         }
       }
     }
@@ -222,9 +216,12 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
 
   function getCenterOfSubcountyFeatureCollection(subCounties: any) {
     const points = [];
-    const coords = subCounties.geometry.coordinates[0][0];
+    console.log('subcounties are ' + JSON.stringify(subCounties));
+    const similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
+    const coords = (similarity > 0.9) ?
+    subCounties.geometry.coordinates[0][0] : subCounties.geometry.coordinates[0];
     for (const item in coords) {
-      if (coords[item]) {
+      if (coords[item] && (coords[item] instanceof Array)) {
         points.push(turf.point(coords[item]));
       }
     }
