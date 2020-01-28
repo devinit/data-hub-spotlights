@@ -20,7 +20,7 @@ interface State {
   selectedSubcounty: string;
   mapCenter?: L.LatLng;
   zoom: number;
-  layer: string;
+  layers: L.TileLayer[];
   mapID: string;
 }
 
@@ -33,7 +33,11 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     selectedSubcounty: '',
     mapCenter: new L.LatLng(0.2601, 37.2757),
     zoom: 6,
-    layer: 'https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA',
+    layers: [
+      L.tileLayer('https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA', {
+        attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
+      })
+    ],
     mapID: 'map2'
   });
 
@@ -197,12 +201,26 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   }
 
   function getCenterOfFeatureCollection(subCounties: any) {
-    const points = [];
+    const points: any[] = [];
+    let coordinates_array: any[] = [];
     for (const key in subCounties) {
       if (subCounties[key]) {
-        const similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
-        const coordinates_array = (similarity === 1) ?
-        subCounties[key].geometry.coordinates[0][0] : subCounties[key].geometry.coordinates[0];
+        if (subCounties[key].geometry.type === 'Polygon') {
+          coordinates_array = subCounties[key].geometry.coordinates.reduce((p: any, c: any) => {
+            return p.concat(c);
+          });
+        } else if (subCounties[key].geometry.type === 'MultiPolygon') {
+          for (const item in subCounties[key].geometry.coordinates) {
+            if (subCounties[key].geometry.coordinates[item]) {
+              const holder = subCounties[key].geometry.coordinates[item].reduce((p: any, c: any) => {
+                return p.concat(c);
+              });
+              coordinates_array.concat(holder);
+            }
+          }
+
+        }
+
         for (const item in coordinates_array) {
           if (coordinates_array[item] instanceof Array) {
             points.push(turf.point(coordinates_array[item]));
@@ -246,7 +264,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
           saveMapState={ initialiseMapState }
           mapCenter={ state.mapCenter }
           zoom={ state.zoom }
-          layer={ state.layer }
+          layers={ state.layers }
           mapID={ state.mapID }
         />
       </div>
