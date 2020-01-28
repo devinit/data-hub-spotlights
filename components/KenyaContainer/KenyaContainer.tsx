@@ -38,7 +38,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
       })
     ],
-    mapID: 'map2'
+    mapID: 'kenya_map'
   });
 
   useEffect(() => {
@@ -53,7 +53,6 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         map
       };
     });
-    addLayer();
   }
 
   function loadCountySelect(counties: any) {
@@ -134,7 +133,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     if (Object.keys(state.leaflet).length > 0) {
       const layer = state.leaflet.geoJson(featureCollection, {
         style: {
-          color: '#00008b',
+          color: '#ffffff',
           weight: 1,
           opacity: 0.65
         }
@@ -177,6 +176,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         );
         if (similarity === 1) {
           redrawMap(subCounties[subcounty]);
+          // Fix Me and move to map plus zoom in
           const center: any = getCenterOfSubcountyFeatureCollection(subCounties[subcounty]);
           console.log('The center is ' + JSON.stringify(center));
         }

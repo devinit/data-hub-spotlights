@@ -31,7 +31,7 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     boundaryType: 'all',
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
-    mapCenter: new L.LatLng(0.6976, 33.5825),
+    mapCenter: new L.LatLng(1.4576, 32.5825),
     layers: [
       L.tileLayer('https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA', {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
