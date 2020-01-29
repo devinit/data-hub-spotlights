@@ -4,6 +4,11 @@ import ReactSelect, { GroupedOptionsType, OptionsType, Props as SelectProps, Sty
 export type SelectOptions =
   GroupedOptionsType<{ label: string; value: string; }> | OptionsType<{ label: string; value: string; }> | undefined;
 
+export interface SelectOption {
+  label: string;
+  value: string;
+}
+
 const Select: FunctionComponent<SelectProps> = (props) => {
   const borderColor = '#8f1b13';
   const styles: Styles = {
