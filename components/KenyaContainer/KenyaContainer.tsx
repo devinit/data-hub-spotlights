@@ -3,6 +3,7 @@ import { Select } from '../Select';
 import { Map } from '../Map/Map';
 import kenyanCounties from './geoJSON/kenyan-counties.json';
 import kenyaSubcounties from './geoJSON/kenya-subcounty-proposal.json';
+import kenyaCountyPopulationData from './geoJSON/county_population_data.json';
 import * as distance from 'jaro-winkler';
 import * as turf from '@turf/turf';
 import L from 'leaflet';
@@ -18,6 +19,7 @@ interface State {
   boundaryType: string;
   subcountyDropdownOptions: any[];
   selectedSubcounty: string;
+  counties_with_population: any[];
   mapCenter?: L.LatLng;
   zoom: number;
   layers: L.TileLayer[];
@@ -31,6 +33,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     boundaryType: 'all',
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
+    counties_with_population: [],
     mapCenter: new L.LatLng(0.2601, 37.2757),
     zoom: 6,
     layers: [
@@ -50,9 +53,38 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       return {
         ...prevState,
         leaflet,
-        map
+        map,
+        counties_with_population: mergeCountiesToPopulation(kenyanCounties, kenyaCountyPopulationData)
       };
     });
+  }
+
+  function mergeCountiesToPopulation(counties: any, countyPopulation: any) {
+    const data: any[] = [];
+    for (const key1 in counties.features) {
+      if (counties.features[key1]) {
+        for (const key2 in countyPopulation) {
+          if (countyPopulation[key2]) {
+            const similarity = distance(
+              counties.features[key1].properties.COUNTY.trim().toLowerCase(),
+              countyPopulation[key2].county.trim().toLowerCase()
+            );
+            if (similarity > 0.7) {
+              const holder = counties.features[key1];
+              data.push({
+                ...holder,
+                properties: {
+                  ...holder.properties,
+                  population: countyPopulation[key2].population
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+
+    return data;
   }
 
   function loadCountySelect(counties: any) {
@@ -132,18 +164,34 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   function redrawMap(featureCollection: any) {
     if (Object.keys(state.leaflet).length > 0) {
       const layer = state.leaflet.geoJson(featureCollection, {
-        style: {
-          color: '#ffffff',
-          weight: 1,
-          opacity: 0.65
-        }
+        style
       });
       layer.addTo(state.map);
     }
   }
 
+  function style(feature: any) {
+    return {
+        fillColor: getColor(feature.properties.population),
+        color: '#ffffff',
+        weight: 1,
+        opacity: 0.65
+    };
+  }
+
+  function getColor(d: number) {
+    return d > 4000000 ? '#99000d' :
+        d > 3000000 ? '#cb181d' :
+        d > 2600000 ? '#ef3b2c' :
+        d > 1500000 ? '#fb6a4a' :
+        d > 750000 ? '#fc9272' :
+        d > 500000 ? '#fcbba1' :
+        d > 250000 ? '#fee0d2' :
+                    '#fff5f0';
+  }
+
   function showAllKenyaCounties() {
-    redrawMap(kenyanCounties);
+    redrawMap(state.counties_with_population);
   }
 
   function showOneKenyaCounty() {
@@ -176,7 +224,6 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         );
         if (similarity === 1) {
           redrawMap(subCounties[subcounty]);
-          // Fix Me and move to map plus zoom in
           const center: any = getCenterOfSubcountyFeatureCollection(subCounties[subcounty]);
           if (state.map) {
             const map = state.map;
