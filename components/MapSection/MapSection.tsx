@@ -8,6 +8,7 @@ interface MapSectionProps {
 }
 
 export interface SpotlightOptions {
+  theme?: SpotlightTheme;
   indicator?: SpotlightIndicator;
   year?: number;
 }

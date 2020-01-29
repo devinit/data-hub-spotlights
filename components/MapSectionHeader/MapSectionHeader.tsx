@@ -10,6 +10,14 @@ interface MapSectionHeaderProps {
   onOptionsChange: (options: SpotlightOptions) => void;
 }
 
+interface SectionSelectOptions {
+  themes: SelectOptions;
+  indicators: SelectOptions;
+  years: SelectOptions;
+}
+
+const defaultSelectOptions: SectionSelectOptions = { themes: [], indicators: [], years: [] };
+
 const createThemeOptions = (themes: SpotlightTheme[]): SelectOptions =>
   themes.map(theme => ({
     label: theme.name,
@@ -46,57 +54,50 @@ const parseIndicatorToOption = (indicator: SpotlightIndicator) =>
   ({ label: indicator.name, value: indicator.ddw_id });
 
 const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
-  const [ themes, setThemes ] = useState<SelectOptions>([]);
-  const [ activeTheme, setActiveTheme ] = useState<SpotlightTheme | undefined>(undefined);
-  const [ indicators, setIndicators ] = useState<SelectOptions>([]);
-  const [ activeIndicator, setActiveIndicator ] = useState<SpotlightIndicator | undefined>(undefined);
-  const [ years, setYears ] = useState<SelectOptions>([]);
-  const [ activeYear, setActiveYear ] = useState<number | undefined>(undefined);
+  const [ options, setOptions ] = useState<SectionSelectOptions>(defaultSelectOptions);
+  const { themes, indicators, years } = options;
+  const [ selected, setSelected ] = useState<SpotlightOptions>({});
+  const { theme: activeTheme, indicator: activeIndicator, year: activeYear } = selected;
 
-  useEffect(() => setThemes(createThemeOptions(props.themes)), []);
-  useEffect(() => props.onOptionsChange({ indicator: activeIndicator, year: activeYear }),
-    [ activeIndicator, activeYear ]);
-
-  const clearYears = () => {
-    setYears(undefined);
-    setActiveYear(undefined);
-  };
+  useEffect(() => {
+    setOptions({ ...options, themes: createThemeOptions(props.themes) });
+  }, []);
+  useEffect(() => props.onOptionsChange(selected), [ selected ]);
 
   const onSelectTheme = (option?: SelectOption) => {
     if (option) {
       const selectedTheme = props.themes.find(theme => theme.slug === option.value);
-      setActiveTheme(selectedTheme);
-      if (selectedTheme) {
-        setIndicators(createIndicatorOptionsFromTheme(selectedTheme));
-        setActiveIndicator(undefined);
-        clearYears();
-      }
+      setSelected({ theme: selectedTheme, indicator: undefined, year: undefined });
+      setOptions({
+        ...options,
+        indicators: selectedTheme ? createIndicatorOptionsFromTheme(selectedTheme) : undefined,
+        years: undefined
+      });
     } else if (activeIndicator) {
-      setIndicators(undefined);
-      setActiveIndicator(undefined);
-      clearYears();
+      setSelected({});
+      setOptions(defaultSelectOptions);
     }
   };
 
   const onSelectIndicator = (option?: SelectOption) => {
     if (option && activeTheme) {
       const selectedIndicator = activeTheme.indicators.find(indicator => indicator.ddw_id === option.value);
-      setActiveIndicator(selectedIndicator);
-      if (selectedIndicator) {
-        setYears(createYearOptionsFromIndicator(selectedIndicator));
-        setActiveYear(undefined);
-      }
+      setSelected({ ...selected, indicator: selectedIndicator, year: undefined });
+      setOptions({
+        ...options,
+        years: selectedIndicator ? createYearOptionsFromIndicator(selectedIndicator) : undefined
+      });
     } else if (activeIndicator) {
-      setActiveIndicator(undefined);
-      clearYears();
+      setSelected({ ...selected, indicator: undefined, year: undefined });
+      setOptions({ ...options, years: [] });
     }
   };
 
   const onSelectYear = (option?: SelectOption) => {
     if (option && option.value) {
-      setActiveYear(parseInt(option.value, 10));
+      setSelected({ ...selected, year: parseInt(option.value, 10) });
     } else {
-      setActiveYear(undefined);
+      setSelected({ ...selected, year: undefined });
     }
   };
 
