@@ -45,7 +45,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     addLayer();
   }, [ state ]);
 
-  function initialiseMapState(leaflet: any, map: any) {
+  function initialiseMapState(leaflet: any, map: L.Map) {
     setState(prevState => {
       return {
         ...prevState,
@@ -69,7 +69,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     return options;
   }
 
-  function loadSubcountySelect(subcounties: any) {
+  function loadSubcountySelect(subcounties: any[]) {
     const options = [];
     for (const subcounty in subcounties) {
       if (subcounties[subcounty]) {
@@ -185,6 +185,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
               center.geometry.coordinates[0]
             ], 10);
           }
+          break;
         }
       }
     }
@@ -206,7 +207,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     return selectedGeometry;
   }
 
-  function getCenterOfFeatureCollection(subCounties: any) {
+  function getCenterOfFeatureCollection(subCounties: any[]) {
     const points: any[] = [];
     let coordinates_array: any[] = [];
     for (const key in subCounties) {
