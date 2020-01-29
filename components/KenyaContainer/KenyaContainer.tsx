@@ -160,7 +160,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       map.flyTo([
         center.geometry.coordinates[1],
         center.geometry.coordinates[0]
-      ], 8);
+      ], 9);
     }
   }
 
@@ -178,7 +178,13 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
           redrawMap(subCounties[subcounty]);
           // Fix Me and move to map plus zoom in
           const center: any = getCenterOfSubcountyFeatureCollection(subCounties[subcounty]);
-          console.log('The center is ' + JSON.stringify(center));
+          if (state.map) {
+            const map = state.map;
+            map.flyTo([
+              center.geometry.coordinates[1],
+              center.geometry.coordinates[0]
+            ], 10);
+          }
         }
       }
     }
@@ -234,13 +240,22 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
 
   function getCenterOfSubcountyFeatureCollection(subCounties: any) {
     const points = [];
-    console.log('subcounties are ' + JSON.stringify(subCounties));
-    // Isiolo county data is structured different hence this check
-    const county_similarity = distance(state.selectedCounty.toLowerCase(), 'isiolo');
-    const subcounty_similarity = distance(state.selectedSubcounty.toLowerCase(), 'isiolo south');
+    let coords: any[] = [];
+    if (subCounties.geometry.type === 'Polygon') {
+      coords = subCounties.geometry.coordinates.reduce((p: any, c: any) => {
+        return p.concat(c);
+      });
+    } else if (subCounties.geometry.type === 'MultiPolygon') {
+      for (const item in subCounties.geometry.coordinates) {
+        if (subCounties.geometry.coordinates[item]) {
+          const holder = subCounties.geometry.coordinates[item].reduce((p: any, c: any) => {
+            return p.concat(c);
+          });
+          coords.concat(holder);
+        }
+      }
 
-    const coords = (county_similarity === 1) && (subcounty_similarity !== 1) ?
-    subCounties.geometry.coordinates[0][0] : subCounties.geometry.coordinates[0];
+    }
     for (const item in coords) {
       if (coords[item] && (coords[item] instanceof Array)) {
         points.push(turf.point(coords[item]));
