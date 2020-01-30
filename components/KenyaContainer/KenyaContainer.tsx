@@ -202,22 +202,21 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     });
   }
 
-  function highlightFeature(e: any) {
+  function highlightFeature(e: L.LayerEvent) {
     const layer = e.target;
-    layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
-    });
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-    }
+    const latLng = layer.getBounds().getCenter();
+    addPopup(latLng, e);
   }
 
   function resetFeature(e: any) {
+      if (state.map) {
+        state.map.eachLayer(layer => {
+          if (layer instanceof L.Popup) {
+            layer.remove();
+          }
+        });
+      }
       if (state.districtsLayer) {
-        console.log('current layer is game');
         state.districtsLayer.resetStyle(e.target);
       }
   }
@@ -241,6 +240,16 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         center.geometry.coordinates[1],
         center.geometry.coordinates[0]
       ], 9);
+    }
+  }
+
+  function addPopup(LatLng: L.LatLng, e: L.LayerEvent) {
+    const popup: L.Popup = L.popup(/* {autoClose:false} */)
+    .setLatLng(LatLng)
+    .setContent('<b>County Population</b><br/>' + e.target.feature.properties.COUNTY + '<br/>' +
+    e.target.feature.properties.population);
+    if (state.map) {
+      state.map.addLayer(popup);
     }
   }
 
