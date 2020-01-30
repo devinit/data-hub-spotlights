@@ -24,6 +24,7 @@ interface State {
   zoom: number;
   layers: L.TileLayer[];
   mapID: string;
+  districtsLayer?: L.GeoJSON;
 }
 
 const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
@@ -164,18 +165,22 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   function redrawMap(featureCollection: any) {
     if (Object.keys(state.leaflet).length > 0) {
       const layer = state.leaflet.geoJson(featureCollection, {
-        style
+        style,
+        onEachFeature
       });
       layer.addTo(state.map);
+
+      return layer;
     }
   }
 
   function style(feature: any) {
     return {
         fillColor: getColor(feature.properties.population),
-        color: '#ffffff',
         weight: 1,
-        opacity: 0.65
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 0.7
     };
   }
 
@@ -190,8 +195,35 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
                     '#fff5f0';
   }
 
+  function onEachFeature(_feature: any, layer: any) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetFeature
+    });
+  }
+
+  function highlightFeature(e: any) {
+    const layer = e.target;
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+  }
+
+  function resetFeature(e: any) {
+      if (state.districtsLayer) {
+        console.log('current layer is game');
+        state.districtsLayer.resetStyle(e.target);
+      }
+  }
+
   function showAllKenyaCounties() {
-    redrawMap(state.counties_with_population);
+    state.districtsLayer = redrawMap(state.counties_with_population);
   }
 
   function showOneKenyaCounty() {
