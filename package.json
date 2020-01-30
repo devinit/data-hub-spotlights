@@ -7,7 +7,8 @@
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "test": "jest --coverage",
-    "lint": "tslint -c tslint.json 'pages/**/*.ts' 'components/**/*.tsx' 'server/**/*.ts' && tsc --noEmit"
+    "lint": "tslint -c tslint.json 'pages/**/*.ts' 'components/**/*.tsx' 'server/**/*.ts' && tsc --noEmit",
+    "geojson-converter": "ts-node --project tsconfig.server.json scripts/geojson-converter.ts"
   },
   "husky": {
     "hooks": {
@@ -60,7 +61,7 @@
     "prettier": "^1.19.1",
     "react-test-renderer": "^16.12.0",
     "ts-jest": "^24.2.0",
-    "ts-node": "^8.5.2",
+    "ts-node": "^8.6.2",
     "tslint": "^5.20.1",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-microsoft-contrib": "^6.2.0",
