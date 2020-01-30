@@ -1,55 +1,43 @@
+import * as turf from '@turf/turf';
+import { FeatureCollection } from 'geojson';
+import * as distance from 'jaro-winkler';
+import { GeoJSON, LatLng, Map as LeafletMap } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { GeoJSONLayer, Map, TileLayer } from '../Map';
 import { Select } from '../Select';
-import { Map } from '../Map/Map';
 import ugandaDistricts from './geoJSON/district.json';
 import ugandasubcounties from './geoJSON/subcounty.json';
-import * as distance from 'jaro-winkler';
-import * as turf from '@turf/turf';
-import L from 'leaflet';
 
 interface MapContainerProps {
   padding?: string;
 }
 
 interface State {
-  leaflet: any;
-  map?: L.Map;
+  map?: LeafletMap;
   selectedDistrict: string;
   boundaryType: string;
   subcountyDropdownOptions: any[];
   selectedSubcounty: string;
-  mapCenter?: L.LatLng;
+  mapCenter?: LatLng;
   zoom?: number;
-  layers: L.TileLayer[];
 }
 
 const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   const [ state, setState ] = useState<State>({
-    leaflet: {},
     selectedDistrict: '',
     boundaryType: 'all',
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
-    mapCenter: new L.LatLng(0.6976, 33.5825),
-    layers: [
-      L.tileLayer('https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA', {
-        attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
-      })
-    ]
+    mapCenter: new LatLng(0.6976, 33.5825)
   });
+  const [ geojson, setGeoJSON ] = useState<FeatureCollection | undefined>(undefined);
 
   useEffect(() => {
     addLayer();
   }, [ state ]);
 
-  function initialiseMapState(leaflet: any, map: any) {
-    setState(prevState => {
-      return {
-        ...prevState,
-        leaflet,
-        map
-      };
-    });
+  function initialiseMapState(map: any) {
+    setState(prevState => ({ ...prevState, map }));
     addLayer();
   }
 
@@ -123,28 +111,15 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     if (state.map) {
       const map = state.map;
       map.eachLayer((layer: any) => {
-        if (layer instanceof state.leaflet.GeoJSON) {
+        if (layer instanceof GeoJSON) {
           map.removeLayer(layer);
         }
       });
     }
   }
 
-  function redrawMap(featureCollection: any) {
-    if (Object.keys(state.leaflet).length > 0) {
-      const layer = state.leaflet.geoJson(featureCollection, {
-        style: {
-          color: '#ffffff',
-          weight: 1,
-          opacity: 0.65
-        }
-      });
-      layer.addTo(state.map);
-    }
-  }
-
   function showAllUgandaDistricts() {
-    redrawMap(ugandaDistricts);
+    setGeoJSON(ugandaDistricts as FeatureCollection);
   }
 
   function showOneUgandaDistrict() {
@@ -152,7 +127,7 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     clean_map();
     for (const key in districtSubcounties) {
       if (districtSubcounties[key]) {
-        redrawMap(districtSubcounties[key]);
+        setGeoJSON(districtSubcounties[key]);
       }
     }
     const center: any = getCenterOfFeatureCollection(districtSubcounties);
@@ -176,7 +151,7 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
           districtSubcounties[subcounty].properties.SName2016.toLowerCase()
         );
         if (similarity > 0.9) {
-          redrawMap(districtSubcounties[subcounty]);
+          setGeoJSON(districtSubcounties[subcounty]);
           const center: any = getCenterOfSubcountyFeatureCollection(districtSubcounties[subcounty]);
           if (state.map) {
             const map = state.map;
@@ -243,12 +218,20 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         <Select options={ state.subcountyDropdownOptions } onChange={ handleSubcountyChange } />
       </div>
       <div style={ { padding } }>
-        <Map
-          saveMapState={ initialiseMapState }
-          mapCenter={ state.mapCenter }
-          zoom={ state.zoom }
-          layers={ state.layers }
-        />
+        <Map onCreate={ initialiseMapState } center={ state.mapCenter } zoom={ state.zoom }>
+          <TileLayer
+            url="https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA"
+            attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
+          />
+          <GeoJSONLayer
+            geojson={ geojson }
+            style={ {
+              color: '#ffffff',
+              weight: 1,
+              opacity: 0.65
+            } }
+          />
+        </Map>
       </div>
     </div>
   );

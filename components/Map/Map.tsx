@@ -1,27 +1,35 @@
-import React, { useEffect } from 'react';
-import L from 'leaflet';
+import { LatLng, Map as LeafletMap, map as leafletMap } from 'leaflet';
+import React, { Children, FunctionComponent, cloneElement, isValidElement, useEffect, useRef, useState } from 'react';
+import { GeoJSONLayer } from './GeoJSONLayer';
+import { TileLayer } from './TileLayer';
 
 interface MapProps {
-  saveMapState: (leafletObject: any, map: L.Map) => void;
+  onCreate: (map: LeafletMap) => void;
   width?: string;
   height?: string;
-  mapCenter?: L.LatLng;
+  center?: LatLng;
   zoom?: number;
-  layers: L.TileLayer[];
 }
 
-const Map = ({ saveMapState, width, height, layers, mapCenter, zoom }: MapProps) => {
-  useEffect(() => {
-    // create map
-    const map = L.map('map', {
-      center: mapCenter,
-      zoom,
-      layers
+const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, center, zoom }) => {
+  const [ map, setMap ] = useState<LeafletMap | undefined>(undefined);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const renderLayers = () => {
+    return Children.map(children, child => {
+      if (isValidElement(child) && (child.type === TileLayer || child.type === GeoJSONLayer)) {
+        return cloneElement(child, { map });
+      }
     });
-    saveMapState(L, map);
+  };
+  useEffect(() => {
+    if (mapRef && mapRef.current) {
+      const _map = leafletMap(mapRef.current, { center, zoom });
+      onCreate(_map);
+      setMap(_map);
+    }
   }, []);
 
-  return <div id="map" style={ { width, height } } />;
+  return <div ref={ mapRef } style={ { width, height } }>{ renderLayers() }</div>;
 };
 
 Map.defaultProps = {
