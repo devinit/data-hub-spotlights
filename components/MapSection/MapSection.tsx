@@ -5,6 +5,7 @@ import { PageSection } from '../PageSection';
 import dynamic from 'next/dynamic';
 
 interface MapSectionProps {
+  countryCode: string;
   themes: SpotlightTheme[];
 }
 
@@ -18,13 +19,13 @@ const DynamicMap = dynamic(
   () => import('../SpotlightMap').then(mod => mod.SpotlightMap),
   { ssr: false });
 
-const MapSection: FunctionComponent<MapSectionProps> = ({ themes: themeData }) => {
+const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData }) => {
   const onOptionsChange = (options: SpotlightOptions) => console.log(options);
 
   return (
     <PageSection>
       <MapSectionHeader themes={ themeData } onOptionsChange={ onOptionsChange }/>
-      <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode="UG"/>
+      <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode={ countryCode }/>
     </PageSection>
   );
 };

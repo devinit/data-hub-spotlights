@@ -25,10 +25,10 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
     } });
   console.log(loading, data, error && error.message, page);
 
-  if (page.themes) {
+  if (page.themes && page.country_code) {
     return (
       <>
-        <MapSection themes={ page.themes }/>
+        <MapSection themes={ page.themes } countryCode={ page.country_code }/>
       </>
     );
   }
