@@ -4,6 +4,7 @@ import { Map } from '../Map/Map';
 import kenyanCounties from './geoJSON/kenyan-counties.json';
 import kenyaSubcounties from './geoJSON/kenya-subcounty-proposal.json';
 import kenyaCountyPopulationData from './geoJSON/county_population_data.json';
+import { Legend, LegendItem } from '../Legend';
 import * as distance from 'jaro-winkler';
 import * as turf from '@turf/turf';
 import L from 'leaflet';
@@ -48,6 +49,27 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   useEffect(() => {
     addLayer();
   }, [ state ]);
+
+  const color = [
+    '#fff5f0',
+    '#fee0d2',
+    '#fcbba1',
+    '#fc9272',
+    '#fb6a4a',
+    '#ef3b2c',
+    '#cb181d',
+    '#99000d'
+  ];
+
+  const grades = [
+    250000,
+    500000,
+    750000,
+    1500000,
+    2600000,
+    3000000,
+    4000000
+  ];
 
   function initialiseMapState(leaflet: any, map: L.Map) {
     setState(prevState => {
@@ -363,14 +385,35 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       <div style={ { margin: '10px' } }>
         <Select options={ state.subcountyDropdownOptions } onChange={ handleSubcountyChange } />
       </div>
-      <div style={ { padding } }>
-        <Map
-          saveMapState={ initialiseMapState }
-          mapCenter={ state.mapCenter }
-          zoom={ state.zoom }
-          layers={ state.layers }
-          mapID={ state.mapID }
-        />
+      <div style={ { width: '100%' } }>
+        <div style={ { padding, width: '70%', float: 'right' } }>
+          <Map
+            saveMapState={ initialiseMapState }
+            mapCenter={ state.mapCenter }
+            zoom={ state.zoom }
+            layers={ state.layers }
+            mapID={ state.mapID }
+          />
+        </div>
+        <div style={ { float: 'left', width: '30%', backgroundColor: '#fff', position: 'relative', top: '100' } }>
+          <Legend>
+            {
+              grades.map((grade, index) => {
+                if (index === 0) {
+                  return <LegendItem key={ index } bgColor={ color[index] }><span>{ '0 - ' + grade }</span>
+                  </LegendItem>;
+                } else {
+                return <LegendItem key={ index } bgColor={ color[index] }>{ grade }{ (grades[index + 1])
+                  ? ' - ' + (grades[index + 1]) : ' > ' }
+                  </LegendItem>;
+                }
+                if (!color[index + 1]) {
+                  return <LegendItem/>;
+                }
+              })
+            }
+          </Legend>
+        </div>
       </div>
     </div>
   );
