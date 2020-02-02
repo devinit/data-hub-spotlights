@@ -29,6 +29,34 @@ export function mergeCountiesToPopulation(counties: any, countyPopulation: any) 
   return data;
 }
 
+export function mergeSubCountiesToPopulation(subCounties: any, subcountyPopulation: any) {
+  const data: any[] = [];
+  for (const key1 in subCounties.features) {
+    if (subCounties.features[key1]) {
+      for (const key2 in subcountyPopulation) {
+        if (subcountyPopulation[key2]) {
+          const similarity = distance(
+            subCounties.features[key1].properties.ADMIN2.trim().toLowerCase(),
+            subcountyPopulation[key2].subcounty.trim().toLowerCase()
+          );
+          if (similarity > 0.8) {
+            const holder = subCounties.features[key1];
+            data.push({
+              ...holder,
+              properties: {
+                ...holder.properties,
+                population: subcountyPopulation[key2].population
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
+  return data;
+}
+
 export function loadCountySelect(counties: any) {
   const options = [];
   for (const county in counties.features) {
@@ -59,7 +87,7 @@ export function loadSubcountySelect(subcounties: any[]) {
 
 export function findSelectedCountySubcounties(district: string, allSubcounties: any) {
   const selectedGeometry = [];
-  const subcounties = allSubcounties.features;
+  const subcounties = allSubcounties.features ? allSubcounties.features : allSubcounties;
   for (const subcounty in subcounties) {
     if (subcounties[subcounty]) {
       const current_district = subcounties[subcounty].properties.ADMIN1;

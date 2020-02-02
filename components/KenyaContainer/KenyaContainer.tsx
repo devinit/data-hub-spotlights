@@ -4,13 +4,15 @@ import { Map } from '../Map/Map';
 import kenyanCounties from './geoJSON/kenyan-counties.json';
 import kenyaSubcounties from './geoJSON/kenya-subcounty-proposal.json';
 import kenyaCountyPopulationData from './geoJSON/county_population_data.json';
+import kenyaSubCountyPopulationData from './geoJSON/subcounty_population_data.json';
 import {
   findSelectedCountySubcounties,
   getCenterOfFeatureCollection,
   getCenterOfSubcountyFeatureCollection,
   loadCountySelect,
   loadSubcountySelect,
-  mergeCountiesToPopulation
+  mergeCountiesToPopulation,
+  mergeSubCountiesToPopulation
 } from './KenyaDataManager';
 import { Legend, LegendItem } from '../Legend';
 import * as distance from 'jaro-winkler';
@@ -28,6 +30,7 @@ interface State {
   subcountyDropdownOptions: any[];
   selectedSubcounty: string;
   counties_with_population: any[];
+  subcounties_with_population: any[];
   mapCenter?: L.LatLng;
   zoom: number;
   layers: L.TileLayer[];
@@ -43,6 +46,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
     counties_with_population: [],
+    subcounties_with_population: [],
     mapCenter: new L.LatLng(0.2601, 37.2757),
     zoom: 6,
     layers: [
@@ -84,13 +88,14 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
         ...prevState,
         leaflet,
         map,
-        counties_with_population: mergeCountiesToPopulation(kenyanCounties, kenyaCountyPopulationData)
+        counties_with_population: mergeCountiesToPopulation(kenyanCounties, kenyaCountyPopulationData),
+        subcounties_with_population: mergeSubCountiesToPopulation(kenyaSubcounties, kenyaSubCountyPopulationData)
       };
     });
   }
 
   function handleCountyChange(selectedOption: any) {
-    const countySubcounties = findSelectedCountySubcounties(selectedOption.value, kenyaSubcounties);
+    const countySubcounties = findSelectedCountySubcounties(selectedOption.value, state.subcounties_with_population);
     const subcountyOptions = loadSubcountySelect(countySubcounties);
 
     setState(prevState => {
@@ -182,9 +187,11 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   }
 
   function addPopup(LatLng: L.LatLng, e: L.LayerEvent) {
+    const location: string = e.target.feature.properties.COUNTY ? e.target.feature.properties.COUNTY :
+    e.target.feature.properties.ADMIN2;
     const popup: L.Popup = L.popup({ autoClose: false })
     .setLatLng(LatLng)
-    .setContent('<b>County Population</b><br/>' + e.target.feature.properties.COUNTY + '<br/>' +
+    .setContent('<b>Population</b><br/>' + location + '<br/>' +
     e.target.feature.properties.population);
     if (state.map) {
       state.map.addLayer(popup);
@@ -209,7 +216,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   }
 
   function showOneKenyaCounty() {
-    const countySubcounties = findSelectedCountySubcounties(state.selectedCounty, kenyaSubcounties);
+    const countySubcounties = findSelectedCountySubcounties(state.selectedCounty, state.subcounties_with_population);
     clean_map();
     for (const key in countySubcounties) {
       if (countySubcounties[key]) {
@@ -222,12 +229,12 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       map.flyTo([
         center.geometry.coordinates[1],
         center.geometry.coordinates[0]
-      ], 9);
+      ], 8);
     }
   }
 
   function showKenyaSubcounties() {
-    const subCounties = findSelectedCountySubcounties(state.selectedCounty, kenyaSubcounties);
+    const subCounties = findSelectedCountySubcounties(state.selectedCounty, state.subcounties_with_population);
     clean_map();
 
     for (const subcounty in subCounties) {
