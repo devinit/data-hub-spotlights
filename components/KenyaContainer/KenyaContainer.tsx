@@ -73,6 +73,7 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   ];
 
   const grades = [
+    0,
     250000,
     500000,
     750000,
@@ -277,23 +278,16 @@ const KenyaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
             mapID={ state.mapID }
           />
         </div>
-        <div style={ { float: 'left', width: '30%', backgroundColor: '#fff', position: 'relative', top: '100' } }>
+        <div style={ { float: 'left', padding: '20px', width: '30%', backgroundColor: '#fff' } }>
           <Legend>
             {
               grades.map((grade, index) => {
-                if (index === 0) {
-                  return <LegendItem key={ index } bgColor={ color[index] }><span>{ '0 - ' + grade }</span>
-                  </LegendItem>;
-                } else {
                 return <LegendItem key={ index } bgColor={ color[index] }>{ grade }{ (grades[index + 1])
                   ? ' - ' + (grades[index + 1]) : ' > ' }
                   </LegendItem>;
-                }
-                if (!color[index + 1]) {
-                  return <LegendItem/>;
-                }
               })
             }
+            <LegendItem>no data / not applicable</LegendItem>;
           </Legend>
         </div>
       </div>
