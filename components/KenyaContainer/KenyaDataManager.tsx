@@ -39,7 +39,7 @@ export function mergeSubCountiesToPopulation(subCounties: any, subcountyPopulati
             subCounties.features[key1].properties.ADMIN2.trim().toLowerCase(),
             subcountyPopulation[key2].subcounty.trim().toLowerCase()
           );
-          if (similarity > 0.8) {
+          if (similarity === 1) {
             const holder = subCounties.features[key1];
             data.push({
               ...holder,
