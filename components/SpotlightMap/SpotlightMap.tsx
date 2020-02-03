@@ -2,6 +2,7 @@ import { FeatureCollection, MultiPolygon } from 'geojson';
 import { LatLng } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { GeoJSONLayer, Map, TileLayer } from '../Map';
+import { Loading } from '../Loading';
 
 interface SpotlightMapProps {
   center?: number[];
@@ -33,11 +34,15 @@ const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): Spotlight
 });
 
 const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, center, levels, zoom }) => {
+  const [ loading, setLoading ] = useState<boolean>(true);
   const [ geojson, setGeoJSON ] = useState<SpotlightMapGeoJSON>({});
 
   useEffect(() => {
     import(`./geojson/${countryCode}`)
-      .then(all => setGeoJSON({ all, filtered: filterGeoJSONByLevel(all, levels || []) }))
+      .then(all => {
+        setGeoJSON({ all, filtered: filterGeoJSONByLevel(all, levels || []) });
+        setLoading(false);
+      })
       .catch(error => console.log(error));
   }, [ countryCode ]);
   useEffect(() => {
@@ -45,6 +50,10 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, cente
       setGeoJSON({ ...geojson, filtered: filterGeoJSONByLevel(geojson.all, levels || []) });
     }
   }, [ levels ]);
+
+  if (loading) {
+    return <Loading/>;
+  }
 
   return (
       <Map center={ center && new LatLng(center[0], center[1]) } zoom={ zoom } height="100%">
