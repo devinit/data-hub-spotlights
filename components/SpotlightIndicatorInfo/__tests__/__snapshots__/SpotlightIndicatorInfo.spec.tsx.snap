@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightIndicatorInfo renders correctly 1`] = `
+Array [
+  <div
+    className="spotlight__subheading"
+  >
+    Heading
+  </div>,
+  <p
+    className="spotlight__excerpt"
+  >
+    Description
+  </p>,
+]
+`;

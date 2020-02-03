@@ -4,18 +4,18 @@ import { SpotlightOptions } from '../MapSection';
 import { Select, SelectOption, SelectOptions } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
 
-interface MapSectionHeaderProps {
+interface SpotlightFilterProps {
   themes: SpotlightTheme[];
   onOptionsChange: (options: SpotlightOptions) => void;
 }
 
-interface SectionSelectOptions {
+export interface FilterSelectOptions {
   themes: SelectOptions;
   indicators: SelectOptions;
   years: SelectOptions;
 }
 
-const defaultSelectOptions: SectionSelectOptions = { themes: [], indicators: [], years: [] };
+export const defaultSelectOptions: FilterSelectOptions = { themes: [], indicators: [], years: [] };
 
 const createThemeOptions = (themes: SpotlightTheme[]): SelectOptions =>
   themes.map(theme => ({
@@ -52,8 +52,8 @@ const createYearOptionsFromIndicator = ({ start_year, end_year }: SpotlightIndic
 const parseIndicatorToOption = (indicator: SpotlightIndicator) =>
   ({ label: indicator.name, value: indicator.ddw_id });
 
-const SpotlightFilters: FunctionComponent<MapSectionHeaderProps> = props => {
-  const [ options, setOptions ] = useState<SectionSelectOptions>(defaultSelectOptions);
+const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
+  const [ options, setOptions ] = useState<FilterSelectOptions>(defaultSelectOptions);
   const { themes, indicators, years } = options;
   const [ selected, setSelected ] = useState<SpotlightOptions>({});
   const { theme: activeTheme, indicator: activeIndicator, year: activeYear } = selected;

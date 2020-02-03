@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { FormField } from '../FormField';
 import { Select, SelectOption, SelectOptions } from '../Select';
 
 interface FormProps {
@@ -22,19 +21,15 @@ const IndicatorFilterForm: FunctionComponent<FormProps> =
         onChange={ onSelectIndicator }
         placeholder="Select Indicator"
       />
-      <FormField>
-        <label className="form-label">Year</label>
-        <Select
-          isDisabled={ !indicators || !indicators.length }
-          placeholder="Select Year"
-          options={ years }
-          value={ activeYear ? { value: `${activeYear}`, label: `${activeYear}` } : null }
-          onChange={ onSelectYear }
-        />
-      </FormField>
-      <FormField>
-        <button type="button" className="button">Update</button>
-      </FormField>
+      <label className="form-label">Year</label>
+      <Select
+        isDisabled={ !indicators || !indicators.length }
+        placeholder="Select Year"
+        options={ years }
+        value={ activeYear ? { value: `${activeYear}`, label: `${activeYear}` } : null }
+        onChange={ onSelectYear }
+      />
+      <button type="button" className="button">Update</button>
     </>;
 
 export default IndicatorFilterForm;
