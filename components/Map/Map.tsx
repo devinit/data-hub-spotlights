@@ -31,7 +31,18 @@ const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, c
     }
   }, []);
 
-  return <div ref={ mapRef } style={ { width, height } }>{ renderLayers() }</div>;
+  return (
+    <div ref={ mapRef } style={ { width, height } }>
+      { renderLayers() }
+      <style jsx>{ `
+        div {
+          position: inherit;
+          top: auto;
+          left: auto;
+        }
+      ` }</style>
+    </div>
+  );
 };
 
 Map.defaultProps = {

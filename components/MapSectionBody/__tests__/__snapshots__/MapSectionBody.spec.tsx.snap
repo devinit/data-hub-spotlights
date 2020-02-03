@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MapSectionBody renders correctly 1`] = `
+<div
+  className="spotlight"
+/>
+`;
+
+exports[`MapSectionBody renders only SpotlightSidebar & MapSectionBodyMain 1`] = `
+<div
+  className="spotlight"
+>
+  <div
+    className="spotlight__aside spotlight__aside--padded"
+  />
+  <div
+    className="spotlight__main spotlight__interactive"
+  />
+</div>
+`;
