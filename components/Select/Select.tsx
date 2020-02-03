@@ -19,8 +19,7 @@ const Select: FunctionComponent<SelectProps> = (props) => {
       borderColor,
       'boxShadow': 'none',
       'height': '48px',
-      'borderRadius': '0',
-      'z-index': 10000
+      'borderRadius': '0'
     }),
     menu: provided => ({
       ...provided,
@@ -29,8 +28,7 @@ const Select: FunctionComponent<SelectProps> = (props) => {
     option: (provided, state) => ({
       ...provided,
       ':hover': { backgroundColor: '#f0826d' },
-      'backgroundColor': state.isSelected ? borderColor : 'transparent',
-      'z-index': 10000
+      'backgroundColor': state.isSelected ? borderColor : 'transparent'
     })
   };
 
