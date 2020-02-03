@@ -14,16 +14,14 @@ interface FormProps {
 const MapSectionHeaderForm: FunctionComponent<FormProps> =
   ({ indicators, activeIndicator, onSelectIndicator, years, activeYear, onSelectYear }) =>
     <>
-      <FormField>
-        <label className="form-label">Indicator</label>
-        <Select
-          isDisabled={ !indicators || !indicators.length }
-          options={ indicators }
-          value={ activeIndicator || null }
-          onChange={ onSelectIndicator }
-          placeholder="Select Indicator"
-        />
-      </FormField>
+      <label className="form-label">Indicator</label>
+      <Select
+        isDisabled={ !indicators || !indicators.length }
+        options={ indicators }
+        value={ activeIndicator || null }
+        onChange={ onSelectIndicator }
+        placeholder="Select Indicator"
+      />
       <FormField>
         <label className="form-label">Year</label>
         <Select
@@ -34,7 +32,9 @@ const MapSectionHeaderForm: FunctionComponent<FormProps> =
           onChange={ onSelectYear }
         />
       </FormField>
-      <FormField><button type="button" className="button">Update</button></FormField>
+      <FormField>
+        <button type="button" className="button">Update</button>
+      </FormField>
     </>;
 
 export default MapSectionHeaderForm;
