@@ -3,6 +3,7 @@ import { Select } from '../Select';
 import { Map } from '../Map/Map';
 import ugandaDistricts from './geoJSON/district.json';
 import ugandasubcounties from './geoJSON/subcounty.json';
+import { Legend, LegendItem } from '../Legend';
 import * as distance from 'jaro-winkler';
 import * as turf from '@turf/turf';
 import L from 'leaflet';
@@ -21,6 +22,7 @@ interface State {
   mapCenter?: L.LatLng;
   zoom?: number;
   layers: L.TileLayer[];
+  ugDistrictsLayer?: L.GeoJSON;
 }
 
 const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
@@ -30,7 +32,7 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
     boundaryType: 'all',
     subcountyDropdownOptions: [],
     selectedSubcounty: '',
-    mapCenter: new L.LatLng(0.6976, 33.5825),
+    mapCenter: new L.LatLng(1.176, 32.1225),
     layers: [
       L.tileLayer('https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA', {
         attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
@@ -41,6 +43,28 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   useEffect(() => {
     addLayer();
   }, [ state ]);
+
+  const color = [
+    '#fff5f0',
+    '#fee0d2',
+    '#fcbba1',
+    '#fc9272',
+    '#fb6a4a',
+    '#ef3b2c',
+    '#cb181d',
+    '#99000d'
+  ];
+
+  const grades = [
+    0,
+    10000,
+    20000,
+    150000,
+    350000,
+    500000,
+    750000,
+    1500000
+  ];
 
   function initialiseMapState(leaflet: any, map: any) {
     setState(prevState => {
@@ -133,18 +157,79 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
   function redrawMap(featureCollection: any) {
     if (Object.keys(state.leaflet).length > 0) {
       const layer = state.leaflet.geoJson(featureCollection, {
-        style: {
-          color: '#ffffff',
-          weight: 1,
-          opacity: 0.65
-        }
+        style,
+        onEachFeature
       });
       layer.addTo(state.map);
+
+      return layer;
     }
   }
 
+  function style(feature: any) {
+    const population = (feature.properties.Population) ? feature.properties.Population : feature.properties.Popn;
+
+    return {
+        fillColor: getColor(population),
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 0.7
+    };
+  }
+
+  function getColor(d: number) {
+    return d > 1500000 ? '#99000d' :
+        d > 750000 ? '#cb181d' :
+        d > 500000 ? '#ef3b2c' :
+        d > 350000 ? '#fb6a4a' :
+        d > 150000 ? '#fc9272' :
+        d > 20000 ? '#fcbba1' :
+        d > 10000 ? '#fee0d2' :
+                    '#fff5f0';
+  }
+
+  function onEachFeature(_feature: any, layer: any) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetFeature
+    });
+  }
+
+  function highlightFeature(e: L.LayerEvent) {
+    const layer = e.target;
+    const latLng = layer.getBounds().getCenter();
+    addPopup(latLng, e);
+  }
+
+  function addPopup(LatLng: L.LatLng, e: L.LayerEvent) {
+    const location: string = e.target.feature.properties.DNAME2014 ? e.target.feature.properties.DNAME2014 :
+    e.target.feature.properties.SName2016;
+    const popup: L.Popup = L.popup({ autoClose: false })
+    .setLatLng(LatLng)
+    .setContent('<b>Population</b><br/>' + location + '<br/>' +
+    (e.target.feature.properties.Population ? e.target.feature.properties.Population :
+      e.target.feature.properties.Popn));
+    if (state.map) {
+      state.map.addLayer(popup);
+    }
+  }
+
+  function resetFeature(e: any) {
+      if (state.map) {
+        state.map.eachLayer(layer => {
+          if (layer instanceof L.Popup) {
+            layer.remove();
+          }
+        });
+      }
+      if (state.ugDistrictsLayer) {
+        state.ugDistrictsLayer.resetStyle(e.target);
+      }
+  }
+
   function showAllUgandaDistricts() {
-    redrawMap(ugandaDistricts);
+    state.ugDistrictsLayer = redrawMap(ugandaDistricts);
   }
 
   function showOneUgandaDistrict() {
@@ -242,7 +327,7 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
       <div style={ { margin: '10px' } }>
         <Select options={ state.subcountyDropdownOptions } onChange={ handleSubcountyChange } />
       </div>
-      <div style={ { padding } }>
+      <div style={ { padding, float: 'right', width: '70%' } }>
         <Map
           saveMapState={ initialiseMapState }
           mapCenter={ state.mapCenter }
@@ -250,6 +335,18 @@ const UgandaContainer: FunctionComponent<MapContainerProps> = ({ padding }) => {
           layers={ state.layers }
         />
       </div>
+      <div style={ { float: 'left', padding: '20px', width: '30%', backgroundColor: '#fff' } }>
+          <Legend>
+            {
+              grades.map((grade, index) => {
+                return <LegendItem key={ index } bgColor={ color[index] }>{ grade }{ (grades[index + 1])
+                  ? ' - ' + (grades[index + 1]) : ' > ' }
+                  </LegendItem>;
+              })
+            }
+            <LegendItem>no data / not applicable</LegendItem>;
+          </Legend>
+        </div>
     </div>
   );
 };
