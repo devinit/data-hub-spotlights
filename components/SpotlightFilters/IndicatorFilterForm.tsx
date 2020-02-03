@@ -11,7 +11,7 @@ interface FormProps {
   onSelectYear?: (option?: SelectOption) => void;
 }
 
-const MapSectionHeaderForm: FunctionComponent<FormProps> =
+const IndicatorFilterForm: FunctionComponent<FormProps> =
   ({ indicators, activeIndicator, onSelectIndicator, years, activeYear, onSelectYear }) =>
     <>
       <label className="form-label">Indicator</label>
@@ -37,4 +37,4 @@ const MapSectionHeaderForm: FunctionComponent<FormProps> =
       </FormField>
     </>;
 
-export default MapSectionHeaderForm;
+export default IndicatorFilterForm;

@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { SpotlightIndicator, SpotlightTheme } from '../../utils';
 import { SpotlightOptions } from '../MapSection';
 import { Select, SelectOption, SelectOptions } from '../Select';
-import { SpotlightIndicator, SpotlightTheme } from '../../utils';
-import MapSectionHeaderForm from '../MapSectionHeader/MapSectionHeaderForm';
+import IndicatorFilterForm from './IndicatorFilterForm';
 
 interface MapSectionHeaderProps {
   themes: SpotlightTheme[];
@@ -104,7 +104,7 @@ const SpotlightFilters: FunctionComponent<MapSectionHeaderProps> = props => {
     <>
       <label className="form-label">Theme</label>
       <Select options={ themes } onChange={ onSelectTheme } placeholder="Select Theme"/>
-      <MapSectionHeaderForm
+      <IndicatorFilterForm
         indicators={ indicators }
         activeIndicator={ activeIndicator && parseIndicatorToOption(activeIndicator) }
         onSelectIndicator={ onSelectIndicator }
