@@ -4,7 +4,7 @@ import { GeoJSONLayer } from './GeoJSONLayer';
 import { TileLayer } from './TileLayer';
 
 interface MapProps {
-  onCreate: (map: LeafletMap) => void;
+  onCreate?: (map: LeafletMap) => void;
   width?: string;
   height?: string;
   center?: LatLng;
@@ -24,7 +24,9 @@ const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, c
   useEffect(() => {
     if (mapRef && mapRef.current) {
       const _map = leafletMap(mapRef.current, { center, zoom });
-      onCreate(_map);
+      if (onCreate) {
+        onCreate(_map);
+      }
       setMap(_map);
     }
   }, []);

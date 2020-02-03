@@ -1,5 +1,5 @@
 import { FeatureCollection, MultiPolygon } from 'geojson';
-import { LatLng, Map as LeafletMap } from 'leaflet';
+import { LatLng } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { GeoJSONLayer, Map, TileLayer } from '../Map';
 
@@ -33,10 +33,7 @@ const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): Spotlight
 });
 
 const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, center, levels, zoom }) => {
-  const [ map, setMap ] = useState<LeafletMap | undefined>(undefined);
   const [ geojson, setGeoJSON ] = useState<SpotlightMapGeoJSON>({});
-  const onCreate = (mapInstance: LeafletMap) => setMap(mapInstance);
-  console.log(map);
 
   useEffect(() => {
     import(`./geojson/${countryCode}`)
@@ -50,7 +47,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, cente
   }, [ levels ]);
 
   return (
-      <Map onCreate={ onCreate } center={ center && new LatLng(center[0], center[1]) } zoom={ zoom }>
+      <Map center={ center && new LatLng(center[0], center[1]) } zoom={ zoom }>
         <TileLayer
           url="https://api.mapbox.com/styles/v1/davidserene/ck56hj7h10o861clbgsqu7h88/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiZGF2aWRzZXJlbmUiLCJhIjoiUkJkd1hGWSJ9.SCxMvCeeovv99ZDnpfpNwA"
           attribution="© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
