@@ -1,8 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import ReactSelect, { GroupedOptionsType, OptionsType, Props as SelectProps, Styles } from 'react-select';
+import ReactSelect, { OptionsType, Props as SelectProps, Styles } from 'react-select';
 
-export type SelectOptions =
-  GroupedOptionsType<{ label: string; value: string; }> | OptionsType<{ label: string; value: string; }> | undefined;
+export type SelectOptions = OptionsType<{ label: string; value: string; }> | undefined;
 
 export interface SelectOption {
   label: string;

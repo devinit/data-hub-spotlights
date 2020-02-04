@@ -5,7 +5,7 @@ interface FormProps {
   indicators?: SelectOptions;
   activeIndicator?: SelectOption;
   onSelectIndicator?: (option?: SelectOption) => void;
-  years?: any;
+  years?: SelectOptions;
   activeYear?: number;
   onSelectYear?: (option?: SelectOption) => void;
 }
@@ -17,7 +17,7 @@ const IndicatorFilterForm: FunctionComponent<FormProps> =
       <Select
         isDisabled={ !indicators || !indicators.length }
         options={ indicators }
-        value={ activeIndicator || null }
+        value={ activeIndicator || (indicators ? indicators[0] : null) }
         onChange={ onSelectIndicator }
         placeholder="Select Indicator"
       />
@@ -26,7 +26,11 @@ const IndicatorFilterForm: FunctionComponent<FormProps> =
         isDisabled={ !indicators || !indicators.length }
         placeholder="Select Year"
         options={ years }
-        value={ activeYear ? { value: `${activeYear}`, label: `${activeYear}` } : null }
+        value={
+          activeYear
+            ? { value: `${activeYear}`, label: `${activeYear}` }
+            : (years ? years[0] : null)
+        }
         onChange={ onSelectYear }
       />
       <button type="button" className="button">Update</button>
