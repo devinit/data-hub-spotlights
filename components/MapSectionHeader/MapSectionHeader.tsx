@@ -44,7 +44,7 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
         <Select
           options={ options }
           onChange={ onSelectLocation }
-          placeholder="Select Theme"
+          placeholder="Select Location"
           isLoading={ !props.locations }
         />
       </SpotlightBannerAside>

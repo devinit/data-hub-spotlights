@@ -24,7 +24,9 @@ const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indica
       startYear: year,
       endYear: year
     } });
-  console.log(error && error.message);
+  if (error) {
+    throw Error(error.message);
+  }
 
   return <>{ renderMap(loading, data && data.data) }</>;
 };
