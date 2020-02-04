@@ -64,6 +64,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
           <DynamicMapDataLoader
             indicator={ options.indicator && parseIndicator(options.indicator) }
             geocode={ activeLocation && activeLocation.geocode }
+            year={ options.year && options.year }
           >
             <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode={ countryCode } onLoad={ onMapLoad }/>
           </DynamicMapDataLoader>

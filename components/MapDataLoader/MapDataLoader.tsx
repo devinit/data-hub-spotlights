@@ -5,9 +5,10 @@ import { GET_INDICATOR_DATA } from '../../utils';
 interface MapDataLoaderProps {
   indicator?: string;
   geocode?: string;
+  year?: number;
 }
 
-const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicator, geocode }) => {
+const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicator, geocode, year }) => {
   const renderMap = (dataLoading: boolean, mapData?: any) => Children.map(children, child =>
     isValidElement(child) ? cloneElement(child, { data: mapData, loading: dataLoading }) : null
   );
@@ -19,7 +20,9 @@ const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indica
   const { data, loading, error } = useQuery(GET_INDICATOR_DATA, {
     variables: {
       indicators: [ indicator ],
-      geocodes: geocode ? [ geocode ] : []
+      geocodes: geocode ? [ geocode ] : [],
+      startYear: year,
+      endYear: year
     } });
   console.log(error && error.message);
 
