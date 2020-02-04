@@ -39,6 +39,22 @@ export interface FetchIndicatorDataOptions {
   offset?: number;
 }
 
+export interface SpotlightLocation {
+  geocode: string;
+  name: string;
+}
+
+export interface LocationData extends SpotlightLocation {
+  value: string;
+  year: number;
+  meta: string;
+}
+
+export interface LocationIndicatorData {
+  indicator: string;
+  data: LocationData[];
+}
+
 export const fetchScaffoldData = async (): Promise<PageScaffoldData> => {
   const res_navigation = await fetch(`${process.env.ASSETS_SOURCE_URL}api/spotlights/navigation/`);
   const navigation = await res_navigation.json();

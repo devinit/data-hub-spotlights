@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { SpotlightLocation } from '../../utils';
 import { Select, SelectOption, SelectOptions } from '../Select';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerForm, SpotlightBannerMain } from '../SpotlightBanner';
-import { Location, MapLocations } from '../SpotlightMap';
+import { MapLocations } from '../SpotlightMap';
 
 interface MapSectionHeaderProps {
   locations?: MapLocations;
-  onSelectLocation: (location: Location) => void;
+  onSelectLocation: (location: SpotlightLocation) => void;
 }
 
 // TODO: this is temporary - replace with correct location handler
