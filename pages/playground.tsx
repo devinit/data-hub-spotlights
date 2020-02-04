@@ -1,3 +1,4 @@
+import chroma, { scale } from 'chroma-js';
 import merge from 'deepmerge';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
@@ -207,6 +208,14 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       ]
     }
   ];
+  const renderLegendItems = () => {
+    const ranges = [ '<30%', '30% - 50%', '50% - 70%', '70% - 90%', '>90%' ];
+    const colour = '#8f1b13';
+    const lighter = chroma(colour).brighten(3);
+
+    return scale([ lighter, colour ]).colors(5).map(
+      (color, index) => <LegendItem bgColor={ color } key={ index }>{ ranges[index] }</LegendItem>);
+  };
 
   return (
     <PageSection>
@@ -219,11 +228,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
 
       <div style={ { width: '400px', backgroundColor: '#fff', padding: '20px', marginBottom: '20px' } }>
         <Legend>
-          <LegendItem bgColor="#fad1c9"><span>{ '<30%' }</span></LegendItem>
-          <LegendItem bgColor="#f5aa9b">{ '30% - 50%' }</LegendItem>
-          <LegendItem bgColor="#f0826d">{ '50% - 70%' }</LegendItem>
-          <LegendItem bgColor="#e84439">{ '70% - 90%' }</LegendItem>
-          <LegendItem bgColor="#8f1b13" textColor="#fff">{ '>90%' }</LegendItem>
+          { renderLegendItems() }
           <LegendItem>no data / not applicable</LegendItem>
         </Legend>
       </div>
