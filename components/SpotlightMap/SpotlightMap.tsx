@@ -2,10 +2,17 @@ import { LatLng } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Loading } from '../Loading';
 import { GeoJSONLayer, Map, TileLayer } from '../Map';
-import { SpotlightMapGeoJSON, SpotlightMapProps, extractLocationsFromGeoJSON, filterGeoJSONByLevel } from './utils';
+import {
+  SpotlightMapGeoJSON,
+  SpotlightMapProps,
+  defaultMapStyle,
+  extractLocationsFromGeoJSON,
+  filterGeoJSONByLevel,
+  getFillColor
+} from './utils';
 
 const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
-  const { countryCode, center, levels, zoom, onLoad, data } = props;
+  const { countryCode, center, levels, zoom, onLoad, data, colours, range } = props;
   const [ loading, setLoading ] = useState<boolean>(!!props.loading);
   const [ geojson, setGeoJSON ] = useState<SpotlightMapGeoJSON>({});
 
@@ -46,11 +53,17 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
         />
         <GeoJSONLayer
           geojson={ geojson.filtered || geojson.all }
-          style={ {
-            color: '#ffffff',
-            weight: 0.6,
-            fillOpacity: 1,
-            fillColor: '#D0CCCF'
+          style={ (feature) => {
+            if (feature && feature.properties) {
+              const { properties } = feature;
+
+              return {
+                ...defaultMapStyle,
+                fillColor: getFillColor(properties.geocode, data && data.data, range, colours)
+              };
+            }
+
+            return defaultMapStyle;
           } }
         />
       </Map>

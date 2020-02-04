@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import React, { FunctionComponent, useState } from 'react';
-import { SpotlightIndicator, SpotlightLocation, SpotlightTheme } from '../../utils';
+import { SpotlightLocation } from '../../utils';
 import { MapSectionBody, MapSectionBodyMain } from '../MapSectionBody';
 import { MapSectionHeader } from '../MapSectionHeader';
 import { PageSection } from '../PageSection';
@@ -8,17 +8,7 @@ import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { MapLocations } from '../SpotlightMap';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
-
-interface MapSectionProps {
-  countryCode: string;
-  themes: SpotlightTheme[];
-}
-
-export interface SpotlightOptions {
-  theme?: SpotlightTheme;
-  indicator?: SpotlightIndicator;
-  year?: number;
-}
+import { MapSectionProps, SpotlightOptions, generateColours, parseIndicator, splitByComma } from './utils';
 
 const DynamicMap = dynamic(
   () => import('../SpotlightMap').then(mod => mod.SpotlightMap),
@@ -26,12 +16,6 @@ const DynamicMap = dynamic(
 const DynamicMapDataLoader = dynamic(
   () => import('../MapDataLoader').then(mod => mod.MapDataLoader),
   { ssr: false });
-
-const parseIndicator = (indicator: SpotlightIndicator): string | undefined => {
-  const split = indicator.ddw_id.split('.');
-
-  return split.length ? split[1] : split[0];
-};
 
 const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData }) => {
   const [ options, setOptions ] = useState<SpotlightOptions>({});
@@ -43,7 +27,8 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
   const onMapLoad = (formattedData: MapLocations) => {
     setLocations(formattedData);
   };
-  console.log(activeLocation);
+  const range = options.indicator && splitByComma(options.indicator.range);
+  const colours = options.indicator && splitByComma(options.indicator.colour);
 
   return (
     <PageSection>
@@ -64,9 +49,17 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
           <DynamicMapDataLoader
             indicator={ options.indicator && parseIndicator(options.indicator) }
             geocode={ activeLocation && activeLocation.geocode }
-            year={ options.year && options.year }
+            year={ options.year ? options.year : options.indicator && options.indicator.start_year }
           >
-            <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode={ countryCode } onLoad={ onMapLoad }/>
+            <DynamicMap
+              center={ [ 1.344666, 32.655221 ] }
+              countryCode={ countryCode }
+              onLoad={ onMapLoad }
+              range={ range }
+              colours={ range ? generateColours(colours || [], range) : undefined }
+              dataPrefix={ options.indicator && options.indicator.value_prefix }
+              dataSuffix={ options.indicator && options.indicator.value_suffix }
+            />
           </DynamicMapDataLoader>
         </MapSectionBodyMain>
       </MapSectionBody>

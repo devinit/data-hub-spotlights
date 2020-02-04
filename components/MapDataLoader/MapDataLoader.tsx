@@ -28,7 +28,7 @@ const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indica
     throw Error(error.message);
   }
 
-  return <>{ renderMap(loading, data && data.data) }</>;
+  return <>{ renderMap(loading, data && data.data[0]) }</>;
 };
 
 export { MapDataLoader };

@@ -1,8 +1,9 @@
 import { GeoJsonObject } from 'geojson';
 import { GeoJSONOptions, Map, geoJSON } from 'leaflet';
 import { FunctionComponent } from 'react';
+import { GeoJSONProperties } from '../SpotlightMap/utils/types';
 
-interface GeoJSONLayerProps extends GeoJSONOptions {
+interface GeoJSONLayerProps extends GeoJSONOptions<GeoJSONProperties> {
   geojson?: GeoJsonObject;
   map?: Map;
 }

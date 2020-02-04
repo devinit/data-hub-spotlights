@@ -8,6 +8,10 @@ export interface SpotlightMapProps {
   levels?: number[];
   loading?: boolean;
   data?: LocationIndicatorData;
+  range?: string[];
+  colours?: string[];
+  dataPrefix?: string;
+  dataSuffix?: string;
   onLoad?: (data: MapLocations) => void;
 }
 
