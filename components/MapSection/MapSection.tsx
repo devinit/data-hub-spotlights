@@ -5,8 +5,9 @@ import { MapSectionBody, MapSectionBodyMain } from '../MapSectionBody';
 import { MapSectionHeader } from '../MapSectionHeader';
 import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
-import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
+import { MapLocations } from '../SpotlightMap';
+import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 
 interface MapSectionProps {
   countryCode: string;
@@ -26,10 +27,15 @@ const DynamicMap = dynamic(
 const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData }) => {
   const [ options, setOptions ] = useState<SpotlightOptions>({});
   const onOptionsChange = (optns: SpotlightOptions) => setOptions(optns);
+  const [ locations, setLocations ] = useState<MapLocations | undefined>(undefined);
+
+  const onMapLoad = (formattedData: MapLocations) => {
+    setLocations(formattedData);
+  };
 
   return (
     <PageSection>
-      <MapSectionHeader themes={ themeData } onOptionsChange={ onOptionsChange }/>
+      <MapSectionHeader themes={ themeData } onOptionsChange={ onOptionsChange } locations={ locations }/>
 
       <MapSectionBody>
         <SpotlightSidebar>
@@ -43,7 +49,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
         </SpotlightSidebar>
 
         <MapSectionBodyMain>
-          <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode={ countryCode }/>
+          <DynamicMap center={ [ 1.344666, 32.655221 ] } countryCode={ countryCode } onLoad={ onMapLoad }/>
         </MapSectionBodyMain>
       </MapSectionBody>
     </PageSection>

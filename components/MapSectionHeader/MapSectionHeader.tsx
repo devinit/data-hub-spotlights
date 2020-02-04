@@ -3,9 +3,11 @@ import { SpotlightTheme } from '../../utils';
 import { SpotlightOptions } from '../MapSection/MapSection';
 import { Select, SelectOption, SelectOptions } from '../Select';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerForm, SpotlightBannerMain } from '../SpotlightBanner';
+import { MapLocations } from '../SpotlightMap';
 
 interface MapSectionHeaderProps {
   themes: SpotlightTheme[];
+  locations?: MapLocations;
   onOptionsChange: (options: SpotlightOptions) => void;
 }
 

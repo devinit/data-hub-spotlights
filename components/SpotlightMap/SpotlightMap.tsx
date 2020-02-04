@@ -1,4 +1,5 @@
-import { FeatureCollection, MultiPolygon } from 'geojson';
+import { Feature, FeatureCollection, Geometry, MultiPolygon } from 'geojson';
+import { groupBy } from 'underscore';
 import { LatLng } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { GeoJSONLayer, Map, TileLayer } from '../Map';
@@ -9,6 +10,7 @@ interface SpotlightMapProps {
   zoom?: number;
   countryCode: string;
   levels?: number[];
+  onLoad?: (data: MapLocations) => void;
 }
 
 interface SpotlightMapGeoJSON {
@@ -16,11 +18,24 @@ interface SpotlightMapGeoJSON {
   filtered?: SpotlightFC;
 }
 
-interface GeoJSONProperties {
+interface GeoData {
   geocode: string;
+  name: string;
+}
+
+interface GeoJSONProperties extends GeoData {
+  region?: string;
+  geometry: Geometry;
 }
 
 type SpotlightFC = FeatureCollection<MultiPolygon, GeoJSONProperties>;
+
+export interface MapLocations {
+  regional: {
+    [key: string]: GeoData[]
+  };
+  other: GeoData[];
+}
 
 const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): SpotlightFC => ({
   ...geojson,
@@ -33,7 +48,18 @@ const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): Spotlight
     : geojson.features
 });
 
-const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, center, levels, zoom }) => {
+const extractLocationsFromGeoJSON = (geojson: Feature<MultiPolygon, GeoJSONProperties>[]): MapLocations => {
+  const locations = geojson.map(({ properties }) => {
+    const { geometry, ...data } = properties;
+
+    return data;
+  });
+  const { undefined: other, ...regional } = groupBy(locations, location => location.region);
+
+  return { regional, other };
+};
+
+const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, center, levels, zoom, onLoad }) => {
   const [ loading, setLoading ] = useState<boolean>(true);
   const [ geojson, setGeoJSON ] = useState<SpotlightMapGeoJSON>({});
 
@@ -42,6 +68,9 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = ({ countryCode, cente
       .then(all => {
         setGeoJSON({ all, filtered: filterGeoJSONByLevel(all, levels || []) });
         setLoading(false);
+        if (onLoad) {
+          onLoad(extractLocationsFromGeoJSON(all.features));
+        }
       })
       .catch(error => console.log(error));
   }, [ countryCode ]);
