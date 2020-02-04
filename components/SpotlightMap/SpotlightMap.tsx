@@ -18,12 +18,12 @@ interface SpotlightMapGeoJSON {
   filtered?: SpotlightFC;
 }
 
-interface GeoData {
+export interface Location {
   geocode: string;
   name: string;
 }
 
-interface GeoJSONProperties extends GeoData {
+interface GeoJSONProperties extends Location {
   region?: string;
   geometry: Geometry;
 }
@@ -32,9 +32,9 @@ type SpotlightFC = FeatureCollection<MultiPolygon, GeoJSONProperties>;
 
 export interface MapLocations {
   regional: {
-    [key: string]: GeoData[]
+    [key: string]: Location[]
   };
-  other: GeoData[];
+  other: Location[];
 }
 
 const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): SpotlightFC => ({

@@ -6,7 +6,7 @@ import { MapSectionHeader } from '../MapSectionHeader';
 import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
-import { MapLocations } from '../SpotlightMap';
+import { Location, MapLocations } from '../SpotlightMap';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 
 interface MapSectionProps {
@@ -28,14 +28,17 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
   const [ options, setOptions ] = useState<SpotlightOptions>({});
   const onOptionsChange = (optns: SpotlightOptions) => setOptions(optns);
   const [ locations, setLocations ] = useState<MapLocations | undefined>(undefined);
+  const [ activeLocation, setActiveLocation ] = useState<Location | undefined>(undefined);
+  const onSelectLocation = (location: Location) => setActiveLocation(location);
 
   const onMapLoad = (formattedData: MapLocations) => {
     setLocations(formattedData);
   };
+  console.log(activeLocation);
 
   return (
     <PageSection>
-      <MapSectionHeader themes={ themeData } onOptionsChange={ onOptionsChange } locations={ locations }/>
+      <MapSectionHeader onSelectLocation={ onSelectLocation } locations={ locations }/>
 
       <MapSectionBody>
         <SpotlightSidebar>

@@ -1,60 +1,38 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { SpotlightTheme } from '../../utils';
-import { SpotlightOptions } from '../MapSection/MapSection';
 import { Select, SelectOption, SelectOptions } from '../Select';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerForm, SpotlightBannerMain } from '../SpotlightBanner';
-import { MapLocations } from '../SpotlightMap';
+import { Location, MapLocations } from '../SpotlightMap';
 
 interface MapSectionHeaderProps {
-  themes: SpotlightTheme[];
   locations?: MapLocations;
-  onOptionsChange: (options: SpotlightOptions) => void;
+  onSelectLocation: (location: Location) => void;
 }
 
-interface SectionSelectOptions {
-  themes: SelectOptions;
-  indicators: SelectOptions;
-  years: SelectOptions;
-}
-
-const defaultSelectOptions: SectionSelectOptions = { themes: [], indicators: [], years: [] };
-
-const createThemeOptions = (themes: SpotlightTheme[]): SelectOptions =>
-  themes.map(theme => ({
-    label: theme.name,
-    value: theme.slug
-  }));
-
-const createIndicatorOptionsFromTheme = (theme: SpotlightTheme): SelectOptions => {
-  if (theme) {
-    return theme.indicators.map(indicator => ({
-      label: indicator.name,
-      value: indicator.ddw_id
+// TODO: this is temporary - replace with correct location handler
+const createLocationOptions = (locations: MapLocations): SelectOptions => {
+  let regionalContent: SelectOption[] = [];
+  Object.keys(locations.regional).forEach((region) => {
+    const options = locations.regional[region].map(content => ({
+      label: content.name,
+      value: content.geocode
     }));
-  }
+    regionalContent = regionalContent.concat(options);
+  });
 
-  return [];
+  return regionalContent;
 };
 
 const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
-  const [ options, setOptions ] = useState<SectionSelectOptions>(defaultSelectOptions);
-  const { themes } = options;
-  const [ selected, setSelected ] = useState<SpotlightOptions>({});
-
+  const [ options, setOptions ] = useState<SelectOptions>([]);
   useEffect(() => {
-    setOptions({ ...options, themes: createThemeOptions(props.themes) });
-  }, []);
-  useEffect(() => props.onOptionsChange(selected), [ selected ]);
+    if (props.locations) {
+      setOptions(createLocationOptions(props.locations));
+    }
+  }, [ props.locations ]);
 
-  const onSelectTheme = (option?: SelectOption) => {
-    if (option) {
-      const selectedTheme = props.themes.find(theme => theme.slug === option.value);
-      setSelected({ theme: selectedTheme, indicator: undefined, year: undefined });
-      setOptions({
-        ...options,
-        indicators: selectedTheme ? createIndicatorOptionsFromTheme(selectedTheme) : undefined,
-        years: undefined
-      });
+  const onSelectLocation = (option: SelectOption) => {
+    if (option.value) {
+      props.onSelectLocation({ geocode: option.value, name: option.label });
     }
   };
 
@@ -62,7 +40,12 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
     <SpotlightBanner>
       <SpotlightBannerAside>
         <label className="form-label">Select Location</label>
-        <Select options={ themes } onChange={ onSelectTheme } placeholder="Select Theme"/>
+        <Select
+          options={ options }
+          onChange={ onSelectLocation }
+          placeholder="Select Theme"
+          isLoading={ !props.locations }
+        />
       </SpotlightBannerAside>
       <SpotlightBannerMain>
         <SpotlightBannerForm/>
