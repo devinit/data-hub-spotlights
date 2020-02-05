@@ -10,6 +10,9 @@ const SpotlightSidebar: FunctionComponent = ({ children }) => {
         Children.map(children, child =>
           isValidElement(child) && (child.type === SidebarContent || child.type === SidebarHeading) ? child : null)
       }
+      <style jsx>{ `
+        min-height: 500px;
+      ` }</style>
     </div>
   );
 };

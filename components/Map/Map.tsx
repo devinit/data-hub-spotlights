@@ -1,17 +1,15 @@
-import { LatLng, Map as LeafletMap, map as leafletMap } from 'leaflet';
+import { Map as LeafletMap, MapOptions, map as leafletMap } from 'leaflet';
 import React, { Children, FunctionComponent, cloneElement, isValidElement, useEffect, useRef, useState } from 'react';
 import { GeoJSONLayer } from './GeoJSONLayer';
 import { TileLayer } from './TileLayer';
 
-interface MapProps {
+interface MapProps extends MapOptions {
   onCreate?: (map: LeafletMap) => void;
   width?: string;
   height?: string;
-  center?: LatLng;
-  zoom?: number;
 }
 
-const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, center, zoom }) => {
+const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, ...mapOptions }) => {
   const [ map, setMap ] = useState<LeafletMap | undefined>(undefined);
   const mapRef = useRef<HTMLDivElement>(null);
   const renderLayers = () => {
@@ -23,7 +21,7 @@ const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, c
   };
   useEffect(() => {
     if (mapRef && mapRef.current) {
-      const _map = leafletMap(mapRef.current, { center, zoom });
+      const _map = leafletMap(mapRef.current, mapOptions);
       if (onCreate) {
         onCreate(_map);
       }
@@ -34,13 +32,6 @@ const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, c
   return (
     <div ref={ mapRef } style={ { width, height } }>
       { renderLayers() }
-      <style jsx>{ `
-        div {
-          position: inherit;
-          top: auto;
-          left: auto;
-        }
-      ` }</style>
     </div>
   );
 };

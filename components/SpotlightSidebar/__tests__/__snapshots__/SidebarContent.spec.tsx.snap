@@ -12,6 +12,13 @@ exports[`SidebarContent renders children correctly 1`] = `
   <div>
     My Child
   </div>
+  <style
+    jsx={true}
+  >
+    
+        height: 100%;
+      
+  </style>
 </div>
 `;
 
@@ -23,5 +30,13 @@ exports[`SidebarContent renders correctly with the specified height style 1`] = 
       "height": "300px",
     }
   }
-/>
+>
+  <style
+    jsx={true}
+  >
+    
+        height: 100%;
+      
+  </style>
+</div>
 `;

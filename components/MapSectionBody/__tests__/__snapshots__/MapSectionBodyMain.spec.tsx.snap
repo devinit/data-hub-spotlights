@@ -2,6 +2,19 @@
 
 exports[`MapSectionBodyMain renders correctly 1`] = `
 <div
-  className="spotlight__main spotlight__interactive"
-/>
+  className="spotlight__main"
+>
+  <style
+    jsx={true}
+  >
+    
+      min-height: 500px;
+      border: 1px solid #e84439;
+
+      .spotlight__main &gt; :global(.leaflet-container) {
+        background: inherit;
+      }
+    
+  </style>
+</div>
 `;

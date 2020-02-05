@@ -3,5 +3,13 @@
 exports[`SpotlightSidebar renders correctly 1`] = `
 <div
   className="spotlight__aside spotlight__aside--padded"
-/>
+>
+  <style
+    jsx={true}
+  >
+    
+        min-height: 500px;
+      
+  </style>
+</div>
 `;

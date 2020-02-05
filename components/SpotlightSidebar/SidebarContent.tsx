@@ -8,6 +8,9 @@ const SidebarContent: FunctionComponent<SidebarContentProps> = ({ children, heig
   return (
     <div className="spotlight__content" style={ { height } }>
       { children }
+      <style jsx>{ `
+        height: 100%;
+      ` }</style>
     </div>
   );
 };
