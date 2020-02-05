@@ -1,8 +1,10 @@
+import { Feature, Geometry } from 'geojson';
 import { LatLng } from 'leaflet';
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Loading } from '../Loading';
 import { GeoJSONLayer, Map } from '../Map';
 import {
+  GeoJSONProperties,
   SpotlightMapGeoJSON,
   SpotlightMapProps,
   defaultMapStyle,
@@ -37,28 +39,28 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
     }
   }, [ levels ]);
 
-  if (loading) {
-    return <Loading/>;
-  }
+  const styleMap = (feature: Feature<Geometry, GeoJSONProperties> | undefined) => {
+    if (feature && feature.properties) {
+      const { properties } = feature;
+
+      return {
+        ...defaultMapStyle,
+        fillColor: getFillColor(properties.geocode, data && data.data, range, colours)
+      };
+    }
+
+    return defaultMapStyle;
+  };
 
   return (
+    <Loading active={ loading }>
       <Map center={ center && new LatLng(center[0], center[1]) } zoom={ zoom || 6.8 } height="100%" minZoom={ 6.5 }>
         <GeoJSONLayer
           geojson={ geojson.filtered || geojson.all }
-          style={ (feature) => {
-            if (feature && feature.properties) {
-              const { properties } = feature;
-
-              return {
-                ...defaultMapStyle,
-                fillColor: getFillColor(properties.geocode, data && data.data, range, colours)
-              };
-            }
-
-            return defaultMapStyle;
-          } }
+          style={ styleMap }
         />
       </Map>
+    </Loading>
   );
 };
 
