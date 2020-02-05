@@ -21,7 +21,7 @@ const Select: FunctionComponent<SelectProps> = (props) => {
     }),
     menu: provided => ({
       ...provided,
-      'z-index': 10000
+      'z-index': 15000
     }),
     option: (provided, state) => ({
       ...provided,
