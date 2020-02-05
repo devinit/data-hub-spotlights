@@ -1,22 +1,21 @@
 import React, { FunctionComponent } from 'react';
+import LoadingOverlay from 'react-loading-overlay';
 
-const Loading: FunctionComponent = ({ children }) => {
+interface LoadingProps {
+  active: boolean;
+  text?: string;
+}
+
+const Loading: FunctionComponent<LoadingProps> = ({ children, active, text }) => {
   return (
-    <div>
-      { children || 'Loading ...' }
-      <style jsx>{ `
-        div {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          margin-left: -15px;
-          margin-top: -15px;
-          color: #000;
-          font-size: 25px;
-        }
-      ` }</style>
-    </div>
+    <LoadingOverlay active={ active } spinner text={ text } styles={ { wrapper: { height: '100%' } } }>
+      { children }
+    </LoadingOverlay>
   );
+};
+
+Loading.defaultProps = {
+  text: 'Loading ...'
 };
 
 export { Loading };
