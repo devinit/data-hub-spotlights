@@ -15,7 +15,6 @@ const Select: FunctionComponent<SelectProps> = (props) => {
     control: provided => ({
       ...provided,
       ':hover': { borderColor },
-      borderColor,
       'boxShadow': 'none',
       'height': '48px',
       'borderRadius': '0'
