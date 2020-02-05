@@ -7,7 +7,7 @@ const MapSectionBodyMain: FunctionComponent = ({ children }) =>
       min-height: 500px;
       border: 1px solid #e84439;
 
-      .spotlight__main > :global(.leaflet-container) {
+      .spotlight__main :global(.leaflet-container) {
         background: inherit;
       }
     ` }</style>

@@ -11,7 +11,7 @@ exports[`MapSectionBodyMain renders correctly 1`] = `
       min-height: 500px;
       border: 1px solid #e84439;
 
-      .spotlight__main &gt; :global(.leaflet-container) {
+      .spotlight__main :global(.leaflet-container) {
         background: inherit;
       }
     
