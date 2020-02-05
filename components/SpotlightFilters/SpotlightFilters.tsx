@@ -38,11 +38,13 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   const onSelectIndicator = (option?: SelectOption) => {
     if (option && activeTheme) {
       const selectedIndicator = activeTheme.indicators.find(indicator => indicator.ddw_id === option.value);
-      setSelected({ ...selected, indicator: selectedIndicator, year: undefined });
-      setOptions({
-        ...options,
-        years: selectedIndicator ? createYearOptionsFromIndicator(selectedIndicator) : undefined
+      const yearOptions = selectedIndicator ? createYearOptionsFromIndicator(selectedIndicator) : undefined;
+      setSelected({
+        ...selected,
+        indicator: selectedIndicator,
+        year: yearOptions && parseInt(yearOptions[0].value, 10)
       });
+      setOptions({ ...options, years: yearOptions });
     } else if (activeIndicator) {
       setSelected({ ...selected, indicator: undefined, year: undefined });
       setOptions({ ...options, years: [] });
