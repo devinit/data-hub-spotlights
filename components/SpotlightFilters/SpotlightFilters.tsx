@@ -1,4 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { FormField } from '../FormField';
+import { SpotlightOptions } from '../MapSection';
+import { Select, SelectOption } from '../Select';
+import IndicatorFilterForm from './IndicatorFilterForm';
 import {
   FilterSelectOptions,
   SpotlightFilterProps,
@@ -8,9 +12,6 @@ import {
   getThemeDefaults,
   parseIndicatorToOption
 } from './utils';
-import { SpotlightOptions } from '../MapSection';
-import { Select, SelectOption } from '../Select';
-import IndicatorFilterForm from './IndicatorFilterForm';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes);
@@ -60,15 +61,17 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   };
 
   return (
-    <>
-      <label className="form-label">Theme</label>
-      <Select
-        options={ themes }
-        onChange={ onSelectTheme }
-        placeholder="Select Theme"
-        isLoading={ !themes }
-        defaultValue={ options.themes ? options.themes[0] : undefined }
-      />
+    <form className="form">
+      <FormField className="">
+        <label className="form-label">Select a topic to explore</label>
+        <Select
+          options={ themes }
+          onChange={ onSelectTheme }
+          placeholder="Select Theme"
+          isLoading={ !themes }
+          defaultValue={ options.themes ? options.themes[0] : undefined }
+        />
+      </FormField>
       <IndicatorFilterForm
         indicators={ indicators }
         activeIndicator={ activeIndicator && parseIndicatorToOption(activeIndicator) }
@@ -77,7 +80,7 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
         years={ years }
         activeYear={ activeYear }
       />
-    </>
+    </form>
   );
 };
 

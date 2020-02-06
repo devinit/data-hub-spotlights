@@ -5,7 +5,7 @@ import { SidebarHeading } from './SidebarHeading';
 const SpotlightSidebar: FunctionComponent = ({ children }) => {
 
   return (
-    <div className="spotlight__aside spotlight__aside--padded">
+    <div className="spotlight__aside spotlight__aside--no-margin">
       {
         Children.map(children, child =>
           isValidElement(child) && (child.type === SidebarContent || child.type === SidebarHeading) ? child : null)

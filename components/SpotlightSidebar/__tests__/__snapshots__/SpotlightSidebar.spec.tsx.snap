@@ -2,7 +2,7 @@
 
 exports[`SpotlightSidebar renders correctly 1`] = `
 <div
-  className="spotlight__aside spotlight__aside--padded"
+  className="spotlight__aside spotlight__aside--no-margin"
 >
   <style
     jsx={true}
