@@ -40,7 +40,6 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
   return (
     <SpotlightBanner>
       <SpotlightBannerAside>
-        <label className="form-label">Select Location</label>
         <Select
           options={ options }
           onChange={ onSelectLocation }
