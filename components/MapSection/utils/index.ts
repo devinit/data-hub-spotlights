@@ -19,3 +19,5 @@ export const generateColours = (colours: string[], range: string[]) => {
 
   return scale([ lighter, baseColor ]).colors(range.length + 1);
 };
+export const getIndicatorColours = (indicator?: SpotlightIndicator, range?: string[]) =>
+  indicator && range ? generateColours(splitByComma(indicator.colour) || [], range) : undefined;
