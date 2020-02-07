@@ -38,8 +38,20 @@ const Menu = () => {
     }
   }
 
-  function handleItemClick(e: any) {
+  function handleItemClick() {
+    console.log('This is the click');
+    // const item = $(this);
+    // const isCountry = item.hasClass(countryItem);
+    // const isRegion = !isCountry;
 
+    // e.preventDefault();
+
+    // nav.find('a').removeClass('active');
+    // const countryItemClass = '.countries-menu-list__item--parent-third';
+    // const isRegion = !countryItemClass;
+    // if (e.target.classList.contains(countryItemClass)) {
+
+    // }
   }
 
   const wrapperRef = useRef(null);
