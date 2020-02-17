@@ -7,7 +7,7 @@
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "test": "jest --coverage",
-    "lint": "eslint 'pages/**/*.{ts,tsx}' 'components/**/*.{ts,tsx}' 'server/**/*.ts' --quiet && tsc --noEmit",
+    "lint": "eslint 'pages/**/*.{ts,tsx}' 'components/**/*.{ts,tsx}' 'scripts/**/*.ts' 'server/**/*.ts' --quiet && tsc --noEmit",
     "geojson-converter": "ts-node --project tsconfig.server.json scripts/geojson-converter.ts"
   },
   "husky": {
