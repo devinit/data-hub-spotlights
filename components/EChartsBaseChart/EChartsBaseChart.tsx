@@ -25,9 +25,7 @@ const EChartsBaseChart = (props: EChartBaseChartProps) => {
     }
   }, []);
 
-  return (
-    <div ref={ chartNode } style={ { width: props.width, height: props.height } }/>
-  );
+  return <div ref={chartNode} style={{ width: props.width, height: props.height }} />;
 };
 
 EChartsBaseChart.defaultProps = {

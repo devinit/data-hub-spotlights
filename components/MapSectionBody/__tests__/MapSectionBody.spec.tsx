@@ -10,7 +10,7 @@ import { MapSectionBodyMain } from '../MapSectionBodyMain';
 
 describe('MapSectionBody', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<MapSectionBody/>).toJSON();
+    const renderer = TestRenderer.create(<MapSectionBody />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
@@ -18,9 +18,9 @@ describe('MapSectionBody', () => {
   test('renders only SpotlightSidebar & MapSectionBodyMain', () => {
     const renderer = TestRenderer.create(
       <MapSectionBody>
-        <SpotlightSidebar/>
-        <MapSectionBodyMain/>
-        <div>This Won't Show</div>
+        <SpotlightSidebar />
+        <MapSectionBodyMain />
+        <div>This will not Show</div>
       </MapSectionBody>
     ).toJSON();
 

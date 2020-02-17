@@ -9,7 +9,7 @@ import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 describe('SpotlightIndicatorInfo', () => {
   test('renders correctly', () => {
     const renderer = TestRenderer.create(
-      <SpotlightIndicatorInfo heading="Heading" description="Description"/>
+      <SpotlightIndicatorInfo heading="Heading" description="Description" />
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

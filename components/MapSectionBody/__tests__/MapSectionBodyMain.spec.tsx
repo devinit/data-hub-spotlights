@@ -8,7 +8,7 @@ import { MapSectionBodyMain } from '../MapSectionBodyMain';
 
 describe('MapSectionBodyMain', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<MapSectionBodyMain/>).toJSON();
+    const renderer = TestRenderer.create(<MapSectionBodyMain />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

@@ -10,9 +10,7 @@ import { SpotlightBannerMain } from '../SpotlightBannerMain';
 
 describe('SpotlightBanner', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <SpotlightBanner/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SpotlightBanner />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
@@ -20,8 +18,8 @@ describe('SpotlightBanner', () => {
   test('renders only SpotlightBannerAside & SpotlightBannerMain', () => {
     const renderer = TestRenderer.create(
       <SpotlightBanner>
-        <SpotlightBannerAside/>
-        <SpotlightBannerMain/>
+        <SpotlightBannerAside />
+        <SpotlightBannerMain />
         <div>Excluded Child</div>
       </SpotlightBanner>
     ).toJSON();

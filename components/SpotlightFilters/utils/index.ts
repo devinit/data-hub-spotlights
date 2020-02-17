@@ -55,9 +55,7 @@ export const getThemeDefaults = (theme: SpotlightTheme, currentOptions: FilterSe
   selected.indicator = defaultIndicator;
   if (defaultIndicator) {
     options.years = createYearOptionsFromIndicator(defaultIndicator);
-    selected.year = options.years
-      ? parseInt(options.years[0].value, 10)
-      : undefined;
+    selected.year = options.years ? parseInt(options.years[0].value, 10) : undefined;
   }
 
   return { options, selected };

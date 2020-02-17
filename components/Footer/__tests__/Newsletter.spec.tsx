@@ -9,7 +9,11 @@ import { Newsletter } from '../Newsletter';
 describe('Newsletter', () => {
   test('renders correctly', () => {
     const renderer = TestRenderer.create(
-      <Newsletter caption="Sign up to our newsletter" link_label="Sign Up" link_url="https://localhost:3000/newsletter"/>
+      <Newsletter
+        caption="Sign up to our newsletter"
+        link_label="Sign Up"
+        link_url="https://localhost:3000/newsletter"
+      />
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

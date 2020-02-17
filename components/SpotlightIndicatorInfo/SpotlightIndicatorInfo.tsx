@@ -8,8 +8,8 @@ interface SpotlightIndicatorInfoProps {
 const SpotlightIndicatorInfo: FunctionComponent<SpotlightIndicatorInfoProps> = props => {
   return (
     <>
-      <div className="spotlight__subheading">{ props.heading }</div>
-      <p className="spotlight__excerpt">{ props.description }</p>
+      <div className="spotlight__subheading">{props.heading}</div>
+      <p className="spotlight__excerpt">{props.description}</p>
     </>
   );
 };

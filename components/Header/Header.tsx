@@ -10,8 +10,10 @@ const Header: FunctionComponent<HeaderProps> = ({ navigation }) => {
   return (
     <header role="banner" className="header">
       <div className="row">
-        <a href="/" className="branding">Development Initiatives</a>
-        { navigation ? <PrimaryNavigation items={ navigation.primary }/> : null }
+        <a href="/" className="branding">
+          Development Initiatives
+        </a>
+        {navigation ? <PrimaryNavigation items={navigation.primary} /> : null}
       </div>
     </header>
   );

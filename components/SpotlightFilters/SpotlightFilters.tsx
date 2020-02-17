@@ -15,12 +15,12 @@ import {
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes);
-  const [ options, setOptions ] = useState<FilterSelectOptions>(defaultOptions);
+  const [options, setOptions] = useState<FilterSelectOptions>(defaultOptions);
   const { themes, indicators, years } = options;
-  const [ selected, setSelected ] = useState<SpotlightOptions>(defaultSelected);
+  const [selected, setSelected] = useState<SpotlightOptions>(defaultSelected);
   const { theme: activeTheme, indicator: activeIndicator, year: activeYear } = selected;
 
-  useEffect(() => props.onOptionsChange(selected), [ selected ]);
+  useEffect(() => props.onOptionsChange(selected), [selected]);
 
   const onSelectTheme = (option?: SelectOption) => {
     if (option) {
@@ -65,20 +65,20 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
       <FormField className="">
         <label className="form-label">Select a topic to explore</label>
         <Select
-          options={ themes }
-          onChange={ onSelectTheme }
+          options={themes}
+          onChange={onSelectTheme}
           placeholder="Select Theme"
-          isLoading={ !themes }
-          defaultValue={ options.themes ? options.themes[0] : undefined }
+          isLoading={!themes}
+          defaultValue={options.themes ? options.themes[0] : undefined}
         />
       </FormField>
       <IndicatorFilterForm
-        indicators={ indicators }
-        activeIndicator={ activeIndicator && parseIndicatorToOption(activeIndicator) }
-        onSelectIndicator={ onSelectIndicator }
-        onSelectYear={ onSelectYear }
-        years={ years }
-        activeYear={ activeYear }
+        indicators={indicators}
+        activeIndicator={activeIndicator && parseIndicatorToOption(activeIndicator)}
+        onSelectIndicator={onSelectIndicator}
+        onSelectYear={onSelectYear}
+        years={years}
+        activeYear={activeYear}
       />
     </form>
   );

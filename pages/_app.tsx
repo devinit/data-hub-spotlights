@@ -6,7 +6,11 @@ class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
 
-    return <DefaultLayout><Component { ...pageProps } /></DefaultLayout>;
+    return (
+      <DefaultLayout>
+        <Component {...pageProps} />
+      </DefaultLayout>
+    );
   }
 }
 

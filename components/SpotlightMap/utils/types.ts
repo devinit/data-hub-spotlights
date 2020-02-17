@@ -29,7 +29,7 @@ export type SpotlightFC = FeatureCollection<MultiPolygon, GeoJSONProperties>;
 
 export interface MapLocations {
   regional: {
-    [key: string]: SpotlightLocation[]
+    [key: string]: SpotlightLocation[];
   };
   other: SpotlightLocation[];
 }

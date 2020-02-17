@@ -6,7 +6,7 @@ interface TileLayerProps extends TileLayerOptions {
   map?: Map;
 }
 
-const TileLayer: FunctionComponent<TileLayerProps> = (props) => {
+const TileLayer: FunctionComponent<TileLayerProps> = props => {
   const { map, url, ...options } = props;
   if (map) {
     tileLayer(url, { ...options }).addTo(map);

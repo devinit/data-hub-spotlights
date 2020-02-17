@@ -9,9 +9,7 @@ interface PageSectionProps {
 const PageSection: FunctionComponent<PageSectionProps> = ({ children, narrow, wide }) => {
   return (
     <section className="section">
-      <div className={ classNames('row', { 'row--narrow': narrow, 'row--wide': wide }) }>
-        { children }
-      </div>
+      <div className={classNames('row', { 'row--narrow': narrow, 'row--wide': wide })}>{children}</div>
     </section>
   );
 };

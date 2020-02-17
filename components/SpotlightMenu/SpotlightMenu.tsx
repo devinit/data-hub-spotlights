@@ -24,28 +24,31 @@ const SpotlightMenu: FunctionComponent<SpotlightMenuProps> = ({ active, items })
     }
   }, []);
 
-  const renderItem = (item: SpotlightMenuItem) => item.url
-    ? <a href={ item.url } onClick={ item.onClick }>{ item.title }</a>
-    : <span onClick={ item.onClick }>{ item.title }</span>;
+  const renderItem = (item: SpotlightMenuItem) =>
+    item.url ? (
+      <a href={item.url} onClick={item.onClick}>
+        {item.title}
+      </a>
+    ) : (
+      <span onClick={item.onClick}>{item.title}</span>
+    );
 
-  const renderListItem = (item: SpotlightMenuItem, index: number) =>
-    <li key={ index }>
-      { renderItem(item) }
-      { item.children ? <ul>{ item.children.map(renderListItem) }</ul> : null }
-    </li>;
+  const renderListItem = (item: SpotlightMenuItem, index: number) => (
+    <li key={index}>
+      {renderItem(item)}
+      {item.children ? <ul>{item.children.map(renderListItem)}</ul> : null}
+    </li>
+  );
 
-  const renderNavList = () =>
-    <ul>
-      { items.map(renderListItem) }
-    </ul>;
+  const renderNavList = () => <ul>{items.map(renderListItem)}</ul>;
 
   return (
     <nav
       id="menu"
-      className={ classNames('spotlight-menu mm-menu', { 'spotlight-menu--active': active }) }
-      ref={ menuNode }
+      className={classNames('spotlight-menu mm-menu', { 'spotlight-menu--active': active })}
+      ref={menuNode}
     >
-      { renderNavList() }
+      {renderNavList()}
     </nav>
   );
 };

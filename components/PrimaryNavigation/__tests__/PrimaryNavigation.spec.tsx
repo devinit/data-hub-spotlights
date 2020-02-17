@@ -25,9 +25,7 @@ const items: NavigationItem[] = [
 
 describe('PrimaryNavigation', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <PrimaryNavigation items={ items }/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<PrimaryNavigation items={items} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

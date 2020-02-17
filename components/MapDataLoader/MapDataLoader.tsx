@@ -9,26 +9,28 @@ interface MapDataLoaderProps {
 }
 
 const MapDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicator, geocode, year }) => {
-  const renderMap = (dataLoading: boolean, mapData?: any) => Children.map(children, child =>
-    isValidElement(child) ? cloneElement(child, { data: mapData, dataLoading }) : null
-  );
+  const renderMap = (dataLoading: boolean, mapData?: any) =>
+    Children.map(children, child =>
+      isValidElement(child) ? cloneElement(child, { data: mapData, dataLoading }) : null
+    );
 
   if (!indicator) {
-    return <>{ renderMap(false) }</>;
+    return <>{renderMap(false)}</>;
   }
 
   const { data, loading, error } = useQuery(GET_INDICATOR_DATA, {
     variables: {
-      indicators: [ indicator ],
-      geocodes: geocode ? [ geocode ] : [],
+      indicators: [indicator],
+      geocodes: geocode ? [geocode] : [],
       startYear: year,
       endYear: year
-    } });
+    }
+  });
   if (error) {
     throw Error(error.message);
   }
 
-  return <>{ renderMap(loading, data && data.data[0]) }</>;
+  return <>{renderMap(loading, data && data.data[0])}</>;
 };
 
 export { MapDataLoader };

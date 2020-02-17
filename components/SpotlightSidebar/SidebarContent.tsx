@@ -6,11 +6,11 @@ interface SidebarContentProps {
 
 const SidebarContent: FunctionComponent<SidebarContentProps> = ({ children, height }) => {
   return (
-    <div className="spotlight__content" style={ { height } }>
-      { children }
-      <style jsx>{ `
+    <div className="spotlight__content" style={{ height }}>
+      {children}
+      <style jsx>{`
         height: 100%;
-      ` }</style>
+      `}</style>
     </div>
   );
 };

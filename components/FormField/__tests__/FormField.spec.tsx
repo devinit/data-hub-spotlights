@@ -8,16 +8,16 @@ import { FormField } from '../FormField';
 
 describe('FormField', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <FormField/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<FormField />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders with children correctly', () => {
     const renderer = TestRenderer.create(
-      <FormField><div>My Child</div></FormField>
+      <FormField>
+        <div>My Child</div>
+      </FormField>
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

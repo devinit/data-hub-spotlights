@@ -8,9 +8,7 @@ import { SpotlightTab } from '../SpotlightTab';
 
 describe('SpotlightTab', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <SpotlightTab/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SpotlightTab />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

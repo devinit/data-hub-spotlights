@@ -8,7 +8,7 @@ import { SpotlightBannerForm } from '../SpotlightBannerForm';
 
 describe('SpotlightBannerForm', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<SpotlightBannerForm/>).toJSON();
+    const renderer = TestRenderer.create(<SpotlightBannerForm />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
@@ -17,7 +17,8 @@ describe('SpotlightBannerForm', () => {
     const renderer = TestRenderer.create(
       <SpotlightBannerForm>
         <div>My Child</div>
-      </SpotlightBannerForm>).toJSON();
+      </SpotlightBannerForm>
+    ).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

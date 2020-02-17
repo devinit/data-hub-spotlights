@@ -18,14 +18,12 @@ const footer: FooterType = {
       link_url: 'http://localhost:3000/newsletter'
     }
   ],
-  sections: [ section ]
+  sections: [section]
 };
 
 describe('Footer', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <Footer primaryNavigation={ navigationItems } { ...footer }/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<Footer primaryNavigation={navigationItems} {...footer} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

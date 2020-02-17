@@ -8,17 +8,13 @@ import { Hero } from '../Hero';
 
 describe('Hero', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <Hero title="Spotlight" excerpt="My Spotlight"/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<Hero title="Spotlight" excerpt="My Spotlight" />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders without an excerpt when one is not provided', () => {
-    const renderer = TestRenderer.create(
-      <Hero title="Spotlight"/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<Hero title="Spotlight" />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

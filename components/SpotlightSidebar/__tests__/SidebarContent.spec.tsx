@@ -8,16 +8,16 @@ import { SidebarContent } from '../SidebarContent';
 
 describe('SidebarContent', () => {
   test('renders correctly with the specified height style', () => {
-    const renderer = TestRenderer.create(
-      <SidebarContent height="300px"/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SidebarContent height="300px" />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders children correctly', () => {
     const renderer = TestRenderer.create(
-      <SidebarContent height="400px"><div>My Child</div></SidebarContent>
+      <SidebarContent height="400px">
+        <div>My Child</div>
+      </SidebarContent>
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

@@ -9,16 +9,14 @@ import { SidebarHeading } from '../SidebarHeading';
 
 describe('SidebarHeading', () => {
   test('renders correctly with a heading', () => {
-    const renderer = TestRenderer.create(
-      <SidebarHeading heading="My Heading"/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SidebarHeading heading="My Heading" />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('has a button that responds to click events', () => {
     const onClick = jest.fn();
-    const { getByTestId } = render(<SidebarHeading onClick={ onClick }/>);
+    const { getByTestId } = render(<SidebarHeading onClick={onClick} />);
     const button = getByTestId('spotlight-menu-trigger');
     expect(button).toBeDefined();
 

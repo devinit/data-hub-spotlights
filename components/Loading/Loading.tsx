@@ -8,8 +8,8 @@ interface LoadingProps {
 
 const Loading: FunctionComponent<LoadingProps> = ({ children, active, text }) => {
   return (
-    <LoadingOverlay active={ active } spinner text={ text } styles={ { wrapper: { height: '100%' } } }>
-      { children }
+    <LoadingOverlay active={active} spinner text={text} styles={{ wrapper: { height: '100%' } }}>
+      {children}
     </LoadingOverlay>
   );
 };

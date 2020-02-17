@@ -8,16 +8,16 @@ import { TabContentHeader } from '../TabContentHeader';
 
 describe('TabContentHeader', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <TabContentHeader/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<TabContentHeader />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders with children', () => {
     const renderer = TestRenderer.create(
-      <TabContentHeader><div>My Child</div></TabContentHeader>
+      <TabContentHeader>
+        <div>My Child</div>
+      </TabContentHeader>
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

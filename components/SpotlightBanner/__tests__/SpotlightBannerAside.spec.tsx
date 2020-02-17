@@ -8,7 +8,7 @@ import { SpotlightBannerAside } from '../SpotlightBannerAside';
 
 describe('SpotlightBannerAside', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<SpotlightBannerAside/>).toJSON();
+    const renderer = TestRenderer.create(<SpotlightBannerAside />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
@@ -17,7 +17,8 @@ describe('SpotlightBannerAside', () => {
     const renderer = TestRenderer.create(
       <SpotlightBannerAside>
         <div>My Child</div>
-      </SpotlightBannerAside>).toJSON();
+      </SpotlightBannerAside>
+    ).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

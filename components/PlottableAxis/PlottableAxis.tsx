@@ -9,7 +9,7 @@ interface PlottableAxisProps {
   config: NumericAxisConfig;
 }
 
-const PlottableAxis: SFC<PlottableAxisProps> = (props) => {
+const PlottableAxis: SFC<PlottableAxisProps> = props => {
   const chartNode = useRef<any | null>(null);
   const createAxis = () => {
     const axis = props.config.getAxis();
@@ -21,9 +21,7 @@ const PlottableAxis: SFC<PlottableAxisProps> = (props) => {
     createAxis();
   }, []);
 
-  return (
-    <div ref={ chartNode } style={ { width: props.width, height: props.height } }/>
-  );
+  return <div ref={chartNode} style={{ width: props.width, height: props.height }} />;
 };
 
 PlottableAxis.defaultProps = {

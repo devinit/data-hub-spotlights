@@ -8,7 +8,7 @@ export const parseIndicator = (indicator: SpotlightIndicator): string | undefine
 
   return split.length ? split[1] : split[0];
 };
-export const splitByComma = (text?: string) => text ? text.split(',') : [];
+export const splitByComma = (text?: string) => (text ? text.split(',') : []);
 export const generateColours = (colours: string[], range: string[]) => {
   if (colours.length > range.length) {
     return colours;
@@ -17,7 +17,7 @@ export const generateColours = (colours: string[], range: string[]) => {
   const baseColor = colours[0] || '#8f1b13'; // base colour taken from pattern library TODO: get one from comms thingie
   const lighter = chroma(baseColor).brighten(3);
 
-  return scale([ lighter, baseColor ]).colors(range.length + 1);
+  return scale([lighter, baseColor]).colors(range.length + 1);
 };
 export const getIndicatorColours = (indicator?: SpotlightIndicator, range?: string[]) =>
   indicator && range ? generateColours(splitByComma(indicator.colour) || [], range) : undefined;

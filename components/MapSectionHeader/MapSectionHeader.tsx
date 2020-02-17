@@ -12,7 +12,7 @@ interface MapSectionHeaderProps {
 // TODO: this is temporary - replace with correct location handler
 const createLocationOptions = (locations: MapLocations): SelectOptions => {
   let regionalContent: SelectOption[] = [];
-  Object.keys(locations.regional).forEach((region) => {
+  Object.keys(locations.regional).forEach(region => {
     const options = locations.regional[region].map(content => ({
       label: content.name,
       value: content.geocode
@@ -24,12 +24,12 @@ const createLocationOptions = (locations: MapLocations): SelectOptions => {
 };
 
 const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
-  const [ options, setOptions ] = useState<SelectOptions>([]);
+  const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
     if (props.locations) {
       setOptions(createLocationOptions(props.locations));
     }
-  }, [ props.locations ]);
+  }, [props.locations]);
 
   const onSelectLocation = (option: SelectOption) => {
     if (option.value) {
@@ -41,14 +41,14 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
     <SpotlightBanner>
       <SpotlightBannerAside>
         <Select
-          options={ options }
-          onChange={ onSelectLocation }
+          options={options}
+          onChange={onSelectLocation}
           placeholder="Select Location"
-          isLoading={ !props.locations }
+          isLoading={!props.locations}
         />
       </SpotlightBannerAside>
       <SpotlightBannerMain>
-        <SpotlightBannerForm/>
+        <SpotlightBannerForm />
       </SpotlightBannerMain>
     </SpotlightBanner>
   );

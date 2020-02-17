@@ -9,8 +9,8 @@ export interface NavigationItemProps {
 
 const NavigationItem: FunctionComponent<NavigationItemProps> = ({ active, title, url }) => {
   return (
-    <li className={ classNames('navigation-primary__item', { 'navigation-primary__item--active': active }) }>
-      <a href={ url }>{ title }</a>
+    <li className={classNames('navigation-primary__item', { 'navigation-primary__item--active': active })}>
+      <a href={url}>{title}</a>
     </li>
   );
 };

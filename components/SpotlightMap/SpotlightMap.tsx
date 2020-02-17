@@ -15,8 +15,8 @@ import {
 
 const SpotlightMap: FunctionComponent<SpotlightMapProps> = React.memo(props => {
   const { countryCode, center, levels, zoom, onLoad, data, colours, range } = props;
-  const [ loading, setLoading ] = useState<boolean>(false);
-  const [ geojson, setGeoJSON ] = useState<SpotlightMapGeoJSON>({});
+  const [loading, setLoading] = useState<boolean>(false);
+  const [geojson, setGeoJSON] = useState<SpotlightMapGeoJSON>({});
 
   useEffect(() => {
     setLoading(true);
@@ -32,13 +32,13 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = React.memo(props => {
         console.log(error);
         setLoading(false);
       });
-  }, [ countryCode ]);
+  }, [countryCode]);
 
   useEffect(() => {
     if (geojson.all) {
       setGeoJSON({ ...geojson, filtered: filterGeoJSONByLevel(geojson.all, levels || []) });
     }
-  }, [ levels ]);
+  }, [levels]);
 
   const styleMap = (feature: Feature<Geometry, GeoJSONProperties> | undefined) => {
     if (feature && feature.properties) {
@@ -54,19 +54,16 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = React.memo(props => {
   };
 
   return (
-    <Loading active={ loading || !!props.dataLoading }>
-      <Map center={ center && new LatLng(center[0], center[1]) } zoom={ zoom || 7 } height="100%" minZoom={ 6.5 }>
-        <GeoJSONLayer
-          geojson={ geojson.filtered || geojson.all }
-          style={ styleMap }
-        />
+    <Loading active={loading || !!props.dataLoading}>
+      <Map center={center && new LatLng(center[0], center[1])} zoom={zoom || 7} height="100%" minZoom={6.5}>
+        <GeoJSONLayer geojson={geojson.filtered || geojson.all} style={styleMap} />
       </Map>
     </Loading>
   );
 });
 
 SpotlightMap.defaultProps = {
-  levels: [ 1 ],
+  levels: [1],
   dataLoading: false
 };
 

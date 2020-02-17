@@ -11,11 +11,7 @@ const SpotlightBanner: FunctionComponent = ({ children }) => {
     });
   };
 
-  return (
-    <div className="spotlight-banner spotlight-banner--header">
-      { renderValidChildren() }
-    </div>
-  );
+  return <div className="spotlight-banner spotlight-banner--header">{renderValidChildren()}</div>;
 };
 
 export { SpotlightBanner };

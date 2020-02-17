@@ -9,9 +9,7 @@ import { SpotlightSidebar } from '../SpotlightSidebar';
 
 describe('SpotlightSidebar', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <SpotlightSidebar/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SpotlightSidebar />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

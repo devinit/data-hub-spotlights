@@ -8,9 +8,9 @@ export interface PrimaryNavigationProps {
 
 const PrimaryNavigation: FunctionComponent<PrimaryNavigationProps> = ({ items }) => {
   const renderNavigationItems = () => {
-    return items.map(item =>
-      <NavigationListItem key={ item.title } title={ item.title } active={ item.active } url={ item.full_url }/>
-    );
+    return items.map(item => (
+      <NavigationListItem key={item.title} title={item.title} active={item.active} url={item.full_url} />
+    ));
   };
 
   return (
@@ -20,7 +20,7 @@ const PrimaryNavigation: FunctionComponent<PrimaryNavigationProps> = ({ items })
       </button>
       <nav className="navigation-primary" role="navigation" id="navigation-primary">
         <ul className="navigation-primary__items" data-testid="navigation-primary-ul">
-          { renderNavigationItems() }
+          {renderNavigationItems()}
         </ul>
       </nav>
     </>

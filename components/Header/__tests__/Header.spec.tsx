@@ -8,9 +8,7 @@ import Header from '../Header';
 
 describe('Header', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <Header/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<Header />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

@@ -11,34 +11,32 @@ import { MapLocations } from '../SpotlightMap';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 import { MapSectionProps, SpotlightOptions, getIndicatorColours, parseIndicator, splitByComma } from './utils';
 
-const DynamicMap = dynamic(
-  () => import('../SpotlightMap').then(mod => mod.SpotlightMap),
-  { ssr: false });
-const DynamicMapDataLoader = dynamic(
-  () => import('../MapDataLoader').then(mod => mod.MapDataLoader),
-  { ssr: false });
+const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
+const DynamicMapDataLoader = dynamic(() => import('../MapDataLoader').then(mod => mod.MapDataLoader), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]) => {
   if (range && colours) {
-    return range.map((rnge, index) =>
-      <LegendItem bgColor={ colours[index] } key={ index }>
-        { index === 0 ? `< ${range[0]}` : `${range[index - 1]}-${rnge}` }
-      </LegendItem>
-    ).concat([
-      <LegendItem bgColor={ colours[colours.length - 1] } key={ range.length }>
-        { `> ${range[range.length - 1]}` }
-      </LegendItem>
-    ]);
+    return range
+      .map((rnge, index) => (
+        <LegendItem bgColor={colours[index]} key={index}>
+          {index === 0 ? `< ${range[0]}` : `${range[index - 1]}-${rnge}`}
+        </LegendItem>
+      ))
+      .concat([
+        <LegendItem bgColor={colours[colours.length - 1]} key={range.length}>
+          {`> ${range[range.length - 1]}`}
+        </LegendItem>
+      ]);
   }
 
   return null;
 };
 
 const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData }) => {
-  const [ options, setOptions ] = useState<SpotlightOptions>({});
+  const [options, setOptions] = useState<SpotlightOptions>({});
   const onOptionsChange = (optns: SpotlightOptions) => setOptions(optns);
-  const [ locations, setLocations ] = useState<MapLocations | undefined>(undefined);
-  const [ activeLocation, setActiveLocation ] = useState<SpotlightLocation | undefined>(undefined);
+  const [locations, setLocations] = useState<MapLocations | undefined>(undefined);
+  const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(undefined);
   const onSelectLocation = (location: SpotlightLocation) => setActiveLocation(location);
 
   const onMapLoad = (formattedData: MapLocations) => {
@@ -49,18 +47,18 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
 
   return (
     <PageSection>
-      <MapSectionHeader onSelectLocation={ onSelectLocation } locations={ locations }/>
+      <MapSectionHeader onSelectLocation={onSelectLocation} locations={locations} />
 
       <MapSectionBody>
         <SpotlightSidebar>
           <SidebarContent>
-            <SpotlightFilters themes={ themeData } onOptionsChange={ onOptionsChange }/>
+            <SpotlightFilters themes={themeData} onOptionsChange={onOptionsChange} />
             <SpotlightIndicatorInfo
-              heading={ options.indicator && options.indicator.name }
-              description={ options.indicator && options.indicator.description }
+              heading={options.indicator && options.indicator.name}
+              description={options.indicator && options.indicator.description}
             />
             <Legend>
-              { renderLegendItems(range, colours) }
+              {renderLegendItems(range, colours)}
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
           </SidebarContent>
@@ -68,18 +66,18 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
 
         <MapSectionBodyMain>
           <DynamicMapDataLoader
-            indicator={ options.indicator && parseIndicator(options.indicator) }
-            geocode={ activeLocation && activeLocation.geocode }
-            year={ options.year ? options.year : options.indicator && options.indicator.start_year }
+            indicator={options.indicator && parseIndicator(options.indicator)}
+            geocode={activeLocation && activeLocation.geocode}
+            year={options.year ? options.year : options.indicator && options.indicator.start_year}
           >
             <DynamicMap
-              center={ [ 1.344666, 32.655221 ] }
-              countryCode={ countryCode }
-              onLoad={ onMapLoad }
-              range={ range }
-              colours={ colours }
-              dataPrefix={ options.indicator && options.indicator.value_prefix }
-              dataSuffix={ options.indicator && options.indicator.value_suffix }
+              center={[1.344666, 32.655221]}
+              countryCode={countryCode}
+              onLoad={onMapLoad}
+              range={range}
+              colours={colours}
+              dataPrefix={options.indicator && options.indicator.value_prefix}
+              dataSuffix={options.indicator && options.indicator.value_suffix}
             />
           </DynamicMapDataLoader>
         </MapSectionBodyMain>

@@ -8,16 +8,16 @@ import { TabContent } from '../TabContent';
 
 describe('TabContent', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <TabContent/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<TabContent />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders with children', () => {
     const renderer = TestRenderer.create(
-      <TabContent><div>My Child</div></TabContent>
+      <TabContent>
+        <div>My Child</div>
+      </TabContent>
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();

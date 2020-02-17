@@ -41,9 +41,7 @@ describe('SpotlightMenu', () => {
   ];
 
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(
-      <SpotlightMenu items={ sidebarItems }/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<SpotlightMenu items={sidebarItems} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

@@ -21,68 +21,65 @@ interface PlaygroundProps {
   scaffold: PageScaffoldData;
 }
 
-const SpotlightMenu = dynamic(
-  () => import('../components/SpotlightMenu').then(mod => mod.SpotlightMenu),
-  { ssr: false });
+const SpotlightMenu = dynamic(() => import('../components/SpotlightMenu').then(mod => mod.SpotlightMenu), {
+  ssr: false
+});
 
-const MapContainerWithoutSSR = dynamic(
-    () => import('../components/UgandaContainer').then(mod => mod.UgandaContainer),
-    { ssr: false });
+const MapContainerWithoutSSR = dynamic(() => import('../components/UgandaContainer').then(mod => mod.UgandaContainer), {
+  ssr: false
+});
 
 const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
   useEffect(() => {
     if (setData) {
       setData({ ...scaffold });
     }
-  }, [ setData, scaffold ]);
+  }, [setData, scaffold]);
 
   const options1: ECharts.Options = {
     title: {
-        text: 'Basic Bar Chart'
+      text: 'Basic Bar Chart'
     },
     tooltip: {},
     legend: {
-        data: [ 'Sales', 'Expenses' ]
+      data: ['Sales', 'Expenses']
     },
     xAxis: {
-        data: toBasicAxisData([ 'Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks' ])
+      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
     },
     yAxis: {},
     series: [
       {
         name: 'Sales',
         type: 'bar',
-        data: [ 5, 20, 36, 15, 10, 25 ]
+        data: [5, 20, 36, 15, 10, 25]
       },
       {
         name: 'Expenses',
         type: 'bar',
-        data: [ 2, 30, 3, 40, 20, 36 ]
+        data: [2, 30, 3, 40, 20, 36]
       }
     ]
   };
 
   const options2: ECharts.Options = {
     title: {
-        text: 'Inverted Bar Chart - Via Dataset'
+      text: 'Inverted Bar Chart - Via Dataset'
     },
     tooltip: {},
     legend: {
-        data: [ 'Sales', 'Expenses' ]
+      data: ['Sales', 'Expenses']
     },
     xAxis: { type: 'value' },
     yAxis: { type: 'category' },
-    series: [
-      { type: 'bar' },
-      { type: 'bar' }
-    ],
+    series: [{ type: 'bar' }, { type: 'bar' }],
     dataset: {
-      source : [
-        [ 'item', 'Sales', 'Expenses' ],
-        [ 'Shirt', 5, 2 ],
-        [ 'Cardigan', 20, 30 ],
-        [ 'Chiffon Shirt', 34, 23 ],
-        [ 'Pants', 56, 12 ]
+      source: [
+        ['item', 'Sales', 'Expenses'],
+        ['Shirt', 5, 2],
+        ['Cardigan', 20, 30],
+        ['Chiffon Shirt', 34, 23],
+        ['Pants', 56, 12]
       ]
     }
   };
@@ -108,10 +105,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       { type: 'category', gridIndex: 0 },
       { type: 'category', gridIndex: 1 }
     ],
-    grid: [
-        { bottom: '55%' },
-        { top: '55%' }
-    ]
+    grid: [{ bottom: '55%' }, { top: '55%' }]
   });
   options4.legend = {};
   options4.series = [
@@ -143,36 +137,33 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       {
         show: false,
         type: 'category',
-        data: toBasicAxisData([ 'Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks' ])
+        data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
       },
       {
         type: 'category',
         gridIndex: 1,
-        data: toBasicAxisData([ 'Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks' ]),
+        data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks']),
         offset: 20,
         axisTick: { show: false }
       }
     ],
-    grid: [
-        { left: '50%' },
-        { right: '50%' }
-    ]
+    grid: [{ left: '50%' }, { right: '50%' }]
   });
   options5.legend = {};
   options5.series = [
     {
       type: 'bar',
-      data: toBasicAxisData([ 5, 20, 36, 15, 10, 25 ])
+      data: toBasicAxisData([5, 20, 36, 15, 10, 25])
     },
     {
       type: 'bar',
-      data: toBasicAxisData([ 2, 30, 3, 40, 20, 36 ]),
+      data: toBasicAxisData([2, 30, 3, 40, 20, 36]),
       xAxisIndex: 1,
       yAxisIndex: 1
     }
   ];
 
-  const [ sidebarActive, setSidebarActive ] = useState(false);
+  const [sidebarActive, setSidebarActive] = useState(false);
 
   const onSidebarHeaderClick = () => {
     setSidebarActive(!sidebarActive);
@@ -209,38 +200,43 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     }
   ];
   const renderLegendItems = () => {
-    const ranges = [ '<30%', '30% - 50%', '50% - 70%', '70% - 90%', '>90%' ];
+    const ranges = ['<30%', '30% - 50%', '50% - 70%', '70% - 90%', '>90%'];
     const colour = '#8f1b13';
     const lighter = chroma(colour).brighten(3);
 
-    return scale([ lighter, colour ]).colors(5).map(
-      (color, index) => <LegendItem bgColor={ color } key={ index }>{ ranges[index] }</LegendItem>);
+    return scale([lighter, colour])
+      .colors(5)
+      .map((color, index) => (
+        <LegendItem bgColor={color} key={index}>
+          {ranges[index]}
+        </LegendItem>
+      ));
   };
 
   return (
     <PageSection>
       <h1>Visualisation Playground</h1>
-      <EChartsBaseChart options={ options1 }/>
-      <EChartsBaseChart options={ options2 } height="500px"/>
-      <EChartsBaseChart options={ options3 } height="500px"/>
-      <EChartsBaseChart options={ options4 } height="800px"/>
-      <EChartsBaseChart options={ options5 } height="800px"/>
+      <EChartsBaseChart options={options1} />
+      <EChartsBaseChart options={options2} height="500px" />
+      <EChartsBaseChart options={options3} height="500px" />
+      <EChartsBaseChart options={options4} height="800px" />
+      <EChartsBaseChart options={options5} height="800px" />
 
-      <div style={ { width: '400px', backgroundColor: '#fff', padding: '20px', marginBottom: '20px' } }>
+      <div style={{ width: '400px', backgroundColor: '#fff', padding: '20px', marginBottom: '20px' }}>
         <Legend>
-          { renderLegendItems() }
+          {renderLegendItems()}
           <LegendItem>no data / not applicable</LegendItem>
         </Legend>
       </div>
-      <div style={ { marginBottom: '20px', display: 'flex' } }>
+      <div style={{ marginBottom: '20px', display: 'flex' }}>
         <SpotlightSidebar>
-          <SidebarHeading heading="Uganda" onClick={ onSidebarHeaderClick }/>
+          <SidebarHeading heading="Uganda" onClick={onSidebarHeaderClick} />
           <SidebarContent height="300px">
-            <SpotlightMenu active={ sidebarActive } items={ sidebarItems }/>
+            <SpotlightMenu active={sidebarActive} items={sidebarItems} />
           </SidebarContent>
         </SpotlightSidebar>
       </div>
-      <div style={ { marginBottom: '20px' } }>
+      <div style={{ marginBottom: '20px' }}>
         <SpotlightTab>
           <TabContainer id="1" label="Tab 1" active>
             <TabContent>
@@ -257,10 +253,9 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         </SpotlightTab>
       </div>
 
-      <div style={ { display: 'block', float: 'left', width: '100%' } }>
+      <div style={{ display: 'block', float: 'left', width: '100%' }}>
         <MapContainerWithoutSSR />
       </div>
-
     </PageSection>
   );
 };

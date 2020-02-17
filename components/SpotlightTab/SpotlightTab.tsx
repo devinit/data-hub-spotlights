@@ -3,17 +3,10 @@ import { TabContainer } from './TabContainer';
 
 const SpotlightTab: FunctionComponent = ({ children }) => {
   const renderTabs = () => {
-    return Children.map(
-      children,
-      (child) => isValidElement(child) && child.type === TabContainer ? child : null
-    );
+    return Children.map(children, child => (isValidElement(child) && child.type === TabContainer ? child : null));
   };
 
-  return (
-    <div className="tabs">
-      { renderTabs() }
-    </div>
-  );
+  return <div className="tabs">{renderTabs()}</div>;
 };
 
 export { SpotlightTab };

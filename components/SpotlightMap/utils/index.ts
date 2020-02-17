@@ -9,10 +9,10 @@ export const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): Sp
   ...geojson,
   features: levels.length
     ? geojson.features.filter(feature => {
-      const level = feature.properties.geocode.split('.').length - 1;
+        const level = feature.properties.geocode.split('.').length - 1;
 
-      return levels.indexOf(level) > -1;
-    })
+        return levels.indexOf(level) > -1;
+      })
     : geojson.features
 });
 
@@ -37,17 +37,13 @@ export const defaultMapStyle = {
 export const getLocationIDFromGeoCode = (geocode: string) => {
   const geocodeArray = geocode.split('.');
 
-  return geocodeArray.length > 1
-    ? geocodeArray[geocodeArray.length - 1]
-    : geocodeArray[0];
+  return geocodeArray.length > 1 ? geocodeArray[geocodeArray.length - 1] : geocodeArray[0];
 };
 
 export const getFillColor = (geocode: string, data?: LocationData[], range?: string[], colours?: string[]): string => {
   const locationID = getLocationIDFromGeoCode(geocode);
   if (data && range && colours) {
-    const match = data.find(location =>
-      getLocationIDFromGeoCode(location.geocode) === locationID
-    );
+    const match = data.find(location => getLocationIDFromGeoCode(location.geocode) === locationID);
     if (match) {
       const matchingRange = range.find(rng => parseFloat(match.value) <= parseFloat(rng));
 

@@ -9,7 +9,7 @@ import { Hero } from '../Hero';
 import { PageScaffoldData } from './types';
 
 const DefaultLayout: NextComponentType = ({ children }) => {
-  const [ data, setData ] = useState<PageScaffoldData | undefined>();
+  const [data, setData] = useState<PageScaffoldData | undefined>();
 
   const attachDataProp = (component: ReactNode) => {
     if (isValidElement(component)) {
@@ -21,18 +21,14 @@ const DefaultLayout: NextComponentType = ({ children }) => {
 
   return (
     <ErrorBoundary>
-      <ApolloProvider client={ graphClient }>
+      <ApolloProvider client={graphClient}>
         <div className="ui-base">
-          <Header navigation={ data && data.navigation }/>
-          <main id="pagecontent" className="pagecontent -nofocus" role="main" tabIndex={ -1 }>
-            <Hero title={ data && data.title ? data.title : '' }/>
-            { attachDataProp(children) }
+          <Header navigation={data && data.navigation} />
+          <main id="pagecontent" className="pagecontent -nofocus" role="main" tabIndex={-1}>
+            <Hero title={data && data.title ? data.title : ''} />
+            {attachDataProp(children)}
           </main>
-          {
-            data && data.footer
-              ? <Footer { ...data.footer } primaryNavigation={ data.navigation.primary || [] }/>
-              : null
-          }
+          {data && data.footer ? <Footer {...data.footer} primaryNavigation={data.navigation.primary || []} /> : null}
         </div>
       </ApolloProvider>
     </ErrorBoundary>

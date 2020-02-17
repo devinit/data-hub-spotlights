@@ -10,7 +10,7 @@ import { LegendItem } from '../LegendItem';
 
 describe('Legend', () => {
   test('renders with the class spotlight-legend', () => {
-    const { container } = render(<Legend/>);
+    const { container } = render(<Legend />);
 
     expect(container.firstChild).toHaveClass('spotlight-legend');
   });
@@ -18,9 +18,9 @@ describe('Legend', () => {
   test('renders only LegendItem children', () => {
     const renderer = TestRenderer.create(
       <Legend>
-        <LegendItem/>
+        <LegendItem />
         Non Legend Item
-        <LegendItem/>
+        <LegendItem />
         <span>Testing</span>
       </Legend>
     ).toJSON();

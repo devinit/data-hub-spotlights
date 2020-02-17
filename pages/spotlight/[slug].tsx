@@ -16,20 +16,24 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
     if (setData) {
       setData({ ...scaffold, title: page.title });
     }
-  }, [ setData, scaffold ]);
+  }, [setData, scaffold]);
 
   if (page.themes && page.country_code) {
     return (
       <>
-        <MapSection themes={ page.themes } countryCode={ page.country_code }/>
+        <MapSection themes={page.themes} countryCode={page.country_code} />
       </>
     );
   }
 
-  return <PageSection><h3>No Content</h3></PageSection>;
+  return (
+    <PageSection>
+      <h3>No Content</h3>
+    </PageSection>
+  );
 };
 
-Spotlight.getInitialProps = async (context) => {
+Spotlight.getInitialProps = async context => {
   const { slug } = context.query;
   const scaffold = await fetchScaffoldData();
   const page = await fetchSpotlightPage(slug as string);

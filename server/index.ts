@@ -20,7 +20,8 @@ app
       const parsedUrl = parse(req.url as any, true);
       const { pathname, query } = parsedUrl;
 
-      if (pathname === '/') { // FIXME: remove redirect to playground once project officially starts
+      if (pathname === '/') {
+        // FIXME: remove redirect to playground once project officially starts
         app.render(req, res, '/playground', query);
       } else {
         handle(req, res, parsedUrl);

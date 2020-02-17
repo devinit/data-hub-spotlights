@@ -15,16 +15,14 @@ const item: NavigationItemProps = {
 
 describe('NavigationItem', () => {
   test('renders the NavigationItem correctly', () => {
-    const renderer = TestRenderer.create(
-      <NavigationItem { ...item }/>
-    ).toJSON();
+    const renderer = TestRenderer.create(<NavigationItem {...item} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders with the class navigation-primary__item--active when active', () => {
     item.active = true;
-    const { container } = render(<NavigationItem { ...item }/>);
+    const { container } = render(<NavigationItem {...item} />);
 
     expect(container.firstChild).toHaveClass('navigation-primary__item--active');
   });

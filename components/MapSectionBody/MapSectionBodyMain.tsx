@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react';
 
-const MapSectionBodyMain: FunctionComponent = ({ children }) =>
+const MapSectionBodyMain: FunctionComponent = ({ children }) => (
   <div className="spotlight__main">
-    { children }
-    <style jsx>{ `
+    {children}
+    <style jsx>{`
       min-height: 500px;
       border: 1px solid #e84439;
 
       .spotlight__main :global(.leaflet-container) {
         background: inherit;
       }
-    ` }</style>
-  </div>;
+    `}</style>
+  </div>
+);
 
 export { MapSectionBodyMain };

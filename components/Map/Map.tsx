@@ -10,7 +10,7 @@ interface MapProps extends MapOptions {
 }
 
 const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, ...mapOptions }) => {
-  const [ map, setMap ] = useState<LeafletMap | undefined>(undefined);
+  const [map, setMap] = useState<LeafletMap | undefined>(undefined);
   const mapRef = useRef<HTMLDivElement>(null);
   const renderLayers = () => {
     return Children.map(children, child => {
@@ -30,8 +30,8 @@ const Map: FunctionComponent<MapProps> = ({ children, onCreate, width, height, .
   }, []);
 
   return (
-    <div ref={ mapRef } style={ { width, height } }>
-      { renderLayers() }
+    <div ref={mapRef} style={{ width, height }}>
+      {renderLayers()}
     </div>
   );
 };
