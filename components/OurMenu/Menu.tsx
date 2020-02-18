@@ -25,6 +25,7 @@ function useOutsideAlerter(ref: any, callback: VoidFunction) {
 const Menu = () => {
   const [ triggerClass, setTriggerClass ] = useState();
   const [ menuContainerClass, setMenuContainerClass ] = useState();
+  const [ countryMenuListClass, setcountryMenuListClass ] = useState();
 
   function handleTrigger() {
     setTriggerClass('inactive');
@@ -38,20 +39,21 @@ const Menu = () => {
     }
   }
 
-  function handleItemClick() {
-    console.log('This is the click');
-    // const item = $(this);
-    // const isCountry = item.hasClass(countryItem);
-    // const isRegion = !isCountry;
+  function handleItemClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    const item = e.currentTarget;
+    const isCountry = item.classList.contains('.countries-menu-list__item--parent-third');
+    const isRegion = !isCountry;
 
-    // e.preventDefault();
+    //     nav
+    //         .find('a')
+    //         .removeClass('active');
 
-    // nav.find('a').removeClass('active');
-    // const countryItemClass = '.countries-menu-list__item--parent-third';
-    // const isRegion = !countryItemClass;
-    // if (e.target.classList.contains(countryItemClass)) {
+    if (isRegion) {
+      if (item.classList.contains('countries-menu-list__item--open')) {
+        setcountryMenuListClass('');
+      }
+    }
 
-    // }
   }
 
   const wrapperRef = useRef(null);
@@ -92,7 +94,10 @@ const Menu = () => {
           <li className="countries-menu-list--has-children js-profile-region-item">
             <a
               href="#"
-              className="countries-menu-list__item countries-menu-list__item--parent-first js-menu-item js-search-item active "
+              className={
+                countryMenuListClass ? 'countries-menu-list__item countries-menu-list__item--parent-first js-menu-item js-search-item active ' + countryMenuListClass :
+                  'countries-menu-list__item countries-menu-list__item--parent-first js-menu-item js-search-item active'
+              }
               data-has-children="1"
               aria-label="View Central Uganda"
               onClick={ handleItemClick }
