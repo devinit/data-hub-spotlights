@@ -27,7 +27,7 @@ const convertUgandaSubCountyGeoJSON = (features: any[], districtFeatures: any[])
     }
   }));
 
-export const convertUG = (sourcePath: string) => {
+export const convertUG = (sourcePath: string): void => {
   const districtJSON = JSON.parse(fs.readFileSync(`${sourcePath}UG/district.json`, 'utf8'));
   const subcountyGeoJSON = JSON.parse(fs.readFileSync(`${sourcePath}UG/subcounty.json`, 'utf8'));
   const convertedJSON = {
