@@ -31,11 +31,16 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   return null;
 };
 
-const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData }) => {
+const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: themeData, onChangeLocation }) => {
   const [options, setOptions] = useState<SpotlightOptions>({});
   const onOptionsChange = (optns: SpotlightOptions): void => setOptions(optns);
   const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(undefined);
-  const onSelectLocation = (location: SpotlightLocation): void => setActiveLocation(location);
+  const onSelectLocation = (location: SpotlightLocation): void => {
+    setActiveLocation(location);
+    if (onChangeLocation) {
+      onChangeLocation(location);
+    }
+  };
 
   const range = options.indicator && splitByComma(options.indicator.range);
   const colours = getIndicatorColours(options.indicator, range);

@@ -1,8 +1,9 @@
-import { SpotlightIndicator, SpotlightTheme } from '../../../utils';
+import { SpotlightIndicator, SpotlightTheme, SpotlightLocation } from '../../../utils';
 
 export interface MapSectionProps {
   countryCode: string;
   themes: SpotlightTheme[];
+  onChangeLocation?: (location?: SpotlightLocation) => void;
 }
 
 export interface SpotlightOptions {
