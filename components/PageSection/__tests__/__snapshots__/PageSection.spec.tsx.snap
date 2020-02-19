@@ -10,6 +10,16 @@ exports[`PageSection renders correctly 1`] = `
 </section>
 `;
 
+exports[`PageSection renders the appropriate class when dark 1`] = `
+<section
+  className="section section--alt-dark"
+>
+  <div
+    className="row"
+  />
+</section>
+`;
+
 exports[`PageSection renders the appropriate class when narrow 1`] = `
 <section
   className="section"

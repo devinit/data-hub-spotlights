@@ -24,4 +24,10 @@ describe('PageSection', () => {
 
     expect(renderer).toMatchSnapshot();
   });
+
+  test('renders the appropriate class when dark', () => {
+    const renderer = TestRenderer.create(<PageSection dark />).toJSON();
+
+    expect(renderer).toMatchSnapshot();
+  });
 });
