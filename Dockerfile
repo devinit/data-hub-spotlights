@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD node index.js
+CMD cross-env NODE_ENV=production node index.js

@@ -1,6 +1,9 @@
+FROM nginx:1.13.3
+# Remove any existing config files
+RUN rm /etc/nginx/conf.d/default.conf
+# Copy the Nginx configuration
+COPY ./nginx/default.conf /etc/nginx/conf.d/
+# Expose website on port
+EXPOSE 80
 
-# Base image
-FROM nginx:1.15.9-alpine
-
-# Overwrite the default nginx.conf file
-COPY ./default.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
