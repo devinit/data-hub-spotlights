@@ -13,6 +13,7 @@ export interface SpotlightPage {
 export interface SpotlightTheme {
   name: string;
   slug: string;
+  section: string | null;
   indicators: SpotlightIndicator[];
 }
 
@@ -26,6 +27,7 @@ export interface SpotlightIndicator {
   value_prefix?: string;
   value_suffix?: string;
   tooltip_template?: string;
+  content_template: string | null;
   colour?: string;
   source?: string;
 }
