@@ -27,9 +27,32 @@ export interface SpotlightIndicator {
   value_prefix?: string;
   value_suffix?: string;
   tooltip_template?: string;
-  content_template: string | null;
+  content_template: string | null; // this is a JSON string in the format of SpotlightIndicatorContent
   colour?: string;
   source?: string;
+}
+
+export interface SpotlightIndicatorContent {
+  stat?: {
+    indicators: string[];
+    value_prefix?: string;
+    value_suffix?: string;
+    value_template?: string;
+    description?: string;
+    source?: string;
+    aggregation?: string; // this allows for simple operations on the data for more complex stats
+  };
+  chart?: {
+    type: 'bar' | 'line' | 'pie';
+    indicators: {
+      id: string;
+      value_prefix?: string;
+      value_suffix?: string;
+      value_template?: string;
+      description?: string;
+      source?: string;
+    }[];
+  };
 }
 
 export interface FetchIndicatorDataOptions {
