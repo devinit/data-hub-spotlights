@@ -21,11 +21,13 @@ const KeyFactsSection: FunctionComponent<KeyFactsSectionProps> = ({ location, th
       <TabContainer key={theme.slug} id={theme.slug} label={theme.name} active={index === activeIndex}>
         <TabContent>
           <TabContentHeader onClick={(): void => setActiveIndex(index)} />
-          {theme.indicators.map((indicator, index) => (
-            <DynamicDataLoader key={index} indicator={indicator.ddw_id} geocode={location.geocode}>
-              <KeyFactIndicator location={location} indicator={indicator} />
-            </DynamicDataLoader>
-          ))}
+          <div className="l-2up-3up">
+            {theme.indicators.map((indicator, index) => (
+              <DynamicDataLoader key={index} indicator={indicator.ddw_id} geocode={location.geocode}>
+                <KeyFactIndicator location={location} indicator={indicator} />
+              </DynamicDataLoader>
+            ))}
+          </div>
         </TabContent>
       </TabContainer>
     ));

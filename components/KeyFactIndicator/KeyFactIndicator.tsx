@@ -16,7 +16,7 @@ interface KeyFactIndicatorProps {
   dataLoading?: boolean;
 }
 
-const getValue = (data?: LocationData): string => (data ? data.value : 'No Data');
+const getValue = (data?: LocationData): string => (data && data.value ? data.value.toFixed(2) : 'No Data');
 
 const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ location, indicator, data, dataLoading }) => {
   if (indicator.content_template) {
