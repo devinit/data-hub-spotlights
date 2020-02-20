@@ -16,6 +16,7 @@ import { TabContainer } from '../components/SpotlightTab/TabContainer';
 import { TabContent } from '../components/SpotlightTab/TabContent';
 import { TabContentHeader } from '../components/SpotlightTab/TabContentHeader';
 import { fetchScaffoldData } from '../utils';
+import { Menu } from '../components/Menu';
 
 interface PlaygroundProps {
   setData?: (data: PageScaffoldData) => void;
@@ -250,6 +251,15 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     <PageSection>
       <h1>Visualisation Playground</h1>
 
+      <div style={ { display: 'block', paddingBottom: '20px', width: '100%' } }>
+        <Menu title="Uganda" />
+      </div>
+      <EChartsBaseChart options={ options1 }/>
+      <EChartsBaseChart options={ options2 } height="500px"/>
+      <EChartsBaseChart options={ options3 } height="500px"/>
+      <EChartsBaseChart options={ options4 } height="800px"/>
+      <EChartsBaseChart options={ options5 } height="800px"/>
+
       <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
         <BaseMap
           accessToken="pk.eyJ1IjoiZWR3aW5tcCIsImEiOiJjazFsdHVtcG0wOG9mM2RueWJscHhmcXZqIn0.cDR43UvfMaOY9cNJsEKsvg"
@@ -294,6 +304,11 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
           </TabContainer>
         </SpotlightTab>
       </div>
+
+      <div style={ { display: 'block', float: 'left', width: '100%' } }>
+        <MapContainerWithoutSSR />
+      </div>
+
     </PageSection>
   );
 };
