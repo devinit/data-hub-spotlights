@@ -38,11 +38,11 @@ export const getFillColor = (geocode: string, data?: LocationData[], range?: str
   if (data && range && colours) {
     const match = data.find(location => getLocationIDFromGeoCode(location.geocode, '.') === locationID);
     if (match) {
-      const matchingRange = range.find(rng => parseFloat(match.value) <= parseFloat(rng));
+      const matchingRange = range.find(rng => match.value <= parseFloat(rng));
 
       if (matchingRange) {
         return colours[range.indexOf(matchingRange)];
-      } else if (parseFloat(match.value) > parseFloat(range[range.length - 1])) {
+      } else if (match.value > parseFloat(range[range.length - 1])) {
         return colours[colours.length - 1];
       }
     }

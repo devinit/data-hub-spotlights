@@ -12,11 +12,11 @@ export const getLocationStyles = (
   if (data && range && colours) {
     return data.map<LocationStyle>(location => {
       const locationID = format ? format(location.name) : location.name;
-      const matchingRange = range.find(rng => parseFloat(location.value) <= parseFloat(rng));
+      const matchingRange = range.find(rng => location.value <= parseFloat(rng));
 
       if (matchingRange) {
         return [locationID, colours[range.indexOf(matchingRange)]];
-      } else if (parseFloat(location.value) > parseFloat(range[range.length - 1])) {
+      } else if (location.value > parseFloat(range[range.length - 1])) {
         return [locationID, colours[colours.length - 1]];
       }
 

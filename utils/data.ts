@@ -70,7 +70,8 @@ export interface SpotlightLocation {
 }
 
 export interface LocationData extends SpotlightLocation {
-  value: string;
+  value: number;
+  value_ncu?: number;
   year: number;
   meta: string;
 }
