@@ -1,5 +1,5 @@
 import React, { FunctionComponent, MouseEvent, useState } from 'react';
-import classNames from 'classnames';
+import { Collapse } from 'react-collapse';
 import { Region } from './Region';
 import { RegionItem } from './RegionItem';
 
@@ -8,7 +8,7 @@ interface MenuNode {
 }
 
 const Menu: FunctionComponent<MenuNode> = ({ title }) => {
-    const [ showParentNav, toggleParentNav ] = useState(false);
+    const [ showParentNav, toggleParentNav ] = useState(true);
     const [ showNextNav, showNextNavMenu ] = useState(false);
 
     const toggleRegionsLevelOne = (event: MouseEvent<HTMLElement>) => {
@@ -25,39 +25,44 @@ const Menu: FunctionComponent<MenuNode> = ({ title }) => {
 
     return (
         <div>
-          <nav
-            onClick={ toggleRegionsLevelOne }
-            className={ classNames('countries-menu-list js-countries-menu-trigger', { inactive: showParentNav }) }
-          >
-          <a className="countries-menu-list__item countries-menu-list__parent" href="#"><span>Uganda</span></a>
-          </nav>
-          <nav
-            className={ classNames('countries-menu-list animated', { inactive: !showNextNav }) }
-          >
-            <a
-              onClick={ toggleRegionsLevelTwo }
-              className={ classNames('countries-menu-list__item countries-menu-list__parent',
-              { inactive: !showNextNav }) }
-              href="#"
+          <Collapse isOpened={ showParentNav }>
+            <nav
+              onClick={ toggleRegionsLevelOne }
+              className="countries-menu-list js-countries-menu-trigger"
             >
-              <span>{ title }</span>
-            </a>
-            <a
-              href="#"
-              className="countries-menu__profile countries-menu__link js-profile-item"
-              title="View Uganda"
+            <a className="countries-menu-list__item countries-menu-list__parent" href="#"><span>Uganda</span></a>
+            </nav>
+          </Collapse>
+
+          <Collapse isOpened={ showNextNav }>
+            <nav
+              className="countries-menu-list animated"
             >
-              View
-            </a>
+              <a
+                onClick={ toggleRegionsLevelTwo }
+                className="countries-menu-list__item countries-menu-list__parent"
+                href="#"
+              >
+                <span>{ title }</span>
+              </a>
+              <a
+                href="#"
+                className="countries-menu__profile countries-menu__link js-profile-item"
+                title="View Uganda"
+              >
+                View
+              </a>
 
-            <Region>
-              <RegionItem regionTitle="Central Region" />
-              <RegionItem regionTitle="Western Region" />
-              <RegionItem regionTitle="Eastern Region" />
-              <RegionItem regionTitle="Northern Region" />
-            </Region>
+              <Region>
+                <RegionItem regionTitle="Central Region" />
+                <RegionItem regionTitle="Western Region" />
+                <RegionItem regionTitle="Eastern Region" />
+                <RegionItem regionTitle="Northern Region" />
+              </Region>
 
-          </nav>
+            </nav>
+          </Collapse>
+
         </div>
     );
 };
