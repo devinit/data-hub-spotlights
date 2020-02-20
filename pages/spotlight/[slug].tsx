@@ -29,7 +29,7 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
           countryCode={page.country_code}
           onChangeLocation={onChangeLocation}
         />
-        <KeyFactsSection location={location} />
+        <KeyFactsSection location={location} themes={page.themes.filter(theme => theme.section === 'facts')} />
       </>
     );
   }
