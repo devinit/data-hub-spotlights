@@ -6,7 +6,7 @@ interface IndicatorStatProps {
   source?: string;
   value?: string;
 }
-
+// TODO: add proper tooltip for description & source
 const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, heading, source, value }) => {
   return (
     <div className="l-2up-3up__col">
@@ -16,6 +16,11 @@ const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, hea
           {description || source ? (
             <span className="spotlight__stat-icon">
               <i role="presentation" aria-hidden="true" className="ico ico--12 ico-info-slate"></i>
+              <style jsx>{`
+                .spotlight__stat-icon {
+                  display: none;
+                }
+              `}</style>
             </span>
           ) : null}
         </h3>
