@@ -11,7 +11,7 @@ import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 import { MapSectionProps, SpotlightOptions, getIndicatorColours, parseIndicator, splitByComma } from './utils';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
-const DynamicMapDataLoader = dynamic(() => import('../MapDataLoader').then(mod => mod.MapDataLoader), { ssr: false });
+const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   if (range && colours) {
