@@ -10,8 +10,7 @@ COPY package*.json ./
 
 COPY yarn.lock ./
 
-RUN yarn install && yarn add cross-env
-
+RUN yarn install
 
 COPY . .
 
