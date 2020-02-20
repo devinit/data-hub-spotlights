@@ -58,10 +58,10 @@ export interface LocationIndicatorData {
 }
 
 export const fetchScaffoldData = async (): Promise<PageScaffoldData> => {
-  const res_navigation = await fetch(`${process.env.CMS_URL}api/spotlights/navigation/`);
-  const navigation = await res_navigation.json();
-  const res_footer = await fetch(`${process.env.CMS_URL}api/footer/`);
-  const footer = await res_footer.json();
+  const resNavigation = await fetch(`${process.env.CMS_URL}api/spotlights/navigation/`);
+  const navigation = await resNavigation.json();
+  const resFooter = await fetch(`${process.env.CMS_URL}api/footer/`);
+  const footer = await resFooter.json();
 
   return { navigation, footer };
 };
