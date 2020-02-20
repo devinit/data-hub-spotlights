@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndicatorStat renders default state correctly 1`] = `
+<div
+  className="l-2up-3up__col"
+>
+  <div
+    className="spotlight__stat"
+  >
+    <h3
+      className="spotlight__stat-heading"
+    />
+    <p
+      className="spotlight__stat-data"
+    />
+  </div>
+</div>
+`;
