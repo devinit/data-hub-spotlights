@@ -5,7 +5,7 @@ services:
             context: .
             dockerfile: ./Dockerfile
             args:
-              ASSETS_SOURCE_URL: "http://178.128.102.213/"
+              CMS_URL: "http://178.128.102.213/"
         container_name: nodejs
         restart: always
         ports:
