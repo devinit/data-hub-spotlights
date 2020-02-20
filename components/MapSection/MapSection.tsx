@@ -52,10 +52,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
       <MapSectionBody>
         <SpotlightSidebar>
           <SidebarContent>
-            <SpotlightFilters
-              themes={themeData.filter(theme => theme.section === 'map')}
-              onOptionsChange={onOptionsChange}
-            />
+            <SpotlightFilters themes={themeData} onOptionsChange={onOptionsChange} />
             <SpotlightIndicatorInfo
               heading={options.indicator && options.indicator.name}
               description={options.indicator && options.indicator.description}
