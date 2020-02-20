@@ -251,15 +251,15 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     <PageSection>
       <h1>Visualisation Playground</h1>
 
-      <div style={ { display: 'block', paddingBottom: '20px', width: '100%' } }>
+      <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
         <Menu title="Uganda" />
       </div>
 
-      <EChartsBaseChart options={ options1 }/>
-      <EChartsBaseChart options={ options2 } height="500px"/>
-      <EChartsBaseChart options={ options3 } height="500px"/>
-      <EChartsBaseChart options={ options4 } height="800px"/>
-      <EChartsBaseChart options={ options5 } height="800px"/>
+      <EChartsBaseChart options={options1} />
+      <EChartsBaseChart options={options2} height="500px" />
+      <EChartsBaseChart options={options3} height="500px" />
+      <EChartsBaseChart options={options4} height="800px" />
+      <EChartsBaseChart options={options5} height="800px" />
 
       <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
         <BaseMap
@@ -305,7 +305,6 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
           </TabContainer>
         </SpotlightTab>
       </div>
-
     </PageSection>
   );
 };
