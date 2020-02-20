@@ -1,4 +1,5 @@
 import React, { FunctionComponent, MouseEvent, useState } from 'react';
+import classNames from 'classnames';
 import { Collapse } from 'react-collapse';
 import { Region } from './Region';
 import { RegionItem } from './RegionItem';
@@ -40,7 +41,7 @@ const Menu: FunctionComponent<MenuNode> = ({ title }) => {
             >
               <a
                 onClick={ toggleRegionsLevelTwo }
-                className="countries-menu-list__item countries-menu-list__parent"
+                className={ classNames('countries-menu-list__item countries-menu-list__parent', { 'countries-menu-list__item--open': showNextNav }) }
                 href="#"
               >
                 <span>{ title }</span>
@@ -54,10 +55,10 @@ const Menu: FunctionComponent<MenuNode> = ({ title }) => {
               </a>
 
               <Region>
-                <RegionItem regionTitle="Central Region" />
-                <RegionItem regionTitle="Western Region" />
-                <RegionItem regionTitle="Eastern Region" />
-                <RegionItem regionTitle="Northern Region" />
+                <RegionItem key="central" regionTitle="Central Region" />
+                <RegionItem key="western" regionTitle="Western Region" />
+                <RegionItem key="eastern" regionTitle="Eastern Region" />
+                <RegionItem key="northern" regionTitle="Northern Region" />
               </Region>
 
             </nav>

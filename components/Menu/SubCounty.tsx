@@ -17,9 +17,9 @@ const SubCounty: FunctionComponent<SubCountyNode> = ({ subcounties, showSubCount
         style={ { display: showSubCounty ? 'block' : 'none' } }
       >
         {
-          subcounties.map((subcounty) => {
+          subcounties.map((subcounty, index) => {
                 return (
-                  <li key={ subcounty.name } className="countries-menu-list__countries js-profile-country-item">
+                  <li key={ index } className="countries-menu-list__countries js-profile-country-item">
                   <a
                     href="#"
                     className="countries-menu-list__item countries-menu-list__item--parent-sixth js-search-item"

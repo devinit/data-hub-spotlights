@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { v1 as uuid } from 'uuid';
 import classNames from 'classnames';
 import { DistrictItem } from './DistrictItem';
 
@@ -41,22 +42,18 @@ interface DistrictNode {
 }
 
 const District: FunctionComponent<DistrictNode> = ({ region, showDistrict }) => {
-    return (
-      <ul
-        className={ classNames('js-profile-subregion-list', { 'countries-menu-list--selected': showDistrict }) }
-        style={ { display: showDistrict ? 'block' : 'none' } }
-      >
-        {
-          allDistricts.map((district) => {
-            if (region.toLowerCase().includes(district.region)) {
-              return (
-                <DistrictItem district={ district } subcounties={ district.subcounties }/>
-              );
-            }
-          })
+  return (
+    <ul
+      className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': showDistrict })}
+      style={{ display: showDistrict ? 'block' : 'none' }}
+    >
+      {allDistricts.map(district => {
+        if (region.toLowerCase().includes(district.region)) {
+          return <DistrictItem district={district} subcounties={district.subcounties} key={uuid()} />;
         }
-      </ul>
-    );
+      })}
+    </ul>
+  );
 };
 
 export { District };

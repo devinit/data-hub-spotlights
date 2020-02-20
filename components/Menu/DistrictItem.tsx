@@ -19,7 +19,7 @@ const DistrictItem: FunctionComponent<DistrictItemNode> = ({ district, subcounti
     }
 
     return (
-      <li key={ district.name } className="countries-menu-list--has-children js-profile-subregion-item">
+      <li className="countries-menu-list--has-children js-profile-subregion-item">
         <a
           onClick={ handleDistrictClick }
           href="#"

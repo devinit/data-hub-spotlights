@@ -34,7 +34,7 @@ const RegionItem: FunctionComponent<RegionItemNode> = ({ regionTitle }) => {
       >
         View
       </a>
-      <District region={ regionTitle } showDistrict={ showDistrict }/>
+      <District region={ regionTitle } showDistrict={ showDistrict } />
     </li>
   );
 };

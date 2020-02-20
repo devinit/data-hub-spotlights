@@ -254,6 +254,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       <div style={ { display: 'block', paddingBottom: '20px', width: '100%' } }>
         <Menu title="Uganda" />
       </div>
+
       <EChartsBaseChart options={ options1 }/>
       <EChartsBaseChart options={ options2 } height="500px"/>
       <EChartsBaseChart options={ options3 } height="500px"/>
@@ -303,10 +304,6 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
             </TabContent>
           </TabContainer>
         </SpotlightTab>
-      </div>
-
-      <div style={ { display: 'block', float: 'left', width: '100%' } }>
-        <MapContainerWithoutSSR />
       </div>
 
     </PageSection>
