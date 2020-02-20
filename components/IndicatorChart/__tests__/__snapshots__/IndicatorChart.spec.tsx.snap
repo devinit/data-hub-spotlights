@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndicatorChart renders default state correctly 1`] = `
+<div
+  className="l-2up-3up__col"
+>
+  <div
+    className="spotlight__stat"
+  >
+    <div
+      className="spotlight__interactive"
+    />
+  </div>
+</div>
+`;
