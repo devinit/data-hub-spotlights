@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactText } from 'react';
 
 interface IndicatorStatProps {
   heading?: string;
   description?: string;
   source?: string;
-  value?: string;
+  value?: ReactText;
 }
 // TODO: add proper tooltip for description & source
 const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, heading, source, value }) => {
