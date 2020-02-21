@@ -14,6 +14,7 @@ interface KeyFactIndicatorProps {
   indicator: SpotlightIndicator;
   data?: LocationIndicatorData;
   dataLoading?: boolean;
+  useLocalCurrency?: boolean; // only used where applicable
 }
 
 const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ location, indicator, data, dataLoading }) => {
