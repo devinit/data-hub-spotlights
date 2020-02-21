@@ -1,12 +1,5 @@
-import React, { Children, FunctionComponent, isValidElement } from 'react';
-import { TabContainer } from './TabContainer';
+import React, { FunctionComponent } from 'react';
 
-const SpotlightTab: FunctionComponent = ({ children }) => {
-  const renderTabs = () => {
-    return Children.map(children, child => (isValidElement(child) && child.type === TabContainer ? child : null));
-  };
-
-  return <div className="tabs">{renderTabs()}</div>;
-};
+const SpotlightTab: FunctionComponent = ({ children }) => <div className="tabs">{children}</div>;
 
 export { SpotlightTab };
