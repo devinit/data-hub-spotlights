@@ -1,8 +1,9 @@
 import { LocationData } from '../../../utils';
 import { ReactText } from 'react';
 
+const DEFAULT_VALUE = 'No Data';
+
 export const getValue = (data?: LocationData[], aggregation?: string): string | number => {
-  const DEFAULT_VALUE = 'No Data';
   if (data && data.length) {
     if (data.length === 1 && data[0].value) {
       return data[0].value.toFixed(2);
@@ -27,5 +28,5 @@ export const formatValue = (
 ): ReactText => {
   const value = getValue(data, aggregation);
 
-  return `${prefix || ''} ${value} ${suffix || ''}`;
+  return value !== DEFAULT_VALUE ? `${prefix || ''} ${value} ${suffix || ''}` : value;
 };
