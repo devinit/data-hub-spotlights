@@ -44,6 +44,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
 
   const range = options.indicator && splitByComma(options.indicator.range);
   const colours = getIndicatorColours(options.indicator, range);
+  const indicatorID = options.indicator && parseIndicator(options.indicator);
 
   return (
     <PageSection>
@@ -66,7 +67,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
 
         <MapSectionBodyMain>
           <DynamicMapDataLoader
-            indicator={options.indicator && parseIndicator(options.indicator)}
+            indicators={indicatorID ? [indicatorID] : undefined}
             geocode={activeLocation && activeLocation.geocode}
             year={options.year ? options.year : options.indicator && options.indicator.start_year}
           >

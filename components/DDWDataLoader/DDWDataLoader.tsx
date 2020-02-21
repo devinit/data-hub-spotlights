@@ -3,24 +3,24 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_INDICATOR_DATA, LocationIndicatorData } from '../../utils';
 
 interface MapDataLoaderProps {
-  indicator?: string;
+  indicators?: string[];
   geocode?: string;
   year?: number;
 }
 
-const DDWDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicator, geocode, year }) => {
+const DDWDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicators, geocode, year }) => {
   const renderChildren = (dataLoading: boolean, mapData?: LocationIndicatorData): ReactNode =>
     Children.map(children, child =>
       isValidElement(child) ? cloneElement(child, { data: mapData, dataLoading }) : null
     );
 
-  if (!indicator) {
+  if (!indicators || !indicators.length) {
     return <>{renderChildren(false)}</>;
   }
 
   const { data, loading, error } = useQuery<{ data: LocationIndicatorData[] }>(GET_INDICATOR_DATA, {
     variables: {
-      indicators: [indicator],
+      indicators,
       geocodes: geocode ? [geocode] : [],
       startYear: year,
       endYear: year

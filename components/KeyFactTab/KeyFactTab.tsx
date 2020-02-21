@@ -32,7 +32,7 @@ const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, them
           {theme.indicators.map((indicator, index) => (
             <DynamicDataLoader
               key={index}
-              indicator={indicator.ddw_id}
+              indicators={[indicator.ddw_id]}
               geocode={location.geocode}
               year={indicator.start_year || indicator.end_year}
             >
