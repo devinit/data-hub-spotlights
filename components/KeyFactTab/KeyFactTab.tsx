@@ -18,10 +18,9 @@ interface KeyFactTabProps {
 const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
 
 const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, theme, onActivate, currencyCode }) => {
-  const [useLocalCurrency, setUseLocalCurrency] = useState(false);
-  console.log(useLocalCurrency);
+  const [useLocalValue, setUseLocalValue] = useState(false);
 
-  const onChangeCurrency = (isLocal: boolean): void => setUseLocalCurrency(isLocal);
+  const onChangeCurrency = (isLocal: boolean): void => setUseLocalValue(isLocal);
 
   return (
     <TabContainer key={theme.slug} id={theme.slug} label={theme.name} active={active}>
@@ -31,8 +30,21 @@ const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, them
         </TabContentHeader>
         <div className="l-2up-3up">
           {theme.indicators.map((indicator, index) => (
-            <DynamicDataLoader key={index} indicator={indicator.ddw_id} geocode={location.geocode}>
-              <KeyFactIndicator location={location} indicator={indicator} useLocalCurrency={useLocalCurrency} />
+            <DynamicDataLoader
+              key={index}
+              indicator={indicator.ddw_id}
+              geocode={location.geocode}
+              year={indicator.start_year || indicator.end_year}
+            >
+              <KeyFactIndicator
+                location={location}
+                indicator={indicator}
+                valueOptions={{
+                  useLocalValue,
+                  prefix: indicator.data_type === 'currency' && useLocalValue ? currencyCode : indicator.value_prefix,
+                  suffix: indicator.value_suffix
+                }}
+              />
             </DynamicDataLoader>
           ))}
         </div>

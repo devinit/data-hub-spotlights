@@ -1,15 +1,36 @@
-import { LocationData } from '../../../utils';
+import { LocationData, LocationDataMeta } from '../../../utils';
 import { ReactText } from 'react';
+
+export interface ValueOptions {
+  useLocalValue?: boolean;
+  aggregation?: string;
+  prefix?: string;
+  suffix?: string;
+}
 
 const DEFAULT_VALUE = 'No Data';
 
-export const getValue = (data?: LocationData[], aggregation?: string): string | number => {
+const getLocalValue = (data: LocationData): string | number => {
+  if (data.meta) {
+    const meta: LocationDataMeta = JSON.parse(data.meta);
+    if (meta.valueLocalCurrency) {
+      return meta.valueLocalCurrency.toFixed(2);
+    }
+  }
+
+  return data.value.toFixed(2);
+};
+
+export const getValue = (data?: LocationData[], options: ValueOptions = {}): string | number => {
   if (data && data.length) {
     if (data.length === 1 && data[0].value) {
+      if (options.useLocalValue) {
+        return getLocalValue(data[0]);
+      }
       return data[0].value.toFixed(2);
     }
     // if no aggregation is specified, use the value of the most recent year
-    if (!aggregation) {
+    if (!options.aggregation) {
       const sortedData = data.sort((a, b) => a.year - b.year);
       if (sortedData[data.length - 1].value) {
         return sortedData[data.length - 1].value.toFixed(2);
@@ -20,13 +41,12 @@ export const getValue = (data?: LocationData[], aggregation?: string): string | 
   return DEFAULT_VALUE;
 };
 
-export const formatValue = (
-  data?: LocationData[],
-  prefix?: string,
-  suffix?: string,
-  aggregation?: string
-): ReactText => {
-  const value = getValue(data, aggregation);
+const addPrefixAndSuffix = (value: string | number, options: ValueOptions): string => {
+  return `${options.prefix || ''} ${value} ${options.suffix || ''}`;
+};
 
-  return value !== DEFAULT_VALUE ? `${prefix || ''} ${value} ${suffix || ''}` : value;
+export const formatValue = (data?: LocationData[], options: ValueOptions = {}): ReactText => {
+  const value = getValue(data, options);
+
+  return value !== DEFAULT_VALUE ? addPrefixAndSuffix(value, options) : value;
 };

@@ -24,6 +24,7 @@ export interface SpotlightIndicator {
   description?: string;
   start_year?: number;
   end_year?: number;
+  data_type: 'plain' | 'currency' | 'percent';
   range?: string;
   value_prefix?: string;
   value_suffix?: string;
@@ -72,14 +73,18 @@ export interface SpotlightLocation {
 
 export interface LocationData extends SpotlightLocation {
   value: number;
-  value_ncu?: number;
   year: number;
-  meta: string;
+  meta: string; // this is a JSON string - refer to LocationDataMeta to see structure
 }
 
 export interface LocationIndicatorData {
   indicator: string;
   data: LocationData[];
+}
+
+export interface LocationDataMeta {
+  budgetType?: 'actual' | 'approved' | 'proposed';
+  valueLocalCurrency?: number;
 }
 
 export const fetchScaffoldData = async (): Promise<PageScaffoldData> => {

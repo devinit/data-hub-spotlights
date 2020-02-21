@@ -7,17 +7,17 @@ import {
   TemplateOptions
 } from '../../utils';
 import { IndicatorStat } from '../IndicatorStat';
-import { formatValue } from './utils';
+import { formatValue, ValueOptions } from './utils';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
   indicator: SpotlightIndicator;
   data?: LocationIndicatorData;
   dataLoading?: boolean;
-  useLocalCurrency?: boolean; // only used where applicable
+  valueOptions?: ValueOptions;
 }
 
-const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ location, indicator, data, dataLoading }) => {
+const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, data, dataLoading, ...props }) => {
   if (indicator.content_template) {
     return null; // TODO: add proper handling for this path
   }
@@ -26,7 +26,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ location, 
     return <div>Loading ...</div>;
   }
   const templateOptions: TemplateOptions = {
-    location: location.name
+    location: props.location.name
   };
 
   return (
@@ -34,9 +34,13 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ location, 
       heading={processTemplateString(indicator.name, templateOptions)}
       description={indicator.description}
       source={indicator.source}
-      value={formatValue(data && data.data, indicator.value_prefix, indicator.value_suffix)}
+      value={formatValue(data && data.data, props.valueOptions)}
     />
   );
+};
+
+KeyFactIndicator.defaultProps = {
+  valueOptions: {}
 };
 
 export { KeyFactIndicator };
