@@ -10,11 +10,24 @@ export interface ValueOptions {
 
 const DEFAULT_VALUE = 'No Data';
 
+const formatNumber = (value: number): string => {
+  if (value >= 1000000000) {
+    return `${(value / 1000000000).toFixed(2)}b`;
+  }
+  if (value >= 1000000) {
+    return `${(value / 1000000).toFixed(2)}m`;
+  }
+  if (value >= 1000) {
+    return `${(value / 1000).toFixed(2)}k`;
+  }
+  return `${value.toFixed(2)}`;
+};
+
 const getLocalValue = (data: LocationData): string | number => {
   if (data.meta) {
     const meta: LocationDataMeta = JSON.parse(data.meta);
     if (meta.valueLocalCurrency) {
-      return meta.valueLocalCurrency.toFixed(2);
+      return formatNumber(meta.valueLocalCurrency);
     }
   }
 
@@ -27,13 +40,13 @@ export const getValue = (data?: LocationData[], options: ValueOptions = {}): str
       if (options.useLocalValue) {
         return getLocalValue(data[0]);
       }
-      return data[0].value.toFixed(2);
+      return formatNumber(data[0].value);
     }
     // if no aggregation is specified, use the value of the most recent year
     if (!options.aggregation) {
       const sortedData = data.sort((a, b) => a.year - b.year);
       if (sortedData[data.length - 1].value) {
-        return sortedData[data.length - 1].value.toFixed(2);
+        return formatNumber(sortedData[data.length - 1].value);
       }
     }
   }
