@@ -41,7 +41,7 @@ const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, them
                 indicator={indicator}
                 valueOptions={{
                   useLocalValue,
-                  prefix: indicator.data_type === 'currency' && useLocalValue ? currencyCode : indicator.value_prefix,
+                  prefix: indicator.data_format === 'currency' && useLocalValue ? currencyCode : indicator.value_prefix,
                   suffix: indicator.value_suffix
                 }}
               />

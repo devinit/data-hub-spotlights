@@ -24,7 +24,7 @@ export interface SpotlightIndicator {
   description?: string;
   start_year?: number;
   end_year?: number;
-  data_type: 'plain' | 'currency' | 'percent';
+  data_format: 'plain' | 'currency' | 'percent';
   range?: string;
   value_prefix?: string;
   value_suffix?: string;
