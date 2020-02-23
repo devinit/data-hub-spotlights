@@ -43,7 +43,17 @@ export const config: { [key: string]: MapConfig } = {
         minZoom: 5.0,
         maxZoom: 6,
         nameProperty: 'ADM1_EN',
-        codeProperty: 'ADM1_PCODE'
+        codeProperty: 'ADM1_PCODE',
+        format: (value: string): string => {
+          if (value === 'Trans-Nzoia') {
+            return 'Trans Nzoia';
+          }
+          if (value === 'Nithi') {
+            return 'Tharaka-Nithi';
+          }
+
+          return value;
+        }
       }
     ]
   }
