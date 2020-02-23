@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import React, { FunctionComponent, useState } from 'react';
 import { SpotlightLocation, SpotlightTheme } from '../../utils';
 import { KeyFactIndicator } from '../KeyFactIndicator';
@@ -15,8 +14,6 @@ interface KeyFactTabProps {
   currencyCode: string;
 }
 
-const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
-
 const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, theme, onActivate, currencyCode }) => {
   const [useLocalValue, setUseLocalValue] = useState(false);
 
@@ -30,22 +27,17 @@ const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, them
         </TabContentHeader>
         <div className="l-2up-3up">
           {theme.indicators.map((indicator, index) => (
-            <DynamicDataLoader
+            <KeyFactIndicator
               key={index}
-              indicators={[indicator.ddw_id]}
-              geocode={location.geocode}
-              year={indicator.start_year || indicator.end_year}
-            >
-              <KeyFactIndicator
-                location={location}
-                indicator={indicator}
-                valueOptions={{
-                  useLocalValue,
-                  prefix: indicator.data_format === 'currency' && useLocalValue ? currencyCode : indicator.value_prefix,
-                  suffix: indicator.value_suffix
-                }}
-              />
-            </DynamicDataLoader>
+              location={location}
+              indicator={indicator}
+              valueOptions={{
+                useLocalValue,
+                dataFormat: indicator.data_format,
+                prefix: indicator.data_format === 'currency' && useLocalValue ? currencyCode : indicator.value_prefix,
+                suffix: indicator.value_suffix
+              }}
+            />
           ))}
         </div>
       </TabContent>

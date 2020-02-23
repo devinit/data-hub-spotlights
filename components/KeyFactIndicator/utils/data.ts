@@ -1,14 +1,18 @@
 import { LocationData, LocationDataMeta } from '../../../utils';
-import { ReactText } from 'react';
 
 export interface ValueOptions {
   useLocalValue?: boolean;
+  dataFormat: 'plain' | 'currency' | 'percent';
   aggregation?: string;
   prefix?: string;
   suffix?: string;
 }
 
 const DEFAULT_VALUE = 'No Data';
+
+const addPrefixAndSuffix = (value: string | number, options: ValueOptions): string => {
+  return `${options.prefix || ''} ${value} ${options.suffix || ''}`;
+};
 
 const formatNumber = (value: number): string => {
   if (value >= 1000000000) {
@@ -23,43 +27,36 @@ const formatNumber = (value: number): string => {
   return `${value.toFixed(2)}`;
 };
 
-const getLocalValue = (data: LocationData): string | number => {
+const getLocalValue = (data: LocationData, options: ValueOptions): string => {
   if (data.meta) {
     const meta: LocationDataMeta = JSON.parse(data.meta);
     if (meta.valueLocalCurrency) {
-      return formatNumber(meta.valueLocalCurrency);
+      return addPrefixAndSuffix(formatNumber(meta.valueLocalCurrency), options);
     }
   }
 
-  return data.value.toFixed(2);
+  return addPrefixAndSuffix(data.value.toFixed(2), {
+    ...options,
+    prefix: options.dataFormat === 'currency' ? 'US$' : options.prefix
+  });
 };
 
-export const getValue = (data?: LocationData[], options: ValueOptions = {}): string | number => {
+export const formatValue = (data?: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
   if (data && data.length) {
     if (data.length === 1 && data[0].value) {
       if (options.useLocalValue) {
-        return getLocalValue(data[0]);
+        return getLocalValue(data[0], options);
       }
-      return formatNumber(data[0].value);
+      return addPrefixAndSuffix(formatNumber(data[0].value), options);
     }
     // if no aggregation is specified, use the value of the most recent year
     if (!options.aggregation) {
       const sortedData = data.sort((a, b) => a.year - b.year);
       if (sortedData[data.length - 1].value) {
-        return formatNumber(sortedData[data.length - 1].value);
+        return addPrefixAndSuffix(formatNumber(sortedData[data.length - 1].value), options);
       }
     }
   }
 
   return DEFAULT_VALUE;
-};
-
-const addPrefixAndSuffix = (value: string | number, options: ValueOptions): string => {
-  return `${options.prefix || ''} ${value} ${options.suffix || ''}`;
-};
-
-export const formatValue = (data?: LocationData[], options: ValueOptions = {}): ReactText => {
-  const value = getValue(data, options);
-
-  return value !== DEFAULT_VALUE ? addPrefixAndSuffix(value, options) : value;
 };

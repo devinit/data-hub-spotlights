@@ -1,46 +1,50 @@
+import dynamic from 'next/dynamic';
 import React, { FunctionComponent } from 'react';
-import {
-  LocationIndicatorData,
-  processTemplateString,
-  SpotlightIndicator,
-  SpotlightLocation,
-  TemplateOptions
-} from '../../utils';
-import { IndicatorStat } from '../IndicatorStat';
-import { formatValue, ValueOptions } from './utils';
+import { SpotlightIndicator, SpotlightIndicatorContent, SpotlightLocation, TemplateOptions } from '../../utils';
+import { ValueOptions } from './utils';
+import { IndicatorStatDataHandler } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
   indicator: SpotlightIndicator;
-  data?: LocationIndicatorData;
-  dataLoading?: boolean;
   valueOptions?: ValueOptions;
 }
 
-const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, data, dataLoading, ...props }) => {
+const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
+
+const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, ...props }) => {
   if (indicator.content_template) {
-    return null; // TODO: add proper handling for this path
+    try {
+      const contentOptions: SpotlightIndicatorContent = JSON.parse(indicator.content_template);
+      console.log(contentOptions);
+    } catch (error) {
+      console.log(error.message);
+    }
+
+    return <div>Content Goes Here</div>; // TODO: add proper handling for this path
   }
 
-  if (dataLoading) {
-    return <div>Loading ...</div>;
-  }
   const templateOptions: TemplateOptions = {
     location: props.location.name
   };
 
   return (
-    <IndicatorStat
-      heading={processTemplateString(indicator.name, templateOptions)}
-      description={indicator.description}
-      source={indicator.source}
-      value={formatValue(data && data.data, props.valueOptions)}
-    />
+    <DynamicDataLoader
+      indicators={[indicator.ddw_id]}
+      geocode={props.location.geocode}
+      year={indicator.start_year || indicator.end_year}
+    >
+      <IndicatorStatDataHandler
+        indicator={indicator}
+        valueOptions={props.valueOptions}
+        templateOptions={templateOptions}
+      />
+    </DynamicDataLoader>
   );
 };
 
 KeyFactIndicator.defaultProps = {
-  valueOptions: {}
+  valueOptions: { dataFormat: 'plain' }
 };
 
 export { KeyFactIndicator };
