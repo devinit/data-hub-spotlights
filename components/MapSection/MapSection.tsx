@@ -70,6 +70,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
             indicators={indicatorID ? [indicatorID] : undefined}
             geocode={activeLocation && activeLocation.geocode}
             year={options.year ? options.year : options.indicator && options.indicator.start_year}
+            limit={10000}
           >
             <DynamicMap
               countryCode={countryCode}
