@@ -7,7 +7,7 @@ import {
   TemplateOptions,
   processTemplateString
 } from '../../utils';
-import { ValueOptions } from './utils';
+import { ValueOptions } from '../IndicatorStat/utils';
 import { IndicatorStatDataHandler, IndicatorStat } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
