@@ -1,17 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import { LocationIndicatorData } from '../../utils';
-import { formatValue, ValueOptions } from '../KeyFactIndicator/utils';
+import { getIndicatorValue, ValueOptions } from '../KeyFactIndicator/utils';
 import { IndicatorStatDataViewer } from './IndicatorStatDataViewer';
 
 interface DataHandlerProps {
-  data?: LocationIndicatorData;
+  data?: LocationIndicatorData[];
   dataLoading?: boolean;
   valueOptions?: ValueOptions;
 }
 
 const IndicatorStatDataHandler: FunctionComponent<DataHandlerProps> = ({ data, dataLoading, ...props }) => {
-  if (!dataLoading) {
-    return <IndicatorStatDataViewer value={formatValue(data && data.data, props.valueOptions)} />;
+  if (!dataLoading && data) {
+    if (data.length === 1) {
+      return <IndicatorStatDataViewer value={getIndicatorValue(data[0].data, props.valueOptions)} />;
+    }
   }
 
   return <div>Loading ...</div>;

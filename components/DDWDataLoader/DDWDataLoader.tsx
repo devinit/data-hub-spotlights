@@ -10,10 +10,8 @@ interface MapDataLoaderProps {
 }
 
 const DDWDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indicators, geocode, year, limit }) => {
-  const renderChildren = (dataLoading: boolean, mapData?: LocationIndicatorData): ReactNode =>
-    Children.map(children, child =>
-      isValidElement(child) ? cloneElement(child, { data: mapData, dataLoading }) : null
-    );
+  const renderChildren = (dataLoading: boolean, data?: LocationIndicatorData[]): ReactNode =>
+    Children.map(children, child => (isValidElement(child) ? cloneElement(child, { data, dataLoading }) : null));
 
   if (!indicators || !indicators.length) {
     return <>{renderChildren(false)}</>;
@@ -32,7 +30,7 @@ const DDWDataLoader: FunctionComponent<MapDataLoaderProps> = ({ children, indica
     throw Error(error.message);
   }
 
-  return <>{renderChildren(loading, data && data.data[0])}</>;
+  return <>{renderChildren(loading, data && data.data)}</>;
 };
 
 DDWDataLoader.defaultProps = { limit: 100 };

@@ -14,7 +14,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
   }, [countryCode]);
 
   const renderLayers = (): ReactNode => {
-    if (!dataLoading && data && data.data.length) {
+    if (!dataLoading && data && data[0].data.length) {
       return (
         <BaseMapLayer
           id="highlight"
@@ -27,7 +27,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
               property: options.nameProperty,
               type: 'categorical',
               default: '#b3adad',
-              stops: getLocationStyles(data.data, range, colours, options.format)
+              stops: getLocationStyles(data[0].data, range, colours, options.format)
             },
             'fill-opacity': 0.75,
             'fill-outline-color': '#ffffff'

@@ -96,15 +96,13 @@ const processMultipleData = (data: LocationData[], options: ValueOptions = { dat
   return DEFAULT_VALUE;
 };
 
-export const formatValue = (data?: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
+export const getIndicatorValue = (data?: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
   if (data && data.length) {
     if (data.length === 1 && data[0].value) {
       return getValue(data[0], options);
     }
-    // if no aggregation is specified, use the value of the most recent year
-    if (!options.aggregation) {
-      return processMultipleData(data, options);
-    }
+
+    return processMultipleData(data, options);
   }
 
   return DEFAULT_VALUE;

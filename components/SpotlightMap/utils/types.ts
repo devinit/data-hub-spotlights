@@ -7,7 +7,7 @@ export interface SpotlightMapProps {
   countryCode: string;
   level?: number;
   dataLoading?: boolean;
-  data?: LocationIndicatorData;
+  data?: LocationIndicatorData[];
   range?: string[];
   colours?: string[];
   dataPrefix?: string;
