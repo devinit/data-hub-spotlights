@@ -14,6 +14,7 @@ interface KeyFactIndicatorProps {
   location: SpotlightLocation;
   indicator: SpotlightIndicator;
   valueOptions?: ValueOptions;
+  currencyCode: string;
 }
 
 const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
@@ -40,14 +41,25 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                   key={index}
                   indicators={stat.indicators}
                   geocode={location.geocode}
-                  year={stat.start_year || stat.end_year}
+                  year={stat.start_year || stat.end_year || indicator.start_year || indicator.end_year}
                 >
-                  <IndicatorStatDataHandler valueOptions={props.valueOptions} />
+                  <IndicatorStatDataHandler
+                    valueOptions={{
+                      ...props.valueOptions,
+                      prefix:
+                        stat.data_format === 'currency' && props.valueOptions?.useLocalValue
+                          ? props.currencyCode
+                          : stat.value_prefix || props.valueOptions?.prefix,
+                      suffix: stat.value_suffix || props.valueOptions?.suffix,
+                      dataFormat: stat.data_format || props.valueOptions?.dataFormat,
+                      aggregation: stat.aggregation
+                    }}
+                  />
                 </DynamicDataLoader>
               );
             }
 
-            return <div key={index}>Content Goes Here</div>; // TODO: add proper handling for this path
+            return <div key={index}>Chart Goes Here</div>; // TODO: add proper handling for this path
           })}
         </IndicatorStat>
       );

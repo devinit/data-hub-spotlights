@@ -1,4 +1,4 @@
-import { BudgetType, LocationData, LocationDataMeta } from '../../../utils';
+import { BudgetType, LocationData, LocationDataMeta, LocationIndicatorData, ProcessedData } from '../../../utils';
 
 export interface ValueOptions {
   useLocalValue?: boolean;
@@ -70,23 +70,21 @@ const filterDataByBudgetType = (data: LocationData[], budgetType: BudgetType): L
   });
 };
 
+const getDataMultiple = (data: LocationData[]): LocationData | undefined => {
+  return (
+    filterDataByBudgetType(data, 'actual') ||
+    filterDataByBudgetType(data, 'approved') ||
+    filterDataByBudgetType(data, 'proposed')
+  );
+};
+
 const processMultipleData = (data: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
   const sortedData = data.sort((a, b) => a.year - b.year);
   const latest = sortedData.filter(d => d.year === sortedData[data.length - 1].year);
   if (latest && latest.length > 1) {
-    const actual = filterDataByBudgetType(data, 'actual');
-    if (actual) {
-      return getValue(actual, options);
-    } else {
-      const approved = filterDataByBudgetType(data, 'approved');
-      if (approved) {
-        return getValue(approved, options);
-      } else {
-        const proposed = filterDataByBudgetType(data, 'proposed');
-        if (proposed) {
-          return getValue(proposed, options);
-        }
-      }
+    const _data = getDataMultiple(data);
+    if (_data) {
+      return getValue(_data, options);
     }
   }
   if (sortedData[data.length - 1].value) {
@@ -106,4 +104,62 @@ export const getIndicatorValue = (data?: LocationData[], options: ValueOptions =
   }
 
   return DEFAULT_VALUE;
+};
+
+const aggregateData = (data: ProcessedData[], options: ValueOptions): number | ProcessedData[] => {
+  if (options.aggregation) {
+    if (options.aggregation === 'SUM') {
+      return data.reduce((prev, curr) => {
+        if (options.useLocalValue && options.dataFormat === 'currency' && curr.meta) {
+          return (curr.meta.valueLocalCurrency || 0) + prev;
+        }
+
+        return curr.value + prev;
+      }, 0);
+    }
+  }
+
+  return data;
+};
+
+export const getIndicatorsValue = (
+  data: LocationIndicatorData[],
+  options: ValueOptions = { dataFormat: 'plain' }
+): string => {
+  if (options.aggregation) {
+    const values: ProcessedData[] = data.map(_data => {
+      if (_data.data.length > 1) {
+        const requiredData = getDataMultiple(_data.data);
+        if (requiredData) {
+          return {
+            value: requiredData.value || 0,
+            meta: requiredData.meta ? JSON.parse(requiredData.meta) : {}
+          };
+        } else {
+          const sortedData = _data.data.sort((a, b) => a.year - b.year);
+          const requiredData = sortedData[data.length - 1];
+
+          return {
+            value: requiredData.value || 0,
+            meta: requiredData.meta ? JSON.parse(requiredData.meta) : {}
+          };
+        }
+      }
+      const requiredData = _data.data[0];
+
+      return requiredData
+        ? { value: requiredData.value || 0, meta: requiredData.meta ? JSON.parse(requiredData.meta) : {} }
+        : { value: 0, meta: {} };
+    });
+    const aggregate = aggregateData(values, options);
+    if (typeof aggregate === 'number') {
+      return addPrefixAndSuffix(formatNumber(aggregate), options);
+    }
+
+    return DEFAULT_VALUE; // TODO: remove when properly handled
+  }
+
+  console.log('An aggregation property is required to handle data from multiple indicators');
+
+  return 'Invalid Configuration';
 };

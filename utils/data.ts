@@ -18,13 +18,15 @@ export interface SpotlightTheme {
   indicators: SpotlightIndicator[];
 }
 
+export type DataFormat = 'plain' | 'currency' | 'percent';
+
 export interface SpotlightIndicator {
   ddw_id: string;
   name: string;
   description?: string;
   start_year?: number;
   end_year?: number;
-  data_format: 'plain' | 'currency' | 'percent';
+  data_format: DataFormat;
   range?: string;
   value_prefix?: string;
   value_suffix?: string;
@@ -39,6 +41,7 @@ export interface SpotlightIndicatorContent {
     indicators: string[];
     start_year?: number;
     end_year?: number;
+    data_format: DataFormat;
     value_prefix?: string;
     value_suffix?: string;
     value_template?: string;
@@ -89,6 +92,11 @@ export type BudgetType = 'actual' | 'approved' | 'proposed';
 export interface LocationDataMeta {
   budgetType?: BudgetType;
   valueLocalCurrency?: number;
+}
+
+export interface ProcessedData {
+  value: number;
+  meta?: LocationDataMeta;
 }
 
 export const fetchScaffoldData = async (): Promise<PageScaffoldData> => {
