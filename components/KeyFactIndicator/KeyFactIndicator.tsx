@@ -1,8 +1,14 @@
 import dynamic from 'next/dynamic';
 import React, { FunctionComponent } from 'react';
-import { SpotlightIndicator, SpotlightIndicatorContent, SpotlightLocation, TemplateOptions } from '../../utils';
+import {
+  SpotlightIndicator,
+  SpotlightIndicatorContent,
+  SpotlightLocation,
+  TemplateOptions,
+  processTemplateString
+} from '../../utils';
 import { ValueOptions } from './utils';
-import { IndicatorStatDataHandler } from '../IndicatorStat';
+import { IndicatorStatDataHandler, IndicatorStat } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
@@ -12,34 +18,60 @@ interface KeyFactIndicatorProps {
 
 const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
 
-const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, ...props }) => {
+const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, location, ...props }) => {
+  const templateOptions: TemplateOptions = {
+    location: location.name
+  };
+
   if (indicator.content_template) {
     try {
-      const contentOptions: SpotlightIndicatorContent = JSON.parse(indicator.content_template);
-      console.log(contentOptions);
+      const contentOptions: SpotlightIndicatorContent[] = JSON.parse(indicator.content_template);
+
+      return (
+        <IndicatorStat
+          heading={processTemplateString(indicator.name, templateOptions)}
+          description={indicator.description}
+          source={indicator.source}
+        >
+          {contentOptions.map(({ stat }, index) => {
+            if (stat) {
+              return (
+                <DynamicDataLoader
+                  key={index}
+                  indicators={stat.indicators}
+                  geocode={location.geocode}
+                  year={stat.start_year || stat.end_year}
+                >
+                  <IndicatorStatDataHandler valueOptions={props.valueOptions} />
+                </DynamicDataLoader>
+              );
+            }
+
+            return <div key={index}>Content Goes Here</div>; // TODO: add proper handling for this path
+          })}
+        </IndicatorStat>
+      );
     } catch (error) {
       console.log(error.message);
     }
 
-    return <div>Content Goes Here</div>; // TODO: add proper handling for this path
+    return <div>No Data</div>;
   }
 
-  const templateOptions: TemplateOptions = {
-    location: props.location.name
-  };
-
   return (
-    <DynamicDataLoader
-      indicators={[indicator.ddw_id]}
-      geocode={props.location.geocode}
-      year={indicator.start_year || indicator.end_year}
+    <IndicatorStat
+      heading={processTemplateString(indicator.name, templateOptions)}
+      description={indicator.description}
+      source={indicator.source}
     >
-      <IndicatorStatDataHandler
-        indicator={indicator}
-        valueOptions={props.valueOptions}
-        templateOptions={templateOptions}
-      />
-    </DynamicDataLoader>
+      <DynamicDataLoader
+        indicators={[indicator.ddw_id]}
+        geocode={location.geocode}
+        year={indicator.start_year || indicator.end_year}
+      >
+        <IndicatorStatDataHandler valueOptions={props.valueOptions} />
+      </DynamicDataLoader>
+    </IndicatorStat>
   );
 };
 

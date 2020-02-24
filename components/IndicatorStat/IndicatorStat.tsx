@@ -1,13 +1,12 @@
-import React, { FunctionComponent, ReactText } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface IndicatorStatProps {
   heading?: string;
   description?: string;
   source?: string;
-  value?: ReactText;
 }
 // TODO: add proper tooltip for description & source
-const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, heading, source, value }) => {
+const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, heading, source, children }) => {
   return (
     <div className="l-2up-3up__col">
       <div className="spotlight__stat">
@@ -24,7 +23,7 @@ const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, hea
             </span>
           ) : null}
         </h3>
-        <p className="spotlight__stat-data">{value}</p>
+        {children}
       </div>
     </div>
   );

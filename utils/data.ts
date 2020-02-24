@@ -37,6 +37,8 @@ export interface SpotlightIndicator {
 export interface SpotlightIndicatorContent {
   stat?: {
     indicators: string[];
+    start_year?: number;
+    end_year?: number;
     value_prefix?: string;
     value_suffix?: string;
     value_template?: string;
@@ -82,8 +84,10 @@ export interface LocationIndicatorData {
   data: LocationData[];
 }
 
+export type BudgetType = 'actual' | 'approved' | 'proposed';
+
 export interface LocationDataMeta {
-  budgetType?: 'actual' | 'approved' | 'proposed';
+  budgetType?: BudgetType;
   valueLocalCurrency?: number;
 }
 

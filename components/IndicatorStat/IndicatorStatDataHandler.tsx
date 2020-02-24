@@ -1,31 +1,22 @@
 import React, { FunctionComponent } from 'react';
-import { LocationIndicatorData, SpotlightIndicator, processTemplateString, TemplateOptions } from '../../utils';
-import { ValueOptions, formatValue } from '../KeyFactIndicator/utils';
-import { IndicatorStat } from '.';
+import { LocationIndicatorData } from '../../utils';
+import { formatValue, ValueOptions } from '../KeyFactIndicator/utils';
+import { IndicatorStatDataViewer } from './IndicatorStatDataViewer';
 
 interface DataHandlerProps {
   data?: LocationIndicatorData;
   dataLoading?: boolean;
-  indicator: SpotlightIndicator;
   valueOptions?: ValueOptions;
-  templateOptions?: TemplateOptions;
 }
 
-const IndicatorStatDataHandler: FunctionComponent<DataHandlerProps> = ({ data, dataLoading, indicator, ...props }) => {
+const IndicatorStatDataHandler: FunctionComponent<DataHandlerProps> = ({ data, dataLoading, ...props }) => {
   if (!dataLoading) {
-    return (
-      <IndicatorStat
-        heading={processTemplateString(indicator.name, props.templateOptions || {})}
-        description={indicator.description}
-        source={indicator.source}
-        value={formatValue(data && data.data, props.valueOptions)}
-      />
-    );
+    return <IndicatorStatDataViewer value={formatValue(data && data.data, props.valueOptions)} />;
   }
 
   return <div>Loading ...</div>;
 };
 
-IndicatorStatDataHandler.defaultProps = { templateOptions: {}, valueOptions: { dataFormat: 'plain' } };
+IndicatorStatDataHandler.defaultProps = { valueOptions: { dataFormat: 'plain' } };
 
 export { IndicatorStatDataHandler };

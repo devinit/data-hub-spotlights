@@ -10,9 +10,6 @@ exports[`IndicatorStat renders default state correctly 1`] = `
     <h3
       className="spotlight__stat-heading"
     />
-    <p
-      className="spotlight__stat-data"
-    />
   </div>
 </div>
 `;

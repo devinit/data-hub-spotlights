@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndicatorStatDataViewer renders a note correctly 1`] = `
+<p
+  className="spotlight__stat-data"
+>
+  My Note
+</p>
+`;
+
+exports[`IndicatorStatDataViewer renders a value and a note correctly 1`] = `
+<p
+  className="spotlight__stat-data"
+>
+  My Value
+  <span
+    className="spotlight__stat-data__note"
+  >
+    My Note
+  </span>
+</p>
+`;
+
+exports[`IndicatorStatDataViewer renders a value correctly 1`] = `
+<p
+  className="spotlight__stat-data"
+>
+  My Value
+</p>
+`;
+
+exports[`IndicatorStatDataViewer renders default state correctly 1`] = `
+<p
+  className="spotlight__stat-data"
+/>
+`;
