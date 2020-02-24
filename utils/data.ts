@@ -45,6 +45,7 @@ export interface SpotlightIndicatorContent {
     value_prefix?: string;
     value_suffix?: string;
     value_template?: string;
+    title?: string;
     description?: string;
     source?: string;
     aggregation?: string; // this allows for simple operations on the data for more complex stats

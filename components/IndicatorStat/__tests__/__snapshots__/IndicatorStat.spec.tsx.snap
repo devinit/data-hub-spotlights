@@ -2,14 +2,10 @@
 
 exports[`IndicatorStat renders default state correctly 1`] = `
 <div
-  className="l-2up-3up__col"
+  className="spotlight__stat"
 >
-  <div
-    className="spotlight__stat"
-  >
-    <h3
-      className="spotlight__stat-heading"
-    />
-  </div>
+  <h3
+    className="spotlight__stat-heading"
+  />
 </div>
 `;

@@ -29,39 +29,43 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
       const contentOptions: SpotlightIndicatorContent[] = JSON.parse(indicator.content_template);
 
       return (
-        <IndicatorStat
-          heading={processTemplateString(indicator.name, templateOptions)}
-          description={indicator.description}
-          source={indicator.source}
-        >
+        <div className="l-2up-3up__col">
           {contentOptions.map(({ stat }, index) => {
             if (stat) {
+              const heading = stat.title || indicator.name;
+
               return (
-                <DynamicDataLoader
-                  key={index}
-                  indicators={stat.indicators}
-                  geocode={location.geocode}
-                  year={stat.start_year || stat.end_year || indicator.start_year || indicator.end_year}
+                <IndicatorStat
+                  heading={processTemplateString(heading, templateOptions)}
+                  description={stat.description || indicator.description}
+                  source={stat.source || indicator.source}
                 >
-                  <IndicatorStatDataHandler
-                    valueOptions={{
-                      ...props.valueOptions,
-                      prefix:
-                        stat.data_format === 'currency' && props.valueOptions?.useLocalValue
-                          ? props.currencyCode
-                          : stat.value_prefix || props.valueOptions?.prefix,
-                      suffix: stat.value_suffix || props.valueOptions?.suffix,
-                      dataFormat: stat.data_format || props.valueOptions?.dataFormat,
-                      aggregation: stat.aggregation
-                    }}
-                  />
-                </DynamicDataLoader>
+                  <DynamicDataLoader
+                    key={index}
+                    indicators={stat.indicators}
+                    geocode={location.geocode}
+                    year={stat.start_year || stat.end_year || indicator.start_year || indicator.end_year}
+                  >
+                    <IndicatorStatDataHandler
+                      valueOptions={{
+                        ...props.valueOptions,
+                        prefix:
+                          stat.data_format === 'currency' && props.valueOptions?.useLocalValue
+                            ? props.currencyCode
+                            : stat.value_prefix || props.valueOptions?.prefix,
+                        suffix: stat.value_suffix || props.valueOptions?.suffix,
+                        dataFormat: stat.data_format || props.valueOptions?.dataFormat,
+                        aggregation: stat.aggregation
+                      }}
+                    />
+                  </DynamicDataLoader>
+                </IndicatorStat>
               );
             }
 
             return <div key={index}>Chart Goes Here</div>; // TODO: add proper handling for this path
           })}
-        </IndicatorStat>
+        </div>
       );
     } catch (error) {
       console.log(error.message);
@@ -71,19 +75,21 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
   }
 
   return (
-    <IndicatorStat
-      heading={processTemplateString(indicator.name, templateOptions)}
-      description={indicator.description}
-      source={indicator.source}
-    >
-      <DynamicDataLoader
-        indicators={[indicator.ddw_id]}
-        geocode={location.geocode}
-        year={indicator.start_year || indicator.end_year}
+    <div className="l-2up-3up__col">
+      <IndicatorStat
+        heading={processTemplateString(indicator.name, templateOptions)}
+        description={indicator.description}
+        source={indicator.source}
       >
-        <IndicatorStatDataHandler valueOptions={props.valueOptions} />
-      </DynamicDataLoader>
-    </IndicatorStat>
+        <DynamicDataLoader
+          indicators={[indicator.ddw_id]}
+          geocode={location.geocode}
+          year={indicator.start_year || indicator.end_year}
+        >
+          <IndicatorStatDataHandler valueOptions={props.valueOptions} />
+        </DynamicDataLoader>
+      </IndicatorStat>
+    </div>
   );
 };
 
