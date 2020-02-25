@@ -26,7 +26,9 @@ describe('IndicatorStatDataViewer', () => {
   });
 
   test('renders a value and a note correctly', () => {
-    const renderer = TestRenderer.create(<IndicatorStatDataViewer value="My Value" note="My Note" />).toJSON();
+    const renderer = TestRenderer.create(
+      <IndicatorStatDataViewer value="My Value" note={{ content: 'My Note' }} />
+    ).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

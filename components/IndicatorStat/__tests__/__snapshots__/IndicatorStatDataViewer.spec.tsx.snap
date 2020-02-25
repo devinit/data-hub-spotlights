@@ -13,6 +13,12 @@ exports[`IndicatorStatDataViewer renders a value and a note correctly 1`] = `
   className="spotlight__stat-data"
 >
   My Value
+  <span
+    className="spotlight__stat-data__note"
+  >
+    My Note
+     
+  </span>
 </p>
 `;
 
