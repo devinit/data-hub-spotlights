@@ -13,7 +13,7 @@ const IndicatorStatDataViewer: FunctionComponent<IndicatorStatDataProps> = ({ va
       {value}
       {note && note.content ? (
         <span className="spotlight__stat-data__note">
-          {note}{' '}
+          {note.content}{' '}
           {note.meta ? (
             <span className="spotlight__stat-icon">
               <i role="presentation" aria-hidden="true" className="ico ico--12 ico-info-slate"></i>
