@@ -110,6 +110,7 @@ export interface LocationDataMeta {
 
 export interface ProcessedData {
   value: number;
+  name: string;
   meta?: LocationDataMeta;
 }
 

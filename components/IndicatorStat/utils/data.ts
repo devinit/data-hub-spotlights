@@ -86,12 +86,11 @@ const getOneFromMultipleBudgetTypes = (data: LocationData[]): LocationData | und
   );
 };
 
-const processLocationData = (data: LocationData[]): ProcessedData[] => {
-  return data.map(_data => ({
-    value: _data.value || 0,
-    meta: _data.meta ? JSON.parse(_data.meta) : {}
-  }));
-};
+const locationDataToProcessedData = ({ name, value, meta }: LocationData): ProcessedData => ({
+  name,
+  value: value || 0,
+  meta: meta ? JSON.parse(meta) : {}
+});
 
 const getSum = (data: ProcessedData[], options: ValueOptions): number => {
   return data.reduce((prev, curr) => {
@@ -132,7 +131,7 @@ const processMultipleData = (data: LocationData[], options: ValueOptions = { dat
       return getValue(sortedData[data.length - 1], options);
     }
   } else {
-    const aggregate = aggregateProcessedData(processLocationData(data), options);
+    const aggregate = aggregateProcessedData(data.map(locationDataToProcessedData), options);
     if (typeof aggregate === 'number') {
       return addPrefixAndSuffix(formatNumber(aggregate), options);
     }
@@ -162,25 +161,17 @@ export const getIndicatorsValue = (
       if (_data.data.length > 1) {
         const requiredData = getOneFromMultipleBudgetTypes(_data.data);
         if (requiredData) {
-          return {
-            value: requiredData.value || 0,
-            meta: requiredData.meta ? JSON.parse(requiredData.meta) : {}
-          };
+          return locationDataToProcessedData(requiredData);
         } else {
           const sortedData = _data.data.sort((a, b) => a.year - b.year);
           const requiredData = sortedData[data.length - 1];
 
-          return {
-            value: requiredData.value || 0,
-            meta: requiredData.meta ? JSON.parse(requiredData.meta) : {}
-          };
+          return locationDataToProcessedData(requiredData);
         }
       }
       const requiredData = _data.data[0];
 
-      return requiredData
-        ? { value: requiredData.value || 0, meta: requiredData.meta ? JSON.parse(requiredData.meta) : {} }
-        : { value: 0, meta: {} };
+      return requiredData ? locationDataToProcessedData(requiredData) : { name: '', value: 0, meta: {} };
     });
     const aggregate = aggregateProcessedData(values, options);
     if (typeof aggregate === 'number') {
