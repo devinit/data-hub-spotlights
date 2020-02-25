@@ -61,19 +61,13 @@ export interface IndicatorStat {
   fetchAll?: boolean;
 }
 
+export interface IndicatorChart {
+  options: ECharts.Options;
+}
+
 export interface SpotlightIndicatorContent {
   stat?: IndicatorStat;
-  chart?: {
-    type: 'bar' | 'line' | 'pie';
-    indicators: {
-      id: string;
-      valuePrefix?: string;
-      valueSuffix?: string;
-      valueTemplate?: string;
-      description?: string;
-      source?: string;
-    }[];
-  };
+  chart?: IndicatorChart;
 }
 
 export interface FetchIndicatorDataOptions {
@@ -106,6 +100,7 @@ export type BudgetType = 'actual' | 'approved' | 'proposed';
 export interface LocationDataMeta {
   budgetType?: BudgetType;
   valueLocalCurrency?: number;
+  extra?: { [key: string]: number | string };
 }
 
 export interface ProcessedData {

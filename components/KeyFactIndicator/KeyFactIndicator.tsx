@@ -7,7 +7,7 @@ import {
   TemplateOptions,
   processTemplateString
 } from '../../utils';
-import { IndicatorStatDataHandler, IndicatorStat } from '../IndicatorStat';
+import { IndicatorStatDataHandler, IndicatorStat, IndicatorStatChart } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
@@ -29,7 +29,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
 
       return (
         <div className="l-2up-3up__col">
-          {contentOptions.map(({ stat }, index) => {
+          {contentOptions.map(({ stat, chart }, index) => {
             if (stat) {
               const heading = stat.title || indicator.name;
 
@@ -62,8 +62,11 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                 </IndicatorStat>
               );
             }
+            if (chart) {
+              return <IndicatorStatChart key={index} {...chart} />;
+            }
 
-            return <div key={index}>Chart Goes Here</div>; // TODO: add proper handling for this path
+            return null;
           })}
         </div>
       );
