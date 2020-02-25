@@ -35,7 +35,7 @@ const getLocalValue = (data: LocationData, options: ValueOptions): string => {
     }
   }
 
-  return addPrefixAndSuffix(data.value.toFixed(2), {
+  return addPrefixAndSuffix(formatNumber(data.value), {
     ...options,
     prefix: options.dataFormat === 'currency' ? 'US$' : options.prefix
   });
