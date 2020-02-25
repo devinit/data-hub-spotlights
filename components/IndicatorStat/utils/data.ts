@@ -70,7 +70,7 @@ const filterDataByBudgetType = (data: LocationData[], budgetType: BudgetType): L
   });
 };
 
-const getDataMultiple = (data: LocationData[]): LocationData | undefined => {
+const getOneFromMultipleBudgetTypes = (data: LocationData[]): LocationData | undefined => {
   return (
     filterDataByBudgetType(data, 'actual') ||
     filterDataByBudgetType(data, 'approved') ||
@@ -82,13 +82,16 @@ const processMultipleData = (data: LocationData[], options: ValueOptions = { dat
   const sortedData = data.sort((a, b) => a.year - b.year);
   const latest = sortedData.filter(d => d.year === sortedData[data.length - 1].year);
   if (latest && latest.length > 1) {
-    const _data = getDataMultiple(data);
+    const _data = getOneFromMultipleBudgetTypes(data);
     if (_data) {
       return getValue(_data, options);
     }
   }
-  if (sortedData[data.length - 1].value) {
-    return getValue(sortedData[data.length - 1], options);
+
+  if (!options.aggregation) {
+    if (sortedData[data.length - 1].value) {
+      return getValue(sortedData[data.length - 1], options);
+    }
   }
 
   return DEFAULT_VALUE;
@@ -106,7 +109,7 @@ export const getIndicatorValue = (data?: LocationData[], options: ValueOptions =
   return DEFAULT_VALUE;
 };
 
-const aggregateData = (data: ProcessedData[], options: ValueOptions): number | ProcessedData[] => {
+const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): number | ProcessedData[] => {
   if (options.aggregation) {
     if (options.aggregation === 'SUM') {
       return data.reduce((prev, curr) => {
@@ -129,7 +132,7 @@ export const getIndicatorsValue = (
   if (options.aggregation) {
     const values: ProcessedData[] = data.map(_data => {
       if (_data.data.length > 1) {
-        const requiredData = getDataMultiple(_data.data);
+        const requiredData = getOneFromMultipleBudgetTypes(_data.data);
         if (requiredData) {
           return {
             value: requiredData.value || 0,
@@ -151,7 +154,7 @@ export const getIndicatorsValue = (
         ? { value: requiredData.value || 0, meta: requiredData.meta ? JSON.parse(requiredData.meta) : {} }
         : { value: 0, meta: {} };
     });
-    const aggregate = aggregateData(values, options);
+    const aggregate = aggregateProcessedData(values, options);
     if (typeof aggregate === 'number') {
       return addPrefixAndSuffix(formatNumber(aggregate), options);
     }
