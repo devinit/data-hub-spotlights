@@ -1,8 +1,7 @@
 import React, { FunctionComponent, MouseEvent, useState } from 'react';
 import classNames from 'classnames';
 import { Collapse } from 'react-collapse';
-import { Region } from './Region';
-import { RegionItem } from './RegionItem';
+import { MenuItem } from './MenuItem';
 
 export interface MenuItems {
   title: string;
@@ -55,12 +54,14 @@ const Menu: FunctionComponent<MenuNode> = ({ title, items }) => {
             View
           </a>
 
-          <Region>
-            <RegionItem key="central" regionTitle="Central Region" items={items} />
-            <RegionItem key="western" regionTitle="Western Region" items={items} />
-            <RegionItem key="eastern" regionTitle="Eastern Region" items={items} />
-            <RegionItem key="northern" regionTitle="Northern Region" items={items} />
-          </Region>
+          <ul
+            className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': showNextNav })}
+            style={{ display: showNextNav ? 'block' : 'none' }}
+          >
+            {items.map((item, index) => {
+              return <MenuItem item={item} key={index} />;
+            })}
+          </ul>
         </nav>
       </Collapse>
     </div>

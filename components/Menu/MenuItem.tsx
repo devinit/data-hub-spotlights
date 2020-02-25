@@ -1,20 +1,19 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import classNames from 'classnames';
 
-export interface SpotlightMenuItem {
+interface SpotlightMenuItem {
   title: string;
-  url?: string;
-  children?: SpotlightMenuItem[];
-  onClick?: () => void;
+  region?: string;
+  level?: number;
+  children?: [];
 }
 
 interface MenuItemNode {
-  region: string;
-  showDistrict: boolean;
-  items: SpotlightMenuItem[];
+  key: number;
+  item: SpotlightMenuItem;
 }
 
-const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
+const MenuItem: FunctionComponent<MenuItemNode> = ({ key, item }) => {
   const [show, toggleMenu] = useState(false);
   const menuClasses = [
     'countries-menu-list__item--parent-second',
@@ -22,21 +21,17 @@ const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
     'countries-menu-list__item--parent-fourth'
   ];
 
-  useEffect(() => {
-    toggleMenu(showDistrict);
-  }, [showDistrict]);
-
-  function loadClass(item: any) {
+  function loadClass(item: any): string {
     return menuClasses[item.level];
   }
 
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void {
+    event.stopPropagation();
     toggleMenu(!show);
-    console.log('The element text is ' + event.currentTarget.text);
   }
 
-  const renderListItem = (item: SpotlightMenuItem, index: number) => (
-    <li className="countries-menu-list__countries js-profile-country-item" key={index}>
+  const renderItem = (item: SpotlightMenuItem): JSX.Element => (
+    <span>
       <a
         onClick={handleClick}
         href="#"
@@ -44,20 +39,20 @@ const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
           active: show,
           'countries-menu-list__item--open': show
         })}
-        data-has-children="1"
         title={'View ' + item.title}
       >
         {item.title}
       </a>
 
-      <a
-        href="#profile"
-        aria-hidden="true"
-        className="countries-menu__profile countries-menu__link js-profile-item"
-        title="View County A"
-      >
+      <a href="#profile" className="countries-menu__profile countries-menu__link js-profile-item" title="View">
         View
       </a>
+    </span>
+  );
+
+  const renderListItem = (item: SpotlightMenuItem, index: number): JSX.Element => (
+    <li className="countries-menu-list__countries js-profile-country-item" key={index}>
+      {renderItem(item)}
       {item.children ? (
         <ul
           className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': show })}
@@ -69,16 +64,7 @@ const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
     </li>
   );
 
-  const renderNavList = () => items.map(renderListItem);
-
-  return (
-    <ul
-      className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': showDistrict })}
-      style={{ display: showDistrict ? 'block' : 'none' }}
-    >
-      {renderNavList()}
-    </ul>
-  );
+  return <span>{renderListItem(item, key)}</span>;
 };
 
 export { MenuItem };
