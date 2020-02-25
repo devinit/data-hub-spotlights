@@ -4,11 +4,17 @@ import { Collapse } from 'react-collapse';
 import { Region } from './Region';
 import { RegionItem } from './RegionItem';
 
-interface MenuNode {
-  title?: string;
+export interface MenuItems {
+  title: string;
+  region: string;
 }
 
-const Menu: FunctionComponent<MenuNode> = ({ title }) => {
+interface MenuNode {
+  title?: string;
+  items: MenuItems[];
+}
+
+const Menu: FunctionComponent<MenuNode> = ({ title, items }) => {
   const [showParentNav, toggleParentNav] = useState(true);
   const [showNextNav, showNextNavMenu] = useState(false);
 
@@ -50,10 +56,10 @@ const Menu: FunctionComponent<MenuNode> = ({ title }) => {
           </a>
 
           <Region>
-            <RegionItem key="central" regionTitle="Central Region" />
-            <RegionItem key="western" regionTitle="Western Region" />
-            <RegionItem key="eastern" regionTitle="Eastern Region" />
-            <RegionItem key="northern" regionTitle="Northern Region" />
+            <RegionItem key="central" regionTitle="Central Region" items={items} />
+            <RegionItem key="western" regionTitle="Western Region" items={items} />
+            <RegionItem key="eastern" regionTitle="Eastern Region" items={items} />
+            <RegionItem key="northern" regionTitle="Northern Region" items={items} />
           </Region>
         </nav>
       </Collapse>

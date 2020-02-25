@@ -247,12 +247,44 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     });
   };
 
+  const menuitems = [
+    {
+      title: 'Level 1',
+      region: 'central',
+      level: 0,
+      children: [
+        {
+          title: 'Level 1.1',
+          level: 1
+        },
+        {
+          title: 'Level 1.1',
+          level: 1
+        },
+        {
+          title: 'Level 1.1',
+          level: 1
+        }
+      ]
+    },
+    {
+      title: 'Level 1',
+      region: 'western',
+      level: 0
+    },
+    {
+      title: 'Level 1',
+      region: 'eastern',
+      level: 0
+    }
+  ];
+
   return (
     <PageSection>
       <h1>Visualisation Playground</h1>
 
       <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
-        <Menu title="Uganda" />
+        <Menu title="Uganda" items={menuitems} />
       </div>
 
       <EChartsBaseChart options={options1} />
