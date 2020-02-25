@@ -164,6 +164,60 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     }
   ];
 
+  const options6: ECharts.Options = {
+    title: {
+      text: 'Basic Pie Chart'
+    },
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+    legend: {
+      data: ['Apples']
+    },
+    xAxis: undefined,
+    yAxis: undefined,
+    series: [
+      {
+        name: 'Sales',
+        type: 'pie',
+        label: {
+          normal: { show: true, formatter: '{a} - {b} : {c} ({d}%)' }
+        },
+        data: [
+          {
+            name: 'Apples',
+            value: 70
+          },
+          {
+            name: 'Strawberries',
+            value: 68
+          },
+          {
+            name: 'Bananas',
+            value: 48
+          },
+          {
+            name: 'Oranges',
+            value: 40
+          },
+          {
+            name: 'Pears',
+            value: 32
+          },
+          {
+            name: 'Pineapples',
+            value: 27
+          },
+          {
+            name: 'Grapes',
+            value: 18
+          }
+        ]
+      }
+    ]
+  };
+
   const [sidebarActive, setSidebarActive] = useState(false);
 
   const onSidebarHeaderClick = () => {
@@ -259,6 +313,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         />
       </div>
       <EChartsBaseChart options={options1} />
+      <EChartsBaseChart options={options6} />
       <EChartsBaseChart options={options2} height="500px" />
       <EChartsBaseChart options={options3} height="500px" />
       <EChartsBaseChart options={options4} height="800px" />
