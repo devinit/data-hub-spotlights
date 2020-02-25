@@ -30,9 +30,15 @@ const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
     return menuClasses[item.level];
   }
 
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    toggleMenu(!show);
+    console.log('The element text is ' + event.currentTarget.text);
+  }
+
   const renderListItem = (item: SpotlightMenuItem, index: number) => (
     <li className="countries-menu-list__countries js-profile-country-item" key={index}>
       <a
+        onClick={handleClick}
         href="#"
         className={classNames('countries-menu-list__item ' + loadClass(item) + ' js-menu-item js-search-item', {
           active: show,
@@ -67,8 +73,8 @@ const MenuItem: FunctionComponent<MenuItemNode> = ({ showDistrict, items }) => {
 
   return (
     <ul
-      className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': show })}
-      style={{ display: show ? 'block' : 'none' }}
+      className={classNames('js-profile-subregion-list', { 'countries-menu-list--selected': showDistrict })}
+      style={{ display: showDistrict ? 'block' : 'none' }}
     >
       {renderNavList()}
     </ul>

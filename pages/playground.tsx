@@ -255,7 +255,21 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       children: [
         {
           title: 'Level 1.1',
-          level: 1
+          level: 1,
+          children: [
+            {
+              title: 'Level 1.1.2',
+              level: 2
+            },
+            {
+              title: 'Level 1.1.2',
+              level: 2
+            },
+            {
+              title: 'Level 1.1.2',
+              level: 2
+            }
+          ]
         },
         {
           title: 'Level 1.1',

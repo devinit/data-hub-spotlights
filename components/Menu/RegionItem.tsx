@@ -17,8 +17,9 @@ const RegionItem: FunctionComponent<RegionItemNode> = ({ regionTitle, items }) =
   }
 
   return (
-    <li className="countries-menu-list--has-children js-profile-region-item" onClick={handleClick}>
+    <li className="countries-menu-list--has-children js-profile-region-item">
       <a
+        onClick={handleClick}
         href="#"
         data-has-children="1"
         className={classNames('countries-menu-list__item js-menu-item js-search-item', {
