@@ -5,11 +5,14 @@ declare namespace ECharts {
     title?: {
       text: string;
     };
-    tooltip?: any; // FIXME: give a proper type
+    tooltip?: {
+      trigger?: 'item' | 'axis' | 'none';
+      formatter?: string;
+    };
     legend?: {
       show?: boolean;
       data?: string[];
-    }
+    };
     xAxis?: XAxis | XAxis[];
     yAxis?: YAxis | YAxis[];
     series?: Series[];
@@ -19,7 +22,9 @@ declare namespace ECharts {
     dataset?: Dataset;
   }
 
-  type DatasetSource = Array<Array<string|number> | {[key: string]: string | number}> | {[key: string]: Array<string | number>};
+  type DatasetSource =
+    | Array<Array<string | number> | { [key: string]: string | number }>
+    | { [key: string]: Array<string | number> };
 
   interface DataSet {
     source: DatasetSource;
@@ -42,11 +47,11 @@ declare namespace ECharts {
 
   interface YAxis extends Axis {
     position?: 'left' | 'right';
-  };
+  }
 
   interface XAxis extends Axis {
     position?: 'top' | 'bottom';
-  };
+  }
 
   interface Data {
     value: string | number;
@@ -105,6 +110,15 @@ declare namespace ECharts {
     seriesLayoutBy?: 'column' | 'row';
     xAxisIndex?: number;
     yAxisIndex?: number;
+    label?: SeriesLabel;
+  }
+
+  interface SeriesLabel {
+    normal?: {
+      show?: boolean;
+      position?: 'inside' | 'outside' | 'center';
+      formatter?: string;
+    };
   }
 
   interface SeriesEncode {
