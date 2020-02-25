@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react';
+import { ContentMeta } from '../../utils';
 
 interface IndicatorStatProps {
   heading?: string;
-  description?: string;
-  source?: string;
+  meta?: ContentMeta;
 }
 // TODO: add proper tooltip for description & source
-const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, heading, source, children }) => {
+const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ meta = {}, heading, children }) => {
   return (
     <div className="spotlight__stat">
       <h3 className="spotlight__stat-heading">
         {heading}
-        {description || source ? (
+        {meta.description || meta.source ? (
           <span className="spotlight__stat-icon">
             <i role="presentation" aria-hidden="true" className="ico ico--12 ico-info-slate"></i>
             <style jsx>{`
@@ -26,5 +26,7 @@ const IndicatorStat: FunctionComponent<IndicatorStatProps> = ({ description, hea
     </div>
   );
 };
+
+IndicatorStat.defaultProps = { meta: {} };
 
 export { IndicatorStat };

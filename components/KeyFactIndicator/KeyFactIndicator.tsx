@@ -38,8 +38,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                 <IndicatorStat
                   key={index}
                   heading={processTemplateString(heading, templateOptions)}
-                  description={stat.description || indicator.description}
-                  source={stat.source || indicator.source}
+                  meta={stat.meta || { description: indicator.description, source: indicator.source }}
                 >
                   <DynamicDataLoader
                     indicators={stat.indicators}
@@ -57,6 +56,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                         dataFormat: stat.dataFormat || props.valueOptions?.dataFormat,
                         aggregation: stat.aggregation
                       }}
+                      note={stat.note}
                     />
                   </DynamicDataLoader>
                 </IndicatorStat>
@@ -78,8 +78,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
     <div className="l-2up-3up__col">
       <IndicatorStat
         heading={processTemplateString(indicator.name, templateOptions)}
-        description={indicator.description}
-        source={indicator.source}
+        meta={{ description: indicator.description, source: indicator.source }}
       >
         <DynamicDataLoader
           indicators={[indicator.ddw_id]}

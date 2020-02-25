@@ -36,6 +36,16 @@ export interface SpotlightIndicator {
   source?: string;
 }
 
+export interface ContentMeta {
+  description?: string;
+  source?: string;
+}
+
+export interface ContentNote {
+  content?: string;
+  meta?: ContentMeta;
+}
+
 export interface SpotlightIndicatorContent {
   stat?: {
     indicators: string[];
@@ -46,8 +56,8 @@ export interface SpotlightIndicatorContent {
     valueSuffix?: string;
     valueTemplate?: string;
     title?: string;
-    description?: string;
-    source?: string;
+    meta?: ContentMeta;
+    note?: ContentNote;
     aggregation?: string; // this allows for simple operations on the data for more complex stats
     fetchAll?: boolean;
   };
