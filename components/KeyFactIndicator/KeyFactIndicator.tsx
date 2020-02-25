@@ -36,14 +36,14 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
 
               return (
                 <IndicatorStat
+                  key={index}
                   heading={processTemplateString(heading, templateOptions)}
                   description={stat.description || indicator.description}
                   source={stat.source || indicator.source}
                 >
                   <DynamicDataLoader
-                    key={index}
                     indicators={stat.indicators}
-                    geocode={location.geocode}
+                    geocode={!stat.fetchAll ? location.geocode : undefined}
                     year={stat.startYear || stat.endYear || indicator.start_year || indicator.end_year}
                   >
                     <IndicatorStatDataHandler

@@ -78,6 +78,37 @@ const getOneFromMultipleBudgetTypes = (data: LocationData[]): LocationData | und
   );
 };
 
+const processLocationData = (data: LocationData[]): ProcessedData[] => {
+  return data.map(_data => ({
+    value: _data.value || 0,
+    meta: _data.meta ? JSON.parse(_data.meta) : {}
+  }));
+};
+
+const getSum = (data: ProcessedData[], options: ValueOptions): number => {
+  return data.reduce((prev, curr) => {
+    if (options.useLocalValue && options.dataFormat === 'currency' && curr.meta) {
+      return (curr.meta.valueLocalCurrency || 0) + prev;
+    }
+
+    return curr.value + prev;
+  }, 0);
+};
+
+const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): number | ProcessedData[] => {
+  if (options.aggregation) {
+    if (options.aggregation === 'SUM') {
+      return getSum(data, options);
+    }
+    if (options.aggregation === 'AVG') {
+      const sum = getSum(data, options);
+      return sum / data.length;
+    }
+  }
+
+  return data;
+};
+
 const processMultipleData = (data: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
   const sortedData = data.sort((a, b) => a.year - b.year);
   const latest = sortedData.filter(d => d.year === sortedData[data.length - 1].year);
@@ -91,6 +122,11 @@ const processMultipleData = (data: LocationData[], options: ValueOptions = { dat
   if (!options.aggregation) {
     if (sortedData[data.length - 1].value) {
       return getValue(sortedData[data.length - 1], options);
+    }
+  } else {
+    const aggregate = aggregateProcessedData(processLocationData(data), options);
+    if (typeof aggregate === 'number') {
+      return addPrefixAndSuffix(formatNumber(aggregate), options);
     }
   }
 
@@ -107,22 +143,6 @@ export const getIndicatorValue = (data?: LocationData[], options: ValueOptions =
   }
 
   return DEFAULT_VALUE;
-};
-
-const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): number | ProcessedData[] => {
-  if (options.aggregation) {
-    if (options.aggregation === 'SUM') {
-      return data.reduce((prev, curr) => {
-        if (options.useLocalValue && options.dataFormat === 'currency' && curr.meta) {
-          return (curr.meta.valueLocalCurrency || 0) + prev;
-        }
-
-        return curr.value + prev;
-      }, 0);
-    }
-  }
-
-  return data;
 };
 
 export const getIndicatorsValue = (
