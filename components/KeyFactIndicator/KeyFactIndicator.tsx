@@ -7,14 +7,13 @@ import {
   TemplateOptions,
   processTemplateString
 } from '../../utils';
-import { ValueOptions } from '../IndicatorStat/utils';
 import { IndicatorStatDataHandler, IndicatorStat } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
   indicator: SpotlightIndicator;
-  valueOptions?: ValueOptions;
   currencyCode: string;
+  useLocalValue: boolean;
 }
 
 const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
@@ -47,13 +46,14 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                   >
                     <IndicatorStatDataHandler
                       valueOptions={{
-                        ...props.valueOptions,
+                        location,
+                        useLocalValue: props.useLocalValue,
                         prefix:
-                          stat.dataFormat === 'currency' && props.valueOptions?.useLocalValue
+                          stat.dataFormat === 'currency' && props.useLocalValue
                             ? props.currencyCode
-                            : stat.valuePrefix || props.valueOptions?.prefix,
-                        suffix: stat.valueSuffix || props.valueOptions?.suffix,
-                        dataFormat: stat.dataFormat || props.valueOptions?.dataFormat,
+                            : stat.valuePrefix || indicator.value_prefix,
+                        suffix: stat.valueSuffix || indicator.value_suffix,
+                        dataFormat: stat.dataFormat || indicator.data_format,
                         aggregation: stat.aggregation
                       }}
                       note={stat.note}
@@ -85,7 +85,18 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
           geocode={location.geocode}
           year={indicator.start_year || indicator.end_year}
         >
-          <IndicatorStatDataHandler valueOptions={props.valueOptions} />
+          <IndicatorStatDataHandler
+            valueOptions={{
+              location,
+              useLocalValue: props.useLocalValue,
+              dataFormat: indicator.data_format,
+              prefix:
+                indicator.data_format === 'currency' && props.useLocalValue
+                  ? props.currencyCode
+                  : indicator.value_prefix,
+              suffix: indicator.value_suffix
+            }}
+          />
         </DynamicDataLoader>
       </IndicatorStat>
     </div>
@@ -93,7 +104,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
 };
 
 KeyFactIndicator.defaultProps = {
-  valueOptions: { dataFormat: 'plain' }
+  useLocalValue: false
 };
 
 export { KeyFactIndicator };

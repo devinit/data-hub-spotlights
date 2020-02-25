@@ -1,4 +1,11 @@
-import { BudgetType, LocationData, LocationDataMeta, LocationIndicatorData, ProcessedData } from '../../../utils';
+import {
+  BudgetType,
+  LocationData,
+  LocationDataMeta,
+  LocationIndicatorData,
+  ProcessedData,
+  SpotlightLocation
+} from '../../../utils';
 
 export interface ValueOptions {
   useLocalValue?: boolean;
@@ -6,6 +13,7 @@ export interface ValueOptions {
   aggregation?: string;
   prefix?: string;
   suffix?: string;
+  location?: SpotlightLocation;
 }
 
 const DEFAULT_VALUE = 'No Data';

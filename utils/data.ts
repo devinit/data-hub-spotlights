@@ -46,21 +46,23 @@ export interface ContentNote {
   meta?: ContentMeta;
 }
 
+export interface IndicatorStat {
+  indicators: string[];
+  startYear?: number;
+  endYear?: number;
+  dataFormat: DataFormat;
+  valuePrefix?: string;
+  valueSuffix?: string;
+  valueTemplate?: string;
+  title?: string;
+  meta?: ContentMeta;
+  note?: ContentNote;
+  aggregation?: string; // this allows for simple operations on the data for more complex stats
+  fetchAll?: boolean;
+}
+
 export interface SpotlightIndicatorContent {
-  stat?: {
-    indicators: string[];
-    startYear?: number;
-    endYear?: number;
-    dataFormat: DataFormat;
-    valuePrefix?: string;
-    valueSuffix?: string;
-    valueTemplate?: string;
-    title?: string;
-    meta?: ContentMeta;
-    note?: ContentNote;
-    aggregation?: string; // this allows for simple operations on the data for more complex stats
-    fetchAll?: boolean;
-  };
+  stat?: IndicatorStat;
   chart?: {
     type: 'bar' | 'line' | 'pie';
     indicators: {
