@@ -111,6 +111,21 @@ const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): n
       const sum = getSum(data, options);
       return sum / data.length;
     }
+    if (options.aggregation === 'POSN ASC' && options.location) {
+      return data
+        .sort((a, b) => a.value - b.value)
+        .findIndex(d =>
+          d.name && options.location?.name ? d.name.toLowerCase() === options.location?.name.toLowerCase() : false
+        );
+    }
+    if (options.aggregation === 'POSN DESC' && options.location) {
+      return data
+        .sort((a, b) => a.value - b.value)
+        .reverse()
+        .findIndex(d =>
+          d.name && options.location?.name ? d.name.toLowerCase() === options.location?.name.toLowerCase() : false
+        );
+    }
   }
 
   return data;
