@@ -44,17 +44,17 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                     key={index}
                     indicators={stat.indicators}
                     geocode={location.geocode}
-                    year={stat.start_year || stat.end_year || indicator.start_year || indicator.end_year}
+                    year={stat.startYear || stat.endYear || indicator.start_year || indicator.end_year}
                   >
                     <IndicatorStatDataHandler
                       valueOptions={{
                         ...props.valueOptions,
                         prefix:
-                          stat.data_format === 'currency' && props.valueOptions?.useLocalValue
+                          stat.dataFormat === 'currency' && props.valueOptions?.useLocalValue
                             ? props.currencyCode
-                            : stat.value_prefix || props.valueOptions?.prefix,
-                        suffix: stat.value_suffix || props.valueOptions?.suffix,
-                        dataFormat: stat.data_format || props.valueOptions?.dataFormat,
+                            : stat.valuePrefix || props.valueOptions?.prefix,
+                        suffix: stat.valueSuffix || props.valueOptions?.suffix,
+                        dataFormat: stat.dataFormat || props.valueOptions?.dataFormat,
                         aggregation: stat.aggregation
                       }}
                     />

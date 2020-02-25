@@ -39,24 +39,25 @@ export interface SpotlightIndicator {
 export interface SpotlightIndicatorContent {
   stat?: {
     indicators: string[];
-    start_year?: number;
-    end_year?: number;
-    data_format: DataFormat;
-    value_prefix?: string;
-    value_suffix?: string;
-    value_template?: string;
+    startYear?: number;
+    endYear?: number;
+    dataFormat: DataFormat;
+    valuePrefix?: string;
+    valueSuffix?: string;
+    valueTemplate?: string;
     title?: string;
     description?: string;
     source?: string;
     aggregation?: string; // this allows for simple operations on the data for more complex stats
+    fetchAll?: boolean;
   };
   chart?: {
     type: 'bar' | 'line' | 'pie';
     indicators: {
       id: string;
-      value_prefix?: string;
-      value_suffix?: string;
-      value_template?: string;
+      valuePrefix?: string;
+      valueSuffix?: string;
+      valueTemplate?: string;
       description?: string;
       source?: string;
     }[];
