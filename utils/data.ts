@@ -46,6 +46,8 @@ export interface ContentNote {
   meta?: ContentMeta;
 }
 
+export type Aggregation = 'SUM' | 'AVG' | 'PERCENT' | 'POSN ASC' | 'POSN DESC';
+
 interface SharedIndicatorContentProps {
   indicators: string[];
   startYear?: number;
@@ -53,7 +55,7 @@ interface SharedIndicatorContentProps {
   title?: string;
   meta?: ContentMeta;
   fetchAll?: boolean;
-  aggregation?: 'SUM' | 'AVG' | 'PERCENT' | 'POSN ASC' | 'POSN DESC'; // this allows for simple operations on the data for more complex stats
+  aggregation?: Aggregation; // this allows for simple operations on the data for more complex stats
 }
 
 export interface IndicatorStat extends SharedIndicatorContentProps {

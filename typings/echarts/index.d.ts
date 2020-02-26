@@ -9,10 +9,7 @@ declare namespace ECharts {
       trigger?: 'item' | 'axis' | 'none';
       formatter?: string;
     };
-    legend?: {
-      show?: boolean;
-      data?: string[];
-    };
+    legend?: Legend;
     xAxis?: XAxis | XAxis[];
     yAxis?: YAxis | YAxis[];
     series?: Series[];
@@ -28,6 +25,11 @@ declare namespace ECharts {
 
   interface DataSet {
     source: DatasetSource;
+  }
+
+  interface Legend {
+    show?: boolean;
+    data?: string[];
   }
 
   interface Axis {
