@@ -59,7 +59,7 @@ const Menu: FunctionComponent<MenuNode> = ({ title, items }) => {
             style={{ display: showNextNav ? 'block' : 'none' }}
           >
             {items.map((item, index) => {
-              return <MenuItem item={item} key={index} />;
+              return <MenuItem item={item} key={index} index={index} />;
             })}
           </ul>
         </nav>
