@@ -1,13 +1,21 @@
 import React, { FunctionComponent } from 'react';
-import { IndicatorChart } from '../../utils';
 import { EChartsBaseChart } from '../EChartsBaseChart';
 
-type IndicatorStatChartProps = IndicatorChart;
+interface IndicatorStatChartProps {
+  options: ECharts.Options;
+}
 
 const IndicatorStatChart: FunctionComponent<IndicatorStatChartProps> = ({ options }) => {
   return (
-    <div className="spotlight__interactive">
-      <EChartsBaseChart options={options} />
+    <div>
+      <EChartsBaseChart options={options} width="240px" height="230px" />
+      <style jsx>{`
+        position: relative;
+        min-height: 250px;
+        border: 1px solid #e84439;
+        width: 100%;
+        padding: 20px;
+      `}</style>
     </div>
   );
 };

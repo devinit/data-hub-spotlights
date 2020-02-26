@@ -46,23 +46,37 @@ export interface ContentNote {
   meta?: ContentMeta;
 }
 
-export interface IndicatorStat {
+interface SharedIndicatorContentProps {
   indicators: string[];
   startYear?: number;
   endYear?: number;
+  title?: string;
+  meta?: ContentMeta;
+  fetchAll?: boolean;
+  aggregation?: 'SUM' | 'AVG' | 'PERCENT' | 'POSN ASC' | 'POSN DESC'; // this allows for simple operations on the data for more complex stats
+}
+
+export interface IndicatorStat extends SharedIndicatorContentProps {
   dataFormat: DataFormat;
   valuePrefix?: string;
   valueSuffix?: string;
   valueTemplate?: string;
-  title?: string;
-  meta?: ContentMeta;
   note?: ContentNote;
-  aggregation?: string; // this allows for simple operations on the data for more complex stats
-  fetchAll?: boolean;
 }
 
-export interface IndicatorChart {
+export interface IndicatorChart extends SharedIndicatorContentProps {
+  type: 'bar' | 'pie';
   options: ECharts.Options;
+  bar?: {
+    legend: string;
+    xAxis: string;
+    yAxis: string[];
+  };
+  pie?: {
+    legend: string;
+    value: string;
+    name: string;
+  };
 }
 
 export interface SpotlightIndicatorContent {

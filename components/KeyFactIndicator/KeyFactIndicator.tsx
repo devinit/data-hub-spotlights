@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import React, { FunctionComponent } from 'react';
 import {
+  processTemplateString,
   SpotlightIndicator,
   SpotlightIndicatorContent,
   SpotlightLocation,
-  TemplateOptions,
-  processTemplateString
+  TemplateOptions
 } from '../../utils';
-import { IndicatorStatDataHandler, IndicatorStat, IndicatorStatChart } from '../IndicatorStat';
+import { IndicatorChartDataHandler, IndicatorStat, IndicatorStatDataHandler } from '../IndicatorStat';
 
 interface KeyFactIndicatorProps {
   location: SpotlightLocation;
@@ -63,7 +63,23 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
               );
             }
             if (chart) {
-              return <IndicatorStatChart key={index} {...chart} />;
+              const heading = chart.title || indicator.name;
+
+              return (
+                <IndicatorStat
+                  key={index}
+                  heading={processTemplateString(heading, templateOptions)}
+                  meta={chart.meta || { description: indicator.description, source: indicator.source }}
+                >
+                  <DynamicDataLoader
+                    indicators={chart.indicators}
+                    geocode={!chart.fetchAll ? location.geocode : undefined}
+                    year={chart.startYear || chart.endYear || indicator.start_year || indicator.end_year}
+                  >
+                    <IndicatorChartDataHandler {...chart} />
+                  </DynamicDataLoader>
+                </IndicatorStat>
+              );
             }
 
             return null;
