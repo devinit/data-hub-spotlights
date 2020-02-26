@@ -6,6 +6,7 @@ import { axisDefaults, defaults } from './utils/options';
 interface EChartBaseChartProps {
   width?: string;
   height?: string;
+  classNames?: string;
   options: ECharts.Options;
 }
 
@@ -25,7 +26,7 @@ const EChartsBaseChart: FunctionComponent<EChartBaseChartProps> = props => {
     }
   }, []);
 
-  return <div ref={chartNode} style={{ width: props.width, height: props.height }} />;
+  return <div ref={chartNode} style={{ width: props.width, height: props.height }} className={props.classNames} />;
 };
 
 EChartsBaseChart.defaultProps = {

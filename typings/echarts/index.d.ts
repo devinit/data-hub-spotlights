@@ -35,6 +35,7 @@ declare namespace ECharts {
     show?: boolean;
     data?: Data[];
     axisLine?: AxisLine;
+    axisLabel?: AxisLabel;
     axisTick?: AxisTick;
     splitLine?: SplitLine;
     type?: AxisType;
@@ -68,6 +69,10 @@ declare namespace ECharts {
   interface AxisLine {
     show?: boolean;
     lineStyle?: AxisLineStyle;
+  }
+
+  interface AxisLabel {
+    formatter?: ((value: string | number, index: number) => void) | string;
   }
 
   interface AxisTick {
