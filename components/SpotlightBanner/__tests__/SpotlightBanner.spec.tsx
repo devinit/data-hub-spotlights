@@ -15,12 +15,12 @@ describe('SpotlightBanner', () => {
     expect(renderer).toMatchSnapshot();
   });
 
-  test('renders only SpotlightBannerAside & SpotlightBannerMain', () => {
+  test('renders children correctly', () => {
     const renderer = TestRenderer.create(
       <SpotlightBanner>
         <SpotlightBannerAside />
         <SpotlightBannerMain />
-        <div>Excluded Child</div>
+        <div>My Other Child</div>
       </SpotlightBanner>
     ).toJSON();
 

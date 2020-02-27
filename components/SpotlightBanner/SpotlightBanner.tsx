@@ -1,23 +1,9 @@
 import classNames from 'classnames';
-import React, { Children, FunctionComponent, isValidElement, ReactNode } from 'react';
-import { SpotlightBannerAside } from './SpotlightBannerAside';
-import { SpotlightBannerMain } from './SpotlightBannerMain';
+import React, { FunctionComponent } from 'react';
 
-const SpotlightBanner: FunctionComponent<{ header?: boolean }> = ({ children, header }) => {
-  const renderValidChildren = (): ReactNode => {
-    return Children.map(children, child => {
-      if (isValidElement(child) && (child.type === SpotlightBannerAside || child.type === SpotlightBannerMain)) {
-        return child;
-      }
-    });
-  };
-
-  return (
-    <div className={classNames('spotlight-banner', { 'spotlight-banner--header': header })}>
-      {renderValidChildren()}
-    </div>
-  );
-};
+const SpotlightBanner: FunctionComponent<{ header?: boolean }> = ({ children, header }) => (
+  <div className={classNames('spotlight-banner', { 'spotlight-banner--header': header })}>{children}</div>
+);
 
 SpotlightBanner.defaultProps = {
   header: false
