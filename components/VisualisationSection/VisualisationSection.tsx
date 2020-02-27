@@ -1,16 +1,17 @@
-import React, { Children, FunctionComponent, isValidElement } from 'react';
+import classNames from 'classnames';
+import React, { Children, FunctionComponent, isValidElement, ReactNode } from 'react';
 import { SpotlightSidebar } from '../SpotlightSidebar';
 import { VisualisationSectionMain } from './VisualisationSectionMain';
 
-const VisualisationSection: FunctionComponent = ({ children }) => {
-  const renderContent = () =>
+const VisualisationSection: FunctionComponent<{ className?: string }> = ({ children, className }) => {
+  const renderContent = (): ReactNode =>
     Children.map(children, child => {
       if (isValidElement(child) && (child.type === SpotlightSidebar || child.type === VisualisationSectionMain)) {
         return child;
       }
     });
 
-  return <div className="spotlight">{renderContent()}</div>;
+  return <div className={classNames('spotlight', className)}>{renderContent()}</div>;
 };
 
 export { VisualisationSection };

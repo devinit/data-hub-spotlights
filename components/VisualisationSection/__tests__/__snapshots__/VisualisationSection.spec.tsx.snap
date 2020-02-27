@@ -11,7 +11,7 @@ exports[`VisualisationSection renders only SpotlightSidebar & VisualisationSecti
   className="spotlight"
 >
   <div
-    className="spotlight__aside spotlight__aside--no-margin"
+    className="spotlight__aside"
   >
     <style
       jsx={true}
@@ -38,4 +38,10 @@ exports[`VisualisationSection renders only SpotlightSidebar & VisualisationSecti
     </style>
   </div>
 </div>
+`;
+
+exports[`VisualisationSection renders with the specified class name 1`] = `
+<div
+  className="spotlight spotlight--leader"
+/>
 `;

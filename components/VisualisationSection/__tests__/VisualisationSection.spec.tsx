@@ -26,4 +26,10 @@ describe('VisualisationSection', () => {
 
     expect(renderer).toMatchSnapshot();
   });
+
+  test('renders with the specified class name', () => {
+    const renderer = TestRenderer.create(<VisualisationSection className="spotlight--leader" />).toJSON();
+
+    expect(renderer).toMatchSnapshot();
+  });
 });
