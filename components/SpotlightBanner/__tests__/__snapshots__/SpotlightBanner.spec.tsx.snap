@@ -2,13 +2,13 @@
 
 exports[`SpotlightBanner renders correctly 1`] = `
 <div
-  className="spotlight-banner spotlight-banner--header"
+  className="spotlight-banner"
 />
 `;
 
 exports[`SpotlightBanner renders only SpotlightBannerAside & SpotlightBannerMain 1`] = `
 <div
-  className="spotlight-banner spotlight-banner--header"
+  className="spotlight-banner"
 >
   <div
     className="spotlight-banner__aside"
@@ -17,4 +17,10 @@ exports[`SpotlightBanner renders only SpotlightBannerAside & SpotlightBannerMain
     className="spotlight-banner__main"
   />
 </div>
+`;
+
+exports[`SpotlightBanner renders the class spotlight-banner--header when configured as a header 1`] = `
+<div
+  className="spotlight-banner spotlight-banner--header"
+/>
 `;

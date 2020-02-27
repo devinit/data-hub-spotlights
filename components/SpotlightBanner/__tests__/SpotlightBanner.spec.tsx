@@ -26,4 +26,10 @@ describe('SpotlightBanner', () => {
 
     expect(renderer).toMatchSnapshot();
   });
+
+  test('renders the class spotlight-banner--header when configured as a header', () => {
+    const renderer = TestRenderer.create(<SpotlightBanner header />).toJSON();
+
+    expect(renderer).toMatchSnapshot();
+  });
 });
