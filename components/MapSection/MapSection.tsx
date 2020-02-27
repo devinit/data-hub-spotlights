@@ -51,7 +51,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
       <MapSectionHeader onSelectLocation={onSelectLocation} countryCode={countryCode} />
 
       <VisualisationSection>
-        <SpotlightSidebar>
+        <SpotlightSidebar className="spotlight__aside--no-margin">
           <SidebarContent>
             <SpotlightFilters
               themes={themeData}

@@ -1,10 +1,11 @@
 import React, { Children, FunctionComponent, isValidElement } from 'react';
+import classNames from 'classnames';
 import { SidebarContent } from './SidebarContent';
 import { SidebarHeading } from './SidebarHeading';
 
-const SpotlightSidebar: FunctionComponent = ({ children }) => {
+const SpotlightSidebar: FunctionComponent<{ className?: string }> = ({ children, className }) => {
   return (
-    <div className="spotlight__aside spotlight__aside--no-margin">
+    <div className={classNames('spotlight__aside', className)}>
       {Children.map(children, child =>
         isValidElement(child) && (child.type === SidebarContent || child.type === SidebarHeading) ? child : null
       )}
