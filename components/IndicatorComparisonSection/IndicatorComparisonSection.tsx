@@ -28,7 +28,7 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
   console.log(indicatorOne, indicatorTwo);
 
   return (
-    <PageSection dark wide>
+    <PageSection wide dark={!!location}>
       <PageSectionHeading>Compare indicators for {location ? location.name : countryName}</PageSectionHeading>
       <SpotlightBanner>
         <SpotlightComparison>
