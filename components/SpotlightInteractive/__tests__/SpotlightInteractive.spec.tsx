@@ -13,6 +13,14 @@ describe('SpotlightInteractive', () => {
     expect(renderer).toMatchSnapshot();
   });
 
+  test('renders the configured class name', () => {
+    const renderer = TestRenderer.create(
+      <SpotlightInteractive className="spotlight__interactive--max-height" />
+    ).toJSON();
+
+    expect(renderer).toMatchSnapshot();
+  });
+
   test('renders the configured minHeight', () => {
     const renderer = TestRenderer.create(<SpotlightInteractive minHeight="300px" />).toJSON();
 

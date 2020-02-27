@@ -1,7 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SpotlightInteractive renders correctly 1`] = `
-<div>
+<div
+  className=""
+>
+  <style
+    jsx={true}
+  >
+    
+        min-height: 500px;
+        height: 100%;
+        border: 1px solid #e84439;
+        
+      
+  </style>
+</div>
+`;
+
+exports[`SpotlightInteractive renders the configured class name 1`] = `
+<div
+  className="spotlight__interactive--max-height"
+>
   <style
     jsx={true}
   >
@@ -16,7 +35,9 @@ exports[`SpotlightInteractive renders correctly 1`] = `
 `;
 
 exports[`SpotlightInteractive renders the configured maxHeight 1`] = `
-<div>
+<div
+  className=""
+>
   <style
     jsx={true}
   >
@@ -34,7 +55,9 @@ exports[`SpotlightInteractive renders the configured maxHeight 1`] = `
 `;
 
 exports[`SpotlightInteractive renders the configured minHeight 1`] = `
-<div>
+<div
+  className=""
+>
   <style
     jsx={true}
   >
