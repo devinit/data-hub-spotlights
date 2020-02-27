@@ -8,7 +8,7 @@ import { SpotlightHeading } from '../SpotlightHeading';
 
 describe('SpotlightHeading', () => {
   test('renders correctly with a heading', () => {
-    const renderer = TestRenderer.create(<SpotlightHeading />).toJSON();
+    const renderer = TestRenderer.create(<SpotlightHeading>My Heading</SpotlightHeading>).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });

@@ -3,7 +3,9 @@
 exports[`SpotlightHeading renders correctly with a heading 1`] = `
 <h2
   className="spotlight__heading"
-/>
+>
+  My Heading
+</h2>
 `;
 
 exports[`SpotlightHeading renders with the specificed class name 1`] = `
