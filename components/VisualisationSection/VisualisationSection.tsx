@@ -1,11 +1,11 @@
 import React, { Children, FunctionComponent, isValidElement } from 'react';
 import { SpotlightSidebar } from '../SpotlightSidebar';
-import { MapSectionBodyMain } from './MapSectionBodyMain';
+import { VisualisationSectionMain } from './VisualisationSectionMain';
 
-const MapSectionBody: FunctionComponent = ({ children }) => {
+const VisualisationSection: FunctionComponent = ({ children }) => {
   const renderContent = () =>
     Children.map(children, child => {
-      if (isValidElement(child) && (child.type === SpotlightSidebar || child.type === MapSectionBodyMain)) {
+      if (isValidElement(child) && (child.type === SpotlightSidebar || child.type === VisualisationSectionMain)) {
         return child;
       }
     });
@@ -13,4 +13,4 @@ const MapSectionBody: FunctionComponent = ({ children }) => {
   return <div className="spotlight">{renderContent()}</div>;
 };
 
-export { MapSectionBody };
+export { VisualisationSection };

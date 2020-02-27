@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-const MapSectionBodyMain: FunctionComponent = ({ children }) => (
+const VisualisationSectionMain: FunctionComponent = ({ children }) => (
   <div className="spotlight__main">
     {children}
     <style jsx>{`
@@ -14,4 +14,4 @@ const MapSectionBodyMain: FunctionComponent = ({ children }) => (
   </div>
 );
 
-export { MapSectionBodyMain };
+export { VisualisationSectionMain };

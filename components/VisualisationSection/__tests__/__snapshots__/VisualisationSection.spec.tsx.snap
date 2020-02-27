@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MapSectionBody renders correctly 1`] = `
+exports[`VisualisationSection renders correctly 1`] = `
 <div
   className="spotlight"
 />
 `;
 
-exports[`MapSectionBody renders only SpotlightSidebar & MapSectionBodyMain 1`] = `
+exports[`VisualisationSection renders only SpotlightSidebar & VisualisationSectionMain 1`] = `
 <div
   className="spotlight"
 >

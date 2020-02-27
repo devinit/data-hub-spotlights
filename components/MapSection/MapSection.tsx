@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { SpotlightLocation, SpotlightOptions } from '../../utils';
 import { Legend, LegendItem } from '../Legend';
-import { MapSectionBody, MapSectionBodyMain } from '../MapSectionBody';
+import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import { MapSectionHeader } from '../MapSectionHeader';
 import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
@@ -50,7 +50,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
     <PageSection>
       <MapSectionHeader onSelectLocation={onSelectLocation} countryCode={countryCode} />
 
-      <MapSectionBody>
+      <VisualisationSection>
         <SpotlightSidebar>
           <SidebarContent>
             <SpotlightFilters
@@ -71,7 +71,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
           </SidebarContent>
         </SpotlightSidebar>
 
-        <MapSectionBodyMain>
+        <VisualisationSectionMain>
           <DynamicMapDataLoader
             indicators={indicatorID ? [indicatorID] : undefined}
             geocode={activeLocation && activeLocation.geocode}
@@ -86,8 +86,8 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
               dataSuffix={options.indicator && options.indicator.value_suffix}
             />
           </DynamicMapDataLoader>
-        </MapSectionBodyMain>
-      </MapSectionBody>
+        </VisualisationSectionMain>
+      </VisualisationSection>
     </PageSection>
   );
 };

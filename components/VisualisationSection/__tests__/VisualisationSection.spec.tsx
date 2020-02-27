@@ -4,24 +4,24 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import * as TestRenderer from 'react-test-renderer';
-import { MapSectionBody } from '../MapSectionBody';
 import { SpotlightSidebar } from '../../SpotlightSidebar';
-import { MapSectionBodyMain } from '../MapSectionBodyMain';
+import { VisualisationSection } from '../VisualisationSection';
+import { VisualisationSectionMain } from '../VisualisationSectionMain';
 
-describe('MapSectionBody', () => {
+describe('VisualisationSection', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<MapSectionBody />).toJSON();
+    const renderer = TestRenderer.create(<VisualisationSection />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
-  test('renders only SpotlightSidebar & MapSectionBodyMain', () => {
+  test('renders only SpotlightSidebar & VisualisationSectionMain', () => {
     const renderer = TestRenderer.create(
-      <MapSectionBody>
+      <VisualisationSection>
         <SpotlightSidebar />
-        <MapSectionBodyMain />
+        <VisualisationSectionMain />
         <div>This will not Show</div>
-      </MapSectionBody>
+      </VisualisationSection>
     ).toJSON();
 
     expect(renderer).toMatchSnapshot();
