@@ -4,6 +4,10 @@ import { SpotlightLocation, SpotlightTheme, SpotlightOptions, SpotlightIndicator
 import { SpotlightComparison } from '../SpotlightComparison';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightBanner } from '../SpotlightBanner';
+import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
+import { SpotlightSidebar } from '../SpotlightSidebar';
+import { SpotlightHeading } from '../SpotlightHeading';
+import { SpotlightInteractive } from '../SpotlightInteractive';
 
 export interface IndicatorComparisonSectionProps {
   location?: SpotlightLocation;
@@ -59,6 +63,17 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
           Compare
         </button>
       </SpotlightBanner>
+
+      <VisualisationSection className="spotlight--leader">
+        <SpotlightSidebar>
+          <SpotlightHeading>{location ? location.name : countryName}</SpotlightHeading>
+          <SpotlightInteractive></SpotlightInteractive>
+        </SpotlightSidebar>
+        <VisualisationSectionMain>
+          <SpotlightHeading>Locations in {location ? location.name : countryName}</SpotlightHeading>
+          <SpotlightInteractive maxHeight="500px"></SpotlightInteractive>
+        </VisualisationSectionMain>
+      </VisualisationSection>
     </PageSection>
   );
 };
