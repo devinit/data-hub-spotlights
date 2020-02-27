@@ -36,6 +36,7 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
           themes={page.themes.filter(theme => theme.section === 'facts')}
         />
         <IndicatorComparisonSection
+          location={location}
           themes={page.themes.filter(theme => theme.section === 'map')}
           countryCode={page.country_code}
           countryName={page.country_name}
