@@ -1,14 +1,15 @@
 import dynamic from 'next/dynamic';
-import React, { FunctionComponent, useState, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, useState } from 'react';
 import { SpotlightLocation, SpotlightOptions } from '../../utils';
 import { Legend, LegendItem } from '../Legend';
-import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import { MapSectionHeader } from '../MapSectionHeader';
 import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
+import { SpotlightInteractive } from '../SpotlightInteractive';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
-import { MapSectionProps, getIndicatorColours, parseIndicator, splitByComma } from './utils';
+import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
+import { getIndicatorColours, MapSectionProps, parseIndicator, splitByComma } from './utils';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
@@ -72,20 +73,22 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
         </SpotlightSidebar>
 
         <VisualisationSectionMain>
-          <DynamicMapDataLoader
-            indicators={indicatorID ? [indicatorID] : undefined}
-            geocode={activeLocation && activeLocation.geocode}
-            year={options.year ? options.year : options.indicator && options.indicator.start_year}
-            limit={10000}
-          >
-            <DynamicMap
-              countryCode={countryCode}
-              range={range}
-              colours={colours}
-              dataPrefix={options.indicator && options.indicator.value_prefix}
-              dataSuffix={options.indicator && options.indicator.value_suffix}
-            />
-          </DynamicMapDataLoader>
+          <SpotlightInteractive>
+            <DynamicMapDataLoader
+              indicators={indicatorID ? [indicatorID] : undefined}
+              geocode={activeLocation && activeLocation.geocode}
+              year={options.year ? options.year : options.indicator && options.indicator.start_year}
+              limit={10000}
+            >
+              <DynamicMap
+                countryCode={countryCode}
+                range={range}
+                colours={colours}
+                dataPrefix={options.indicator && options.indicator.value_prefix}
+                dataSuffix={options.indicator && options.indicator.value_suffix}
+              />
+            </DynamicMapDataLoader>
+          </SpotlightInteractive>
         </VisualisationSectionMain>
       </VisualisationSection>
     </PageSection>
