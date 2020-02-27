@@ -1,17 +1,15 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FormField } from '../FormField';
-import { SpotlightOptions } from '../MapSection';
 import { Select, SelectOption } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
+import { FilterSelectOptions, SpotlightFilterProps, defaultSelectOptions } from './utils';
 import {
-  FilterSelectOptions,
-  SpotlightFilterProps,
-  createYearOptionsFromIndicator,
-  defaultSelectOptions,
   getDefaults,
   getThemeDefaults,
-  parseIndicatorToOption
-} from './utils';
+  createYearOptionsFromIndicator,
+  parseIndicatorToOption,
+  SpotlightOptions
+} from '../../utils';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes);
@@ -62,12 +60,12 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
 
   return (
     <form className="form">
-      <FormField className="">
-        <label className="form-label">Select a topic to explore</label>
+      <FormField className={props.topicClassName}>
+        <label className="form-label">{props.topicLabel}</label>
         <Select
           options={themes}
           onChange={onSelectTheme}
-          placeholder="Select Theme"
+          placeholder="Select Topic"
           isLoading={!themes}
           defaultValue={options.themes ? options.themes[0] : undefined}
         />
@@ -79,9 +77,19 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
         onSelectYear={onSelectYear}
         years={years}
         activeYear={activeYear}
+        indicatorLabel={props.indicatorLabel}
+        yearLabel={props.yearLabel}
+        indicatorClassName={props.indicatorClassName}
+        yearClassName={props.yearClassName}
       />
     </form>
   );
+};
+
+SpotlightFilters.defaultProps = {
+  topicLabel: 'Select a topic to explore',
+  indicatorLabel: 'Choose an indicator',
+  yearLabel: 'Choose a year'
 };
 
 export { SpotlightFilters };

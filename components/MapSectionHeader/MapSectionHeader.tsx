@@ -36,7 +36,7 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
   };
 
   return (
-    <SpotlightBanner>
+    <SpotlightBanner header>
       <SpotlightBannerAside>
         <Select
           options={options}

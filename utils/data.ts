@@ -7,6 +7,7 @@ export interface SpotlightPage {
   full_url: string;
   relative_url: string;
   country_code: string;
+  country_name: string;
   currency_code: string;
   themes: SpotlightTheme[];
 }

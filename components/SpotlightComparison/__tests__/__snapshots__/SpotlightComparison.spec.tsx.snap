@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightComparison renders correctly 1`] = `
+<div
+  className="spotlight__comparison"
+>
+  <span
+    className="spotlight__comparison-legend"
+  />
+</div>
+`;
+
+exports[`SpotlightComparison renders the legend with the configured class 1`] = `
+<div
+  className="spotlight__comparison"
+>
+  <span
+    className="spotlight__comparison-legend spotlight__comparison-legend--alt"
+  />
+</div>
+`;

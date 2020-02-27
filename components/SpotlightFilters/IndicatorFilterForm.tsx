@@ -9,6 +9,10 @@ interface FormProps {
   years?: SelectOptions;
   activeYear?: number;
   onSelectYear?: (option?: SelectOption) => void;
+  indicatorLabel?: string;
+  yearLabel?: string;
+  indicatorClassName?: string; // for the form field
+  yearClassName?: string; // for the form field
 }
 
 const IndicatorFilterForm: FunctionComponent<FormProps> = ({
@@ -17,11 +21,12 @@ const IndicatorFilterForm: FunctionComponent<FormProps> = ({
   onSelectIndicator,
   years,
   activeYear,
-  onSelectYear
+  onSelectYear,
+  ...props
 }) => (
   <>
-    <FormField className="form-field--spaced-minor">
-      <label className="form-label">Choose an indicator</label>
+    <FormField className={props.indicatorClassName}>
+      <label className="form-label">{props.indicatorLabel}</label>
       <Select
         isDisabled={!indicators || !indicators.length}
         options={indicators}
@@ -30,8 +35,8 @@ const IndicatorFilterForm: FunctionComponent<FormProps> = ({
         placeholder="Select Indicator"
       />
     </FormField>
-    <FormField className="form-field--inline">
-      <label className="form-label">Choose a year</label>
+    <FormField className={props.yearClassName}>
+      <label className="form-label">{props.yearLabel}</label>
       <Select
         isDisabled={!indicators || !indicators.length}
         placeholder="Select Year"
@@ -40,16 +45,6 @@ const IndicatorFilterForm: FunctionComponent<FormProps> = ({
         onChange={onSelectYear}
         className="form-field__select-dropdown"
       />
-    </FormField>
-    <FormField className="form-field--inline">
-      <button type="button" className="button">
-        Update
-      </button>
-      <style jsx>{`
-        button.button {
-          display: none;
-        }
-      `}</style>
     </FormField>
   </>
 );
