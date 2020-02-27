@@ -1,5 +1,4 @@
-import { SpotlightTheme } from '../../../utils';
-import { SpotlightOptions } from '../../MapSection';
+import { SpotlightTheme, SpotlightOptions } from '../../../utils';
 import { SelectOptions } from '../../Select';
 
 export interface SpotlightFilterProps {

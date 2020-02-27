@@ -1,17 +1,15 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { FormField } from '../FormField';
-import { SpotlightOptions } from '../MapSection';
 import { Select, SelectOption } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
+import { FilterSelectOptions, SpotlightFilterProps, defaultSelectOptions } from './utils';
 import {
-  FilterSelectOptions,
-  SpotlightFilterProps,
-  createYearOptionsFromIndicator,
-  defaultSelectOptions,
   getDefaults,
   getThemeDefaults,
-  parseIndicatorToOption
-} from './utils';
+  createYearOptionsFromIndicator,
+  parseIndicatorToOption,
+  SpotlightOptions
+} from '../../utils';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
   const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes);

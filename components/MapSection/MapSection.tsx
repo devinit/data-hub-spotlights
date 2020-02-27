@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import React, { FunctionComponent, useState, ReactNode } from 'react';
-import { SpotlightLocation } from '../../utils';
+import { SpotlightLocation, SpotlightOptions } from '../../utils';
 import { Legend, LegendItem } from '../Legend';
 import { MapSectionBody, MapSectionBodyMain } from '../MapSectionBody';
 import { MapSectionHeader } from '../MapSectionHeader';
@@ -8,7 +8,7 @@ import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
-import { MapSectionProps, SpotlightOptions, getIndicatorColours, parseIndicator, splitByComma } from './utils';
+import { MapSectionProps, getIndicatorColours, parseIndicator, splitByComma } from './utils';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
