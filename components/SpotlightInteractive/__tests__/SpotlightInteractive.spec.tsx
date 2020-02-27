@@ -21,6 +21,12 @@ describe('SpotlightInteractive', () => {
     expect(renderer).toMatchSnapshot();
   });
 
+  test('renders the configured height', () => {
+    const renderer = TestRenderer.create(<SpotlightInteractive height="300px" />).toJSON();
+
+    expect(renderer).toMatchSnapshot();
+  });
+
   test('renders the configured minHeight', () => {
     const renderer = TestRenderer.create(<SpotlightInteractive minHeight="300px" />).toJSON();
 

@@ -8,8 +8,9 @@ exports[`SpotlightInteractive renders correctly 1`] = `
     jsx={true}
   >
     
+        position: relative;
         min-height: 500px;
-        height: 100%;
+        height: auto;
         border: 1px solid #e84439;
         
       
@@ -25,8 +26,27 @@ exports[`SpotlightInteractive renders the configured class name 1`] = `
     jsx={true}
   >
     
+        position: relative;
         min-height: 500px;
-        height: 100%;
+        height: auto;
+        border: 1px solid #e84439;
+        
+      
+  </style>
+</div>
+`;
+
+exports[`SpotlightInteractive renders the configured height 1`] = `
+<div
+  className=""
+>
+  <style
+    jsx={true}
+  >
+    
+        position: relative;
+        min-height: 500px;
+        height: 300px;
         border: 1px solid #e84439;
         
       
@@ -42,8 +62,9 @@ exports[`SpotlightInteractive renders the configured maxHeight 1`] = `
     jsx={true}
   >
     
+        position: relative;
         min-height: 500px;
-        height: 100%;
+        height: auto;
         border: 1px solid #e84439;
         
             overflow: hidden;
@@ -62,8 +83,9 @@ exports[`SpotlightInteractive renders the configured minHeight 1`] = `
     jsx={true}
   >
     
+        position: relative;
         min-height: 300px;
-        height: 100%;
+        height: auto;
         border: 1px solid #e84439;
         
       

@@ -5,6 +5,7 @@ interface SpotlightInteractiveProps {
   maxHeight?: string;
   minHeight?: string;
   className?: string;
+  height?: string;
 }
 
 const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = props => {
@@ -12,8 +13,9 @@ const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = props
     <div className={classNames(props.className)}>
       {props.children}
       <style jsx>{`
+        position: relative;
         min-height: ${props.minHeight};
-        height: 100%;
+        height: ${props.height};
         border: 1px solid #e84439;
         ${props.maxHeight
           ? `
@@ -27,7 +29,8 @@ const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = props
 };
 
 SpotlightInteractive.defaultProps = {
-  minHeight: '500px'
+  minHeight: '500px',
+  height: 'auto'
 };
 
 export { SpotlightInteractive };
