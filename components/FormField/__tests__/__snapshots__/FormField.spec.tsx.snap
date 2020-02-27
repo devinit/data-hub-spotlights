@@ -3,7 +3,15 @@
 exports[`FormField renders correctly 1`] = `
 <div
   className="form-field form-field--inline-block"
-/>
+>
+  <style
+    jsx={true}
+  >
+    
+      z-index: auto;
+    
+  </style>
+</div>
 `;
 
 exports[`FormField renders with children correctly 1`] = `
@@ -13,5 +21,12 @@ exports[`FormField renders with children correctly 1`] = `
   <div>
     My Child
   </div>
+  <style
+    jsx={true}
+  >
+    
+      z-index: auto;
+    
+  </style>
 </div>
 `;
