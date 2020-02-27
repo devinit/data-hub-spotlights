@@ -8,7 +8,7 @@ import { PageScaffoldData } from '../components/DefaultLayout';
 import { EChartsBaseChart } from '../components/EChartsBaseChart';
 import { toBasicAxisData } from '../components/EChartsBaseChart/utils';
 import { Legend, LegendItem } from '../components/Legend';
-import { PageSection } from '../components/PageSection';
+import { PageSection, PageSectionHeading, PageSectionSubHeading } from '../components/PageSection';
 import { SpotlightMenuItem } from '../components/SpotlightMenu';
 import { SidebarContent, SidebarHeading, SpotlightSidebar } from '../components/SpotlightSidebar';
 import { SpotlightTab } from '../components/SpotlightTab';
@@ -17,6 +17,10 @@ import { TabContent } from '../components/SpotlightTab/TabContent';
 import { TabContentHeader } from '../components/SpotlightTab/TabContentHeader';
 import { Select } from '../components/Select';
 import { fetchScaffoldData } from '../utils';
+import { Banner, BannerAside } from '../components/CompareIndicators';
+import { FormFieldSelect } from '../components/FormFieldSelect';
+import { FormField } from '../components/FormField';
+import { SubmitButton } from '../components/SubmitButton';
 
 interface PlaygroundProps {
   setData?: (data: PageScaffoldData) => void;
@@ -332,64 +336,122 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     }
   ];
 
+  const topicOptions = [
+    { value: 'Poverty and vulnerability', label: 'Poverty and vulnerability' },
+    { value: 'Population', label: 'Population' },
+    { value: 'health', label: 'Health' },
+    { value: 'agriculture', label: 'Agriculture' }
+  ];
+
+  const indicatorOptions = [
+    { value: 'Poverty headcount', label: 'Poverty headcount' },
+    { value: 'Decent standard of living score', label: 'Decent standard of living score' },
+    { value: 'Life expectancy', label: 'Life expectancy' },
+    { value: 'Population with a disability (%)', label: 'Population with a disability (%)' }
+  ];
+
+  const yearOptions = [
+    { value: '2018', label: '2018' },
+    { value: '2017', label: '2017' },
+    { value: '2016', label: '2016' },
+    { value: '2015', label: '2015' }
+  ];
+
   return (
-    <PageSection>
-      <h1>Visualisation Playground</h1>
+    <React.Fragment>
+      <PageSection>
+        <PageSectionHeading>Compare</PageSectionHeading>
+        <PageSectionSubHeading>Poverty Headcount vs. Domestic Spending</PageSectionSubHeading>
+        <Banner>
+          <BannerAside classname={'spotlight__comparison'}>
+            <span className="spotlight__comparison-legend"></span>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Topic'} options={topicOptions} themeColor={'light'} />
+            </FormField>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Indicators'} options={indicatorOptions} themeColor={'light'} />
+            </FormField>
 
-      <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
-        <Select options={groupedOptions} chooseTheme="dark" placeholder="Select Dark" />
-      </div>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Year'} options={yearOptions} themeColor={'light'} />
+            </FormField>
+          </BannerAside>
+          <BannerAside classname={'spotlight__comparison'}>
+            <span className="spotlight__comparison-legend spotlight__comparison-legend--alt"></span>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Topic'} options={topicOptions} themeColor={'light'} />
+            </FormField>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Indicators'} options={indicatorOptions} themeColor={'light'} />
+            </FormField>
 
-      <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
-        <Select options={flavourOptions} chooseTheme={'light'} placeholder="Select Light" />
-      </div>
+            <FormField className={'form-field--inline-three'}>
+              <FormFieldSelect label={'Year'} options={yearOptions} themeColor={'light'} />
+            </FormField>
+          </BannerAside>
+          <SubmitButton text={'Compare'} classname={'button--compare'}></SubmitButton>
+        </Banner>
+      </PageSection>
 
-      <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
-        <BaseMap
-          accessToken="pk.eyJ1IjoiZWR3aW5tcCIsImEiOiJjazFsdHVtcG0wOG9mM2RueWJscHhmcXZqIn0.cDR43UvfMaOY9cNJsEKsvg"
-          options={baseMapOptions}
-          onLoad={onMapLoad}
-          width="100%"
-        />
-      </div>
-      <EChartsBaseChart options={options1} />
-      <EChartsBaseChart options={options6} />
-      <EChartsBaseChart options={options2} height="500px" />
-      <EChartsBaseChart options={options3} height="500px" />
-      <EChartsBaseChart options={options4} height="800px" />
-      <EChartsBaseChart options={options5} height="800px" />
+      <PageSection>
+        <h1>Visualisation Playground</h1>
 
-      <div style={{ width: '400px', backgroundColor: '#fff', padding: '20px', marginBottom: '20px' }}>
-        <Legend>
-          {renderLegendItems()}
-          <LegendItem>no data / not applicable</LegendItem>
-        </Legend>
-      </div>
-      <div style={{ marginBottom: '20px', display: 'flex' }}>
-        <SpotlightSidebar>
-          <SidebarHeading heading="Uganda" onClick={onSidebarHeaderClick} />
-          <SidebarContent height="300px">
-            <SpotlightMenu active={sidebarActive} items={sidebarItems} />
-          </SidebarContent>
-        </SpotlightSidebar>
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <SpotlightTab>
-          <TabContainer id="1" label="Tab 1" active>
-            <TabContent>
-              <TabContentHeader>Tab 1 Content</TabContentHeader>
-              <div>Other Content 1</div>
-            </TabContent>
-          </TabContainer>
-          <TabContainer id="2" label="Tab 2">
-            <TabContent>
-              <TabContentHeader>Tab 2 Content</TabContentHeader>
-              <div>Other Content 2</div>
-            </TabContent>
-          </TabContainer>
-        </SpotlightTab>
-      </div>
-    </PageSection>
+        <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
+          <Select options={groupedOptions} chooseTheme="dark" placeholder="Select Dark" />
+        </div>
+
+        <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
+          <Select options={flavourOptions} chooseTheme={'light'} placeholder="Select Light" />
+        </div>
+
+        <div style={{ display: 'block', paddingBottom: '20px', width: '100%' }}>
+          <BaseMap
+            accessToken="pk.eyJ1IjoiZWR3aW5tcCIsImEiOiJjazFsdHVtcG0wOG9mM2RueWJscHhmcXZqIn0.cDR43UvfMaOY9cNJsEKsvg"
+            options={baseMapOptions}
+            onLoad={onMapLoad}
+            width="100%"
+          />
+        </div>
+
+        <EChartsBaseChart options={options1} />
+        <EChartsBaseChart options={options6} />
+        <EChartsBaseChart options={options2} height="500px" />
+        <EChartsBaseChart options={options3} height="500px" />
+        <EChartsBaseChart options={options4} height="800px" />
+        <EChartsBaseChart options={options5} height="800px" />
+
+        <div style={{ width: '400px', backgroundColor: '#fff', padding: '20px', marginBottom: '20px' }}>
+          <Legend>
+            {renderLegendItems()}
+            <LegendItem>no data / not applicable</LegendItem>
+          </Legend>
+        </div>
+        <div style={{ marginBottom: '20px', display: 'flex' }}>
+          <SpotlightSidebar>
+            <SidebarHeading heading="Uganda" onClick={onSidebarHeaderClick} />
+            <SidebarContent height="300px">
+              <SpotlightMenu active={sidebarActive} items={sidebarItems} />
+            </SidebarContent>
+          </SpotlightSidebar>
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+          <SpotlightTab>
+            <TabContainer id="1" label="Tab 1" active>
+              <TabContent>
+                <TabContentHeader>Tab 1 Content</TabContentHeader>
+                <div>Other Content 1</div>
+              </TabContent>
+            </TabContainer>
+            <TabContainer id="2" label="Tab 2">
+              <TabContent>
+                <TabContentHeader>Tab 2 Content</TabContentHeader>
+                <div>Other Content 2</div>
+              </TabContent>
+            </TabContainer>
+          </SpotlightTab>
+        </div>
+      </PageSection>
+    </React.Fragment>
   );
 };
 
