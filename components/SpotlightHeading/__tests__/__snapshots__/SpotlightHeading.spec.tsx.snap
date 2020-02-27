@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotlightHeading renders correctly with a heading 1`] = `
+<h2
+  className="spotlight__heading"
+/>
+`;
+
+exports[`SpotlightHeading renders with the specificed class name 1`] = `
+<h2
+  className="spotlight__heading my-class"
+/>
+`;

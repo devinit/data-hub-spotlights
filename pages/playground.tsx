@@ -10,7 +10,6 @@ import { toBasicAxisData } from '../components/EChartsBaseChart/utils';
 import { Legend, LegendItem } from '../components/Legend';
 import { PageSection } from '../components/PageSection';
 import { SpotlightMenuItem } from '../components/SpotlightMenu';
-import { SidebarContent, SidebarHeading, SpotlightSidebar } from '../components/SpotlightSidebar';
 import { SpotlightTab } from '../components/SpotlightTab';
 import { TabContainer } from '../components/SpotlightTab/TabContainer';
 import { TabContent } from '../components/SpotlightTab/TabContent';
@@ -22,10 +21,6 @@ interface PlaygroundProps {
   setData?: (data: PageScaffoldData) => void;
   scaffold: PageScaffoldData;
 }
-
-const SpotlightMenu = dynamic(() => import('../components/SpotlightMenu').then(mod => mod.SpotlightMenu), {
-  ssr: false
-});
 
 const BaseMap = dynamic(() => import('../components/BaseMap').then(mod => mod.BaseMap), {
   ssr: false
@@ -364,14 +359,6 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
           {renderLegendItems()}
           <LegendItem>no data / not applicable</LegendItem>
         </Legend>
-      </div>
-      <div style={{ marginBottom: '20px', display: 'flex' }}>
-        <SpotlightSidebar>
-          <SidebarHeading heading="Uganda" onClick={onSidebarHeaderClick} />
-          <SidebarContent height="300px">
-            <SpotlightMenu active={sidebarActive} items={sidebarItems} />
-          </SidebarContent>
-        </SpotlightSidebar>
       </div>
       <div style={{ marginBottom: '20px' }}>
         <SpotlightTab>
