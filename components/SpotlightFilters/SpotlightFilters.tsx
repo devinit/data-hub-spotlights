@@ -60,12 +60,12 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
 
   return (
     <form className="form">
-      <FormField className="">
-        <label className="form-label">Select a topic to explore</label>
+      <FormField className={props.topicClassName}>
+        <label className="form-label">{props.topicLabel}</label>
         <Select
           options={themes}
           onChange={onSelectTheme}
-          placeholder="Select Theme"
+          placeholder="Select Topic"
           isLoading={!themes}
           defaultValue={options.themes ? options.themes[0] : undefined}
         />
@@ -77,9 +77,19 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = props => {
         onSelectYear={onSelectYear}
         years={years}
         activeYear={activeYear}
+        indicatorLabel={props.indicatorLabel}
+        yearLabel={props.yearLabel}
+        indicatorClassName={props.indicatorClassName}
+        yearClassName={props.yearClassName}
       />
     </form>
   );
+};
+
+SpotlightFilters.defaultProps = {
+  topicLabel: 'Select a topic to explore',
+  indicatorLabel: 'Choose an indicator',
+  yearLabel: 'Choose a year'
 };
 
 export { SpotlightFilters };

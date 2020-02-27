@@ -53,7 +53,13 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, themes: t
       <MapSectionBody>
         <SpotlightSidebar>
           <SidebarContent>
-            <SpotlightFilters themes={themeData} onOptionsChange={onOptionsChange} />
+            <SpotlightFilters
+              themes={themeData}
+              onOptionsChange={onOptionsChange}
+              topicClassName=""
+              indicatorClassName="form-field--spaced-minor"
+              yearClassName="form-field--inline"
+            />
             <SpotlightIndicatorInfo
               heading={options.indicator && options.indicator.name}
               description={options.indicator && options.indicator.description}
