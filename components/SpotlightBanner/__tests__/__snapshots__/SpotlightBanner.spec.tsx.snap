@@ -2,16 +2,16 @@
 
 exports[`SpotlightBanner renders correctly 1`] = `
 <div
-  className="spotlight-banner spotlight-banner--header"
+  className="spotlight-banner"
 />
 `;
 
 exports[`SpotlightBanner renders only SpotlightBannerAside & SpotlightBannerMain 1`] = `
 <div
-  className="spotlight-banner spotlight-banner--header"
+  className="spotlight-banner"
 >
   <div
-    className="spotlight-banner__aside"
+    className="spotlight__comparison"
   />
   <div
     className="spotlight-banner__main"

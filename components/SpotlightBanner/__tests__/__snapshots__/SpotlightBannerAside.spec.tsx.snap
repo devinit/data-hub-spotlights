@@ -2,13 +2,13 @@
 
 exports[`SpotlightBannerAside renders correctly 1`] = `
 <div
-  className="spotlight-banner__aside"
+  className="spotlight__comparison"
 />
 `;
 
 exports[`SpotlightBannerAside renders with children correctly 1`] = `
 <div
-  className="spotlight-banner__aside"
+  className="spotlight__comparison"
 >
   <div>
     My Child

@@ -8,7 +8,7 @@ import { SpotlightBannerAside } from '../SpotlightBannerAside';
 
 describe('SpotlightBannerAside', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<SpotlightBannerAside />).toJSON();
+    const renderer = TestRenderer.create(<SpotlightBannerAside classname={'spotlight__comparison'} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
