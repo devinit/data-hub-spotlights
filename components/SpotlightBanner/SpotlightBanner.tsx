@@ -5,10 +5,10 @@ import { SpotlightBannerMain } from './SpotlightBannerMain';
 import { Button } from '../Button';
 
 interface SpotlightBannerProps {
-  header?: boolean;
+  className?: string;
 }
 
-const SpotlightBanner: FunctionComponent<SpotlightBannerProps> = ({ children, header }) => {
+const SpotlightBanner: FunctionComponent<SpotlightBannerProps> = ({ children, className }) => {
   const renderValidChildren = () => {
     return Children.map(children, child => {
       if (
@@ -20,15 +20,7 @@ const SpotlightBanner: FunctionComponent<SpotlightBannerProps> = ({ children, he
     });
   };
 
-  return (
-    <div
-      className={classNames('spotlight-banner', {
-        'spotlight-banner--header': header
-      })}
-    >
-      {renderValidChildren()}
-    </div>
-  );
+  return <div className={classNames('spotlight-banner', className)}>{renderValidChildren()}</div>;
 };
 
 export { SpotlightBanner };
