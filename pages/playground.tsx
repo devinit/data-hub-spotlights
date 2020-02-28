@@ -19,7 +19,7 @@ import { Select } from '../components/Select';
 import { fetchScaffoldData } from '../utils';
 import { FormFieldSelect } from '../components/FormFieldSelect';
 import { FormField } from '../components/FormField';
-import { Button } from '../components/SubmitButton';
+import { Button } from '../components/Button';
 import { SpotlightBanner, SpotlightBannerAside } from '../components/SpotlightBanner';
 
 interface PlaygroundProps {
