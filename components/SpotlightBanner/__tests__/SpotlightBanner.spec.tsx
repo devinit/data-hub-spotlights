@@ -18,7 +18,7 @@ describe('SpotlightBanner', () => {
   test('renders only SpotlightBannerAside & SpotlightBannerMain', () => {
     const renderer = TestRenderer.create(
       <SpotlightBanner>
-        <SpotlightBannerAside />
+        <SpotlightBannerAside classname={'spotlight__comparison'} />
         <SpotlightBannerMain />
         <div>Excluded Child</div>
       </SpotlightBanner>

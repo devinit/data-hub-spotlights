@@ -15,7 +15,7 @@ describe('SpotlightBannerAside', () => {
 
   test('renders with children correctly', () => {
     const renderer = TestRenderer.create(
-      <SpotlightBannerAside>
+      <SpotlightBannerAside classname={'spotlight__comparison'}>
         <div>My Child</div>
       </SpotlightBannerAside>
     ).toJSON();
