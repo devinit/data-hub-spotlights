@@ -8,14 +8,14 @@ import { SpotlightBannerAside } from '../SpotlightBannerAside';
 
 describe('SpotlightBannerAside', () => {
   test('renders correctly', () => {
-    const renderer = TestRenderer.create(<SpotlightBannerAside classname={'spotlight__comparison'} />).toJSON();
+    const renderer = TestRenderer.create(<SpotlightBannerAside className={'spotlight__comparison'} />).toJSON();
 
     expect(renderer).toMatchSnapshot();
   });
 
   test('renders with children correctly', () => {
     const renderer = TestRenderer.create(
-      <SpotlightBannerAside classname={'spotlight__comparison'}>
+      <SpotlightBannerAside className={'spotlight__comparison'}>
         <div>My Child</div>
       </SpotlightBannerAside>
     ).toJSON();
