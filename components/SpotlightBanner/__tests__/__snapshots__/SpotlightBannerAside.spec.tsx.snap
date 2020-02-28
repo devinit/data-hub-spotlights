@@ -1,14 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SpotlightBannerAside It renders the SpotlightBannerAside with a spotlight__comparison class 1`] = `
+<div
+  className="spotlight-banner__aside spotlight__comparison"
+/>
+`;
+
 exports[`SpotlightBannerAside renders correctly 1`] = `
 <div
-  className="spotlight__comparison"
+  className="spotlight-banner__aside"
 />
 `;
 
 exports[`SpotlightBannerAside renders with children correctly 1`] = `
 <div
-  className="spotlight__comparison"
+  className="spotlight-banner__aside"
 >
   <div>
     My Child
