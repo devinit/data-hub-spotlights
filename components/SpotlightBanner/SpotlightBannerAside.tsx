@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 
 interface SpotlightBannerAsideProps {
-  classname: string;
+  className: string;
 }
 
-const SpotlightBannerAside: FunctionComponent<SpotlightBannerAsideProps> = ({ children, classname }) => (
-  <div className={classname}>{children}</div>
+const SpotlightBannerAside: FunctionComponent<SpotlightBannerAsideProps> = ({ children, className }) => (
+  <div className={className}>{children}</div>
 );
 
 export { SpotlightBannerAside };

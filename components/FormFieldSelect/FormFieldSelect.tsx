@@ -1,12 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { Select } from '../Select';
+import { Props as SelectProps } from 'react-select';
 
 interface FormFieldSelectItem {
   value: string;
   label: string;
 }
 
-interface FormFieldSelectProps {
+interface FormFieldSelectProps extends SelectProps {
   label: string;
   options: FormFieldSelectItem[];
 }
@@ -14,12 +15,8 @@ interface FormFieldSelectProps {
 const FormFieldSelect: FunctionComponent<FormFieldSelectProps> = ({ label, options }) => {
   return (
     <>
-      <label htmlFor="topic" className="form-label">
-        {label}
-      </label>
-      <div className="form-field__select-dropdown">
-        <Select options={options} />
-      </div>
+      {label ? <label className="form-label">{label}</label> : null}
+      <Select options={options} />
     </>
   );
 };

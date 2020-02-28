@@ -19,7 +19,7 @@ import { Select } from '../components/Select';
 import { fetchScaffoldData } from '../utils';
 import { FormFieldSelect } from '../components/FormFieldSelect';
 import { FormField } from '../components/FormField';
-import { SubmitButton } from '../components/SubmitButton';
+import { Button } from '../components/SubmitButton';
 import { SpotlightBanner, SpotlightBannerAside } from '../components/SpotlightBanner';
 
 interface PlaygroundProps {
@@ -363,7 +363,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         <PageSectionHeading>Compare</PageSectionHeading>
         <PageSectionSubHeading>Poverty Headcount vs. Domestic Spending</PageSectionSubHeading>
         <SpotlightBanner>
-          <SpotlightBannerAside classname={'spotlight__comparison'}>
+          <SpotlightBannerAside className={'spotlight__comparison'}>
             <span className="spotlight__comparison-legend"></span>
             <FormField className={'form-field--inline-three'}>
               <FormFieldSelect label={'Topic'} options={topicOptions} />
@@ -376,7 +376,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
               <FormFieldSelect label={'Year'} options={yearOptions} />
             </FormField>
           </SpotlightBannerAside>
-          <SpotlightBannerAside classname={'spotlight__comparison'}>
+          <SpotlightBannerAside className={'spotlight__comparison'}>
             <span className="spotlight__comparison-legend spotlight__comparison-legend--alt"></span>
             <FormField className={'form-field--inline-three'}>
               <FormFieldSelect label={'Topic'} options={topicOptions} />
@@ -389,7 +389,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
               <FormFieldSelect label={'Year'} options={yearOptions} />
             </FormField>
           </SpotlightBannerAside>
-          <SubmitButton text={'Compare'} classname={'button--compare'}></SubmitButton>
+          <Button className={'button--compare'}>{'Compare'}</Button>
         </SpotlightBanner>
       </PageSection>
 
