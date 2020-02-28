@@ -10,7 +10,9 @@ exports[`SpotlightBanner renders only SpotlightBannerAside & SpotlightBannerMain
 <div
   className="spotlight-banner"
 >
-  <div />
+  <div
+    className="spotlight__comparison"
+  />
   <div
     className="spotlight-banner__main"
   />
