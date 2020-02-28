@@ -8,7 +8,7 @@ import { PageScaffoldData } from '../components/DefaultLayout';
 import { EChartsBaseChart } from '../components/EChartsBaseChart';
 import { toBasicAxisData } from '../components/EChartsBaseChart/utils';
 import { Legend, LegendItem } from '../components/Legend';
-import { PageSection, PageSectionHeading, PageSectionSubHeading } from '../components/PageSection';
+import { PageSection, PageSectionHeading, PageSectionSubheading } from '../components/PageSection';
 import { SpotlightMenuItem } from '../components/SpotlightMenu';
 import { SidebarContent, SidebarHeading, SpotlightSidebar } from '../components/SpotlightSidebar';
 import { SpotlightTab } from '../components/SpotlightTab';
@@ -361,7 +361,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     <React.Fragment>
       <PageSection>
         <PageSectionHeading>Compare</PageSectionHeading>
-        <PageSectionSubHeading>Poverty Headcount vs. Domestic Spending</PageSectionSubHeading>
+        <PageSectionSubheading>Poverty Headcount vs. Domestic Spending</PageSectionSubheading>
         <SpotlightBanner>
           <SpotlightBannerAside className={'spotlight__comparison'}>
             <span className="spotlight__comparison-legend"></span>
