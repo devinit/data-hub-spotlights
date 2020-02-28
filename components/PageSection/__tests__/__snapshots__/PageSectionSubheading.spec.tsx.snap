@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageSectionSubheading It renders children correctly 1`] = `
+<h3
+  className="section__sub-heading"
+>
+  My Child
+</h3>
+`;
+
+exports[`PageSectionSubheading renders correctly 1`] = `
+<h3
+  className="section__sub-heading"
+/>
+`;
