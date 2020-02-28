@@ -17,10 +17,10 @@ import { TabContent } from '../components/SpotlightTab/TabContent';
 import { TabContentHeader } from '../components/SpotlightTab/TabContentHeader';
 import { Select } from '../components/Select';
 import { fetchScaffoldData } from '../utils';
-import { Banner, BannerAside } from '../components/CompareIndicators';
 import { FormFieldSelect } from '../components/FormFieldSelect';
 import { FormField } from '../components/FormField';
 import { SubmitButton } from '../components/SubmitButton';
+import { SpotlightBanner, SpotlightBannerAside } from '../components/SpotlightBanner';
 
 interface PlaygroundProps {
   setData?: (data: PageScaffoldData) => void;
@@ -362,35 +362,35 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       <PageSection>
         <PageSectionHeading>Compare</PageSectionHeading>
         <PageSectionSubHeading>Poverty Headcount vs. Domestic Spending</PageSectionSubHeading>
-        <Banner>
-          <BannerAside classname={'spotlight__comparison'}>
+        <SpotlightBanner>
+          <SpotlightBannerAside classname={'spotlight__comparison'}>
             <span className="spotlight__comparison-legend"></span>
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Topic'} options={topicOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Topic'} options={topicOptions} />
             </FormField>
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Indicators'} options={indicatorOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Indicators'} options={indicatorOptions} />
             </FormField>
 
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Year'} options={yearOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Year'} options={yearOptions} />
             </FormField>
-          </BannerAside>
-          <BannerAside classname={'spotlight__comparison'}>
+          </SpotlightBannerAside>
+          <SpotlightBannerAside classname={'spotlight__comparison'}>
             <span className="spotlight__comparison-legend spotlight__comparison-legend--alt"></span>
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Topic'} options={topicOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Topic'} options={topicOptions} />
             </FormField>
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Indicators'} options={indicatorOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Indicators'} options={indicatorOptions} />
             </FormField>
 
             <FormField className={'form-field--inline-three'}>
-              <FormFieldSelect label={'Year'} options={yearOptions} themeColor={'light'} />
+              <FormFieldSelect label={'Year'} options={yearOptions} />
             </FormField>
-          </BannerAside>
+          </SpotlightBannerAside>
           <SubmitButton text={'Compare'} classname={'button--compare'}></SubmitButton>
-        </Banner>
+        </SpotlightBanner>
       </PageSection>
 
       <PageSection>

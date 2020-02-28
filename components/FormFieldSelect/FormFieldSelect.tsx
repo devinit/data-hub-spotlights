@@ -9,17 +9,16 @@ interface FormFieldSelectItem {
 interface FormFieldSelectProps {
   label: string;
   options: FormFieldSelectItem[];
-  themeColor: 'light' | 'dark';
 }
 
-const FormFieldSelect: FunctionComponent<FormFieldSelectProps> = ({ label, options, themeColor }) => {
+const FormFieldSelect: FunctionComponent<FormFieldSelectProps> = ({ label, options }) => {
   return (
     <>
       <label htmlFor="topic" className="form-label">
         {label}
       </label>
       <div className="form-field__select-dropdown">
-        <Select options={options} chooseTheme={themeColor} />
+        <Select options={options} />
       </div>
     </>
   );
