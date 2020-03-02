@@ -24,10 +24,17 @@ const BaseMapLayer: FunctionComponent<BaseMapLayerProps> = ({ map, show, ...opti
           const geometry = e.features?.[0].geometry;
           if (geometry.type === 'Polygon') {
             const coordinates = geometry.coordinates[0][0];
-            popup
-              .setLngLat([coordinates[0], coordinates[1]])
-              .setHTML('<h3>' + e.features?.[0].properties.DName2019 + '</h3>')
-              .addTo(map);
+            if (e.features?.[0].properties.DName2019) {
+              popup
+                .setLngLat([coordinates[0], coordinates[1]])
+                .setHTML('<h3>' + e.features?.[0].properties.DName2019 + '</h3>')
+                .addTo(map);
+            } else {
+              popup
+                .setLngLat([coordinates[0], coordinates[1]])
+                .setHTML('<h3>' + e.features?.[0].properties.ADM1_EN + '</h3>')
+                .addTo(map);
+            }
           }
         } else {
           return 'null';
