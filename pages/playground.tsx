@@ -278,7 +278,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       closeOnClick: false,
       closeButton: false
     });
-    map.on('mousemove', 'highlight', function(e) {
+    map.on('mousemove', 'highlight', e => {
       map.getCanvas().style.cursor = 'pointer';
       if (e.features?.[0].properties) {
         const geometry = e.features?.[0].geometry;
@@ -294,7 +294,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       }
     });
     // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'highlight', function() {
+    map.on('mouseleave', 'highlight', () => {
       map.getCanvas().style.cursor = '';
       popup.remove();
     });
