@@ -273,16 +273,18 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       }
     });
     const mapboxgl = await import('mapbox-gl');
-    map.on('click', 'highlight', function(e){
+    const popup = new mapboxgl.Popup({
+      offset: 5,
+      closeOnClick: false,
+      closeButton: false
+     })
+    map.on('mousemove', 'highlight', function(e){
+      map.getCanvas().style.cursor = 'pointer';
       if(e.features![0].properties){
         const geometry = e.features![0].geometry;
         if(geometry.type === 'Polygon'){
         const coordinates = geometry.coordinates[0][0];
-        new mapboxgl.Popup({
-          offset: 5,
-          closeOnClick: true
-         })
-         .setLngLat([coordinates[0], coordinates[1]])
+        popup.setLngLat([coordinates[0], coordinates[1]])
          .setHTML('<h3>' + e.features![0].properties.DName2019 +'</h3>')
          .addTo(map);
       }
@@ -290,13 +292,10 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       return 'null';
     }
    });
-   // Change the cursor to a pointer when the mouse is over the places layer.
-  map.on('mouseenter', 'highlight', function() {
-      map.getCanvas().style.cursor = 'pointer';
-  });
   // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'high', function() {
-  map.getCanvas().style.cursor = '';
+  map.on('mouseleave', 'highlight', function() {
+    map.getCanvas().style.cursor = '';
+    popup.remove();
   });
   };
 
