@@ -250,7 +250,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     maxZoom: 7
   };
 
-  const onMapLoad = async(map: Map): Promise<any> => {
+  const onMapLoad = async (map: Map): Promise<any> => {
     map.addLayer({
       id: 'highlight',
       source: 'composite',
@@ -277,26 +277,27 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       offset: 5,
       closeOnClick: false,
       closeButton: false
-     })
-    map.on('mousemove', 'highlight', function(e){
+    });
+    map.on('mousemove', 'highlight', function(e) {
       map.getCanvas().style.cursor = 'pointer';
-      if(e.features![0].properties){
-        const geometry = e.features![0].geometry;
-        if(geometry.type === 'Polygon'){
-        const coordinates = geometry.coordinates[0][0];
-        popup.setLngLat([coordinates[0], coordinates[1]])
-         .setHTML('<h3>' + e.features![0].properties.DName2019 +'</h3>')
-         .addTo(map);
+      if (e.features?.[0].properties) {
+        const geometry = e.features?.[0].geometry;
+        if (geometry.type === 'Polygon') {
+          const coordinates = geometry.coordinates[0][0];
+          popup
+            .setLngLat([coordinates[0], coordinates[1]])
+            .setHTML('<h3>' + e.features?.[0].properties.DName2019 + '</h3>')
+            .addTo(map);
+        }
+      } else {
+        return 'null';
       }
-    }else{
-      return 'null';
-    }
-   });
-  // Change it back to a pointer when it leaves.
-  map.on('mouseleave', 'highlight', function() {
-    map.getCanvas().style.cursor = '';
-    popup.remove();
-  });
+    });
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'highlight', function() {
+      map.getCanvas().style.cursor = '';
+      popup.remove();
+    });
   };
 
   const colourOptions = [
