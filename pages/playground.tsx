@@ -250,7 +250,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     maxZoom: 7
   };
 
-  const onMapLoad = (map: Map): void => {
+  const onMapLoad = async(map: Map): Promise<any> => {
     map.addLayer({
       id: 'highlight',
       source: 'composite',
@@ -272,6 +272,32 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         'fill-outline-color': '#ffffff'
       }
     });
+    const mapboxgl = await import('mapbox-gl');
+    map.on('click', 'highlight', function(e){
+      if(e.features![0].properties){
+        const geometry = e.features![0].geometry;
+        if(geometry.type === 'Polygon'){
+        const coordinates = geometry.coordinates[0][0];
+        new mapboxgl.Popup({
+          offset: 5,
+          closeOnClick: true
+         })
+         .setLngLat([coordinates[0], coordinates[1]])
+         .setHTML('<h3>' + e.features![0].properties.DName2019 +'</h3>')
+         .addTo(map);
+      }
+    }else{
+      return 'null';
+    }
+   });
+   // Change the cursor to a pointer when the mouse is over the places layer.
+  map.on('mouseenter', 'highlight', function() {
+      map.getCanvas().style.cursor = 'pointer';
+  });
+  // Change it back to a pointer when it leaves.
+  map.on('mouseleave', 'high', function() {
+  map.getCanvas().style.cursor = '';
+  });
   };
 
   const colourOptions = [
