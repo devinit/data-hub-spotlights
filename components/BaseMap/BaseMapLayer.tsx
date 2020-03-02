@@ -18,7 +18,7 @@ const BaseMapLayer: FunctionComponent<BaseMapLayerProps> = ({ map, show, ...opti
         closeOnClick: false,
         closeButton: false
       });
-      map.on('mousemove', 'highlight', function(e) {
+      map.on('mousemove', options.id, function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (e.features?.[0].properties) {
           const geometry = e.features?.[0].geometry;
@@ -34,7 +34,7 @@ const BaseMapLayer: FunctionComponent<BaseMapLayerProps> = ({ map, show, ...opti
         }
       });
       // Change it back to a pointer when it leaves.
-      map.on('mouseleave', 'highlight', function() {
+      map.on('mouseleave', options.id, function() {
         map.getCanvas().style.cursor = '';
         popup.remove();
       });
