@@ -9,6 +9,7 @@ import { Select, SelectOption, SelectOptions } from '../Select';
 import { createLocationOptions, getBoundariesByCountryCode } from '../../utils';
 import { LocationTagsList } from './LocationTagsList';
 import { LocationTagsListItem } from './LocationTagsListItem';
+import { Button } from '../Button';
 
 interface LocationComparisonSectionProps {
   countryCode: string;
@@ -125,6 +126,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
         </SpotlightBannerAside>
         <SpotlightBannerMain>
           <LocationTagsList>{renderLocationTagItems()}</LocationTagsList>
+          <Button className={'button--compare'}>{'Compare'}</Button>
         </SpotlightBannerMain>
       </SpotlightBanner>
     </PageSection>
