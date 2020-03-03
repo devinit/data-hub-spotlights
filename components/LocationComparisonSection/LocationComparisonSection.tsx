@@ -62,9 +62,16 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     });
   };
 
+  const removeLocationTag = (label: string): void => {
+    const updatedLocationTags = locationTags.filter(function(obj) {
+      return obj.label !== label;
+    });
+    setLocationTags([...updatedLocationTags]);
+  };
+
   const renderLocationTagItems = (): ReactNode => {
     return locationTags.map((locationTag: any, index: number) => {
-      return <LocationTagsListItem key={index} label={locationTag.label} />;
+      return <LocationTagsListItem key={index} label={locationTag.label} removeTag={removeLocationTag} />;
     });
   };
 
