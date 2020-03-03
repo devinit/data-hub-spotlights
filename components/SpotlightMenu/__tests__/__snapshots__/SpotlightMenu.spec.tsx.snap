@@ -1,11 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SpotlightMenu renders children correctly 1`] = `
-<div>
+<div
+  className="spotlight__menu"
+>
   <div>
     Testing
   </div>
+  <style
+    jsx={true}
+  >
+    
+          .spotlight__menu {
+            display: block;
+          }
+        
+  </style>
 </div>
 `;
 
-exports[`SpotlightMenu renders correctly 1`] = `<div />`;
+exports[`SpotlightMenu renders correctly 1`] = `
+<div
+  className="spotlight__menu"
+>
+  <style
+    jsx={true}
+  >
+    
+          .spotlight__menu {
+            display: block;
+          }
+        
+  </style>
+</div>
+`;
