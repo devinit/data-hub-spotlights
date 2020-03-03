@@ -18,11 +18,11 @@ const AddLocation: FunctionComponent<AddLocationProps> = ({ label, active, toggl
   }, [active]);
 
   return (
-    <a className="m-text-link" onClick={toggle}>
+    <a className="m-text-link add-location-link" onClick={toggle}>
       <style jsx>{`
-        .m-text-link {
+        .add-location-link {
           display: ${show ? 'block' : 'none'};
-          cursor: 'pointer';
+          cursor: pointer;
         }
       `}</style>
       <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-poppy"></i>

@@ -15,7 +15,7 @@ const LocationTagsListItem: FunctionComponent<LocationTagsListItemProps> = ({ la
     <li className="m-pills__item">
       <style jsx>{`
         .m-pills__item {
-          margin-bottom: '5px !important';
+          margin-bottom: 5px !important;
         }
       `}</style>
       <button type="button" onClick={remove}>
