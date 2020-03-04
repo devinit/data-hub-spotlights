@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 
-const LocationTagsList: FunctionComponent = ({ children }) => {
+const TagsList: FunctionComponent = ({ children }) => {
   return <ul className="m-pills">{children}</ul>;
 };
 
-export { LocationTagsList };
+export { TagsList };

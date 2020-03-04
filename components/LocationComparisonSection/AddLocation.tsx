@@ -3,14 +3,14 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 interface AddLocationProps {
   label: string;
   active?: boolean;
-  toggleComponentVisibility?: (MenuState: boolean, AddLocationState: boolean) => void;
+  onWidgetClick?: (widgetState: boolean, tagName: string) => void;
 }
 
-const AddLocation: FunctionComponent<AddLocationProps> = ({ label, active, toggleComponentVisibility }) => {
+const AddLocation: FunctionComponent<AddLocationProps> = ({ label, active, onWidgetClick }) => {
   const [show, setShow] = useState(active);
   const toggle = (): void => {
     setShow(false);
-    toggleComponentVisibility ? toggleComponentVisibility(true, false) : null;
+    onWidgetClick ? onWidgetClick(true, '') : null;
   };
 
   useEffect(() => {

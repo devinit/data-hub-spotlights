@@ -1,14 +1,13 @@
 import React, { FunctionComponent } from 'react';
 
-interface LocationTagsListItemProps {
+interface TagsListItemProps {
   label: string;
-  active?: boolean;
-  removeTag: (label: string) => void;
+  onRemoveTag?: (label: string) => void;
 }
 
-const LocationTagsListItem: FunctionComponent<LocationTagsListItemProps> = ({ label, removeTag }) => {
-  const remove = (): void => {
-    removeTag(label);
+const TagsListItem: FunctionComponent<TagsListItemProps> = ({ label, onRemoveTag }) => {
+  const onRemove = (): void => {
+    onRemoveTag ? onRemoveTag(label) : null;
   };
 
   return (
@@ -18,7 +17,7 @@ const LocationTagsListItem: FunctionComponent<LocationTagsListItemProps> = ({ la
           margin-bottom: 5px !important;
         }
       `}</style>
-      <button type="button" onClick={remove}>
+      <button type="button" onClick={onRemove}>
         <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-blank"></i>
       </button>
       {label}
@@ -26,4 +25,4 @@ const LocationTagsListItem: FunctionComponent<LocationTagsListItemProps> = ({ la
   );
 };
 
-export { LocationTagsListItem };
+export { TagsListItem };

@@ -69,7 +69,8 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
               </ErrorBoundary>
             ))
         )}
-        <LocationComparisonSection />
+
+        <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} />
       </>
     );
   }

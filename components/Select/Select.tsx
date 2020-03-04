@@ -60,7 +60,7 @@ export const DarkThemeGroupLabel = (group: GroupType<OptionTypeBase>): JSX.Eleme
   </div>
 );
 
-const Select: FunctionComponent<ExtendedSelectProps> = ({ chooseTheme: theme, styles, show, ...props }) => {
+const Select: FunctionComponent<ExtendedSelectProps> = ({ chooseTheme: theme, styles, ...props }) => {
   const borderColor = '#8f1b13';
 
   return (
@@ -74,8 +74,7 @@ const Select: FunctionComponent<ExtendedSelectProps> = ({ chooseTheme: theme, st
 };
 
 Select.defaultProps = {
-  chooseTheme: 'light',
-  show: true
+  chooseTheme: 'light'
 };
 
 export { Select };
