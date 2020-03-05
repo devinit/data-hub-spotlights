@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import { PageScaffoldData } from '../../../components/DefaultLayout';
-import { LocationComparisonSection } from '../../../components/LocationComparisonSection';
 import { IndicatorComparisonSection } from '../../../components/IndicatorComparisonSection';
 import { KeyFactsSection } from '../../../components/KeyFactsSection';
 import { MapSection } from '../../../components/MapSection';
