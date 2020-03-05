@@ -40,7 +40,12 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
       <SpotlightBanner>
         <SpotlightBannerAside>
           <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
-          <SpotlightMenuWithData onWidgetClick={onWidgetClick} countryName={countryName} spotlightMenu={active} />
+          <SpotlightMenuWithData
+            onWidgetClick={onWidgetClick}
+            countryName={countryName}
+            countryCode={countryCode}
+            spotlightMenu={active}
+          />
           <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
         </SpotlightBannerAside>
         <SpotlightBannerMain>
