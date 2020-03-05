@@ -6,10 +6,15 @@ import { Button } from '../Button';
 import { SelectWithData } from '../SelectWithData';
 import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
 import { Tags } from '../Tags/Tags';
+import { Spotlight } from '../Spotlight';
+import { SpaceSectionBottom } from '../SpaceSectionBottom';
+import { LocationComparisonFilters } from './LocationComparisonFilters';
+import { SpotlightOptions, SpotlightTheme } from '../../utils';
 
 interface LocationComparisonSectionProps {
   countryCode: string;
   countryName: string;
+  themes: SpotlightTheme[];
 }
 
 export interface LocationTagProps {
@@ -18,9 +23,14 @@ export interface LocationTagProps {
 
 export type LocationTagType = LocationTagProps[];
 
-const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProps> = ({ countryCode, countryName }) => {
+const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProps> = ({
+  countryCode,
+  countryName,
+  themes
+}) => {
   const [active, showActive] = useState(false);
   const [locations, setLocations] = useState<LocationTagType>([]);
+  const [filter, setFilter] = useState<SpotlightOptions | undefined>(undefined);
 
   const onWidgetClick = (widgetState: boolean, locationName: string): void => {
     showActive(widgetState);
@@ -32,6 +42,12 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
       return obj.label !== tagName;
     });
     setLocations([...updatedLocations]);
+  };
+  const onFilterChange = (index: number) => (options: SpotlightOptions): void => {
+    console.log('filter is ' + filter + ' and number is ' + index);
+    if (options.indicator && options.year) {
+      setFilter(options);
+    }
   };
 
   return (
@@ -53,6 +69,20 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
           <Button className={'button--compare'}>{'Compare'}</Button>
         </SpotlightBannerMain>
       </SpotlightBanner>
+      <Spotlight className="spotlight--full">
+        <SpaceSectionBottom>
+          <LocationComparisonFilters
+            themes={themes}
+            onOptionsChange={onFilterChange(0)}
+            topicLabel="Topic"
+            indicatorLabel="Indicator"
+            yearLabel="Year"
+            topicClassName="form-field--inline-three"
+            indicatorClassName="form-field--inline-three"
+            yearClassName="form-field--inline-three"
+          ></LocationComparisonFilters>
+        </SpaceSectionBottom>
+      </Spotlight>
     </PageSection>
   );
 };

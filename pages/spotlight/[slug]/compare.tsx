@@ -21,7 +21,11 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
   if (page.themes && page.country_code) {
     return (
       <>
-        <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} />
+        <LocationComparisonSection
+          countryCode={page.country_code}
+          countryName={page.country_name}
+          themes={page.themes}
+        />
       </>
     );
   }
