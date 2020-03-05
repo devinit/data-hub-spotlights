@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Add Location It does not render when active class is false 1`] = `
+<a
+  className="m-text-link add-location-link"
+  onClick={[Function]}
+>
+  <style
+    jsx={true}
+  >
+    
+        .add-location-link {
+          display: none;
+          cursor: pointer;
+        }
+      
+  </style>
+  <i
+    aria-hidden="true"
+    className="ico ico--16 ico-plus-poppy"
+    role="presentation"
+  />
+  <span>
+    Add Location
+  </span>
+</a>
+`;
+
+exports[`Add Location renders correctly 1`] = `
+<a
+  className="m-text-link add-location-link"
+  onClick={[Function]}
+>
+  <style
+    jsx={true}
+  >
+    
+        .add-location-link {
+          display: block;
+          cursor: pointer;
+        }
+      
+  </style>
+  <i
+    aria-hidden="true"
+    className="ico ico--16 ico-plus-poppy"
+    role="presentation"
+  />
+  <span>
+    Add Location
+  </span>
+</a>
+`;

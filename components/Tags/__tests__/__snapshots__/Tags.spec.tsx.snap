@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tags It renders correctly 1`] = `
+<ul
+  className="m-pills"
+>
+  <li
+    className="m-pills__item"
+  >
+    <style
+      jsx={true}
+    >
+      
+        .m-pills__item {
+          margin-bottom: 5px !important;
+        }
+      
+    </style>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--16 ico-plus-blank"
+        role="presentation"
+      />
+    </button>
+    Masaka
+  </li>
+  <li
+    className="m-pills__item"
+  >
+    <style
+      jsx={true}
+    >
+      
+        .m-pills__item {
+          margin-bottom: 5px !important;
+        }
+      
+    </style>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--16 ico-plus-blank"
+        role="presentation"
+      />
+    </button>
+    Gulu
+  </li>
+  <li
+    className="m-pills__item"
+  >
+    <style
+      jsx={true}
+    >
+      
+        .m-pills__item {
+          margin-bottom: 5px !important;
+        }
+      
+    </style>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--16 ico-plus-blank"
+        role="presentation"
+      />
+    </button>
+    Arua
+  </li>
+  <li
+    className="m-pills__item"
+  >
+    <style
+      jsx={true}
+    >
+      
+        .m-pills__item {
+          margin-bottom: 5px !important;
+        }
+      
+    </style>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--16 ico-plus-blank"
+        role="presentation"
+      />
+    </button>
+    Koboko
+  </li>
+  <li
+    className="m-pills__item"
+  >
+    <style
+      jsx={true}
+    >
+      
+        .m-pills__item {
+          margin-bottom: 5px !important;
+        }
+      
+    </style>
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--16 ico-plus-blank"
+        role="presentation"
+      />
+    </button>
+    Palisa
+  </li>
+</ul>
+`;
