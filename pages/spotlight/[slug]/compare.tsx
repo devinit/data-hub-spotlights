@@ -5,13 +5,13 @@ import { LocationComparisonSection } from '../../../components/LocationCompariso
 import { fetchScaffoldData, fetchSpotlightPage, SpotlightPage } from '../../../utils';
 import { PageSection } from '../../../components/PageSection';
 
-interface SpotlightProps {
+interface CompareProps {
   setData?: (data: PageScaffoldData) => void;
   scaffold: PageScaffoldData;
   page: SpotlightPage;
 }
 
-const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
+const Compare: NextPage<CompareProps> = ({ setData, scaffold, page }) => {
   useEffect(() => {
     if (setData) {
       setData({ ...scaffold, title: page.title });
@@ -37,7 +37,7 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
   );
 };
 
-Spotlight.getInitialProps = async (context): Promise<SpotlightProps> => {
+Compare.getInitialProps = async (context): Promise<CompareProps> => {
   const { slug } = context.query;
   const scaffold = await fetchScaffoldData();
   const page = await fetchSpotlightPage(slug as string);
@@ -45,4 +45,4 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightProps> => {
   return { scaffold, page };
 };
 
-export default Spotlight;
+export default Compare;

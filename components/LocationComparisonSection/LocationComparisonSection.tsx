@@ -10,6 +10,8 @@ import { Spotlight } from '../Spotlight';
 import { SpaceSectionBottom } from '../SpaceSectionBottom';
 import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { SpotlightOptions, SpotlightTheme } from '../../utils';
+import { VisualisationSectionMain } from '../VisualisationSection';
+import { SpotlightInteractive } from '../SpotlightInteractive';
 
 interface LocationComparisonSectionProps {
   countryCode: string;
@@ -81,6 +83,9 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
             yearClassName="form-field--inline-three"
           ></LocationComparisonFilters>
         </SpaceSectionBottom>
+        <VisualisationSectionMain>
+          <SpotlightInteractive></SpotlightInteractive>
+        </VisualisationSectionMain>
       </Spotlight>
     </PageSection>
   );
