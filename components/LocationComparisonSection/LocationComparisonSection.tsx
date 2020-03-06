@@ -74,9 +74,8 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
           <LocationComparisonFilters
             themes={themes}
             onOptionsChange={onFilterChange(0)}
-            topicLabel="Topic"
-            indicatorLabel="Indicator"
-            yearLabel="Year"
+            topicLabel="Select a topic to explore"
+            indicatorLabel="Choose an indicator"
             topicClassName="form-field--inline-three"
             indicatorClassName="form-field--inline-three"
             yearClassName="form-field--inline-three"

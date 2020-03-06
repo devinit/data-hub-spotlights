@@ -82,8 +82,7 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
 
 LocationComparisonFilters.defaultProps = {
   topicLabel: 'Select a topic to explore',
-  indicatorLabel: 'Choose an indicator',
-  yearLabel: 'Choose a year'
+  indicatorLabel: 'Choose an indicator'
 };
 
 export { LocationComparisonFilters };

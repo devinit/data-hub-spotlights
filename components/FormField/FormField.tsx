@@ -6,6 +6,7 @@ const FormField: FunctionComponent<{ className?: string }> = ({ className, child
     {children}
     <style jsx>{`
       z-index: auto;
+      margin-left: 5px;
     `}</style>
   </div>
 );
