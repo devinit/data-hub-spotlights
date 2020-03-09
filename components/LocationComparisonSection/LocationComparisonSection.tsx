@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { PageSection, PageSectionHeading } from '../PageSection';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
 import { AddLocation } from './AddLocation';
@@ -7,11 +7,9 @@ import { SelectWithData } from '../SelectWithData';
 import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
 import { Tags } from '../Tags/Tags';
 import { Spotlight } from '../Spotlight';
-import { SpaceSectionBottom } from '../SpaceSectionBottom';
-import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { SpotlightOptions, SpotlightTheme } from '../../utils';
-import { VisualisationSectionMain } from '../VisualisationSection';
-import { SpotlightInteractive } from '../SpotlightInteractive';
+import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
+import { AddComparison } from './AddComparison';
 
 interface LocationComparisonSectionProps {
   countryCode: string;
@@ -25,6 +23,8 @@ export interface LocationTagProps {
 
 export type LocationTagType = LocationTagProps[];
 
+type NumberArray = number[];
+
 const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProps> = ({
   countryCode,
   countryName,
@@ -33,6 +33,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   const [active, showActive] = useState(false);
   const [locations, setLocations] = useState<LocationTagType>([]);
   const [filter, setFilter] = useState<SpotlightOptions | undefined>(undefined);
+  const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
 
   const onWidgetClick = (widgetState: boolean, locationName: string): void => {
     showActive(widgetState);
@@ -45,6 +46,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     });
     setLocations([...updatedLocations]);
   };
+
   const onFilterChange = (index: number) => (options: SpotlightOptions): void => {
     console.log('filter is ' + filter + ' and number is ' + index);
     if (options.indicator && options.year) {
@@ -52,42 +54,51 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     }
   };
 
+  const onAddComparison = (): void => {
+    addChartAndFilters([...chartAndFilters, 1]);
+  };
+
+  const renderAddComparisonComponents = (): ReactNode => {
+    return chartAndFilters.map(
+      (_item, index): ReactNode => {
+        return (
+          <PageSection key={index}>
+            <Spotlight className="spotlight--full">
+              <LocationFiltersAndCharts themes={themes} onFilterChange={onFilterChange}></LocationFiltersAndCharts>
+            </Spotlight>
+          </PageSection>
+        );
+      }
+    );
+  };
+
   return (
-    <PageSection>
-      <PageSectionHeading>Location Comparison</PageSectionHeading>
-      <SpotlightBanner>
-        <SpotlightBannerAside>
-          <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
-          <SpotlightMenuWithData
-            onWidgetClick={onWidgetClick}
-            countryName={countryName}
-            countryCode={countryCode}
-            spotlightMenu={active}
-          />
-          <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
-        </SpotlightBannerAside>
-        <SpotlightBannerMain>
-          <Tags onCloseTag={onCloseTag} updatedTags={locations} />
-          <Button className={'button--compare'}>{'Compare'}</Button>
-        </SpotlightBannerMain>
-      </SpotlightBanner>
-      <Spotlight className="spotlight--full">
-        <SpaceSectionBottom>
-          <LocationComparisonFilters
-            themes={themes}
-            onOptionsChange={onFilterChange(0)}
-            topicLabel="Select a topic to explore"
-            indicatorLabel="Choose an indicator"
-            topicClassName="form-field--inline-three"
-            indicatorClassName="form-field--inline-three"
-            yearClassName="form-field--inline-three"
-          ></LocationComparisonFilters>
-        </SpaceSectionBottom>
-        <VisualisationSectionMain>
-          <SpotlightInteractive></SpotlightInteractive>
-        </VisualisationSectionMain>
-      </Spotlight>
-    </PageSection>
+    <>
+      <PageSection>
+        <PageSectionHeading>Location Comparison</PageSectionHeading>
+        <SpotlightBanner>
+          <SpotlightBannerAside>
+            <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
+            <SpotlightMenuWithData
+              onWidgetClick={onWidgetClick}
+              countryName={countryName}
+              countryCode={countryCode}
+              spotlightMenu={active}
+            />
+            <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
+          </SpotlightBannerAside>
+          <SpotlightBannerMain>
+            <Tags onCloseTag={onCloseTag} updatedTags={locations} />
+            <Button className={'button--compare'}>{'Compare'}</Button>
+          </SpotlightBannerMain>
+        </SpotlightBanner>
+        <Spotlight className="spotlight--full">
+          <LocationFiltersAndCharts themes={themes} onFilterChange={onFilterChange}></LocationFiltersAndCharts>
+        </Spotlight>
+      </PageSection>
+      {renderAddComparisonComponents()}
+      <AddComparison onAddComparison={onAddComparison}></AddComparison>
+    </>
   );
 };
 

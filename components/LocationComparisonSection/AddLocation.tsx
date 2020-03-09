@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
 interface AddLocationProps {
   label: string;
@@ -7,21 +7,15 @@ interface AddLocationProps {
 }
 
 const AddLocation: FunctionComponent<AddLocationProps> = ({ label, active, onWidgetClick }) => {
-  const [show, setShow] = useState(active);
   const toggle = (): void => {
-    setShow(false);
     onWidgetClick ? onWidgetClick(true, '') : null;
   };
-
-  useEffect(() => {
-    setShow(active);
-  }, [active]);
 
   return (
     <a className="m-text-link add-location-link" onClick={toggle}>
       <style jsx>{`
         .add-location-link {
-          display: ${show ? 'block' : 'none'};
+          display: ${active ? 'block' : 'none'};
           cursor: pointer;
         }
       `}</style>
