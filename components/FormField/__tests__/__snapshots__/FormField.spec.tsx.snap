@@ -9,6 +9,7 @@ exports[`FormField renders correctly 1`] = `
   >
     
       z-index: auto;
+      margin-left: 5px;
     
   </style>
 </div>
@@ -26,6 +27,7 @@ exports[`FormField renders with children correctly 1`] = `
   >
     
       z-index: auto;
+      margin-left: 5px;
     
   </style>
 </div>
