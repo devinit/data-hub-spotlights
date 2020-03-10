@@ -234,7 +234,23 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         </LegendItem>
       ));
   };
-
+  class ShareButton {
+    //private map: any;
+    //private map: any;
+    container!: HTMLDivElement;
+    map: any;
+    onAdd(map: any) {
+      this.map = map;
+      this.container = document.createElement('div');
+      const control = document.createElement('button');
+      this.container.appendChild(control);
+      return this.container;
+    }
+    onRemove(){
+      this.container.parentNode?.removeChild(this.container);
+      this.map = undefined;
+    }
+  }
   const baseMapOptions: Partial<MapboxOptions> = {
     style: 'mapbox://styles/edwinmp/ck6an0ra90nob1ikvysfmbg15/draft',
     center: [32.655221, 1.344666],
@@ -243,7 +259,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     maxZoom: 7
   };
 
-  const onMapLoad = (map: Map): void => {
+  const onMapLoad = async (map: Map): Promise<any> => {
     map.addLayer({
       id: 'highlight',
       source: 'composite',
@@ -265,6 +281,8 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         'fill-outline-color': '#ffffff'
       }
     });
+    //const mapboxgl = await require('mapbox-gl');
+    map.addControl(new ShareButton(), 'top-right');
   };
 
   const colourOptions = [
