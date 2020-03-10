@@ -234,37 +234,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         </LegendItem>
       ));
   };
-  class ShareButton {
-    container!: HTMLDivElement;
-    map: any;
-    onAdd(map: any) {
-      this.map = map;
-      this.container = document.createElement('div');
-      this.container.className = 'mapboxgl-ctrl';
-      const control = this._createButton('button');
-      this.container.appendChild(control);
-      return this.container;
-    }
-    onRemove() {
-      this.container.parentNode?.removeChild(this.container);
-      this.map = undefined;
-    }
-    _createButton(className: string) {
-      const el = window.document.createElement('button');
-      el.className = className;
-      el.textContent = 'Share';
-      el.addEventListener(
-        'click',
-        e => {
-          console.log(e);
-          // e.preventDefault()
-          e.stopPropagation();
-        },
-        false
-      );
-      return el;
-    }
-  }
+
   const baseMapOptions: Partial<MapboxOptions> = {
     style: 'mapbox://styles/edwinmp/ck6an0ra90nob1ikvysfmbg15/draft',
     center: [32.655221, 1.344666],
@@ -273,7 +243,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     maxZoom: 7
   };
 
-  const onMapLoad = async (map: Map): Promise<any> => {
+  const onMapLoad = (map: Map): void => {
     map.addLayer({
       id: 'highlight',
       source: 'composite',
@@ -295,8 +265,6 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         'fill-outline-color': '#ffffff'
       }
     });
-    //const mapboxgl = await require('mapbox-gl');
-    map.addControl(new ShareButton(), 'bottom-right');
   };
 
   const colourOptions = [
