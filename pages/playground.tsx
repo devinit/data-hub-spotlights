@@ -235,20 +235,34 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       ));
   };
   class ShareButton {
-    //private map: any;
-    //private map: any;
     container!: HTMLDivElement;
     map: any;
     onAdd(map: any) {
       this.map = map;
       this.container = document.createElement('div');
-      const control = document.createElement('button');
+      this.container.className = 'mapboxgl-ctrl';
+      const control = this._createButton('button');
       this.container.appendChild(control);
       return this.container;
     }
-    onRemove(){
+    onRemove() {
       this.container.parentNode?.removeChild(this.container);
       this.map = undefined;
+    }
+    _createButton(className: string) {
+      const el = window.document.createElement('button');
+      el.className = className;
+      el.textContent = 'Share';
+      el.addEventListener(
+        'click',
+        e => {
+          console.log(e);
+          // e.preventDefault()
+          e.stopPropagation();
+        },
+        false
+      );
+      return el;
     }
   }
   const baseMapOptions: Partial<MapboxOptions> = {
@@ -282,7 +296,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
       }
     });
     //const mapboxgl = await require('mapbox-gl');
-    map.addControl(new ShareButton(), 'top-right');
+    map.addControl(new ShareButton(), 'bottom-right');
   };
 
   const colourOptions = [
