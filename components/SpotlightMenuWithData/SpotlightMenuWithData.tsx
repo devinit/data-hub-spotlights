@@ -33,14 +33,13 @@ const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
 
   const renderMenuItems = (data: any, depth = 1, setActive: (_id: string) => void) => {
     return data.map((location: any, index: number) => {
-      const onView = (_event: any, id: string) => {
-        setActive(id);
+      const onView = (_event: any, item: any) => {
         setShowMenu(false);
-        onWidgetClick(false, id);
+        onWidgetClick(false, item.name);
       };
 
       return (
-        <SpotlightMenuListItem key={index} title={location.name} depth={depth} onView={onView}>
+        <SpotlightMenuListItem key={index} item={location} depth={depth} onView={onView}>
           {location.children ? (
             <SpotlightMenuList>{renderMenuItems(location.children, depth + 1, setActive)}</SpotlightMenuList>
           ) : null}
