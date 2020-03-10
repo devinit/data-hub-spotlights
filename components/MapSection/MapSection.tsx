@@ -7,6 +7,7 @@ import { PageSection } from '../PageSection';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { SpotlightInteractive } from '../SpotlightInteractive';
+import { SpotlightShare } from '../SpotlightShare';
 import { SidebarContent, SpotlightSidebar } from '../SpotlightSidebar';
 import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import {
@@ -76,6 +77,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               {renderLegendItems(range, colours)}
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
+            <SpotlightShare />
           </SidebarContent>
         </SpotlightSidebar>
 
