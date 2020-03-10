@@ -4,6 +4,7 @@ import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { VisualisationSectionMain } from '../VisualisationSection';
 import { SpotlightInteractive } from '../SpotlightInteractive';
 import { SpotlightOptions, SpotlightTheme } from '../../utils';
+import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 
 interface LocationFiltersAndChartsProps {
   onFilterChange: (index: number) => (options: SpotlightOptions) => void;
@@ -25,7 +26,9 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
         ></LocationComparisonFilters>
       </SpaceSectionBottom>
       <VisualisationSectionMain>
-        <SpotlightInteractive></SpotlightInteractive>
+        <SpotlightInteractive>
+          <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
+        </SpotlightInteractive>
       </VisualisationSectionMain>
     </>
   );
