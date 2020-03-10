@@ -11,7 +11,7 @@ interface SpotlightShareProps {
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   return (
     <div className={classNames(props.className)}>
-      <Button>Share this visualization</Button>
+      <Button>Share this visualisation</Button>
     </div>
   );
 };
