@@ -5,9 +5,9 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
   className?: string;
 }
 
-const Button: FunctionComponent<ButtonProps> = ({ children, className }) => {
+const Button: FunctionComponent<ButtonProps> = ({ children, className, ...props }) => {
   return (
-    <button type="button" className={classNames('button', className)}>
+    <button {...props} type="button" className={classNames('button', className)}>
       {children}
     </button>
   );
