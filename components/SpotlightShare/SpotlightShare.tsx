@@ -9,9 +9,12 @@ interface SpotlightShareProps {
 }
 
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
+  const handleClick = (e: any) => {
+    console.log(e);
+  };
   return (
     <div className={classNames(props.className)}>
-      <Button>Share this visualisation</Button>
+      <Button onClick={handleClick}>Share this visualisation</Button>
     </div>
   );
 };
