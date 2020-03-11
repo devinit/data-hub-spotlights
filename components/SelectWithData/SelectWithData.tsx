@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Select, SelectOptions, SelectOption } from '../Select';
-import { getBoundariesByCountryCode, createLocationOptions } from '../../utils';
+import { getBoundariesByCountryCode, createLocationOptions, SpotlightLocation } from '../../utils';
 
 interface SelectWithDataProps {
   show?: boolean;
   countryCode: string;
-  onWidgetClick: (widgetState: boolean, option: SelectOption) => void;
+  onWidgetClick: (widgetState: boolean, option: SpotlightLocation) => void;
 }
 
 const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show }) => {
@@ -18,7 +18,7 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
 
   const onSelectLocation = (option?: SelectOption): void => {
     if (option) {
-      onWidgetClick(false, option);
+      onWidgetClick(false, { name: option.label, geocode: option.value });
     }
   };
 

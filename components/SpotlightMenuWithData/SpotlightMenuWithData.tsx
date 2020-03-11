@@ -35,7 +35,7 @@ const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
     return data.map((location: any, index: number) => {
       const onView = (_event: any, item: any) => {
         setShowMenu(false);
-        onWidgetClick(false, item);
+        onWidgetClick(false, { name: item.label, geocode: item.value });
       };
       return (
         <SpotlightMenuListItem

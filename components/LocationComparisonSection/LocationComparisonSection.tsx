@@ -30,9 +30,9 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   const [filter, setFilter] = useState<SpotlightOptions | undefined>(undefined);
   const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
 
-  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation): void => {
+  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
     showActive(widgetState);
-    location ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
+    location.name ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
   };
 
   const onCloseTag = (tagName: string): void => {
@@ -45,7 +45,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   };
 
   const onFilterChange = (index: number) => (options: SpotlightOptions): void => {
-    console.log('filter is ' + filter + ' and number is ' + index);
+    console.log('The selected filter is ' + JSON.stringify(filter) + ' index is ' + index);
     if (options.indicator && options.year) {
       setFilter(options);
     }
