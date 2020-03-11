@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { PageSection, PageSectionHeading } from '../PageSection';
 import { Spotlight } from '../Spotlight';
-import { SpotlightOptions, SpotlightTheme } from '../../utils';
+import { SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
 import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
 import { AddComparison } from './AddComparison';
 import { LocationComparisonBanner } from './LocationComparisonBanner';
@@ -26,20 +26,22 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   themes
 }) => {
   const [active, showActive] = useState(false);
-  const [locations, setLocations] = useState<LocationTagType>([]);
+  const [locations, setLocations] = useState<SpotlightLocation[]>([]);
   const [filter, setFilter] = useState<SpotlightOptions | undefined>(undefined);
   const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
 
-  const onWidgetClick = (widgetState: boolean, locationName: string): void => {
+  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation): void => {
     showActive(widgetState);
-    locationName.length > 0 ? setLocations([...locations, { label: locationName }]) : null;
+    location ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
   };
 
   const onCloseTag = (tagName: string): void => {
-    const updatedLocations = locations.filter(function(obj) {
-      return obj.label !== tagName;
-    });
-    setLocations([...updatedLocations]);
+    if (locations) {
+      const updatedLocations = locations.filter(function(obj) {
+        return obj.name !== tagName;
+      });
+      setLocations([...updatedLocations]);
+    }
   };
 
   const onFilterChange = (index: number) => (options: SpotlightOptions): void => {

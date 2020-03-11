@@ -1,17 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
-import { AddLocation, LocationTagType } from '.';
+import { AddLocation } from '.';
 import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
 import { SelectWithData } from '../SelectWithData';
 import { Tags } from '../Tags/Tags';
 import { Button } from '../Button';
+import { SelectOption } from '../Select';
+import { SpotlightLocation } from '../../utils';
 
 interface ComparisonWrapperProps {
   countryName: string;
   countryCode: string;
-  onWidgetClick: (widgetState: boolean, locationName: string) => void;
+  onWidgetClick: (widgetState: boolean, locationName: SelectOption | any | string) => void;
   active: boolean;
-  locations: LocationTagType;
+  locations: SpotlightLocation[];
   onCloseTag: (tagName: string) => void;
   onCompare: () => void;
 }
