@@ -35,11 +35,15 @@ const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
     return data.map((location: any, index: number) => {
       const onView = (_event: any, item: any) => {
         setShowMenu(false);
-        onWidgetClick(false, item.name);
+        onWidgetClick(false, item.label);
       };
-
       return (
-        <SpotlightMenuListItem key={index} item={location} depth={depth} onView={onView}>
+        <SpotlightMenuListItem
+          key={index}
+          item={{ label: location.name, value: location.geocode }}
+          depth={depth}
+          onView={onView}
+        >
           {location.children ? (
             <SpotlightMenuList>{renderMenuItems(location.children, depth + 1, setActive)}</SpotlightMenuList>
           ) : null}

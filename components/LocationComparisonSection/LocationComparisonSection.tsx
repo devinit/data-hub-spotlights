@@ -1,15 +1,10 @@
 import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { PageSection, PageSectionHeading } from '../PageSection';
-import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
-import { AddLocation } from './AddLocation';
-import { Button } from '../Button';
-import { SelectWithData } from '../SelectWithData';
-import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
-import { Tags } from '../Tags/Tags';
 import { Spotlight } from '../Spotlight';
 import { SpotlightOptions, SpotlightTheme } from '../../utils';
 import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
 import { AddComparison } from './AddComparison';
+import { LocationComparisonBanner } from './LocationComparisonBanner';
 
 interface LocationComparisonSectionProps {
   countryCode: string;
@@ -72,26 +67,23 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     );
   };
 
+  const onCompare = (): void => {
+    console.log('The locations are ' + JSON.stringify(locations));
+  };
+
   return (
     <>
       <PageSection>
         <PageSectionHeading>Location Comparison</PageSectionHeading>
-        <SpotlightBanner>
-          <SpotlightBannerAside>
-            <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
-            <SpotlightMenuWithData
-              onWidgetClick={onWidgetClick}
-              countryName={countryName}
-              countryCode={countryCode}
-              spotlightMenu={active}
-            />
-            <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
-          </SpotlightBannerAside>
-          <SpotlightBannerMain>
-            <Tags onCloseTag={onCloseTag} updatedTags={locations} />
-            <Button className={'button--compare'}>{'Compare'}</Button>
-          </SpotlightBannerMain>
-        </SpotlightBanner>
+        <LocationComparisonBanner
+          onCloseTag={onCloseTag}
+          active={active}
+          locations={locations}
+          countryName={countryName}
+          countryCode={countryCode}
+          onWidgetClick={onWidgetClick}
+          onCompare={onCompare}
+        ></LocationComparisonBanner>
         <Spotlight className="spotlight--full">
           <LocationFiltersAndCharts themes={themes} onFilterChange={onFilterChange}></LocationFiltersAndCharts>
         </Spotlight>
