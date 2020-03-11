@@ -5,7 +5,7 @@ import { getBoundariesByCountryCode, createLocationOptions } from '../../utils';
 interface SelectWithDataProps {
   show?: boolean;
   countryCode: string;
-  onWidgetClick: (widgetState: boolean, tagName: string) => void;
+  onWidgetClick: (widgetState: boolean, option: SelectOption) => void;
 }
 
 const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show }) => {
@@ -18,7 +18,7 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
 
   const onSelectLocation = (option?: SelectOption): void => {
     if (option) {
-      onWidgetClick(false, option.label);
+      onWidgetClick(false, option);
     }
   };
 

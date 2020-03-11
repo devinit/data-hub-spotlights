@@ -7,7 +7,7 @@ interface SpotlightMenuWithDataProps {
   countryName: string;
   countryCode: string;
   spotlightMenu?: boolean;
-  onWidgetClick: (widgetState: boolean, tagName: string) => void;
+  onWidgetClick: (widgetState: boolean, location: any) => void;
 }
 
 const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
@@ -35,7 +35,7 @@ const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
     return data.map((location: any, index: number) => {
       const onView = (_event: any, item: any) => {
         setShowMenu(false);
-        onWidgetClick(false, item.label);
+        onWidgetClick(false, item);
       };
       return (
         <SpotlightMenuListItem

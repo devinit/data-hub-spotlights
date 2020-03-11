@@ -1,10 +1,10 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { TagsList } from './TagsList';
 import { TagsListItem } from './TagsListItem';
-import { LocationTagType } from '../LocationComparisonSection';
+import { SpotlightLocation } from '../../utils';
 
 interface TagsProps {
-  updatedTags: LocationTagType;
+  updatedTags: SpotlightLocation[];
   onCloseTag: (tagName: string) => void;
 }
 
@@ -15,7 +15,7 @@ const Tags: FunctionComponent<TagsProps> = ({ onCloseTag, updatedTags }) => {
 
   const renderLocationTagItems = (): ReactNode => {
     return updatedTags.map((tag: any, index: number) => {
-      return <TagsListItem key={index} label={tag.label} onRemoveTag={onRemove} />;
+      return <TagsListItem key={index} label={tag.name} onRemoveTag={onRemove} />;
     });
   };
 
