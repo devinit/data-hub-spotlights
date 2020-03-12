@@ -32,7 +32,23 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   return (
     <div className={classNames(props.className)}>
       <Button onClick={openModal}>Share this visualisation</Button>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+        <form method="post">
+          <h4>Share this visualisation</h4>
+          <label htmlFor="one">
+            <input type="radio" id="one" name="first_item" value="1" />
+            in default view
+          </label>
+          <label htmlFor="two">
+            <input type="radio" id="two" name="second_item" value="2" />
+            as I configured it
+          </label>
+          <input type="text" id="urllink" name="urllink" />
+          <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
+          <button type="submit">Submit</button>
+        </form>
+      </Modal>
     </div>
   );
 };
