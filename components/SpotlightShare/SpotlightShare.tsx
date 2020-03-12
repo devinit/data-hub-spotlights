@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Modal from 'react-modal';
 import { Button } from '../Button';
 import classNames from 'classnames';
+import './styles.css';
 
 interface SpotlightShareProps {
   maxHeight?: string;
@@ -33,8 +34,11 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
     <div className={classNames(props.className)}>
       <Button onClick={openModal}>Share this visualisation</Button>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-        <form method="post">
-          <h4>Share this visualisation</h4>
+        <form>
+          <label>
+            <b> Share this visualisation</b>
+          </label>
+          <br />
           <label htmlFor="one">
             <input type="radio" id="one" name="first_item" value="1" />
             in default view
@@ -43,10 +47,13 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
             <input type="radio" id="two" name="second_item" value="2" />
             as I configured it
           </label>
+          <br />
           <input type="text" id="urllink" name="urllink" />
-          <button type="submit">Submit</button>
-          <button type="submit">Submit</button>
-          <button type="submit">Submit</button>
+          <br />
+          <br />
+          <button type="submit" className="ui icon button"></button>
+          <button type="submit" className="ui icon button"></button>
+          <button type="submit" className="ui icon button"></button>
         </form>
       </Modal>
     </div>
