@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import Modal from 'react-modal';
 import { Button } from '../Button';
 import classNames from 'classnames';
 
@@ -9,9 +10,17 @@ interface SpotlightShareProps {
 }
 
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <div className={classNames(props.className)}>
-      <Button>Share this visualisation</Button>
+      <Button onClick={openModal}>Share this visualisation</Button>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}></Modal>
     </div>
   );
 };
