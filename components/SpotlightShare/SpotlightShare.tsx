@@ -8,6 +8,18 @@ interface SpotlightShareProps {
   minHeight?: string;
   className?: string;
 }
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    width: '50%',
+    height: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
 
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -20,7 +32,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   return (
     <div className={classNames(props.className)}>
       <Button onClick={openModal}>Share this visualisation</Button>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}></Modal>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
     </div>
   );
 };
