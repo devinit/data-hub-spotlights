@@ -11,6 +11,7 @@ import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { SpotlightInteractive } from '../SpotlightInteractive';
 import { SidebarContent, SpotlightHide, SpotlightSidebar, SpotlightSidebarInfo } from '../SpotlightSidebar';
+import { SpotlightShare } from '../SpotlightShare';
 import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import {
   getDataPrefix,
@@ -129,6 +130,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               {renderLegendItems(range, colours)}
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
+            <SpotlightShare />
           </SidebarContent>
         </SpotlightSidebar>
       </VisualisationSection>
