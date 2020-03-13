@@ -49,6 +49,7 @@
     "react-loading-overlay": "^1.0.1",
     "react-modal": "^3.11.2",
     "react-select": "^3.0.8",
+    "react-svg": "^11.0.13",
     "styled-components": "^5.0.1",
     "styled-jsx": "^3.2.4",
     "underscore": "^1.9.2"

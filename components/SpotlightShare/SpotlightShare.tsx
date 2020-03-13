@@ -2,8 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Modal from 'react-modal';
 import { Button } from '../Button';
 import classNames from 'classnames';
-import { FaFacebookF, FaTwitter } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+import { SVG } from './icons';
 import './styles.css';
 
 interface SpotlightShareProps {
@@ -53,15 +52,13 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
           <input type="text" id="urllink" name="urllink" />
           <br />
           <br />
-          <button type="submit" className="ui icon button">
-            <FaFacebookF />
+          <button type="submit">
+            <SVG fill="#49c" width={'100'} name="twitter" />
           </button>
-          <button type="submit" className="ui icon button">
-            <FaTwitter />
+          <button type="submit">
+            <SVG fill="#49c" width={'100'} name="facebook" />
           </button>
-          <button type="submit" className="ui icon button">
-            <MdEmail />
-          </button>
+          <button type="submit"></button>
         </form>
       </Modal>
     </div>
