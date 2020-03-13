@@ -38,7 +38,14 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   return (
     <div className={props.className}>
       <Button onClick={toggleModal}>Share visualisation</Button>
-      <Modal isOpen={isOpen} onAfterOpen={disableScroll} onRequestClose={toggleModal} style={customStyles}>
+      <Modal
+        isOpen={isOpen}
+        onAfterOpen={disableScroll}
+        onRequestClose={toggleModal}
+        style={customStyles}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={false}
+      >
         <form>
           <h2 style={{ fontSize: '2.6rem' }}>Share this visualisation</h2>
           <br />
@@ -84,6 +91,19 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
             />
           </a>
         </form>
+        <button
+          onClick={toggleModal}
+          style={{
+            padding: '8px 16px',
+            fontSize: '25px',
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            cursor: 'pointer'
+          }}
+        >
+          X
+        </button>
       </Modal>
     </div>
   );
