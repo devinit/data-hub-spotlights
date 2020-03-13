@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from '../Button';
-import { SVG } from './icons';
+//import { SVG } from './icons';
 
 interface SpotlightShareProps {
   maxHeight?: string;
@@ -13,7 +13,7 @@ const customStyles = {
     top: '50%',
     left: '50%',
     width: '50%',
-    height: '50%',
+    height: '32%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
@@ -26,25 +26,20 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-  const handleClick = () => {
-    console.log('hello');
-  };
   return (
     <div className={props.className}>
-      <Button onClick={toggleModal}>Share this visualisation</Button>
+      <Button onClick={toggleModal}>Share visualisation</Button>
       <Modal isOpen={isOpen} onRequestClose={toggleModal} style={customStyles}>
         <form>
-          <label>
-            <b> Share this visualisation</b>
-          </label>
+          <h2 style={{ fontSize: '2.6rem' }}>Share this visualisation</h2>
           <br />
           <label htmlFor="one">
-            <input type="radio" id="one" name="first_item" value="1" />
-            in default view
+            <input type="radio" id="one" name="first_item" value="1" style={{ marginRight: '1em' }} />
+            In default view
           </label>
           <label htmlFor="two">
-            <input type="radio" id="two" name="second_item" value="2" />
-            as I configured it
+            <input type="radio" id="two" name="second_item" value="2" style={{ marginRight: '1em' }} />
+            As I configured it
           </label>
           <br />
           <input
@@ -52,23 +47,33 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
             id="urllink"
             name="urllink"
             style={{
-              padding: '0.5em 1.5em',
-              borderWidth: '2px',
-              height: '3em',
-              borderColor: 'rgb(42, 39, 41)',
-              borderStyle: 'solid',
-              outline: '0px'
+              padding: '2em 1.5em',
+              height: '5em'
             }}
           />
           <br />
           <br />
-          <button type="submit" onClick={handleClick}>
-            <SVG fill="#49c" width={'40'} name="twitter" />
-          </button>
-          <button type="submit" onClick={handleClick}>
-            <SVG fill="#49c" width={'40'} name="facebook" />
-          </button>
-          <button type="submit"></button>
+          <a href="#">
+            <img
+              src="/assets/svg/source/twitter.svg"
+              alt="twitter"
+              style={{
+                margin: '0 7px',
+                height: '3em',
+                width: '3em'
+              }}
+            />
+          </a>
+          <a href="#">
+            <img
+              src="/assets/svg/source/facebook.svg"
+              alt="facebook"
+              style={{
+                height: '3em',
+                width: '3em'
+              }}
+            />
+          </a>
         </form>
       </Modal>
     </div>
