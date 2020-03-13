@@ -23,7 +23,7 @@ const getPath = (name: string, props: JSX.IntrinsicAttributes & React.SVGProps<S
 const getViewBox = (name: any) => {
   switch (name) {
     case 'twitter':
-      return '0 0 172.76 172.76'; // Eg. 0 0 32 32
+      return '0 0 172.76 172.76';
     case 'facebook':
       return '0 0 172.76 172.76';
     default:

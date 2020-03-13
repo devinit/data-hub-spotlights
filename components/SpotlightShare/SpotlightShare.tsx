@@ -1,9 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from '../Button';
-import classNames from 'classnames';
 import { SVG } from './icons';
-import './styles.css';
 
 interface SpotlightShareProps {
   maxHeight?: string;
@@ -24,17 +22,17 @@ const customStyles = {
 };
 
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const openModal = () => {
-    setIsOpen(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
   };
-  const closeModal = () => {
-    setIsOpen(false);
+  const handleClick = () => {
+    console.log('hello');
   };
   return (
-    <div className={classNames(props.className)}>
-      <Button onClick={openModal}>Share this visualisation</Button>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+    <div className={props.className}>
+      <Button onClick={toggleModal}>Share this visualisation</Button>
+      <Modal isOpen={isOpen} toggle={toggleModal} style={customStyles}>
         <form>
           <label>
             <b> Share this visualisation</b>
@@ -49,14 +47,26 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
             as I configured it
           </label>
           <br />
-          <input type="text" id="urllink" name="urllink" />
+          <input
+            type="text"
+            id="urllink"
+            name="urllink"
+            style={{
+              padding: '0.5em 1.5em',
+              borderWidth: '2px',
+              height: '3em',
+              borderColor: 'rgb(42, 39, 41)',
+              borderStyle: 'solid',
+              outline: '0px'
+            }}
+          />
           <br />
           <br />
-          <button type="submit">
-            <SVG fill="#49c" width={'100'} name="twitter" />
+          <button type="submit" onClick={handleClick}>
+            <SVG fill="#49c" width={'40'} name="twitter" />
           </button>
-          <button type="submit">
-            <SVG fill="#49c" width={'100'} name="facebook" />
+          <button type="submit" onClick={handleClick}>
+            <SVG fill="#49c" width={'40'} name="facebook" />
           </button>
           <button type="submit"></button>
         </form>
