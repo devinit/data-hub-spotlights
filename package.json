@@ -21,6 +21,7 @@
     "@turf/center": "^6.0.1",
     "@turf/helpers": "^6.1.4",
     "@types/echarts": "^4.4.3",
+    "@types/react-modal": "^3.10.5",
     "@types/styled-components": "^5.0.0",
     "@zeit/next-css": "^1.0.1",
     "apollo-cache-inmemory": "^1.6.5",

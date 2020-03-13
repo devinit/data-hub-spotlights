@@ -32,7 +32,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   return (
     <div className={props.className}>
       <Button onClick={toggleModal}>Share this visualisation</Button>
-      <Modal isOpen={isOpen} toggle={toggleModal} style={customStyles}>
+      <Modal isOpen={isOpen} onRequestClose={toggleModal} style={customStyles}>
         <form>
           <label>
             <b> Share this visualisation</b>
