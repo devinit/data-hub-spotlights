@@ -12,12 +12,18 @@ const customStyles = {
   content: {
     top: '50%',
     left: '50%',
-    width: '50%',
-    height: '32%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    width: '600px',
+    maxWidth: '100%',
+    height: '300px',
+    maxHeight: '100%',
+    padding: '20px 50px 20px 20px',
+    overflow: 'auto',
+    borderRadius: 10
+  },
+  overlay: {
+    background: 'rgba(0,0,0,.85)',
+    zIndex: 1000
   }
 };
 
@@ -26,10 +32,13 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const disableScroll = () => {
+    document.body.style.overflow = 'hidden';
+  };
   return (
     <div className={props.className}>
       <Button onClick={toggleModal}>Share visualisation</Button>
-      <Modal isOpen={isOpen} onRequestClose={toggleModal} style={customStyles}>
+      <Modal isOpen={isOpen} onAfterOpen={disableScroll} onRequestClose={toggleModal} style={customStyles}>
         <form>
           <h2 style={{ fontSize: '2.6rem' }}>Share this visualisation</h2>
           <br />
