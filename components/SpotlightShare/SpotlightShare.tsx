@@ -13,13 +13,14 @@ const customStyles = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '600px',
-    maxWidth: '100%',
-    height: '300px',
+    maxWidth: '680px',
+    height: '280px',
     maxHeight: '100%',
-    padding: '20px 50px 20px 20px',
+    padding: '20px',
     overflow: 'auto',
-    borderRadius: 10
+    borderRadius: '8px',
+    backgroundColor: '#fefefe',
+    boxShadow: '20px 40px 50px rgba(0, 0, 0, 0.1)'
   },
   overlay: {
     background: 'rgba(0,0,0,.85)',
@@ -94,15 +95,19 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
         <button
           onClick={toggleModal}
           style={{
-            padding: '8px 16px',
-            fontSize: '25px',
+            padding: '0px 15px',
+            color: '#fff',
+            fontSize: '26px',
             position: 'absolute',
             right: 0,
             top: 0,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            backgroundColor: '#000',
+            borderBottomLeftRadius: '8px',
+            display: 'block'
           }}
         >
-          X
+          x
         </button>
       </Modal>
     </div>
