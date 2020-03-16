@@ -73,7 +73,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
           <a href="#">
             <img
               src="/assets/svg/source/twitter.svg"
-              alt="twitter"
+              alt="Twitter"
               style={{
                 margin: '0 7px',
                 height: '3em',
@@ -84,8 +84,19 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
           <a href="#">
             <img
               src="/assets/svg/source/facebook.svg"
-              alt="facebook"
+              alt="Facebook"
               style={{
+                height: '3em',
+                width: '3em'
+              }}
+            />
+          </a>
+          <a href="#">
+            <img
+              src="/assets/svg/source/email.svg"
+              alt="Email"
+              style={{
+                margin: '0 7px',
                 height: '3em',
                 width: '3em'
               }}
