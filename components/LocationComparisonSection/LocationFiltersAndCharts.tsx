@@ -1,23 +1,34 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { SpaceSectionBottom } from '../SpaceSectionBottom';
 import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { VisualisationSectionMain } from '../VisualisationSection';
 import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SpotlightOptions, SpotlightTheme } from '../../utils';
+import { SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 
 interface LocationFiltersAndChartsProps {
-  onFilterChange: (index: number) => (options: SpotlightOptions) => void;
   themes: SpotlightTheme[];
+  selectedLocations: SpotlightLocation[];
 }
 
-const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({ themes, onFilterChange }) => {
+const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({ themes, selectedLocations }) => {
+  const [selections, setSelections] = useState<[SpotlightOptions] | undefined>(undefined);
+  //const [loading, setLoading] = useState(false);
+
+  const onFilterChange = () => (options: SpotlightOptions): void => {
+    console.log('Filter change ' + JSON.stringify(selections) + ' ' + JSON.stringify(selectedLocations));
+    if (options.indicator) {
+      setSelections([options]);
+    }
+  };
+  //const onLoad = (): void => setLoading(false);
+
   return (
     <>
       <SpaceSectionBottom>
         <LocationComparisonFilters
           themes={themes}
-          onOptionsChange={onFilterChange(0)}
+          onOptionsChange={onFilterChange()}
           topicLabel="Select a topic to explore"
           indicatorLabel="Choose an indicator"
           topicClassName="form-field--inline-three"

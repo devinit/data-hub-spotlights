@@ -14,26 +14,26 @@ interface ComponentProps {
 const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
   const options: ECharts.Options = {
     title: {
-      text: 'Basic Bar Chart'
+      text: ''
     },
     tooltip: {},
     legend: {
-      data: ['Sales', 'Expenses']
+      data: []
     },
     xAxis: {
-      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
+      data: toBasicAxisData([])
     },
     yAxis: {},
     series: [
       {
         name: 'Sales',
         type: 'line',
-        data: [5, 20, 36, 15, 10, 25]
+        data: []
       },
       {
         name: 'Expenses',
         type: 'line',
-        data: [2, 30, 3, 40, 20, 36]
+        data: []
       }
     ]
   };

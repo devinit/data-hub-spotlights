@@ -1,34 +1,42 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
 import { AddLocation } from '.';
 import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
 import { SelectWithData } from '../SelectWithData';
 import { Tags } from '../Tags/Tags';
 import { Button } from '../Button';
-import { SelectOption } from '../Select';
 import { SpotlightLocation } from '../../utils';
 
 interface ComparisonWrapperProps {
   countryName: string;
   countryCode: string;
-  onWidgetClick: (widgetState: boolean, locationName: SelectOption | any | string) => void;
-  active: boolean;
-  locations: SpotlightLocation[];
-  onCloseTag: (tagName: string) => void;
-  onCompare: () => void;
+  onCompare: (locations: SpotlightLocation[]) => void;
 }
 
 const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   countryName,
   countryCode,
-  onWidgetClick,
-  active,
-  locations,
-  onCloseTag,
   onCompare
 }) => {
+  const [active, showActive] = useState(false);
+  const [locations, setLocations] = useState<SpotlightLocation[]>([]);
+
+  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
+    showActive(widgetState);
+    location.name ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
+  };
+
+  const onCloseTag = (tagName: string): void => {
+    if (locations) {
+      const updatedLocations = locations.filter(function(obj) {
+        return obj.name !== tagName;
+      });
+      setLocations([...updatedLocations]);
+    }
+  };
+
   const onClickCompare = (): void => {
-    onCompare();
+    onCompare(locations);
   };
 
   return (

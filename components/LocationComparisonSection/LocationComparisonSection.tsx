@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, ReactNode } from 'react';
 import { PageSection, PageSectionHeading } from '../PageSection';
 import { Spotlight } from '../Spotlight';
-import { SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
+import { SpotlightTheme, SpotlightLocation } from '../../utils';
 import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
 import { AddComparison } from './AddComparison';
 import { LocationComparisonBanner } from './LocationComparisonBanner';
@@ -25,31 +25,8 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   countryName,
   themes
 }) => {
-  const [active, showActive] = useState(false);
-  const [locations, setLocations] = useState<SpotlightLocation[]>([]);
-  const [filter, setFilter] = useState<SpotlightOptions | undefined>(undefined);
+  const [selectedLocations, setSelectedLocations] = useState<SpotlightLocation[]>([]);
   const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
-
-  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
-    showActive(widgetState);
-    location.name ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
-  };
-
-  const onCloseTag = (tagName: string): void => {
-    if (locations) {
-      const updatedLocations = locations.filter(function(obj) {
-        return obj.name !== tagName;
-      });
-      setLocations([...updatedLocations]);
-    }
-  };
-
-  const onFilterChange = (index: number) => (options: SpotlightOptions): void => {
-    console.log('The selected filter is ' + JSON.stringify(filter) + ' index is ' + index);
-    if (options.indicator && options.year) {
-      setFilter(options);
-    }
-  };
 
   const onAddComparison = (): void => {
     addChartAndFilters([...chartAndFilters, 1]);
@@ -61,7 +38,10 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
         return (
           <PageSection key={index}>
             <Spotlight className="spotlight--full">
-              <LocationFiltersAndCharts themes={themes} onFilterChange={onFilterChange}></LocationFiltersAndCharts>
+              <LocationFiltersAndCharts
+                themes={themes}
+                selectedLocations={selectedLocations}
+              ></LocationFiltersAndCharts>
             </Spotlight>
           </PageSection>
         );
@@ -69,8 +49,8 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     );
   };
 
-  const onCompare = (): void => {
-    console.log('The locations are ' + JSON.stringify(locations));
+  const onCompare = (locations: SpotlightLocation[] | any): void => {
+    setSelectedLocations(locations);
   };
 
   return (
@@ -78,16 +58,12 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
       <PageSection>
         <PageSectionHeading>Location Comparison</PageSectionHeading>
         <LocationComparisonBanner
-          onCloseTag={onCloseTag}
-          active={active}
-          locations={locations}
           countryName={countryName}
           countryCode={countryCode}
-          onWidgetClick={onWidgetClick}
           onCompare={onCompare}
         ></LocationComparisonBanner>
         <Spotlight className="spotlight--full">
-          <LocationFiltersAndCharts themes={themes} onFilterChange={onFilterChange}></LocationFiltersAndCharts>
+          <LocationFiltersAndCharts themes={themes} selectedLocations={selectedLocations}></LocationFiltersAndCharts>
         </Spotlight>
       </PageSection>
       {renderAddComparisonComponents()}
