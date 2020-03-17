@@ -22,8 +22,12 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   const [locations, setLocations] = useState<SpotlightLocation[]>([]);
 
   const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
+    const index = locations.findIndex(x => x.name === location.name);
+    console.log('the index is ' + index);
     showActive(widgetState);
-    location.name ? setLocations([...locations, { name: location.name, geocode: location.geocode }]) : null;
+    location.name && index === -1
+      ? setLocations([...locations, { name: location.name, geocode: location.geocode }])
+      : null;
   };
 
   const onCloseTag = (tagName: string): void => {
@@ -52,7 +56,15 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
           />
         </SpotlightBannerAside>
         <SpotlightBannerMain>
-          <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
+          <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} width="300px" />
+          <button type="button" className="countries__searched-cancel">
+            <style jsx>{`
+              .countries__searched-cancel {
+                display: ${active ? 'inline-block' : 'none'};
+              }
+            `}</style>
+            {<span>Cancel</span>}
+          </button>
         </SpotlightBannerMain>
       </SpotlightBanner>
       <SpotlightBanner>

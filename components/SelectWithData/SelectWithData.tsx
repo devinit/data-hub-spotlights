@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState, CSSProperties } from 'react';
 import { Select, SelectOptions, SelectOption } from '../Select';
 import { getBoundariesByCountryCode, createLocationOptions, SpotlightLocation } from '../../utils';
 
@@ -6,9 +6,10 @@ interface SelectWithDataProps {
   show?: boolean;
   countryCode: string;
   onWidgetClick: (widgetState: boolean, option: SpotlightLocation) => void;
+  width: string;
 }
 
-const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show }) => {
+const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show, width }) => {
   const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
     getBoundariesByCountryCode(countryCode).then(boundaries => {
@@ -30,6 +31,9 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
       isLoading={!(options && options.length)}
       chooseTheme="dark"
       isClearable
+      styles={{
+        container: (provided: React.CSSProperties): CSSProperties => ({ ...provided, width, fontSize: '1.6rem' })
+      }}
     />
   ) : (
     <span />

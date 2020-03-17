@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SpaceSectionBottom } from '../SpaceSectionBottom';
 import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { VisualisationSectionMain } from '../VisualisationSection';
@@ -17,12 +17,12 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
   const [loading, setLoading] = useState(false);
 
   const onFilterChange = () => (options: SpotlightOptions): void => {
-    console.log('Filter change ' + JSON.stringify(selections) + ' ' + JSON.stringify(selectedLocations));
     if (options.indicator) {
       setSelections([options]);
     }
   };
   const onLoad = (): void => setLoading(false);
+  useEffect(() => setLoading(true), [selectedLocations, selections]);
 
   return (
     <>

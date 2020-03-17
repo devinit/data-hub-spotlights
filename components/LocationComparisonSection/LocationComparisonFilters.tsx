@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { FormField } from '../FormField';
 import { Select, SelectOption } from '../Select';
 import { FilterSelectOptions, SpotlightFilterProps, defaultSelectOptions } from '../SpotlightFilters/utils';
@@ -18,8 +18,6 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
   const [selected, setSelected] = useState<SpotlightOptions>(defaultSelected);
   const { theme: activeTheme, indicator: activeIndicator } = selected;
   const activeIndicatorCache = activeIndicator && parseIndicatorToOption(activeIndicator);
-
-  useEffect(() => props.onOptionsChange(selected), [selected]);
 
   const onSelectTheme = (option?: SelectOption): void => {
     if (option) {
@@ -51,6 +49,11 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
     }
   };
 
+  const onUpdateBtnbClick = (): void => {
+    console.log('The holla ' + JSON.stringify(selected));
+    props.onOptionsChange(selected);
+  };
+
   return (
     <form className="form">
       <FormField className={props.topicClassName}>
@@ -74,7 +77,9 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
         />
       </FormField>
       <FormField className={props.topicClassName}>
-        <Button className={'button'}>{'Update'}</Button>
+        <Button className={'button'} onButtonClick={onUpdateBtnbClick}>
+          {'Update'}
+        </Button>
       </FormField>
     </form>
   );
