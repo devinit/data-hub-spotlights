@@ -13,6 +13,12 @@ interface ComparisonWrapperProps {
   onCompare: (locations: SpotlightLocation[]) => void;
 }
 
+const containerStyles = {
+  display: 'inline-block',
+  fontSize: '1.6rem',
+  width: '300px'
+};
+
 const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   countryName,
   countryCode,
@@ -56,7 +62,12 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
           />
         </SpotlightBannerAside>
         <SpotlightBannerMain>
-          <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} width="300px" />
+          <SelectWithData
+            show={active}
+            countryCode={countryCode}
+            onWidgetClick={onWidgetClick}
+            styles={containerStyles}
+          />
           <button type="button" className="countries__searched-cancel">
             <style jsx>{`
               .countries__searched-cancel {

@@ -6,10 +6,10 @@ interface SelectWithDataProps {
   show?: boolean;
   countryCode: string;
   onWidgetClick: (widgetState: boolean, option: SpotlightLocation) => void;
-  width: string;
+  styles: {};
 }
 
-const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show, width }) => {
+const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show, styles }) => {
   const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
     getBoundariesByCountryCode(countryCode).then(boundaries => {
@@ -32,7 +32,10 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
       chooseTheme="dark"
       isClearable
       styles={{
-        container: (provided: React.CSSProperties): CSSProperties => ({ ...provided, width, fontSize: '1.6rem' })
+        container: (provided: React.CSSProperties): CSSProperties => ({
+          ...provided,
+          ...styles
+        })
       }}
     />
   ) : (
