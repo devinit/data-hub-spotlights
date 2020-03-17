@@ -13,7 +13,8 @@ interface LocationComparisonSectionProps {
 }
 
 export interface LocationTagProps {
-  label: string;
+  name: string;
+  geocode: string;
 }
 
 export type LocationTagType = LocationTagProps[];

@@ -8,11 +8,11 @@ import { Tags } from '../Tags';
 import { LocationTagType } from '../../LocationComparisonSection';
 
 const locations: LocationTagType = [
-  { label: 'Masaka' },
-  { label: 'Gulu' },
-  { label: 'Arua' },
-  { label: 'Koboko' },
-  { label: 'Palisa' }
+  { name: 'Masaka', geocode: 'd123' },
+  { name: 'Gulu', geocode: 'd123' },
+  { name: 'Arua', geocode: 'd123' },
+  { name: 'Koboko', geocode: 'd123' },
+  { name: 'Palisa', geocode: 'd123' }
 ];
 const onCloseTag = jest.fn();
 
