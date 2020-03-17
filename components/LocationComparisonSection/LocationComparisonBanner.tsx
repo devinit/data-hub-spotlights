@@ -40,24 +40,28 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   };
 
   return (
-    <SpotlightBanner>
-      <SpotlightBannerAside>
-        <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
-        <SpotlightMenuWithData
-          onWidgetClick={onWidgetClick}
-          countryName={countryName}
-          countryCode={countryCode}
-          spotlightMenu={active}
-        />
-        <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
-      </SpotlightBannerAside>
-      <SpotlightBannerMain>
+    <>
+      <SpotlightBanner>
+        <SpotlightBannerAside>
+          <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
+          <SpotlightMenuWithData
+            onWidgetClick={onWidgetClick}
+            countryName={countryName}
+            countryCode={countryCode}
+            spotlightMenu={active}
+          />
+        </SpotlightBannerAside>
+        <SpotlightBannerMain>
+          <SelectWithData show={active} countryCode={countryCode} onWidgetClick={onWidgetClick} />
+        </SpotlightBannerMain>
+      </SpotlightBanner>
+      <SpotlightBanner>
         <Tags onCloseTag={onCloseTag} updatedTags={locations} />
         <Button className={'button--compare'} onButtonClick={onClickCompare}>
           {'Compare'}
         </Button>
-      </SpotlightBannerMain>
-    </SpotlightBanner>
+      </SpotlightBanner>
+    </>
   );
 };
 

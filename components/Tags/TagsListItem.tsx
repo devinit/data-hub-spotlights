@@ -12,15 +12,10 @@ const TagsListItem: FunctionComponent<TagsListItemProps> = ({ label, onRemoveTag
 
   return (
     <li className="m-pills__item">
-      <style jsx>{`
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      `}</style>
-      <button type="button" onClick={onRemove}>
-        <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-blank"></i>
-      </button>
       {label}
+      <button type="button" onClick={onRemove}>
+        <i role="presentation" aria-hidden="true" className="ico ico--20 ico-cross-slate"></i>
+      </button>
     </li>
   );
 };

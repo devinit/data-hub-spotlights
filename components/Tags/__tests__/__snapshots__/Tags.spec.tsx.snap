@@ -22,7 +22,7 @@ exports[`Tags It renders correctly 1`] = `
     >
       <i
         aria-hidden="true"
-        className="ico ico--16 ico-plus-blank"
+        className="ico ico--20 ico-cross-slate"
         role="presentation"
       />
     </button>
@@ -46,7 +46,7 @@ exports[`Tags It renders correctly 1`] = `
     >
       <i
         aria-hidden="true"
-        className="ico ico--16 ico-plus-blank"
+        className="ico ico--20 ico-cross-slate"
         role="presentation"
       />
     </button>
@@ -70,7 +70,7 @@ exports[`Tags It renders correctly 1`] = `
     >
       <i
         aria-hidden="true"
-        className="ico ico--16 ico-plus-blank"
+        className="ico ico--20 ico-cross-slate"
         role="presentation"
       />
     </button>
@@ -94,7 +94,7 @@ exports[`Tags It renders correctly 1`] = `
     >
       <i
         aria-hidden="true"
-        className="ico ico--16 ico-plus-blank"
+        className="ico ico--20 ico-cross-slate"
         role="presentation"
       />
     </button>
@@ -118,7 +118,7 @@ exports[`Tags It renders correctly 1`] = `
     >
       <i
         aria-hidden="true"
-        className="ico ico--16 ico-plus-blank"
+        className="ico ico--20 ico-cross-slate"
         role="presentation"
       />
     </button>
