@@ -5,6 +5,7 @@ import { VisualisationSectionMain } from '../VisualisationSection';
 import { SpotlightInteractive } from '../SpotlightInteractive';
 import { SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
+import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 
 interface LocationFiltersAndChartsProps {
   themes: SpotlightTheme[];
@@ -13,7 +14,7 @@ interface LocationFiltersAndChartsProps {
 
 const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({ themes, selectedLocations }) => {
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>(undefined);
-  //const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onFilterChange = () => (options: SpotlightOptions): void => {
     console.log('Filter change ' + JSON.stringify(selections) + ' ' + JSON.stringify(selectedLocations));
@@ -21,7 +22,7 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
       setSelections([options]);
     }
   };
-  //const onLoad = (): void => setLoading(false);
+  const onLoad = (): void => setLoading(false);
 
   return (
     <>
@@ -38,7 +39,14 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
       </SpaceSectionBottom>
       <VisualisationSectionMain>
         <SpotlightInteractive>
-          <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
+          <LocationComparisonDataLoader
+            options={selections}
+            onLoad={onLoad}
+            loading={loading}
+            locations={selectedLocations}
+          >
+            <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
+          </LocationComparisonDataLoader>
         </SpotlightInteractive>
       </VisualisationSectionMain>
     </>
