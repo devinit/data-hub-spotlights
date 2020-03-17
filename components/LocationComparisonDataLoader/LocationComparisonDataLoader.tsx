@@ -17,10 +17,6 @@ type LocData = LocationIndicatorData;
 const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props => {
   const [loading, setLoading] = useState(props.loading);
   const [data, setData] = useState<LocData | undefined>(undefined);
-
-  if (!props.options) {
-    return <div>No Data</div>;
-  }
   useEffect(() => setLoading(props.loading), [props.loading]);
   useEffect(() => {
     if (data) {
@@ -34,6 +30,10 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
   const onLoad = () => (data: LocData[]): void => {
     setData(data[0]);
   };
+
+  if (!props.options) {
+    return <div>No Data</div>;
+  }
 
   if (loading) {
     return (
