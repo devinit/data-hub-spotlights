@@ -7,39 +7,7 @@ exports[`Tags It renders correctly 1`] = `
   <li
     className="m-pills__item"
   >
-    <style
-      jsx={true}
-    >
-      
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      
-    </style>
-    <button
-      onClick={[Function]}
-      type="button"
-    >
-      <i
-        aria-hidden="true"
-        className="ico ico--20 ico-cross-slate"
-        role="presentation"
-      />
-    </button>
     Masaka
-  </li>
-  <li
-    className="m-pills__item"
-  >
-    <style
-      jsx={true}
-    >
-      
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      
-    </style>
     <button
       onClick={[Function]}
       type="button"
@@ -50,20 +18,11 @@ exports[`Tags It renders correctly 1`] = `
         role="presentation"
       />
     </button>
+  </li>
+  <li
+    className="m-pills__item"
+  >
     Gulu
-  </li>
-  <li
-    className="m-pills__item"
-  >
-    <style
-      jsx={true}
-    >
-      
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      
-    </style>
     <button
       onClick={[Function]}
       type="button"
@@ -74,20 +33,11 @@ exports[`Tags It renders correctly 1`] = `
         role="presentation"
       />
     </button>
+  </li>
+  <li
+    className="m-pills__item"
+  >
     Arua
-  </li>
-  <li
-    className="m-pills__item"
-  >
-    <style
-      jsx={true}
-    >
-      
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      
-    </style>
     <button
       onClick={[Function]}
       type="button"
@@ -98,20 +48,11 @@ exports[`Tags It renders correctly 1`] = `
         role="presentation"
       />
     </button>
+  </li>
+  <li
+    className="m-pills__item"
+  >
     Koboko
-  </li>
-  <li
-    className="m-pills__item"
-  >
-    <style
-      jsx={true}
-    >
-      
-        .m-pills__item {
-          margin-bottom: 5px !important;
-        }
-      
-    </style>
     <button
       onClick={[Function]}
       type="button"
@@ -122,7 +63,21 @@ exports[`Tags It renders correctly 1`] = `
         role="presentation"
       />
     </button>
+  </li>
+  <li
+    className="m-pills__item"
+  >
     Palisa
+    <button
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--20 ico-cross-slate"
+        role="presentation"
+      />
+    </button>
   </li>
 </ul>
 `;
