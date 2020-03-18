@@ -10,8 +10,10 @@ import {
   parseIndicatorToOption,
   SpotlightOptions
 } from '../../utils';
+import { useRouter } from 'next/router';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
+  const router = useRouter();
   const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes, defaultIndexes);
   const [options, setOptions] = useState<FilterSelectOptions>(defaultOptions);
   const { themes, indicators, years } = options;
@@ -22,11 +24,21 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
 
   const onSelectTheme = (option?: SelectOption): void => {
     if (option) {
+      console.log(option);
       const selectedTheme = props.themes.find(theme => theme.slug === option.value);
       if (selectedTheme) {
         const { options: themeOptions, selected: themeSelected } = getThemeDefaults(selectedTheme, options);
         setSelected(themeSelected);
         setOptions(themeOptions);
+        const href = router.route;
+        const as = router.asPath + `?mapTopic=${option.label}`;
+        if (router.asPath == 'spotlight/spotlight-uganda') {
+          router.push(href, as, { shallow: true });
+        } else {
+          const asPath = router.asPath.split(/\?/)[0];
+          const as = asPath + `?mapTopic=${option.label}`;
+          router.push(href, as, { shallow: true });
+        }
       }
     } else if (activeIndicator) {
       setSelected({});
