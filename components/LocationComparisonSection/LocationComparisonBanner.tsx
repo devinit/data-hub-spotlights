@@ -49,6 +49,10 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
     onCompare(locations);
   };
 
+  const onCancelClick = (): void => {
+    showActive(!active);
+  };
+
   return (
     <>
       <SpotlightBanner>
@@ -68,7 +72,7 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
             onWidgetClick={onWidgetClick}
             styles={containerStyles}
           />
-          <button type="button" className="countries__searched-cancel">
+          <button type="button" className="countries__searched-cancel" onClick={onCancelClick}>
             <style jsx>{`
               .countries__searched-cancel {
                 display: ${active ? 'inline-block' : 'none'};
