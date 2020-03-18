@@ -11,34 +11,34 @@ interface ComponentProps {
   height?: string;
 }
 
-const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
+const LocationComparisonLineChart: FunctionComponent<ComponentProps> = () => {
   const options: ECharts.Options = {
     title: {
-      text: ''
+      text: 'Basic Bar Chart'
     },
     tooltip: {},
     legend: {
-      data: []
+      data: ['Sales', 'Expenses']
     },
     xAxis: {
-      data: toBasicAxisData([])
+      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
     },
     yAxis: {},
     series: [
       {
         name: 'Sales',
         type: 'line',
-        data: []
+        data: [5, 20, 36, 15, 10, 25]
       },
       {
         name: 'Expenses',
         type: 'line',
-        data: []
+        data: [2, 30, 3, 40, 20, 36]
       }
     ]
   };
 
-  return <EChartsBaseChart options={options} height={props.height} />;
+  return <EChartsBaseChart options={options} height={'500px'} />;
 };
 
 export { LocationComparisonLineChart };

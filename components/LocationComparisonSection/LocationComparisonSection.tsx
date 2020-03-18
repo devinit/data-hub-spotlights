@@ -42,6 +42,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
               <LocationFiltersAndCharts
                 themes={themes}
                 selectedLocations={selectedLocations}
+                countryCode={countryCode}
               ></LocationFiltersAndCharts>
             </Spotlight>
           </PageSection>
@@ -64,7 +65,11 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
           onCompare={onCompare}
         ></LocationComparisonBanner>
         <Spotlight className="spotlight--full">
-          <LocationFiltersAndCharts themes={themes} selectedLocations={selectedLocations}></LocationFiltersAndCharts>
+          <LocationFiltersAndCharts
+            themes={themes}
+            selectedLocations={selectedLocations}
+            countryCode={countryCode}
+          ></LocationFiltersAndCharts>
         </Spotlight>
       </PageSection>
       {renderAddComparisonComponents()}

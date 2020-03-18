@@ -3,16 +3,22 @@ import { SpaceSectionBottom } from '../SpaceSectionBottom';
 import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { VisualisationSectionMain } from '../VisualisationSection';
 import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
+import { SpotlightIndicator, SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
+import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
 
 interface LocationFiltersAndChartsProps {
   themes: SpotlightTheme[];
   selectedLocations: SpotlightLocation[];
+  countryCode: string;
 }
 
-const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({ themes, selectedLocations }) => {
+const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({
+  themes,
+  selectedLocations,
+  countryCode
+}) => {
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +51,13 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
             loading={loading}
             locations={selectedLocations}
           >
-            <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
+            <LocationComparisonChartDataHandler
+              countryCode={countryCode}
+              locations={selectedLocations}
+              indicators={selections?.map(sel => sel.indicator) as [SpotlightIndicator]}
+            >
+              <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
+            </LocationComparisonChartDataHandler>
           </LocationComparisonDataLoader>
         </SpotlightInteractive>
       </VisualisationSectionMain>

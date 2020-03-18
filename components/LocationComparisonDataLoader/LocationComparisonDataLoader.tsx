@@ -28,6 +28,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
   }, [data]);
 
   const onLoad = () => (data: LocData[]): void => {
+    console.log('Onload');
     setData(data[0]);
   };
 
@@ -46,6 +47,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
               <DynamicDataLoader
                 indicators={_indicators}
                 startYear={year}
+                endYear={2020}
                 onLoad={onLoad()}
                 geocodes={props.locations && props.locations.map(loc => loc.geocode)}
               />
