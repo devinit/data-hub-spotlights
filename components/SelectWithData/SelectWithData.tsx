@@ -6,7 +6,7 @@ interface SelectWithDataProps {
   show?: boolean;
   countryCode: string;
   onWidgetClick: (widgetState: boolean, option: SpotlightLocation) => void;
-  styles: {};
+  styles?: {};
 }
 
 const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show, styles }) => {
