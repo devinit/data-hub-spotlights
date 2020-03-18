@@ -4,7 +4,7 @@ exports[`SelectWithData It does not render when show is false 1`] = `<span />`;
 
 exports[`SelectWithData It renders correctly 1`] = `
 <div
-  className=" css-1obsjx3-container"
+  className=" css-2b097c-container"
   onKeyDown={[Function]}
 >
   <div

@@ -3,7 +3,7 @@ import { SpaceSectionBottom } from '../SpaceSectionBottom';
 import { LocationComparisonFilters } from './LocationComparisonFilters';
 import { VisualisationSectionMain } from '../VisualisationSection';
 import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SpotlightIndicator, SpotlightOptions, SpotlightTheme, SpotlightLocation } from '../../utils';
+import { SpotlightIndicator, SpotlightOptions, SpotlightTheme, SpotlightLocation, getDefaults } from '../../utils';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
@@ -19,7 +19,8 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
   selectedLocations,
   countryCode
 }) => {
-  const [selections, setSelections] = useState<[SpotlightOptions] | undefined>(undefined);
+  const { selected: defaultSelected } = getDefaults(themes);
+  const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
   const [loading, setLoading] = useState(false);
 
   const onFilterChange = () => (options: SpotlightOptions): void => {
@@ -28,7 +29,8 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
     }
   };
   const onLoad = (): void => setLoading(false);
-  useEffect(() => setLoading(true), [selectedLocations, selections]);
+  useEffect(() => setLoading(true), [selectedLocations]);
+  useEffect(() => setLoading(true), [selections]);
 
   return (
     <>

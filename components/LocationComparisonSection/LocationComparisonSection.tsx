@@ -52,7 +52,9 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   };
 
   const onCompare = (locations: SpotlightLocation[] | any): void => {
-    setSelectedLocations(locations);
+    if (locations.length > 0) {
+      setSelectedLocations(locations);
+    }
   };
 
   return (

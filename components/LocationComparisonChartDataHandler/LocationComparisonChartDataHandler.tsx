@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState, Children, isValidElement, cloneElement } from 'react';
-import { LocationIndicatorData, SpotlightLocation, LocationData, SpotlightIndicator } from '../../utils';
+import { LocationIndicatorData, SpotlightLocation, SpotlightIndicator } from '../../utils';
 
 interface LocationComparisonChartDataHandlerProps {
   data?: [LocationIndicatorData, LocationIndicatorData];
@@ -8,12 +8,65 @@ interface LocationComparisonChartDataHandlerProps {
   indicators: [SpotlightIndicator];
 }
 
-const getLocationData = (locations: string[], data: LocationData[]): number[] =>
-  locations.map(location => {
-    const match = data.find(_data => _data.name.toLowerCase() === location.toLowerCase());
+const getChartData = (data: any, locations: any): any => {
+  const chartDataArray: any = [];
+  for (const k in data) {
+    if (data.hasOwnProperty(k)) {
+      const { name, value, year } = data[k];
+      for (const key in locations) {
+        if (locations.hasOwnProperty(key)) {
+          const element = locations[key];
+          if (name === element.name) {
+            chartDataArray.push({
+              name,
+              value,
+              year
+            });
+          }
+        }
+      }
+    }
+  }
+  return chartDataArray;
+};
 
-    return match ? match.value : 0;
-  });
+const getSeriesData = (chartData: any, locations: any): [] => {
+  const seriesDataArray: any = [];
+  for (const k in locations) {
+    const seriesData: any = {};
+    seriesData['data'] = [];
+    seriesData['year'] = [];
+    if (locations.hasOwnProperty(k)) {
+      for (const key in chartData) {
+        if (chartData.hasOwnProperty(key)) {
+          if (locations[k].name === chartData[key]['name']) {
+            seriesData['name'] = chartData[key]['name'];
+            seriesData['type'] = 'line';
+            seriesData['data'].push(chartData[key]['value']);
+            seriesData['year'].push(chartData[key]['year']);
+          }
+        }
+      }
+      seriesDataArray.push(seriesData);
+    }
+  }
+  return seriesDataArray;
+};
+
+const getChartYears = (seriesData: any): string[] => {
+  let largestArray: [] = [];
+  for (let index = 0; index < seriesData.length; index++) {
+    const currentLength = seriesData[index]['year'];
+    const nextLength = seriesData[index + 1] ? seriesData[index + 1]['year'] : [];
+    if (currentLength > nextLength) {
+      largestArray = currentLength;
+    } else {
+      largestArray = nextLength;
+    }
+  }
+  console.log('Chart data is ' + JSON.stringify(largestArray));
+  return largestArray;
+};
 
 const getHeightFromCount = (count = 12): string => (count >= 12 ? `${((count / 12) * 500).toFixed()}px` : '500px');
 
@@ -31,10 +84,11 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
     return <div>No Data</div>;
   }
 
-  const locationData = getLocationData(locations, data[0].data);
-  console.log('location is ' + JSON.stringify(locationData));
-  console.log('locations are ' + JSON.stringify(locations));
-  console.log('data is ' + JSON.stringify(data[0].data));
+  const charData = getChartData(data[0].data, props.locations);
+  const seriesData = getSeriesData(charData, props.locations);
+
+  console.log('Chart data is ' + JSON.stringify(charData));
+  console.log('The series data is ' + JSON.stringify(seriesData));
 
   if (locations.length && data.length) {
     return (
@@ -43,12 +97,10 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
           props.children,
           child =>
             isValidElement(child) &&
-            cloneElement(child, {
+            cloneElement(child as React.ReactElement<any>, {
+              years: getChartYears(seriesData),
               labels: locations,
-              series: {
-                names: [props.indicators[0].name],
-                data: [getLocationData(locations, data[0].data)]
-              },
+              series: seriesData,
               height: getHeightFromCount(locations.length)
             })
         )}

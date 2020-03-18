@@ -37,7 +37,6 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
     if (option && activeTheme) {
       const selectedIndicator = activeTheme.indicators.find(indicator => indicator.ddw_id === option.value);
       const yearOptions = selectedIndicator ? createYearOptionsFromIndicator(selectedIndicator) : undefined;
-      console.log('The year options are ' + JSON.stringify(yearOptions));
       setSelected({
         ...selected,
         indicator: selectedIndicator,

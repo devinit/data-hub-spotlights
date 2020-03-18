@@ -3,39 +3,35 @@ import { EChartsBaseChart } from '../EChartsBaseChart';
 import { toBasicAxisData } from '../EChartsBaseChart/utils';
 
 interface ComponentProps {
-  labels?: string[];
-  series?: {
-    names: [string, string];
-    data: [number[], number[]];
-  };
+  years?: (string | number)[];
+  series?: [];
   height?: string;
 }
 
-const LocationComparisonLineChart: FunctionComponent<ComponentProps> = () => {
+const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
   const options: ECharts.Options = {
     title: {
-      text: 'Basic Bar Chart'
+      text: 'Indicator Comparison'
     },
     tooltip: {},
     legend: {
-      data: ['Sales', 'Expenses']
+      data: props.series?.map(item => {
+        const { name } = item;
+        return name;
+      })
     },
     xAxis: {
-      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
+      data: toBasicAxisData(props.years ? props.years : [])
     },
     yAxis: {},
-    series: [
-      {
-        name: 'Sales',
+    series: props.series?.map(item => {
+      const { name, data } = item;
+      return {
+        name,
         type: 'line',
-        data: [5, 20, 36, 15, 10, 25]
-      },
-      {
-        name: 'Expenses',
-        type: 'line',
-        data: [2, 30, 3, 40, 20, 36]
-      }
-    ]
+        data
+      };
+    })
   };
 
   return <EChartsBaseChart options={options} height={'500px'} />;
