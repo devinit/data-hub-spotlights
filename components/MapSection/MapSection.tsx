@@ -18,6 +18,8 @@ import {
   parseIndicator,
   splitByComma
 } from './utils';
+import { SpotlightButtons } from '../SpotlightButtons';
+import { AnchorButton } from '../AnchorButton';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
@@ -78,6 +80,11 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
                 {renderLegendItems(range, colours)}
                 <LegendItem>no data / not applicable</LegendItem>
               </Legend>
+              <SpotlightButtons>
+                <AnchorButton href={'/spotlight/spotlight-uganda/compare'}>
+                  Compare this location to others
+                </AnchorButton>
+              </SpotlightButtons>
             </SpotlightHide>
           </SidebarContent>
         </SpotlightSidebar>

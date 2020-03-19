@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SpotlightMenu, SpotlightMenuToggle, SpotlightMenuList, SpotlightMenuListItem } from '../SpotlightMenu';
 import SpotlightMenuNav from '../SpotlightMenu/SpotlightMenuNav';
-import { getBoundariesByCountryCode } from '../../utils';
+import { getBoundariesByCountryCode, SpotlightBoundary } from '../../utils';
 
 interface SpotlightMenuWithDataProps {
   countryName: string;
@@ -18,7 +18,7 @@ const SpotlightMenuWithData: FunctionComponent<SpotlightMenuWithDataProps> = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [activeItem, setActiveItem] = useState(countryName);
-  const [boundaries, setBoundaries] = useState();
+  const [boundaries, setBoundaries] = useState<SpotlightBoundary[]>();
   const onShowMenu = (): void => setShowMenu(!showMenu);
   const onShowAll = (): void => {
     onShowMenu();
