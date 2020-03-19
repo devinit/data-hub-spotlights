@@ -83,7 +83,7 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
       </SpotlightBanner>
       <SpotlightBanner>
         <Tags onCloseTag={onCloseTag} updatedTags={locations} />
-        <Button className="button button--compare" onClick={onClickCompare}>
+        <Button className="button button--compare" onClick={onClickCompare} show={locations.length >= 2}>
           Compare
         </Button>
       </SpotlightBanner>

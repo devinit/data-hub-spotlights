@@ -2,7 +2,6 @@
 
 exports[`Button renders correctly 1`] = `
 <button
-  className="button"
   type="button"
 >
   Caption
