@@ -67,7 +67,7 @@ const getChartYears = (seriesData: any): string[] => {
   return largestArray;
 };
 
-function prettify(str: string) {
+function prettify(str: string): string {
   return str
     .split('_')
     .map(function capitalize(part: string) {
@@ -121,7 +121,7 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
           font-size: 1.6em;
         }
       `}</style>
-      Please select a location to compare
+      Please select some locations to compare
     </div>
   );
 };
