@@ -6,12 +6,13 @@ interface ComponentProps {
   years?: (string | number)[];
   series?: [];
   height?: string;
+  chartTitle?: string;
 }
 
 const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
   const options: ECharts.Options = {
     title: {
-      text: 'Indicator Comparison'
+      text: props.chartTitle ? props.chartTitle : 'Indicator Comparison'
     },
     tooltip: {},
     legend: {
@@ -23,7 +24,6 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
     xAxis: {
       data: toBasicAxisData(props.years ? props.years : [])
     },
-    yAxis: {},
     series: props.series?.map(item => {
       const { name, data } = item;
       return {

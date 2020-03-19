@@ -67,6 +67,15 @@ const getChartYears = (seriesData: any): string[] => {
   return largestArray;
 };
 
+function prettify(str: string) {
+  return str
+    .split('_')
+    .map(function capitalize(part: string) {
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    })
+    .join(' ');
+}
+
 const getHeightFromCount = (count = 12): string => (count >= 12 ? `${((count / 12) * 500).toFixed()}px` : '500px');
 
 const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonChartDataHandlerProps> = ({
@@ -96,7 +105,8 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
             cloneElement(child as React.ReactElement<any>, {
               years: getChartYears(seriesData),
               series: seriesData,
-              height: getHeightFromCount(locations.length)
+              height: getHeightFromCount(locations.length),
+              chartTitle: prettify(data[0].indicator)
             })
         )}
       </>

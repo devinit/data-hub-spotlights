@@ -40,7 +40,6 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
       <Loading active>
         {props.options.map(({ indicator, year }, index) => {
           const _indicators = [parseIndicator(indicator as SpotlightIndicator) as string];
-
           return (
             <div key={index}>
               <DynamicDataLoader
