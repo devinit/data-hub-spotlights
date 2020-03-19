@@ -9,6 +9,7 @@ exports[`Tags It renders correctly 1`] = `
   >
     Masaka
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
@@ -24,6 +25,7 @@ exports[`Tags It renders correctly 1`] = `
   >
     Gulu
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
@@ -39,6 +41,7 @@ exports[`Tags It renders correctly 1`] = `
   >
     Arua
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
@@ -54,6 +57,7 @@ exports[`Tags It renders correctly 1`] = `
   >
     Koboko
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
@@ -69,6 +73,7 @@ exports[`Tags It renders correctly 1`] = `
   >
     Palisa
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
