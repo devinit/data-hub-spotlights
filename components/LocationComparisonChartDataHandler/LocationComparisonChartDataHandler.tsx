@@ -64,7 +64,6 @@ const getChartYears = (seriesData: any): string[] => {
       largestArray = nextLength;
     }
   }
-  console.log('Chart data is ' + JSON.stringify(largestArray));
   return largestArray;
 };
 
@@ -87,9 +86,6 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
   const charData = getChartData(data[0].data, props.locations);
   const seriesData = getSeriesData(charData, props.locations);
 
-  console.log('Chart data is ' + JSON.stringify(charData));
-  console.log('The series data is ' + JSON.stringify(seriesData));
-
   if (locations.length && data.length) {
     return (
       <>
@@ -99,7 +95,6 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
             isValidElement(child) &&
             cloneElement(child as React.ReactElement<any>, {
               years: getChartYears(seriesData),
-              labels: locations,
               series: seriesData,
               height: getHeightFromCount(locations.length)
             })
@@ -108,7 +103,17 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
     );
   }
 
-  return <div>No Data</div>;
+  return (
+    <div className="no-locations-message">
+      <style jsx>{`
+        .no-locations-message {
+          padding: 20px;
+          font-size: 1.6em;
+        }
+      `}</style>
+      Please select a location to compare
+    </div>
+  );
 };
 
 export { LocationComparisonChartDataHandler };

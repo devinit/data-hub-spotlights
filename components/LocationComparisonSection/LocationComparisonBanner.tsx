@@ -29,7 +29,6 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
 
   const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
     const index = locations.findIndex(x => x.name === location.name);
-    console.log('the index is ' + index);
     showActive(widgetState);
     location.name && index === -1
       ? setLocations([...locations, { name: location.name, geocode: location.geocode }])

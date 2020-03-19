@@ -50,7 +50,6 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
   };
 
   const onUpdateBtnbClick = (): void => {
-    console.log('The holla ' + JSON.stringify(selected));
     props.onOptionsChange(selected);
   };
 
