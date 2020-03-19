@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
 interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
@@ -8,7 +7,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 
 const Button: FunctionComponent<ButtonProps> = ({ children, className, onClick }) => {
   return (
-    <button type="button" className={classNames('button', className)} onClick={onClick}>
+    <button type="button" className={className} onClick={onClick}>
       {children}
     </button>
   );

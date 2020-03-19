@@ -31,6 +31,7 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
       isLoading={!(options && options.length)}
       chooseTheme="dark"
       isClearable
+      autoFocus={true}
       styles={{
         container: (provided: React.CSSProperties): CSSProperties => ({
           ...provided,
