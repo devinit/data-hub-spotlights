@@ -12,6 +12,13 @@ exports[`Tags It renders correctly 1`] = `
       onClick={[Function]}
       type="button"
     >
+      <style
+        jsx={true}
+      >
+        
+        display: block;
+      
+      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -27,6 +34,13 @@ exports[`Tags It renders correctly 1`] = `
       onClick={[Function]}
       type="button"
     >
+      <style
+        jsx={true}
+      >
+        
+        display: block;
+      
+      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -42,6 +56,13 @@ exports[`Tags It renders correctly 1`] = `
       onClick={[Function]}
       type="button"
     >
+      <style
+        jsx={true}
+      >
+        
+        display: block;
+      
+      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -57,6 +78,13 @@ exports[`Tags It renders correctly 1`] = `
       onClick={[Function]}
       type="button"
     >
+      <style
+        jsx={true}
+      >
+        
+        display: block;
+      
+      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -72,6 +100,13 @@ exports[`Tags It renders correctly 1`] = `
       onClick={[Function]}
       type="button"
     >
+      <style
+        jsx={true}
+      >
+        
+        display: block;
+      
+      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"

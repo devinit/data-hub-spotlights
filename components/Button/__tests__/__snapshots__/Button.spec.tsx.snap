@@ -4,6 +4,13 @@ exports[`Button renders correctly 1`] = `
 <button
   type="button"
 >
+  <style
+    jsx={true}
+  >
+    
+        display: block;
+      
+  </style>
   Caption
 </button>
 `;
