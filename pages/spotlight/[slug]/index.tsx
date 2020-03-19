@@ -83,7 +83,6 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightProps> => {
   const { slug } = context.query;
   const scaffold = await fetchScaffoldData();
   const page = await fetchSpotlightPage(slug as string);
-
   return { scaffold, page };
 };
 
