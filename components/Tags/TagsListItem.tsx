@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { Button } from '../Button';
 
 interface TagsListItemProps {
   label: string;
@@ -13,9 +14,9 @@ const TagsListItem: FunctionComponent<TagsListItemProps> = ({ label, onRemoveTag
   return (
     <li className="m-pills__item">
       {label}
-      <button type="button" onClick={onRemove}>
+      <Button type="button" onClick={onRemove}>
         <i role="presentation" aria-hidden="true" className="ico ico--20 ico-cross-slate"></i>
-      </button>
+      </Button>
     </li>
   );
 };

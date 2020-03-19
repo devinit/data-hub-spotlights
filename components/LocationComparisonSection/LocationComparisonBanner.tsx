@@ -30,9 +30,9 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
     const index = locations.findIndex(x => x.name === location.name);
     showActive(widgetState);
-    location.name && index === -1
-      ? setLocations([...locations, { name: location.name, geocode: location.geocode }])
-      : null;
+    if (location.name && index === -1) {
+      setLocations([...locations, { name: location.name, geocode: location.geocode }]);
+    }
   };
 
   const onCloseTag = (tagName: string): void => {
@@ -83,8 +83,8 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
       </SpotlightBanner>
       <SpotlightBanner>
         <Tags onCloseTag={onCloseTag} updatedTags={locations} />
-        <Button className={'button--compare'} onButtonClick={onClickCompare}>
-          {'Compare'}
+        <Button className="button--compare" onClick={onClickCompare}>
+          Compare
         </Button>
       </SpotlightBanner>
     </>

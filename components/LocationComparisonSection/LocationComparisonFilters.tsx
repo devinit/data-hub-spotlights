@@ -49,7 +49,7 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
     }
   };
 
-  const onUpdateBtnbClick = (): void => {
+  const onUpdateBtnClick = (): void => {
     props.onOptionsChange(selected);
   };
 
@@ -76,8 +76,8 @@ const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props
         />
       </FormField>
       <FormField className={props.topicClassName}>
-        <Button className={'button'} onButtonClick={onUpdateBtnbClick}>
-          {'Update'}
+        <Button className={'button'} onClick={onUpdateBtnClick}>
+          Update
         </Button>
       </FormField>
     </form>
