@@ -33,12 +33,12 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
         setSelected(themeSelected);
         setOptions(themeOptions);
         const href = router.route;
-        const as = router.asPath + `?${THEME_QUERY}=${themeSelected.theme?.name}`;
+        const as = router.asPath + `?${THEME_QUERY}=${themeSelected.theme?.slug}`;
         if (router.asPath == `spotlight/${router.query.slug}`) {
           router.push(href, as, { shallow: true });
         } else {
           const asPath = router.asPath.split(/\?/)[0];
-          const as = asPath + `?${THEME_QUERY}=${option.label}`;
+          const as = asPath + `?${THEME_QUERY}=${option.value}`;
           router.push(href, as, { shallow: true });
         }
       }
@@ -61,19 +61,19 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
       if (router.asPath.indexOf(`?${THEME_QUERY}=`) > 0) {
         const asPath = router.asPath.split(/\?/)[1];
         if (!asPath.includes(INDICATOR_QUERY)) {
-          const as = router.asPath + `&${INDICATOR_QUERY}=${option.label}`;
+          const as = router.asPath + `&${INDICATOR_QUERY}=${option.value}`;
           router.push(router.route, as, { shallow: true });
         } else {
           let urlParts = router.asPath.split('&');
           urlParts = urlParts.filter(e => !e.startsWith(INDICATOR_QUERY));
           const newUrl = urlParts.join('&');
-          const as = newUrl + `&${INDICATOR_QUERY}=${option.label}`;
+          const as = newUrl + `&${INDICATOR_QUERY}=${option.value}`;
           router.push(router.route, as, { shallow: true });
         }
       } else {
         router.push(
           router.route,
-          router.asPath + `?${THEME_QUERY}=${activeTheme.name}` + `&${INDICATOR_QUERY}=${option.label}`,
+          router.asPath + `?${THEME_QUERY}=${activeTheme.slug}` + `&${INDICATOR_QUERY}=${option.value}`,
           { shallow: true }
         );
       }
@@ -90,13 +90,13 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
         let urlParts = router.asPath.split('&');
         urlParts = urlParts.filter(e => !e.startsWith(YEAR_QUERY));
         const newUrl = urlParts.join('&');
-        const as = newUrl + `&${YEAR_QUERY}=${option.label}`;
+        const as = newUrl + `&${YEAR_QUERY}=${option.value}`;
         router.push(router.route, as, { shallow: true });
       } else {
         console.log(activeTheme);
         router.push(
           router.route,
-          router.asPath + `?${YEAR_QUERY}=${activeTheme?.name}` + `&${YEAR_QUERY}=${option.label}`,
+          router.asPath + `?${YEAR_QUERY}=${activeTheme?.slug}` + `&${YEAR_QUERY}=${option.value}`,
           { shallow: true }
         );
       }
