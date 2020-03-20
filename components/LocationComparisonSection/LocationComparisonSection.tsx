@@ -28,6 +28,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
 }) => {
   const [selectedLocations, setSelectedLocations] = useState<SpotlightLocation[]>([]);
   const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
+  const [showCharts, setShowCharts] = useState<boolean>(false);
 
   const onAddComparison = (): void => {
     addChartAndFilters([...chartAndFilters, 1]);
@@ -54,6 +55,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   const onCompare = (locations: SpotlightLocation[] | any): void => {
     if (locations.length > 0) {
       setSelectedLocations(locations);
+      setShowCharts(true);
     }
   };
 
@@ -71,6 +73,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
             themes={themes}
             selectedLocations={selectedLocations}
             countryCode={countryCode}
+            show={showCharts}
           ></LocationFiltersAndCharts>
         </Spotlight>
       </PageSection>

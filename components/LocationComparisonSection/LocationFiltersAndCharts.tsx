@@ -12,12 +12,14 @@ interface LocationFiltersAndChartsProps {
   themes: SpotlightTheme[];
   selectedLocations: SpotlightLocation[];
   countryCode: string;
+  show?: boolean;
 }
 
 const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({
   themes,
   selectedLocations,
-  countryCode
+  countryCode,
+  show = false
 }) => {
   const { selected: defaultSelected } = getDefaults(themes);
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
@@ -32,7 +34,7 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
   useEffect(() => setLoading(true), [selectedLocations]);
   useEffect(() => setLoading(true), [selections]);
 
-  return (
+  return show ? (
     <>
       <SpaceSectionBottom>
         <LocationComparisonFilters
@@ -64,6 +66,8 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
         </SpotlightInteractive>
       </VisualisationSectionMain>
     </>
+  ) : (
+    <span />
   );
 };
 
