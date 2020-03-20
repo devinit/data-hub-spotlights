@@ -57,15 +57,11 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-  const disableScroll = () => {
-    document.body.style.overflow = 'hidden';
-  };
   return (
     <div className={props.className}>
       <Button onClick={toggleModal}>Share visualisation</Button>
       <Modal
         isOpen={isOpen}
-        onAfterOpen={disableScroll}
         onRequestClose={toggleModal}
         style={customStyles}
         ariaHideApp={false}

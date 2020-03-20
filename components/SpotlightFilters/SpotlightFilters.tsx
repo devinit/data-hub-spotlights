@@ -93,10 +93,9 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
         const as = newUrl + `&${YEAR_QUERY}=${option.value}`;
         router.push(router.route, as, { shallow: true });
       } else {
-        console.log(activeTheme);
         router.push(
           router.route,
-          router.asPath + `?${YEAR_QUERY}=${activeTheme?.slug}` + `&${YEAR_QUERY}=${option.value}`,
+          router.asPath + `?${THEME_QUERY}=${activeTheme?.slug}` + `&${YEAR_QUERY}=${option.value}`,
           { shallow: true }
         );
       }

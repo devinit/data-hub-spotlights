@@ -9,11 +9,9 @@ const Icon = styled.img`
 `;
 
 const SVG = (props: any) => (
-  <div>
-    <a href="#">
-      <Icon src={'/assets/svg/source/' + props.socialSource + '.svg'} alt={props.socialSource} />
-    </a>
-  </div>
+  <a href="#">
+    <Icon src={'/assets/svg/source/' + props.socialSource + '.svg'} alt={props.socialSource} />
+  </a>
 );
 
 export { SVG };
