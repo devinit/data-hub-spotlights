@@ -1,18 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Icon = styled.img`
+  float: left;
+  margin: 0 5px;
+  height: 3em;
+  width: 3em;
+`;
 
 const SVG = (props: any) => (
   <div>
     <a href="#">
-      <img
-        src={'/assets/svg/source/' + props.socialSource + '.svg'}
-        alt={props.socialSource}
-        style={{
-          float: 'left',
-          margin: '0 5px',
-          height: '3em',
-          width: '3em'
-        }}
-      />
+      <Icon src={'/assets/svg/source/' + props.socialSource + '.svg'} alt={props.socialSource} />
     </a>
   </div>
 );

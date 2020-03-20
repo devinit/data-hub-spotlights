@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import Modal from 'react-modal';
+import styled from 'styled-components';
 import { Button } from '../Button';
 import { SVG } from './icon';
 
@@ -28,6 +29,29 @@ const customStyles = {
   }
 };
 
+const Title = styled.h2`
+  font-size: 2.6rem;
+`;
+const ToggleButton = styled.button`
+  cursor: pointer;
+  background: #000;
+  font-size: 26px;
+  border-bottom-left-radius: 8px;
+  color: #fff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0px 15px;
+  display: block;
+`;
+const TextInput = styled.input`
+  padding: 2em 1.5em;
+  height: 5em;
+`;
+
+const RadioInput = styled.input`
+  margin-right: 1em !important;
+`;
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = () => {
@@ -48,49 +72,25 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
         shouldCloseOnOverlayClick={false}
       >
         <form>
-          <h2 style={{ fontSize: '2.6rem' }}>Share this visualisation</h2>
+          <Title>Share this visualisation</Title>
           <br />
           <label htmlFor="one">
-            <input type="radio" id="one" name="first_item" value="1" style={{ marginRight: '1em' }} />
+            <RadioInput type="radio" id="one" name="first_item" value="1" />
             In default view
           </label>
           <label htmlFor="two">
-            <input type="radio" id="two" name="second_item" value="2" style={{ marginRight: '1em' }} />
+            <RadioInput type="radio" id="two" name="second_item" value="2" />
             As I configured it
           </label>
           <br />
-          <input
-            type="text"
-            id="urllink"
-            name="urllink"
-            style={{
-              padding: '2em 1.5em',
-              height: '5em'
-            }}
-          />
+          <TextInput type="text" id="urllink" name="urllink" />
           <br />
           <br />
           <SVG socialSource="twitter" />
           <SVG socialSource="facebook" />
           <SVG socialSource="email" />
         </form>
-        <button
-          onClick={toggleModal}
-          style={{
-            padding: '0px 15px',
-            color: '#fff',
-            fontSize: '26px',
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            cursor: 'pointer',
-            backgroundColor: '#000',
-            borderBottomLeftRadius: '8px',
-            display: 'block'
-          }}
-        >
-          x
-        </button>
+        <ToggleButton onClick={toggleModal}>x</ToggleButton>
       </Modal>
     </div>
   );
