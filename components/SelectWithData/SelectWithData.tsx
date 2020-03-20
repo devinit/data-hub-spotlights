@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useEffect, useState, CSSProperties } from 'react';
-import { Select, SelectOptions, SelectOption } from '../Select';
+import { SelectOptions, SelectOption, AsyncSelect } from '../Select';
 import { getBoundariesByCountryCode, createLocationOptions, SpotlightLocation } from '../../utils';
+import { SpotlightBannerMain } from '../SpotlightBanner';
+import { ValueType, OptionTypeBase } from 'react-select';
 
 interface SelectWithDataProps {
   show?: boolean;
@@ -9,7 +11,10 @@ interface SelectWithDataProps {
   styles?: {};
 }
 
-const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show, styles }) => {
+const noOptionsMessage = (obj: { inputValue: string }): string =>
+  obj.inputValue ? `No results for ${obj.inputValue}` : 'Type to search ...';
+
+const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, onWidgetClick, show }) => {
   const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
     getBoundariesByCountryCode(countryCode).then(boundaries => {
@@ -23,22 +28,32 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
     }
   };
 
+  const loadOptions = async (inputValue: string): Promise<SelectOptions> =>
+    options && inputValue
+      ? await options.filter(option => option.label.toLowerCase().includes(inputValue.toLowerCase()))
+      : [];
+
   return show ? (
-    <Select
-      options={options}
-      onChange={onSelectLocation}
-      placeholder="Select Location"
-      isLoading={!(options && options.length)}
-      chooseTheme="dark"
-      isClearable
-      autoFocus={true}
-      styles={{
-        container: (provided: React.CSSProperties): CSSProperties => ({
-          ...provided,
-          ...styles
-        })
-      }}
-    />
+    <SpotlightBannerMain>
+      {options && options.length ? (
+        <AsyncSelect
+          loadOptions={loadOptions}
+          placeholder="Search for a location"
+          isLoading={!(options && options.length)}
+          chooseTheme="dark"
+          isClearable
+          defaultOptions
+          styles={{
+            dropdownIndicator: (provided): CSSProperties => ({ ...provided, display: 'none' }),
+            indicatorSeparator: (provided): CSSProperties => ({ ...provided, display: 'none' }),
+            singleValue: (provided): CSSProperties => ({ ...provided, textTransform: 'capitalize' })
+          }}
+          noOptionsMessage={noOptionsMessage}
+          onChange={onSelectLocation as (options: ValueType<OptionTypeBase>) => void}
+          autoFocus={true}
+        />
+      ) : null}
+    </SpotlightBannerMain>
   ) : (
     <span />
   );
