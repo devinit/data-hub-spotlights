@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { EChartOption } from 'echarts';
 import { EChartsBaseChart } from '../EChartsBaseChart';
 import { toBasicAxisData } from '../EChartsBaseChart/utils';
 
@@ -10,7 +11,7 @@ interface ComponentProps {
 }
 
 const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
-  const options: ECharts.Options = {
+  const options: EChartOption = {
     title: {
       text: props.chartTitle ? props.chartTitle : 'Indicator Comparison'
     },
