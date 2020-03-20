@@ -1,8 +1,9 @@
+import { useRouter } from 'next/dist/client/router';
 import dynamic from 'next/dynamic';
 import React, { FunctionComponent, ReactNode, useState } from 'react';
 import { SpotlightLocation, SpotlightOptions } from '../../utils';
-import { ErrorBoundary } from '../ErrorBoundary';
 import { AnchorButton } from '../AnchorButton';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { Legend, LegendItem } from '../Legend';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
 import { PageSection } from '../PageSection';
@@ -10,8 +11,8 @@ import { SpotlightButtons } from '../SpotlightButtons';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SidebarContent, SpotlightHide, SpotlightSidebar, SpotlightSidebarInfo } from '../SpotlightSidebar';
 import { SpotlightShare } from '../SpotlightShare';
+import { SidebarContent, SpotlightHide, SpotlightSidebar, SpotlightSidebarInfo } from '../SpotlightSidebar';
 import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import {
   getDataPrefix,
@@ -21,7 +22,6 @@ import {
   parseIndicator,
   splitByComma
 } from './utils';
-import { useRouter } from 'next/dist/client/router';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });

@@ -4,7 +4,7 @@ import { Select, SelectOption } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
 import { FilterSelectOptions, SpotlightFilterProps, defaultSelectOptions } from './utils';
 import {
-  getDefaults,
+  getDefaultsByIndex,
   getThemeDefaults,
   createYearOptionsFromIndicator,
   parseIndicatorToOption,
@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
   const router = useRouter();
-  const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes, defaultIndexes);
+  const { options: defaultOptions, selected: defaultSelected } = getDefaultsByIndex(props.themes, defaultIndexes);
   const [options, setOptions] = useState<FilterSelectOptions>(defaultOptions);
   const { themes, indicators, years } = options;
   const [selected, setSelected] = useState<SpotlightOptions>(defaultSelected);

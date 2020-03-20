@@ -69,7 +69,10 @@ export const getThemeDefaults = (
   return { options, selected };
 };
 
-export const getDefaults = (themes: SpotlightTheme[], defaultIndexes: [number, number] = [0, 0]): FilterDefaults => {
+export const getDefaultsByIndex = (
+  themes: SpotlightTheme[],
+  defaultIndexes: [number, number] = [0, 0]
+): FilterDefaults => {
   const defaultOptions: FilterSelectOptions = {
     ...defaultSelectOptions,
     themes: createThemeOptions(themes)
