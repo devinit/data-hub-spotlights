@@ -12,7 +12,7 @@ const AddComparison: FunctionComponent<AddComparisonProps> = ({ onAddComparison 
     <PageSection>
       <SpotlightBanner>
         <SpotlightBannerAside>
-          <AddLocation active={true} label={'Add Another Location'} onWidgetClick={onAddComparison}></AddLocation>
+          <AddLocation active={true} label={'Add another comparison'} onWidgetClick={onAddComparison}></AddLocation>
         </SpotlightBannerAside>
       </SpotlightBanner>
     </PageSection>

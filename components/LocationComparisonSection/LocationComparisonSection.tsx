@@ -31,7 +31,9 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
   const [showCharts, setShowCharts] = useState<boolean>(false);
 
   const onAddComparison = (): void => {
-    addChartAndFilters([...chartAndFilters, 1]);
+    if (showCharts) {
+      addChartAndFilters([...chartAndFilters, 1]);
+    }
   };
 
   const renderAddComparisonComponents = (): ReactNode => {
@@ -44,6 +46,7 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
                 themes={themes}
                 selectedLocations={selectedLocations}
                 countryCode={countryCode}
+                show={showCharts}
               ></LocationFiltersAndCharts>
             </Spotlight>
           </PageSection>
