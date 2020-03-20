@@ -3,12 +3,14 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
   createYearOptionsFromIndicator,
   getDefaultsByIndex,
-  getThemeDefaults,
+  getThemeDefaultsByIndex,
   INDICATOR_QUERY,
   parseIndicatorToOption,
   SpotlightOptions,
   THEME_QUERY,
-  YEAR_QUERY
+  YEAR_QUERY,
+  getDefaultsFromQuery,
+  getOptionByIndexOrValue
 } from '../../utils';
 import { FormField } from '../FormField';
 import { Select, SelectOption } from '../Select';
@@ -17,7 +19,9 @@ import { defaultSelectOptions, FilterSelectOptions, SpotlightFilterProps } from 
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
   const router = useRouter();
-  const { options: defaultOptions, selected: defaultSelected } = getDefaultsByIndex(props.themes, defaultIndexes);
+  const { options: defaultOptions, selected: defaultSelected } = router.query[THEME_QUERY]
+    ? getDefaultsFromQuery(props.themes, router.query)
+    : getDefaultsByIndex(props.themes, defaultIndexes);
   const [options, setOptions] = useState<FilterSelectOptions>(defaultOptions);
   const { themes, indicators, years } = options;
   const [selected, setSelected] = useState<SpotlightOptions>(defaultSelected);
@@ -29,7 +33,7 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
     if (option) {
       const selectedTheme = props.themes.find(theme => theme.slug === option.value);
       if (selectedTheme) {
-        const { options: themeOptions, selected: themeSelected } = getThemeDefaults(selectedTheme, options);
+        const { options: themeOptions, selected: themeSelected } = getThemeDefaultsByIndex(selectedTheme, options);
         setSelected(themeSelected);
         setOptions(themeOptions);
         const href = router.route;
@@ -113,7 +117,15 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
           onChange={onSelectTheme}
           placeholder="Select Topic"
           isLoading={!themes}
-          defaultValue={options.themes ? options.themes[defaultIndexes ? defaultIndexes[0] : 0] : undefined}
+          defaultValue={
+            themes
+              ? getOptionByIndexOrValue(
+                  themes,
+                  defaultIndexes && defaultIndexes[0],
+                  selected.theme && selected.theme.slug
+                )
+              : undefined
+          }
         />
       </FormField>
       <IndicatorFilterForm
