@@ -48,6 +48,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
                 endYear={2020}
                 onLoad={onLoad()}
                 geocodes={props.locations && props.locations.map(loc => loc.geocode)}
+                limit={10000}
               />
             </div>
           );

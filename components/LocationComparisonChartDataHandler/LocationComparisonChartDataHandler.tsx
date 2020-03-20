@@ -16,10 +16,10 @@ const getChartData = (data: any, locations: any): any => {
       for (const key in locations) {
         if (locations.hasOwnProperty(key)) {
           const element = locations[key];
-          if (name === element.name) {
+          if (name.toLowerCase() === element.name.toLowerCase()) {
             chartDataArray.push({
               name,
-              value,
+              value: value ? value : 0,
               year
             });
           }
@@ -39,7 +39,7 @@ const getSeriesData = (chartData: any, locations: any): [] => {
     if (locations.hasOwnProperty(k)) {
       for (const key in chartData) {
         if (chartData.hasOwnProperty(key)) {
-          if (locations[k].name === chartData[key]['name']) {
+          if (locations[k].name.toLowerCase() === chartData[key]['name'].toLowerCase()) {
             seriesData['name'] = chartData[key]['name'];
             seriesData['type'] = 'line';
             seriesData['data'].push(chartData[key]['value']);
@@ -67,15 +67,6 @@ const getChartYears = (seriesData: any): string[] => {
   return largestArray;
 };
 
-function prettify(str: string): string {
-  return str
-    .split('_')
-    .map(function capitalize(part: string) {
-      return part.charAt(0).toUpperCase() + part.slice(1);
-    })
-    .join(' ');
-}
-
 const getHeightFromCount = (count = 12): string => (count >= 12 ? `${((count / 12) * 500).toFixed()}px` : '500px');
 
 const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonChartDataHandlerProps> = ({
@@ -92,8 +83,8 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
     return <div>No Data</div>;
   }
 
-  const charData = getChartData(data[0].data, props.locations);
-  const seriesData = getSeriesData(charData, props.locations);
+  const chartData = getChartData(data[0].data, props.locations);
+  const seriesData = getSeriesData(chartData, props.locations);
 
   if (locations.length && data.length) {
     return (
@@ -105,8 +96,7 @@ const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonCh
             cloneElement(child as React.ReactElement<any>, {
               years: getChartYears(seriesData),
               series: seriesData,
-              height: getHeightFromCount(locations.length),
-              chartTitle: prettify(data[0].indicator)
+              height: getHeightFromCount(locations.length)
             })
         )}
       </>
