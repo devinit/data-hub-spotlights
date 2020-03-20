@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from '../Button';
-//import { SVG } from './icons';
+import { SVG } from './icon';
 
 interface SpotlightShareProps {
   maxHeight?: string;
@@ -70,38 +70,9 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = props => {
           />
           <br />
           <br />
-          <a href="#">
-            <img
-              src="/assets/svg/source/twitter.svg"
-              alt="Twitter"
-              style={{
-                margin: '0 7px',
-                height: '3em',
-                width: '3em'
-              }}
-            />
-          </a>
-          <a href="#">
-            <img
-              src="/assets/svg/source/facebook.svg"
-              alt="Facebook"
-              style={{
-                height: '3em',
-                width: '3em'
-              }}
-            />
-          </a>
-          <a href="#">
-            <img
-              src="/assets/svg/source/email.svg"
-              alt="Email"
-              style={{
-                margin: '0 7px',
-                height: '3em',
-                width: '3em'
-              }}
-            />
-          </a>
+          <SVG socialSource="twitter" />
+          <SVG socialSource="facebook" />
+          <SVG socialSource="email" />
         </form>
         <button
           onClick={toggleModal}
