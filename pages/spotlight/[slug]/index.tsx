@@ -14,6 +14,7 @@ import {
   SpotlightPage
 } from '../../../utils';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { LocationComparisonSection } from '../../../components/LocationComparisonSection';
 
 interface SpotlightProps {
   setData?: (data: PageScaffoldData) => void;
@@ -69,7 +70,11 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
             ))
         )}
 
-        <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} />
+        <LocationComparisonSection
+          themes={page.themes}
+          countryCode={page.country_code}
+          countryName={page.country_name}
+        />
       </>
     );
   }
