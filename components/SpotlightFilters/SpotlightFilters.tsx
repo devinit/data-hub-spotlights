@@ -1,16 +1,19 @@
+import { useRouter } from 'next/router';
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import {
+  createYearOptionsFromIndicator,
+  getDefaultsByIndex,
+  getThemeDefaults,
+  INDICATOR_QUERY,
+  parseIndicatorToOption,
+  SpotlightOptions,
+  THEME_QUERY,
+  YEAR_QUERY
+} from '../../utils';
 import { FormField } from '../FormField';
 import { Select, SelectOption } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
-import { FilterSelectOptions, SpotlightFilterProps, defaultSelectOptions } from './utils';
-import {
-  getDefaultsByIndex,
-  getThemeDefaults,
-  createYearOptionsFromIndicator,
-  parseIndicatorToOption,
-  SpotlightOptions
-} from '../../utils';
-import { useRouter } from 'next/router';
+import { defaultSelectOptions, FilterSelectOptions, SpotlightFilterProps } from './utils';
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
   const router = useRouter();
@@ -30,12 +33,12 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
         setSelected(themeSelected);
         setOptions(themeOptions);
         const href = router.route;
-        const as = router.asPath + `?mapTopic=${themeSelected.theme?.name}`;
+        const as = router.asPath + `?${THEME_QUERY}=${themeSelected.theme?.name}`;
         if (router.asPath == `spotlight/${router.query.slug}`) {
           router.push(href, as, { shallow: true });
         } else {
           const asPath = router.asPath.split(/\?/)[0];
-          const as = asPath + `?mapTopic=${option.label}`;
+          const as = asPath + `?${THEME_QUERY}=${option.label}`;
           router.push(href, as, { shallow: true });
         }
       }
@@ -55,22 +58,24 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
         year: yearOptions && parseInt(yearOptions[0].value, 10)
       });
       setOptions({ ...options, years: yearOptions });
-      if (router.asPath.indexOf('?mapTopic=') > 0) {
+      if (router.asPath.indexOf(`?${THEME_QUERY}=`) > 0) {
         const asPath = router.asPath.split(/\?/)[1];
-        if (!asPath.includes('mapIndicator')) {
-          const as = router.asPath + `&mapIndicator=${option.label}`;
+        if (!asPath.includes(INDICATOR_QUERY)) {
+          const as = router.asPath + `&${INDICATOR_QUERY}=${option.label}`;
           router.push(router.route, as, { shallow: true });
         } else {
           let urlParts = router.asPath.split('&');
-          urlParts = urlParts.filter(e => !e.startsWith('mapIndicator'));
+          urlParts = urlParts.filter(e => !e.startsWith(INDICATOR_QUERY));
           const newUrl = urlParts.join('&');
-          const as = newUrl + `&mapIndicator=${option.label}`;
+          const as = newUrl + `&${INDICATOR_QUERY}=${option.label}`;
           router.push(router.route, as, { shallow: true });
         }
       } else {
-        router.push(router.route, router.asPath + `?mapTopic=${activeTheme.name}` + `&mapIndicator=${option.label}`, {
-          shallow: true
-        });
+        router.push(
+          router.route,
+          router.asPath + `?${THEME_QUERY}=${activeTheme.name}` + `&${INDICATOR_QUERY}=${option.label}`,
+          { shallow: true }
+        );
       }
     } else if (activeIndicator) {
       setSelected({ ...selected, indicator: undefined, year: undefined });
@@ -81,17 +86,19 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
   const onSelectYear = (option?: SelectOption): void => {
     if (option && option.value) {
       setSelected({ ...selected, year: parseInt(option.value, 10) });
-      if (router.asPath.indexOf('?mapTopic=') > 0) {
+      if (router.asPath.indexOf(`?${THEME_QUERY}=`) > 0) {
         let urlParts = router.asPath.split('&');
-        urlParts = urlParts.filter(e => !e.startsWith('mapYear'));
+        urlParts = urlParts.filter(e => !e.startsWith(YEAR_QUERY));
         const newUrl = urlParts.join('&');
-        const as = newUrl + `&mapYear=${option.label}`;
+        const as = newUrl + `&${YEAR_QUERY}=${option.label}`;
         router.push(router.route, as, { shallow: true });
       } else {
         console.log(activeTheme);
-        router.push(router.route, router.asPath + `?mapTopic=${activeTheme?.name}` + `&mapYear=${option.label}`, {
-          shallow: true
-        });
+        router.push(
+          router.route,
+          router.asPath + `?${YEAR_QUERY}=${activeTheme?.name}` + `&${YEAR_QUERY}=${option.label}`,
+          { shallow: true }
+        );
       }
     } else {
       setSelected({ ...selected, year: undefined });
