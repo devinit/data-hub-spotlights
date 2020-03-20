@@ -19,7 +19,7 @@ const SelectWithData: FunctionComponent<SelectWithDataProps> = ({ countryCode, o
 
   const onSelectLocation = (option?: SelectOption): void => {
     if (option) {
-      onWidgetClick(false, { name: option.label, geocode: option.value });
+      onWidgetClick(false, { name: option.label.toUpperCase(), geocode: option.value });
     }
   };
 

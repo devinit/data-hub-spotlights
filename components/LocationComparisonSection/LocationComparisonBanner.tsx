@@ -28,6 +28,7 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   const [locations, setLocations] = useState<SpotlightLocation[]>([]);
 
   const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
+    console.log('Locations ' + JSON.stringify(location));
     const index = locations.findIndex(x => x.name === location.name);
     showActive(widgetState);
     if (location.name && index === -1) {
