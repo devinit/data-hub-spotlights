@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import { PageScaffoldData } from '../../../components/DefaultLayout';
 import { LocationComparisonSection } from '../../../components/LocationComparisonSection';
-import { fetchScaffoldData, fetchSpotlightPage, SpotlightPage } from '../../../utils';
+import { fetchScaffoldData, fetchSpotlightPage, SpotlightPage, filterByThemeSection } from '../../../utils';
 import { PageSection } from '../../../components/PageSection';
 
 interface CompareProps {
@@ -17,15 +17,12 @@ const Compare: NextPage<CompareProps> = ({ setData, scaffold, page }) => {
       setData({ ...scaffold, title: page.title });
     }
   }, [setData, scaffold]);
+  const mapThemes = filterByThemeSection(page.themes, 'map');
 
   if (page.themes && page.country_code) {
     return (
       <>
-        <LocationComparisonSection
-          countryCode={page.country_code}
-          countryName={page.country_name}
-          themes={page.themes}
-        />
+        <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} themes={mapThemes} />
       </>
     );
   }

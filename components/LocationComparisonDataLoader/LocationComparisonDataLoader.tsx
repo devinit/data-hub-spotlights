@@ -28,6 +28,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
   }, [data]);
 
   const onLoad = () => (data: LocData[]): void => {
+    console.log('onload');
     setData(data[0]);
   };
 

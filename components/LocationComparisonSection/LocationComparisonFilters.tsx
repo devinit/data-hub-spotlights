@@ -11,8 +11,8 @@ import {
 } from '../../utils';
 import { Button } from '../Button';
 
-const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = props => {
-  const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes);
+const LocationComparisonFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
+  const { options: defaultOptions, selected: defaultSelected } = getDefaults(props.themes, defaultIndexes);
   const [options, setOptions] = useState<FilterSelectOptions>(defaultOptions);
   const { themes, indicators } = options;
   const [selected, setSelected] = useState<SpotlightOptions>(defaultSelected);
