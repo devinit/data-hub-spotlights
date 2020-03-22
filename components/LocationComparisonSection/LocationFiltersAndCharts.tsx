@@ -32,7 +32,6 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
   };
   const onLoad = (): void => setLoading(false);
   useEffect(() => setLoading(true), [selectedLocations, selections]);
-
   return show ? (
     <>
       <SpaceSectionBottom>
