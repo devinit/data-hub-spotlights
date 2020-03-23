@@ -71,7 +71,7 @@ const LocationComparisonSection: FunctionComponent<ComponentProps> = ({ countryC
         </Spotlight>
       </PageSection>
       {renderAddComparisonComponents()}
-      <AddComparison onAddComparison={onAddComparison}></AddComparison>
+      {showCharts ? <AddComparison onAddComparison={onAddComparison}></AddComparison> : null}
     </>
   );
 };
