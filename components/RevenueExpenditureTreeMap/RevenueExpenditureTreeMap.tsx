@@ -45,6 +45,7 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
           : 'Root',
         type: 'treemap',
         leafDepth: 1,
+        roam: 'move',
         itemStyle: {
           borderWidth: 0.5
         },
