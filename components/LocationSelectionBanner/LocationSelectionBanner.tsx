@@ -9,6 +9,7 @@ import { ValueType, OptionTypeBase } from 'react-select';
 interface LocationSelectionBannerProps {
   countryCode: string;
   countryName: string;
+  className?: string;
   onSelectLocation: (location?: SpotlightLocation) => void;
 }
 
@@ -36,7 +37,7 @@ const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> =
       : [];
 
   return (
-    <SpotlightBanner className="spotlight-banner--header">
+    <SpotlightBanner className={props.className}>
       <SpotlightBannerAside>
         <BoundaryMenu countryName={props.countryName} boundaries={boundaries} onSelectLocation={onSelectLocation} />
       </SpotlightBannerAside>
@@ -58,6 +59,7 @@ const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> =
             onChange={onSelectLocation as (options: ValueType<OptionTypeBase>) => void}
           />
         ) : null}
+        {props.children}
       </SpotlightBannerMain>
     </SpotlightBanner>
   );

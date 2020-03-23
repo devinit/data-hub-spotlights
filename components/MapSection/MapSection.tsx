@@ -60,6 +60,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
   return (
     <PageSection>
       <LocationSelectionBanner
+        className="spotlight-banner--header"
         onSelectLocation={onSelectLocation}
         countryCode={countryCode}
         countryName={props.countryName}
