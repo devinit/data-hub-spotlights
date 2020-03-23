@@ -6,7 +6,7 @@ import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
 import { AddComparison } from './AddComparison';
 import { LocationComparisonBanner } from './LocationComparisonBanner';
 
-interface LocationComparisonSectionProps {
+interface ComponentProps {
   countryCode: string;
   countryName: string;
   themes: SpotlightTheme[];
@@ -19,15 +19,9 @@ export interface LocationTagProps {
 
 export type LocationTagType = LocationTagProps[];
 
-type NumberArray = number[];
-
-const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProps> = ({
-  countryCode,
-  countryName,
-  themes
-}) => {
+const LocationComparisonSection: FunctionComponent<ComponentProps> = ({ countryCode, countryName, themes }) => {
   const [selectedLocations, setSelectedLocations] = useState<SpotlightLocation[]>([]);
-  const [chartAndFilters, addChartAndFilters] = useState<NumberArray>([]);
+  const [chartAndFilters, addChartAndFilters] = useState<number[]>([]);
   const [showCharts, setShowCharts] = useState<boolean>(false);
 
   const onAddComparison = (): void => {
@@ -66,18 +60,14 @@ const LocationComparisonSection: FunctionComponent<LocationComparisonSectionProp
     <>
       <PageSection>
         <PageSectionHeading>Location Comparison</PageSectionHeading>
-        <LocationComparisonBanner
-          countryName={countryName}
-          countryCode={countryCode}
-          onCompare={onCompare}
-        ></LocationComparisonBanner>
+        <LocationComparisonBanner countryName={countryName} countryCode={countryCode} onCompare={onCompare} />
         <Spotlight className="spotlight--full">
           <LocationFiltersAndCharts
             themes={themes}
             selectedLocations={selectedLocations}
             countryCode={countryCode}
             show={showCharts}
-          ></LocationFiltersAndCharts>
+          />
         </Spotlight>
       </PageSection>
       {renderAddComparisonComponents()}

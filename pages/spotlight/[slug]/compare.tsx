@@ -2,8 +2,8 @@ import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import { PageScaffoldData } from '../../../components/DefaultLayout';
 import { LocationComparisonSection } from '../../../components/LocationComparisonSection';
-import { fetchScaffoldData, fetchSpotlightPage, SpotlightPage, filterByThemeSection } from '../../../utils';
 import { PageSection } from '../../../components/PageSection';
+import { fetchScaffoldData, fetchSpotlightPage, filterByThemeSection, SpotlightPage } from '../../../utils';
 
 interface CompareProps {
   setData?: (data: PageScaffoldData) => void;
@@ -21,9 +21,7 @@ const Compare: NextPage<CompareProps> = ({ setData, scaffold, page }) => {
 
   if (page.themes && page.country_code) {
     return (
-      <>
-        <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} themes={mapThemes} />
-      </>
+      <LocationComparisonSection countryCode={page.country_code} countryName={page.country_name} themes={mapThemes} />
     );
   }
 
