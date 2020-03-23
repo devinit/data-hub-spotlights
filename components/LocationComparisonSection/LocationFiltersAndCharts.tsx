@@ -8,19 +8,13 @@ import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
 
-interface LocationFiltersAndChartsProps {
+interface ComponentProps {
   themes: SpotlightTheme[];
   selectedLocations: SpotlightLocation[];
   countryCode: string;
-  show?: boolean;
 }
 
-const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps> = ({
-  themes,
-  selectedLocations,
-  countryCode,
-  show = false
-}) => {
+const LocationFiltersAndCharts: FunctionComponent<ComponentProps> = ({ themes, selectedLocations, countryCode }) => {
   const { selected: defaultSelected } = getDefaults(themes);
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
   const [loading, setLoading] = useState(false);
@@ -32,7 +26,7 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
   };
   const onLoad = (): void => setLoading(false);
   useEffect(() => setLoading(true), [selectedLocations, selections]);
-  return show ? (
+  return (
     <>
       <SpaceSectionBottom>
         <LocationComparisonFilters
@@ -64,8 +58,6 @@ const LocationFiltersAndCharts: FunctionComponent<LocationFiltersAndChartsProps>
         </SpotlightInteractive>
       </VisualisationSectionMain>
     </>
-  ) : (
-    <span />
   );
 };
 
