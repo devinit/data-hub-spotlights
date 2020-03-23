@@ -6,7 +6,7 @@ import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../S
 import { MenuListItem } from '../SpotlightMenu';
 import { ValueType, OptionTypeBase } from 'react-select';
 
-interface MapSectionHeaderProps {
+interface LocationSelectionBannerProps {
   countryCode: string;
   countryName: string;
   onSelectLocation: (location?: SpotlightLocation) => void;
@@ -15,7 +15,7 @@ interface MapSectionHeaderProps {
 const noOptionsMessage = (obj: { inputValue: string }): string =>
   obj.inputValue ? `No results for ${obj.inputValue}` : 'Type to search ...';
 
-const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
+const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> = props => {
   const [boundaries, setBoundaries] = useState<SpotlightBoundary[]>([]);
   const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
@@ -63,4 +63,4 @@ const MapSectionHeader: FunctionComponent<MapSectionHeaderProps> = props => {
   );
 };
 
-export { MapSectionHeader };
+export { LocationSelectionBanner };
