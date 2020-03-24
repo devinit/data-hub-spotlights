@@ -33,11 +33,7 @@ const LocationComparisonSection: FunctionComponent<ComponentProps> = ({ countryC
       sections.push(
         <PageSection key={index}>
           <Spotlight className="spotlight--full">
-            <LocationComparisonWrapper
-              themes={themes}
-              selectedLocations={selectedLocations}
-              countryCode={countryCode}
-            />
+            <LocationComparisonWrapper themes={themes} locations={selectedLocations} countryCode={countryCode} />
           </Spotlight>
         </PageSection>
       );

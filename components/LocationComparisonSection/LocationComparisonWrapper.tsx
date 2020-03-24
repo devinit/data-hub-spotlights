@@ -10,11 +10,11 @@ import { LocationComparisonFilters } from './LocationComparisonFilters';
 
 interface ComponentProps {
   themes: SpotlightTheme[];
-  selectedLocations: SpotlightLocation[];
+  locations: SpotlightLocation[];
   countryCode: string;
 }
 
-const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, selectedLocations, countryCode }) => {
+const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, locations, countryCode }) => {
   const { selected: defaultSelected } = getDefaults(themes);
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
     }
   };
   const onLoad = (): void => setLoading(false);
-  useEffect(() => setLoading(true), [selectedLocations, selections]);
+  useEffect(() => setLoading(true), [locations, selections]);
   return (
     <>
       <SpaceSectionBottom>
@@ -41,15 +41,10 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
       </SpaceSectionBottom>
       <VisualisationSectionMain>
         <SpotlightInteractive>
-          <LocationComparisonDataLoader
-            options={selections}
-            onLoad={onLoad}
-            loading={loading}
-            locations={selectedLocations}
-          >
+          <LocationComparisonDataLoader options={selections} onLoad={onLoad} loading={loading} locations={locations}>
             <LocationComparisonChartDataHandler
               countryCode={countryCode}
-              locations={selectedLocations}
+              locations={locations}
               indicators={selections?.map(sel => sel.indicator) as [SpotlightIndicator]}
             >
               <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
