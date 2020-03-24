@@ -1,6 +1,6 @@
 import React, { CSSProperties, FunctionComponent, useState } from 'react';
-import { AddLocation } from '.';
 import { SpotlightLocation } from '../../utils';
+import { AnchorButton } from '../AnchorButton';
 import { Button } from '../Button';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
 import { SpotlightBanner, SpotlightBannerAside } from '../SpotlightBanner';
@@ -9,28 +9,18 @@ import { TagList, TagListItem } from '../Tags';
 interface ComparisonWrapperProps {
   countryName: string;
   countryCode: string;
-  onCompare: (locations: SpotlightLocation[]) => void;
+  onCompare?: (locations: SpotlightLocation[]) => void;
 }
 
-const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
-  countryName,
-  countryCode,
-  onCompare
-}) => {
-  const [active, showActive] = useState(false);
+const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = props => {
+  const [addLocation, setAddLocation] = useState(false);
   const [locations, setLocations] = useState<SpotlightLocation[]>([]);
 
-  const onWidgetClick = (widgetState: boolean, location: SpotlightLocation | any): void => {
-    const index = locations.findIndex(x => x.name === location.name);
-    showActive(widgetState);
-    if (location.name && index === -1) {
-      setLocations([...locations, { name: location.name, geocode: location.geocode }]);
-    }
-  };
+  const onAddLocation = (): void => setAddLocation(true);
   const onSelectLocation = (location?: SpotlightLocation): void => {
     if (location && locations.findIndex(_location => _location.name === location.name) === -1) {
       setLocations(locations.concat(location));
-      showActive(false); // TODO: determine whether to move this outside of condition
+      setAddLocation(false); // TODO: determine whether to move this outside of condition
     }
   };
 
@@ -44,19 +34,21 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   };
 
   const onClickCompare = (): void => {
-    onCompare(locations);
+    if (props.onCompare) {
+      props.onCompare(locations);
+    }
   };
 
   const onCancelClick = (): void => {
-    showActive(!active);
+    setAddLocation(!addLocation);
   };
 
   return (
     <>
-      {active ? (
+      {addLocation ? (
         <LocationSelectionBanner
-          countryName={countryName}
-          countryCode={countryCode}
+          countryName={props.countryName}
+          countryCode={props.countryCode}
           onSelectLocation={onSelectLocation}
           selectStyles={{
             container: (provided): CSSProperties => ({
@@ -74,7 +66,10 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
       ) : (
         <SpotlightBanner>
           <SpotlightBannerAside>
-            <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
+            <AnchorButton className="m-text-link add-location-link" onClick={onAddLocation}>
+              <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-poppy"></i>
+              <span>Add Location</span>
+            </AnchorButton>
           </SpotlightBannerAside>
         </SpotlightBanner>
       )}
