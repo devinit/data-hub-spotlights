@@ -14,7 +14,7 @@ export const axisDefaults: Partial<EChartOption.BasicComponents.CartesianAxis> =
 };
 
 export const defaults: Partial<EChartOption> = {
-  color: ['#8f1b13', '#e84439', '#f0826d', '#f5aa9b', '#fad1c9'],
+  color: ['#ec6250', '#6c120a', '#f4a57c', '#7a2e05', '#fac47e', '#7d4712', '#e05c86', '#65093d', '#af73ae', '#42184c'],
   yAxis: {
     ...axisDefaults
   },
