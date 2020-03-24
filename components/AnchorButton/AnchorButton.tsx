@@ -1,17 +1,16 @@
 import React, { FunctionComponent } from 'react';
 
-interface AnchorButtonProps {
-  link?: string;
-}
+type AnchorButtonProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
-const AnchorButton: FunctionComponent<AnchorButtonProps> = ({ children, link }) => {
-  return (
-    <a className="button" href={link}>
-      <style jsx>{`
-        cursor: pointer;
-      `}</style>
-      {children}
-    </a>
-  );
-};
+const AnchorButton: FunctionComponent<AnchorButtonProps> = ({ children, ...props }) => (
+  <a {...props}>
+    <style jsx>{`
+      cursor: pointer;
+    `}</style>
+    {children}
+  </a>
+);
+
+AnchorButton.defaultProps = { className: 'button' };
+
 export { AnchorButton };
