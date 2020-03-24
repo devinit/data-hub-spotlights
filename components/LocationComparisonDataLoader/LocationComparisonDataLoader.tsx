@@ -58,11 +58,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
   }
 
   if (data) {
-    return (
-      <>
-        {Children.map(props.children, child => (isValidElement(child) ? cloneElement(child, { data: [data] }) : null))}
-      </>
-    );
+    return <>{Children.map(props.children, child => (isValidElement(child) ? cloneElement(child, { data }) : null))}</>;
   }
 
   return <div>No Data</div>;

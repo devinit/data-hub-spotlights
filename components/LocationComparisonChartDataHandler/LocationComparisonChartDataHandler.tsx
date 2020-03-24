@@ -1,13 +1,14 @@
-import React, { FunctionComponent, useState, Children, isValidElement, cloneElement } from 'react';
-import { LocationIndicatorData, SpotlightLocation } from '../../utils';
+import React, { FunctionComponent } from 'react';
+import { LocationIndicatorData, SpotlightLocation, LocationData } from '../../utils';
+import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 
-interface LocationComparisonChartDataHandlerProps {
-  data?: [LocationIndicatorData, LocationIndicatorData];
-  locations?: SpotlightLocation[];
+interface ComponentProps {
+  data?: LocationIndicatorData;
+  locations: SpotlightLocation[];
   countryCode: string;
 }
 
-const getChartData = (data: any, locations: any): any => {
+const getChartData = (data: LocationData[], locations: SpotlightLocation[]): any => {
   const chartDataArray: any = [];
   for (const k in data) {
     if (data.hasOwnProperty(k)) {
@@ -52,67 +53,26 @@ const getSeriesData = (chartData: any, locations: any): [] => {
   return seriesDataArray;
 };
 
-const getChartYears = (seriesData: any): string[] => {
-  let largestArray: [] = [];
-  for (let index = 0; index < seriesData.length; index++) {
-    const currentLength = seriesData[index]['year'];
-    const nextLength = seriesData[index + 1] ? seriesData[index + 1]['year'] : [];
-    if (currentLength > nextLength) {
-      largestArray = currentLength;
-    } else {
-      largestArray = nextLength;
-    }
-  }
-  return largestArray;
-};
+const getYears = (data: LocationData[]): number[] =>
+  data.reduce((prev: number[], curr) => (prev.indexOf(curr.year) === -1 ? prev.concat(curr.year) : prev), []);
 
-const getHeightFromCount = (count = 12): string => (count >= 12 ? `${((count / 12) * 500).toFixed()}px` : '500px');
-
-const LocationComparisonChartDataHandler: FunctionComponent<LocationComparisonChartDataHandlerProps> = ({
-  data,
-  ...props
-}) => {
-  const [locations] = useState<string[]>(
-    (props.locations || [])
-      .map(location => location.name)
-      .sort()
-      .reverse() // eCharts stacks the data, first down last up. So reverse is necessary to show it properly
-  );
+const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data, ...props }) => {
   if (!data) {
-    return <div>No Data</div>;
-  }
-
-  const chartData = getChartData(data[0].data, props.locations);
-  const seriesData = getSeriesData(chartData, props.locations);
-
-  if (locations.length && data.length) {
     return (
-      <>
-        {Children.map(
-          props.children,
-          child =>
-            isValidElement(child) &&
-            cloneElement(child as React.ReactElement<any>, {
-              years: getChartYears(seriesData),
-              series: seriesData,
-              height: getHeightFromCount(locations.length)
-            })
-        )}
-      </>
+      <div>
+        No Data
+        <style jsx>{`
+          padding: 20px;
+          font-size: 1.6em;
+        `}</style>
+      </div>
     );
   }
 
-  return (
-    <div className="no-locations-message">
-      <style jsx>{`
-        .no-locations-message {
-          padding: 20px;
-          font-size: 1.6em;
-        }
-      `}</style>
-      Please select some locations to compare
-    </div>
-  );
+  const chartData = getChartData(data.data, props.locations);
+  const seriesData = getSeriesData(chartData, props.locations);
+
+  return <LocationComparisonLineChart years={getYears(data.data)} series={seriesData} height={'500px'} />;
 };
 
 export { LocationComparisonChartDataHandler };
