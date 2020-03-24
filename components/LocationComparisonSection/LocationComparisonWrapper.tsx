@@ -4,9 +4,9 @@ import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDa
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 import { SpaceSectionBottom } from '../SpaceSectionBottom';
+import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightInteractive } from '../SpotlightInteractive';
 import { VisualisationSectionMain } from '../VisualisationSection';
-import { LocationComparisonFilters } from './LocationComparisonFilters';
 
 interface ComponentProps {
   themes: SpotlightTheme[];
@@ -18,6 +18,7 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
   const { selected: defaultSelected } = getDefaults(themes);
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
   const [loading, setLoading] = useState(false);
+  useEffect(() => setLoading(true), [locations, selections]);
 
   const onFilterChange = () => (options: SpotlightOptions): void => {
     if (options.indicator) {
@@ -25,19 +26,19 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
     }
   };
   const onLoad = (): void => setLoading(false);
-  useEffect(() => setLoading(true), [locations, selections]);
+
   return (
     <>
       <SpaceSectionBottom>
-        <LocationComparisonFilters
+        <SpotlightFilters
           themes={themes}
           onOptionsChange={onFilterChange()}
           topicLabel="Select a topic to explore"
           indicatorLabel="Choose an indicator"
           topicClassName="form-field--inline-three"
           indicatorClassName="form-field--inline-three"
-          yearClassName="form-field--inline-three"
-        ></LocationComparisonFilters>
+          yearClassName="hide"
+        />
       </SpaceSectionBottom>
       <VisualisationSectionMain>
         <SpotlightInteractive>

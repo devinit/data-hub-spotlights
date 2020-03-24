@@ -11,7 +11,7 @@ import { PageScaffoldData } from './types';
 const DefaultLayout: NextComponentType = ({ children }) => {
   const [data, setData] = useState<PageScaffoldData | undefined>();
 
-  const attachDataProp = (component: ReactNode) => {
+  const attachDataProp = (component: ReactNode): ReactNode => {
     if (isValidElement(component)) {
       return cloneElement(component, { setData });
     }
@@ -29,6 +29,11 @@ const DefaultLayout: NextComponentType = ({ children }) => {
             {attachDataProp(children)}
           </main>
           {data && data.footer ? <Footer {...data.footer} primaryNavigation={data.navigation.primary || []} /> : null}
+          <style jsx global>{`
+            .hide {
+              display: none;
+            }
+          `}</style>
         </div>
       </ApolloProvider>
     </ErrorBoundary>
