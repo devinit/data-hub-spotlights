@@ -3,7 +3,7 @@ import { StylesConfig } from 'react-select';
 import { CSSProperties } from 'react';
 
 export const getDefaultStyles = (theme: SelectTheme, borderColor: string): StylesConfig => ({
-  container: (provided): CSSProperties => ({ ...provided, fontSize: '1.6rem' }),
+  container: (provided): CSSProperties => ({ ...provided, fontSize: '1.6rem', width: '100%' }),
   control: (provided): CSSProperties =>
     ({
       ...provided,
