@@ -17,17 +17,10 @@ app
     const server = createServer((req, res) => {
       // Be sure to pass `true` as the second argument to `url.parse`.
       // This tells it to parse the query portion of the URL.
-      const parsedUrl = parse(req.url as any, true);
-      const { pathname, query } = parsedUrl;
-
-      if (pathname === '/') {
-        // FIXME: remove redirect to playground once project officially starts
-        app.render(req, res, '/playground', query);
-      } else {
-        handle(req, res, parsedUrl);
-      }
+      const parsedUrl = parse(req.url as string, true);
+      handle(req, res, parsedUrl);
     });
-    server.on('error', (err: any) => {
+    server.on('error', (err: Error & { code: string }) => {
       if (err.code === 'EADDRINUSE') {
         console.log('Address in use, retrying...');
         setTimeout(() => {
