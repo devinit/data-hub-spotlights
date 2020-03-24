@@ -4,7 +4,7 @@ import { ButtonBanner } from '../ButtonBanner';
 import { PageSection, PageSectionHeading } from '../PageSection';
 import { Spotlight } from '../Spotlight';
 import { LocationComparisonBanner } from './LocationComparisonBanner';
-import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
+import { LocationComparisonWrapper } from './LocationComparisonWrapper';
 
 interface ComponentProps {
   countryCode: string;
@@ -33,7 +33,11 @@ const LocationComparisonSection: FunctionComponent<ComponentProps> = ({ countryC
       sections.push(
         <PageSection key={index}>
           <Spotlight className="spotlight--full">
-            <LocationFiltersAndCharts themes={themes} selectedLocations={selectedLocations} countryCode={countryCode} />
+            <LocationComparisonWrapper
+              themes={themes}
+              selectedLocations={selectedLocations}
+              countryCode={countryCode}
+            />
           </Spotlight>
         </PageSection>
       );

@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { SpaceSectionBottom } from '../SpaceSectionBottom';
-import { LocationComparisonFilters } from './LocationComparisonFilters';
-import { VisualisationSectionMain } from '../VisualisationSection';
-import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SpotlightIndicator, SpotlightOptions, SpotlightTheme, SpotlightLocation, getDefaults } from '../../utils';
-import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
-import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
+import { getDefaults, SpotlightIndicator, SpotlightLocation, SpotlightOptions, SpotlightTheme } from '../../utils';
 import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
+import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
+import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
+import { SpaceSectionBottom } from '../SpaceSectionBottom';
+import { SpotlightInteractive } from '../SpotlightInteractive';
+import { VisualisationSectionMain } from '../VisualisationSection';
+import { LocationComparisonFilters } from './LocationComparisonFilters';
 
 interface ComponentProps {
   themes: SpotlightTheme[];
@@ -14,7 +14,7 @@ interface ComponentProps {
   countryCode: string;
 }
 
-const LocationFiltersAndCharts: FunctionComponent<ComponentProps> = ({ themes, selectedLocations, countryCode }) => {
+const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, selectedLocations, countryCode }) => {
   const { selected: defaultSelected } = getDefaults(themes);
   const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
   const [loading, setLoading] = useState(false);
@@ -61,4 +61,4 @@ const LocationFiltersAndCharts: FunctionComponent<ComponentProps> = ({ themes, s
   );
 };
 
-export { LocationFiltersAndCharts };
+export { LocationComparisonWrapper };
