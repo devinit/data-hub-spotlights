@@ -7,6 +7,8 @@ import { LocationData } from '../../utils';
 interface ComponentProps {
   years: (string | number)[];
   data: FormatedData;
+  prefix?: string;
+  suffix?: string;
   height?: string;
 }
 
@@ -14,7 +16,9 @@ type FormatedData = { [location: string]: { [year: string]: LocationData[] } };
 
 const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
   const options: EChartOption<EChartOption.SeriesLine | EChartOption.SeriesBar> = {
-    tooltip: {},
+    tooltip: {
+      trigger: 'axis'
+    },
     legend: { show: true },
     xAxis: {
       data: toBasicAxisData(props.years ? props.years : []),
@@ -25,6 +29,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
       data: Object.keys(props.data[location]).map(year => props.data[location][year][0].value),
       type: props.years.length > 2 ? 'line' : 'bar',
       connectNulls: true,
+      smooth: true,
       barWidth: 40
     }))
   };

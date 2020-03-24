@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { LocationIndicatorData, SpotlightLocation, LocationData } from '../../utils';
+import { LocationIndicatorData, SpotlightLocation, LocationData, SpotlightIndicator } from '../../utils';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
 import { groupBy } from 'underscore';
 
 interface ComponentProps {
   data?: LocationIndicatorData;
+  indicator: SpotlightIndicator;
   locations: SpotlightLocation[];
   countryCode: string;
 }
@@ -12,7 +13,7 @@ interface ComponentProps {
 const getYears = (data: LocationData[]): number[] =>
   data.reduce((prev: number[], curr) => (prev.indexOf(curr.year) === -1 ? prev.concat(curr.year) : prev), []).sort();
 
-const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data }) => {
+const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data, indicator }) => {
   if (!data) {
     return (
       <div>
@@ -32,7 +33,15 @@ const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({
     groupedByYear[location] = groupedByBudgetType;
   });
 
-  return <LocationComparisonLineChart years={getYears(data.data)} data={groupedByYear} height={'500px'} />;
+  return (
+    <LocationComparisonLineChart
+      years={getYears(data.data)}
+      data={groupedByYear}
+      height={'500px'}
+      prefix={indicator.value_prefix}
+      suffix={indicator.value_suffix}
+    />
+  );
 };
 
 export { LocationComparisonChartDataHandler };

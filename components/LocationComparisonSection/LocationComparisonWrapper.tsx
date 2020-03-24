@@ -15,13 +15,13 @@ interface ComponentProps {
 
 const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, locations, countryCode }) => {
   const { selected: defaultSelected } = getDefaults(themes);
-  const [selections, setSelections] = useState<[SpotlightOptions] | undefined>([defaultSelected]);
+  const [selections, setSelections] = useState<SpotlightOptions>(defaultSelected);
   const [loading, setLoading] = useState(false);
   useEffect(() => setLoading(true), [locations, selections]);
 
   const onFilterChange = () => (options: SpotlightOptions): void => {
     if (options.indicator) {
-      setSelections([options]);
+      setSelections(options);
     }
   };
   const onLoad = (): void => setLoading(false);
@@ -39,13 +39,19 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
           yearClassName="hide"
         />
       </SpaceSectionBottom>
-      <VisualisationSectionMain>
-        <SpotlightInteractive>
-          <LocationComparisonDataLoader options={selections} onLoad={onLoad} loading={loading} locations={locations}>
-            <LocationComparisonChartDataHandler countryCode={countryCode} locations={locations} />
-          </LocationComparisonDataLoader>
-        </SpotlightInteractive>
-      </VisualisationSectionMain>
+      {selections.indicator ? (
+        <VisualisationSectionMain>
+          <SpotlightInteractive>
+            <LocationComparisonDataLoader options={selections} onLoad={onLoad} loading={loading} locations={locations}>
+              <LocationComparisonChartDataHandler
+                countryCode={countryCode}
+                locations={locations}
+                indicator={selections.indicator}
+              />
+            </LocationComparisonDataLoader>
+          </SpotlightInteractive>
+        </VisualisationSectionMain>
+      ) : null}
     </>
   );
 };
