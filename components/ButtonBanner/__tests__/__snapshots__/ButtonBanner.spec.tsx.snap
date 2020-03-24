@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonBanner renders correctly 1`] = `
+<div
+  className="spotlight-banner"
+>
+  <div
+    className="spotlight-banner__aside"
+  >
+    <a
+      className="button"
+    >
+      <style
+        jsx={true}
+      >
+        
+      cursor: pointer;
+    
+      </style>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`ButtonBanner renders the provided className 1`] = `
+<div
+  className="spotlight-banner"
+>
+  <div
+    className="spotlight-banner__aside"
+  >
+    <a
+      className="button-banner"
+    >
+      <style
+        jsx={true}
+      >
+        
+      cursor: pointer;
+    
+      </style>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`ButtonBanner renders with children 1`] = `
+<div
+  className="spotlight-banner"
+>
+  <div
+    className="spotlight-banner__aside"
+  >
+    <a
+      className="button"
+    >
+      <style
+        jsx={true}
+      >
+        
+      cursor: pointer;
+    
+      </style>
+      <span>
+        Caption
+      </span>
+    </a>
+  </div>
+</div>
+`;

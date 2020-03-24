@@ -1,10 +1,10 @@
-import React, { FunctionComponent, useState, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, useState } from 'react';
+import { SpotlightLocation, SpotlightTheme } from '../../utils';
+import { ButtonBanner } from '../ButtonBanner';
 import { PageSection, PageSectionHeading } from '../PageSection';
 import { Spotlight } from '../Spotlight';
-import { SpotlightTheme, SpotlightLocation } from '../../utils';
-import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
-import { AddComparison } from './AddComparison';
 import { LocationComparisonBanner } from './LocationComparisonBanner';
+import { LocationFiltersAndCharts } from './LocationFiltersAndCharts';
 
 interface ComponentProps {
   countryCode: string;
@@ -56,7 +56,14 @@ const LocationComparisonSection: FunctionComponent<ComponentProps> = ({ countryC
         <LocationComparisonBanner countryName={countryName} countryCode={countryCode} onCompare={onCompare} />
       </PageSection>
       {renderSections()}
-      {chartCount ? <AddComparison onAddComparison={onAddComparison}></AddComparison> : null}
+      {chartCount ? (
+        <PageSection>
+          <ButtonBanner onClick={onAddComparison} className="m-text-link add-location-link">
+            <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-poppy"></i>
+            <span>Add another comparison</span>
+          </ButtonBanner>
+        </PageSection>
+      ) : null}
     </>
   );
 };

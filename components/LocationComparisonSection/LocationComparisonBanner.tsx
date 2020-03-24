@@ -1,9 +1,9 @@
 import React, { CSSProperties, FunctionComponent, useState } from 'react';
 import { SpotlightLocation } from '../../utils';
-import { AnchorButton } from '../AnchorButton';
 import { Button } from '../Button';
+import { ButtonBanner } from '../ButtonBanner';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
-import { SpotlightBanner, SpotlightBannerAside } from '../SpotlightBanner';
+import { SpotlightBanner } from '../SpotlightBanner';
 import { TagList, TagListItem } from '../Tags';
 
 interface ComparisonWrapperProps {
@@ -16,31 +16,18 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = prop
   const [addLocation, setAddLocation] = useState(false);
   const [locations, setLocations] = useState<SpotlightLocation[]>([]);
 
-  const onAddLocation = (): void => setAddLocation(true);
+  const toggleAddLocation = (): void => setAddLocation(!addLocation);
   const onSelectLocation = (location?: SpotlightLocation): void => {
     if (location && locations.findIndex(_location => _location.name === location.name) === -1) {
       setLocations(locations.concat(location));
       setAddLocation(false); // TODO: determine whether to move this outside of condition
     }
   };
-
-  const onCloseTag = (tagName: string): void => {
-    if (locations) {
-      const updatedLocations = locations.filter(function(obj) {
-        return obj.name !== tagName;
-      });
-      setLocations([...updatedLocations]);
-    }
-  };
-
+  const onCloseTag = (tagName: string): void => setLocations(locations.filter(location => location.name !== tagName));
   const onClickCompare = (): void => {
     if (props.onCompare) {
       props.onCompare(locations);
     }
-  };
-
-  const onCancelClick = (): void => {
-    setAddLocation(!addLocation);
   };
 
   return (
@@ -59,19 +46,15 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = prop
             })
           }}
         >
-          <Button className="countries__searched-cancel" onClick={onCancelClick}>
+          <Button className="countries__searched-cancel" onClick={toggleAddLocation}>
             <span>Cancel</span>
           </Button>
         </LocationSelectionBanner>
       ) : (
-        <SpotlightBanner>
-          <SpotlightBannerAside>
-            <AnchorButton className="m-text-link add-location-link" onClick={onAddLocation}>
-              <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-poppy"></i>
-              <span>Add Location</span>
-            </AnchorButton>
-          </SpotlightBannerAside>
-        </SpotlightBanner>
+        <ButtonBanner onClick={toggleAddLocation} className="m-text-link add-location-link">
+          <i role="presentation" aria-hidden="true" className="ico ico--16 ico-plus-poppy"></i>
+          <span>Add Location</span>
+        </ButtonBanner>
       )}
       {locations.length ? (
         <SpotlightBanner>
