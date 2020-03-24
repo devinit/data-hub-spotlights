@@ -1,23 +1,16 @@
-import React, { FunctionComponent, useState } from 'react';
-import { SpotlightBanner, SpotlightBannerAside, SpotlightBannerMain } from '../SpotlightBanner';
+import React, { CSSProperties, FunctionComponent, useState } from 'react';
 import { AddLocation } from '.';
-import { SpotlightMenuWithData } from '../SpotlightMenuWithData';
-import { SelectWithData } from '../SelectWithData';
-import { Tags } from '../Tags/Tags';
-import { Button } from '../Button';
 import { SpotlightLocation } from '../../utils';
+import { Button } from '../Button';
+import { LocationSelectionBanner } from '../LocationSelectionBanner';
+import { SpotlightBanner, SpotlightBannerAside } from '../SpotlightBanner';
+import { Tags } from '../Tags';
 
 interface ComparisonWrapperProps {
   countryName: string;
   countryCode: string;
   onCompare: (locations: SpotlightLocation[]) => void;
 }
-
-const containerStyles = {
-  display: 'inline-block',
-  fontSize: '1.6rem',
-  width: '300px'
-};
 
 const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
   countryName,
@@ -32,6 +25,12 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
     showActive(widgetState);
     if (location.name && index === -1) {
       setLocations([...locations, { name: location.name, geocode: location.geocode }]);
+    }
+  };
+  const onSelectLocation = (location?: SpotlightLocation): void => {
+    if (location && locations.findIndex(_location => _location.name === location.name) === -1) {
+      setLocations(locations.concat(location));
+      showActive(false); // TODO: determine whether to move this outside of condition
     }
   };
 
@@ -54,33 +53,26 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
 
   return (
     <>
-      <SpotlightBanner>
-        <SpotlightBannerAside>
-          <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
-          <SpotlightMenuWithData
-            onWidgetClick={onWidgetClick}
-            countryName={countryName}
-            countryCode={countryCode}
-            spotlightMenu={active}
-          />
-        </SpotlightBannerAside>
-        <SpotlightBannerMain>
-          <SelectWithData
-            show={active}
-            countryCode={countryCode}
-            onWidgetClick={onWidgetClick}
-            styles={containerStyles}
-          />
-          <button type="button" className="countries__searched-cancel" onClick={onCancelClick}>
-            <style jsx>{`
-              .countries__searched-cancel {
-                display: ${active ? 'inline-block' : 'none'};
-              }
-            `}</style>
-            {<span>Cancel</span>}
-          </button>
-        </SpotlightBannerMain>
-      </SpotlightBanner>
+      {active ? (
+        <LocationSelectionBanner
+          countryName={countryName}
+          countryCode={countryCode}
+          onSelectLocation={onSelectLocation}
+          selectStyles={{
+            container: (provided): CSSProperties => ({ ...provided, maxWidth: '300px', fontSize: '1.6rem' })
+          }}
+        >
+          <Button className="countries__searched-cancel" onClick={onCancelClick}>
+            <span>Cancel</span>
+          </Button>
+        </LocationSelectionBanner>
+      ) : (
+        <SpotlightBanner>
+          <SpotlightBannerAside>
+            <AddLocation active={!active} label={'Add Location'} onWidgetClick={onWidgetClick} />
+          </SpotlightBannerAside>
+        </SpotlightBanner>
+      )}
       <SpotlightBanner>
         <Tags onCloseTag={onCloseTag} updatedTags={locations} />
         <Button className="button button--compare" onClick={onClickCompare} show={locations.length >= 2}>
