@@ -59,7 +59,12 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
           countryCode={countryCode}
           onSelectLocation={onSelectLocation}
           selectStyles={{
-            container: (provided): CSSProperties => ({ ...provided, maxWidth: '300px', fontSize: '1.6rem' })
+            container: (provided): CSSProperties => ({
+              ...provided,
+              maxWidth: '300px',
+              fontSize: '1.6rem',
+              width: '100%'
+            })
           }}
         >
           <Button className="countries__searched-cancel" onClick={onCancelClick}>
@@ -75,9 +80,11 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
       )}
       <SpotlightBanner>
         <Tags onCloseTag={onCloseTag} updatedTags={locations} />
-        <Button className="button button--compare" onClick={onClickCompare} show={locations.length >= 2}>
-          Compare
-        </Button>
+        {locations.length >= 2 ? (
+          <Button className="button button--compare" onClick={onClickCompare}>
+            Compare
+          </Button>
+        ) : null}
       </SpotlightBanner>
     </>
   );
