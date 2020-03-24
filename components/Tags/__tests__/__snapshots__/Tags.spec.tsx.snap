@@ -9,16 +9,10 @@ exports[`Tags It renders correctly 1`] = `
   >
     Masaka
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
-      <style
-        jsx={true}
-      >
-        
-        display: block;
-      
-      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -31,16 +25,10 @@ exports[`Tags It renders correctly 1`] = `
   >
     Gulu
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
-      <style
-        jsx={true}
-      >
-        
-        display: block;
-      
-      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -53,16 +41,10 @@ exports[`Tags It renders correctly 1`] = `
   >
     Arua
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
-      <style
-        jsx={true}
-      >
-        
-        display: block;
-      
-      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -75,16 +57,10 @@ exports[`Tags It renders correctly 1`] = `
   >
     Koboko
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
-      <style
-        jsx={true}
-      >
-        
-        display: block;
-      
-      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
@@ -97,16 +73,10 @@ exports[`Tags It renders correctly 1`] = `
   >
     Palisa
     <button
+      className="button"
       onClick={[Function]}
       type="button"
     >
-      <style
-        jsx={true}
-      >
-        
-        display: block;
-      
-      </style>
       <i
         aria-hidden="true"
         className="ico ico--20 ico-cross-slate"
