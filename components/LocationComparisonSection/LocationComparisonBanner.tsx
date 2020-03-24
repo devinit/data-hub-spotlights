@@ -4,7 +4,7 @@ import { SpotlightLocation } from '../../utils';
 import { Button } from '../Button';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
 import { SpotlightBanner, SpotlightBannerAside } from '../SpotlightBanner';
-import { Tags } from '../Tags';
+import { TagList, TagListItem } from '../Tags';
 
 interface ComparisonWrapperProps {
   countryName: string;
@@ -79,7 +79,11 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
         </SpotlightBanner>
       )}
       <SpotlightBanner>
-        <Tags onCloseTag={onCloseTag} updatedTags={locations} />
+        <TagList>
+          {locations.map(location => (
+            <TagListItem key={location.geocode} label={location.name} onRemove={onCloseTag} />
+          ))}
+        </TagList>
         {locations.length >= 2 ? (
           <Button className="button button--compare" onClick={onClickCompare}>
             Compare

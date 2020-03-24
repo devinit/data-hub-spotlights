@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TagList renders TagListItems 1`] = `
+<ul
+  className="m-pills"
+>
+  <li
+    className="m-pills__item"
+  >
+    tag 1
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--20 ico-cross-slate"
+        role="presentation"
+      />
+    </button>
+    <style
+      jsx={true}
+    >
+      
+        text-transform: capitalize;
+      
+    </style>
+  </li>
+  <li
+    className="m-pills__item"
+  >
+    tag 2
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      <i
+        aria-hidden="true"
+        className="ico ico--20 ico-cross-slate"
+        role="presentation"
+      />
+    </button>
+    <style
+      jsx={true}
+    >
+      
+        text-transform: capitalize;
+      
+    </style>
+  </li>
+</ul>
+`;
+
+exports[`TagList renders correctly 1`] = `
+<ul
+  className="m-pills"
+/>
+`;
