@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`SelectWithData It does not render when show is false 1`] = `<span />`;
-
-exports[`SelectWithData It renders correctly 1`] = `
-<div
-  className="spotlight-banner__main"
-/>
-`;
