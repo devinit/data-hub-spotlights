@@ -78,18 +78,20 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = ({
           </SpotlightBannerAside>
         </SpotlightBanner>
       )}
-      <SpotlightBanner>
-        <TagList>
-          {locations.map(location => (
-            <TagListItem key={location.geocode} label={location.name} onRemove={onCloseTag} />
-          ))}
-        </TagList>
-        {locations.length >= 2 ? (
-          <Button className="button button--compare" onClick={onClickCompare}>
-            Compare
-          </Button>
-        ) : null}
-      </SpotlightBanner>
+      {locations.length ? (
+        <SpotlightBanner>
+          <TagList>
+            {locations.map(location => (
+              <TagListItem key={location.geocode} label={location.name} onRemove={onCloseTag} />
+            ))}
+          </TagList>
+          {locations.length >= 2 ? (
+            <Button className="button button--compare" onClick={onClickCompare}>
+              Compare
+            </Button>
+          ) : null}
+        </SpotlightBanner>
+      ) : null}
     </>
   );
 };
