@@ -1,11 +1,10 @@
 import React, { FunctionComponent, useState, Children, isValidElement, cloneElement } from 'react';
-import { LocationIndicatorData, SpotlightLocation, SpotlightIndicator } from '../../utils';
+import { LocationIndicatorData, SpotlightLocation } from '../../utils';
 
 interface LocationComparisonChartDataHandlerProps {
   data?: [LocationIndicatorData, LocationIndicatorData];
   locations?: SpotlightLocation[];
   countryCode: string;
-  indicators: [SpotlightIndicator];
 }
 
 const getChartData = (data: any, locations: any): any => {

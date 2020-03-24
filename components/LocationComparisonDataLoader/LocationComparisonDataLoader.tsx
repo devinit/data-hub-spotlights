@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import React, { Children, cloneElement, FunctionComponent, isValidElement, useEffect, useState } from 'react';
-import { LocationIndicatorData, SpotlightIndicator, SpotlightLocation, SpotlightOptions } from '../../utils';
+import { LocationIndicatorData, SpotlightLocation, SpotlightOptions } from '../../utils';
 import { Loading } from '../Loading';
 import { parseIndicator } from '../MapSection/utils';
 
@@ -10,9 +10,9 @@ interface ComponentProps {
   loading?: boolean;
   onLoad?: () => void;
 }
+type LocData = LocationIndicatorData;
 
 const DynamicDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
-type LocData = LocationIndicatorData;
 
 const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props => {
   const [loading, setLoading] = useState(props.loading);
@@ -27,7 +27,7 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
     }
   }, [data]);
 
-  const onLoad = () => (data: LocData[]): void => {
+  const onLoad = (data: LocData[]): void => {
     if (props.onLoad) {
       props.onLoad();
     }
@@ -41,21 +41,18 @@ const LocationComparisonDataLoader: FunctionComponent<ComponentProps> = props =>
   if (loading) {
     return (
       <Loading active>
-        {props.options.map(({ indicator, year }, index) => {
-          const _indicators = [parseIndicator(indicator as SpotlightIndicator) as string];
-          return (
-            <div key={index}>
-              <DynamicDataLoader
-                indicators={_indicators}
-                startYear={year}
-                endYear={2020}
-                onLoad={onLoad()}
-                geocodes={props.locations && props.locations.map(loc => loc.geocode)}
-                limit={10000}
-              />
-            </div>
-          );
-        })}
+        {props.options.map(({ indicator }, index) => (
+          <div key={index}>
+            <DynamicDataLoader
+              indicators={indicator ? [parseIndicator(indicator) as string] : []}
+              startYear={indicator && indicator.start_year}
+              endYear={indicator && indicator.end_year}
+              onLoad={onLoad}
+              geocodes={props.locations && props.locations.map(location => location.geocode)}
+              limit={10000}
+            />
+          </div>
+        ))}
       </Loading>
     );
   }

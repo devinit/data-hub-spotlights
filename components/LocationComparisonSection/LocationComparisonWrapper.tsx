@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { getDefaults, SpotlightIndicator, SpotlightLocation, SpotlightOptions, SpotlightTheme } from '../../utils';
+import { getDefaults, SpotlightLocation, SpotlightOptions, SpotlightTheme } from '../../utils';
 import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 import { LocationComparisonLineChart } from '../LocationComparisonLineChart';
@@ -43,11 +43,7 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
       <VisualisationSectionMain>
         <SpotlightInteractive>
           <LocationComparisonDataLoader options={selections} onLoad={onLoad} loading={loading} locations={locations}>
-            <LocationComparisonChartDataHandler
-              countryCode={countryCode}
-              locations={locations}
-              indicators={selections?.map(sel => sel.indicator) as [SpotlightIndicator]}
-            >
+            <LocationComparisonChartDataHandler countryCode={countryCode} locations={locations}>
               <LocationComparisonLineChart height={'500px'}></LocationComparisonLineChart>
             </LocationComparisonChartDataHandler>
           </LocationComparisonDataLoader>
