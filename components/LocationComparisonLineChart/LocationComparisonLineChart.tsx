@@ -23,10 +23,11 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
         return `<div style="text-align:center;font-size:1.6rem;">${name}</div>${params
           .map(
             param =>
-              `<div>${param.marker}${param.seriesName}: ${addPrefixAndSuffix(
-                formatNumber(param.value as number, 0),
-                props.valueOptions
-              )}</div>`
+              `<div>${param.marker}${param.seriesName}: ${
+                typeof param.value === 'number'
+                  ? addPrefixAndSuffix(formatNumber(param.value as number, 0), props.valueOptions)
+                  : 'No Data'
+              }</div>`
           )
           .join('')}`;
       }
@@ -44,7 +45,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
     },
     series: Object.keys(props.data).map<EChartOption.SeriesLine | EChartOption.SeriesBar>(location => ({
       name: location,
-      data: props.years.map(year => (props.data[location][year] ? props.data[location][year][0].value || 0 : 0)),
+      data: props.years.map(year => (props.data[location][year] ? props.data[location][year][0].value : 0)),
       type: props.years.length > 2 ? 'line' : 'bar',
       connectNulls: true,
       smooth: true,
