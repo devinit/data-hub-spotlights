@@ -35,7 +35,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
     xAxis: {
       data: toBasicAxisData(props.years ? props.years : []),
       interval: props.years.length <= 12 ? 1 : 4,
-      boundaryGap: props.years.length > 2 ? false : true
+      boundaryGap: false
     },
     yAxis: {
       axisLabel: {
@@ -48,10 +48,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
       type: props.years.length > 2 ? 'line' : 'bar',
       connectNulls: true,
       smooth: true,
-      areaStyle: {},
-      lineStyle: { opacity: 0 },
       symbol: 'circle',
-      stack: props.years.length > 2 ? 'comparison' : undefined,
       barWidth: 40
     }))
   };
