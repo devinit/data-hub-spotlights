@@ -12,5 +12,5 @@ export interface ValueOptions {
 export const DEFAULT_VALUE = 'No Data';
 
 export const addPrefixAndSuffix = (value: string | number, options: ValueOptions): string => {
-  return `${options.prefix || ''} ${value} ${options.suffix || ''}`;
+  return `${options.prefix || ''} ${value}${options.suffix || ''}`;
 };

@@ -38,8 +38,11 @@ const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({
       years={getYears(data.data)}
       data={groupedByYear}
       height={'500px'}
-      prefix={indicator.value_prefix}
-      suffix={indicator.value_suffix}
+      valueOptions={{
+        dataFormat: indicator.data_format,
+        prefix: indicator.value_prefix,
+        suffix: indicator.value_suffix
+      }}
     />
   );
 };
