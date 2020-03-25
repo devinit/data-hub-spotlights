@@ -22,14 +22,18 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
     legend: { show: true },
     xAxis: {
       data: toBasicAxisData(props.years ? props.years : []),
-      interval: props.years.length <= 12 ? 1 : 4
+      interval: props.years.length <= 12 ? 1 : 4,
+      boundaryGap: false
     },
     series: Object.keys(props.data).map<EChartOption.SeriesLine | EChartOption.SeriesBar>(location => ({
       name: location,
-      data: Object.keys(props.data[location]).map(year => props.data[location][year][0].value),
+      data: props.years.map(year => (props.data[location][year] ? props.data[location][year][0].value || 0 : 0)),
       type: props.years.length > 2 ? 'line' : 'bar',
       connectNulls: true,
       smooth: true,
+      areaStyle: {},
+      lineStyle: { opacity: 0 },
+      symbol: 'circle',
       barWidth: 40
     }))
   };
