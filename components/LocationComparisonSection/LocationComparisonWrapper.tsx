@@ -41,7 +41,7 @@ const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, 
       </SpaceSectionBottom>
       {selections.indicator ? (
         <VisualisationSectionMain>
-          <SpotlightInteractive>
+          <SpotlightInteractive background="#ffffff">
             <LocationComparisonDataLoader options={selections} onLoad={onLoad} loading={loading} locations={locations}>
               <LocationComparisonChartDataHandler
                 countryCode={countryCode}
