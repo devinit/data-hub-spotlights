@@ -34,6 +34,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
       areaStyle: {},
       lineStyle: { opacity: 0 },
       symbol: 'circle',
+      stack: props.years.length > 2 ? 'comparison' : undefined,
       barWidth: 40
     }))
   };
