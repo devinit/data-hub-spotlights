@@ -89,7 +89,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               </Legend>
               <SpotlightButtons>
                 {router ? (
-                  <AnchorButton href={`${router.asPath}/compare`}>Compare this location to others</AnchorButton>
+                  <AnchorButton href={`${router.asPath}compare`}>Compare this location to others</AnchorButton>
                 ) : null}
               </SpotlightButtons>
             </SpotlightHide>
