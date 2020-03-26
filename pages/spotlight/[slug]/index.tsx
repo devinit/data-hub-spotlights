@@ -21,6 +21,8 @@ interface SpotlightProps {
   page: SpotlightPage;
   currentUrl?: string;
 }
+const BitlyClient = require('bitly').BitlyClient;
+const bitly = new BitlyClient(process.env.BITLY_API_KEY);
 
 const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page, currentUrl }) => {
   const [location, setLocation] = useState<SpotlightLocation | undefined>();
@@ -89,10 +91,12 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightProps> => {
     ? context.req.headers['x-forwarded-host'] || context.req.headers['host']
     : window.location.host;
   const query = context.asPath;
-  let currentUrl = '';
+  let response = '';
   if (host) {
-    currentUrl = host.indexOf('localhost') > -1 ? 'http://' + host + query : 'https://' + host + query;
+    response = host.indexOf('localhost') > -1 ? 'http://127.0.0.1:3000' + query : 'https://' + host + query;
   }
+  const url = await bitly.shorten(response);
+  const currentUrl = `${url.link}`;
 
   return { scaffold, page, currentUrl };
 };
