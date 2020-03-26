@@ -7,9 +7,10 @@ interface SpotlightShareProps {
   maxHeight?: string;
   minHeight?: string;
   className?: string;
+  urlValue?: string;
 }
 
-const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
+const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ urlValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -43,7 +44,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
             As I configured it
           </label>
           <br />
-          <input className="form-item" type="text" id="urllink" name="urllink" />
+          <input className="form-item" type="text" id="urllink" name="urllink" value={urlValue} />
           <br />
           <br />
           <SocialLink socialSource="twitter" url="https://twitter.com" />

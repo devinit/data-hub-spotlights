@@ -5,4 +5,5 @@ export interface MapSectionProps {
   countryName: string;
   themes: SpotlightTheme[];
   onChangeLocation?: (location?: SpotlightLocation) => void;
+  url?: string;
 }

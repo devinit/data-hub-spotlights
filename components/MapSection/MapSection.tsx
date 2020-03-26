@@ -130,7 +130,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               {renderLegendItems(range, colours)}
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
-            <SpotlightShare />
+            <SpotlightShare urlValue={props.url} />
           </SidebarContent>
         </SpotlightSidebar>
       </VisualisationSection>
