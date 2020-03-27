@@ -19,12 +19,9 @@ interface SpotlightProps {
   setData?: (data: PageScaffoldData) => void;
   scaffold: PageScaffoldData;
   page: SpotlightPage;
-  currentUrl?: string;
 }
-const BitlyClient = require('bitly').BitlyClient;
-const bitly = new BitlyClient(process.env.BITLY_API_KEY);
 
-const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page, currentUrl }) => {
+const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
   const [location, setLocation] = useState<SpotlightLocation | undefined>();
   useEffect(() => {
     if (setData) {
@@ -42,7 +39,6 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page, currentU
           countryCode={page.country_code}
           countryName={page.country_name}
           onChangeLocation={onChangeLocation}
-          url={currentUrl}
         />
         <KeyFactsSection
           countryCode={page.country_code}
@@ -87,18 +83,8 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightProps> => {
   const { slug } = context.query;
   const scaffold = await fetchScaffoldData();
   const page = await fetchSpotlightPage(slug as string);
-  const host = context.req
-    ? context.req.headers['x-forwarded-host'] || context.req.headers['host']
-    : window.location.host;
-  const query = context.asPath;
-  let response = '';
-  if (host) {
-    response = host.indexOf('localhost') > -1 ? 'http://127.0.0.1:3000' + query : 'https://' + host + query;
-  }
-  const url = await bitly.shorten(response);
-  const currentUrl = `${url.link}`;
 
-  return { scaffold, page, currentUrl };
+  return { scaffold, page };
 };
 
 export default Spotlight;

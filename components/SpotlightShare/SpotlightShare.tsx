@@ -7,14 +7,31 @@ interface SpotlightShareProps {
   maxHeight?: string;
   minHeight?: string;
   className?: string;
-  urlValue?: string;
 }
-
-const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ urlValue }) => {
+const BitlyClient = require('bitly').BitlyClient;
+const bitly = new BitlyClient(process.env.BITLY_API_KEY);
+const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [url, setUrl] = useState('');
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const getUrl = async () => {
+    const href = window.location.href;
+    let shortUrl;
+    if (href.indexOf('localhost') > -1) {
+      const Url = href.replace('localhost', '127.0.0.1');
+      shortUrl = await bitly.shorten(Url);
+      return shortUrl;
+    } else {
+      shortUrl = await bitly.shorten(href);
+      return shortUrl;
+    }
+  };
+  getUrl()
+    .then(url => setUrl(url.link))
+    .catch(error => console.log(error));
+
   return (
     <div>
       <Button onClick={toggleModal}>Share visualisation</Button>
@@ -44,7 +61,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ urlValue }) =>
             As I configured it
           </label>
           <br />
-          <input className="form-item" type="text" id="urllink" name="urllink" value={urlValue} />
+          <input className="form-item" type="text" id="urllink" name="urllink" value={url} />
           <br />
           <br />
           <SocialLink socialSource="twitter" url="https://twitter.com" />

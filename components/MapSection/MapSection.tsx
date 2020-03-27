@@ -11,7 +11,6 @@ import { SpotlightButtons } from '../SpotlightButtons';
 import { SpotlightFilters } from '../SpotlightFilters';
 import { SpotlightIndicatorInfo } from '../SpotlightIndicatorInfo';
 import { SpotlightInteractive } from '../SpotlightInteractive';
-import { SpotlightShare } from '../SpotlightShare';
 import { SidebarContent, SpotlightHide, SpotlightSidebar, SpotlightSidebarInfo } from '../SpotlightSidebar';
 import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
 import {
@@ -25,6 +24,7 @@ import {
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
+const SpotlightShare = dynamic(() => import('../SpotlightShare').then(mod => mod.SpotlightShare), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   if (range && colours) {
@@ -92,6 +92,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
                 {router ? (
                   <AnchorButton href={`${router.asPath}compare`}>Compare this location to others</AnchorButton>
                 ) : null}
+                <SpotlightShare />
               </SpotlightButtons>
             </SpotlightHide>
           </SidebarContent>
@@ -130,7 +131,9 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               {renderLegendItems(range, colours)}
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
-            <SpotlightShare urlValue={props.url} />
+            <SpotlightButtons>
+              <SpotlightShare />
+            </SpotlightButtons>
           </SidebarContent>
         </SpotlightSidebar>
       </VisualisationSection>
