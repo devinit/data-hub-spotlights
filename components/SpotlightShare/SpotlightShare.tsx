@@ -8,15 +8,21 @@ interface SpotlightShareProps {
   minHeight?: string;
   className?: string;
 }
-const BitlyClient = require('bitly').BitlyClient;
-const bitly = new BitlyClient(process.env.BITLY_API_KEY);
+//const BitlyClient = require('bitly').BitlyClient;
+
+import { BitlyClient } from 'bitly';
+
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [url, setUrl] = useState('');
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+  const location = window.location.pathname.split('-')[1];
+  const capitalizedLocation = location.charAt(0).toUpperCase() + location.substr(1).toLowerCase();
   const getUrl = async () => {
+    const bitly = new BitlyClient(`${process.env.BITLY_API_KEY}`);
+    console.log(bitly);
     const href = window.location.href;
     let shortUrl;
     if (href.indexOf('localhost') > -1) {
@@ -31,7 +37,6 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
   getUrl()
     .then(url => setUrl(url.link))
     .catch(error => console.log(error));
-
   return (
     <div>
       <Button onClick={toggleModal}>Share visualisation</Button>
@@ -61,12 +66,22 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
             As I configured it
           </label>
           <br />
-          <input className="form-item" type="text" id="urllink" name="urllink" value={url} />
+          <input className="form-item" type="text" id="urllink" name="urllink" value="hello" />
           <br />
           <br />
-          <SocialLink socialSource="twitter" url="https://twitter.com" />
-          <SocialLink socialSource="facebook" url="https://facebook.com" />
-          <SocialLink socialSource="email" url="mailto:" />
+          <SocialLink socialSource="twitter" url={'https://twitter.com/intent/tweet?text=' + url} />
+          <SocialLink socialSource="facebook" url={'https://facebook.com/share.php?u=' + url} />
+          <SocialLink
+            socialSource="email"
+            url={
+              'mailto:?subject=Development Initiatives: ' +
+              capitalizedLocation +
+              '&body=Development Initiatives:' +
+              capitalizedLocation +
+              '%0A%0A' +
+              url
+            }
+          />
         </form>
         <button className="modal-button-close js-modal-trigger" onClick={toggleModal}>
           x

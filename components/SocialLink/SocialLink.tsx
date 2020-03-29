@@ -1,12 +1,9 @@
 import React from 'react';
 
 const SocialLink = (props: any) => {
-  const handleClick = () => {
-    console.log('clicked');
-  };
   return (
     <a href={props.url}>
-      <img src={'/assets/svg/source/' + props.socialSource + '.svg'} alt={props.socialSource} onClick={handleClick} />
+      <img src={'/assets/svg/source/' + props.socialSource + '.svg'} alt={props.socialSource} />
       <style jsx>{`
         img {
           float: left;
