@@ -90,9 +90,15 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               </Legend>
               <SpotlightButtons>
                 {router ? (
-                  <AnchorButton href={`${router.asPath}compare`}>Compare this location to others</AnchorButton>
+                  <AnchorButton href={`${router.asPath}${router.asPath.endsWith('/') ? '' : '/'}compare`}>
+                    Compare this location to others
+                  </AnchorButton>
                 ) : null}
-                <SpotlightShare />
+                <SpotlightShare
+                  countryName={props.countryName}
+                  location={activeLocation}
+                  buttonCaption="Share this visualisation"
+                />
               </SpotlightButtons>
             </SpotlightHide>
           </SidebarContent>
@@ -132,7 +138,11 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeL
               <LegendItem>no data / not applicable</LegendItem>
             </Legend>
             <SpotlightButtons>
-              <SpotlightShare />
+              <SpotlightShare
+                countryName={props.countryName}
+                location={activeLocation}
+                buttonCaption="Share this visualisation"
+              />
             </SpotlightButtons>
           </SidebarContent>
         </SpotlightSidebar>
