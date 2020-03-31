@@ -7,6 +7,7 @@ import { getShortUrl } from './utils';
 import { Button } from '../Button';
 import { FormField } from '../FormField';
 import { FormFieldRadio, FormFieldRadioGroup } from '../FormFieldRadio';
+import { Loading } from '../Loading';
 
 interface SpotlightShareProps {
   buttonCaption?: string;
@@ -20,6 +21,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption,
   const [radioValue, setRadioValue] = useState('default');
   useEffect(() => {
     if (modalOpen) {
+      setUrl('');
       getShortUrl(radioValue === 'default')
         .then(url => setUrl(url.link))
         .catch(error => console.log('Error while generating short URL: ', error.message));
@@ -27,6 +29,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption,
   }, [radioValue]);
 
   const toggleModalOpen = (): void => {
+    setUrl('');
     if (!modalOpen) {
       getShortUrl(radioValue === 'default')
         .then(url => setUrl(url.link))
@@ -72,10 +75,12 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption,
             </FormFieldRadio>
           </FormField>
 
-          <FormField className="">
-            <div className="form-label form-label--hidden">url</div>
-            <input className="form-item" type="text" id="urllink" name="urllink" value={url} />
-          </FormField>
+          <Loading active={!url}>
+            <FormField className="">
+              <div className="form-label form-label--hidden">url</div>
+              <input className="form-item" type="text" id="urllink" name="urllink" value={url} />
+            </FormField>
+          </Loading>
 
           <ul className="footer__social">
             <li>
