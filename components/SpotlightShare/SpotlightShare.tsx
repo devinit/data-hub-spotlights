@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { SpotlightLocation, toCamelCase } from '../../utils';
 import { AnchorButton } from '../AnchorButton';
@@ -18,9 +18,17 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption,
   const [modalOpen, setModalOpen] = useState(false);
   const [url, setUrl] = useState('');
   const [radioValue, setRadioValue] = useState('default');
+  useEffect(() => {
+    if (modalOpen) {
+      getShortUrl(radioValue === 'default')
+        .then(url => setUrl(url.link))
+        .catch(error => console.log('Error while generating short URL: ', error.message));
+    }
+  }, [radioValue]);
+
   const toggleModalOpen = (): void => {
     if (!modalOpen) {
-      getShortUrl()
+      getShortUrl(radioValue === 'default')
         .then(url => setUrl(url.link))
         .catch(error => console.log('Error while generating short URL: ', error.message));
     }
