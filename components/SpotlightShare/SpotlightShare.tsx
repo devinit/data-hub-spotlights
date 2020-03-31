@@ -1,44 +1,34 @@
 import React, { FunctionComponent, useState } from 'react';
 import Modal from 'react-modal';
-import { Button } from '../Button';
+import { SpotlightLocation, toCamelCase } from '../../utils';
+import { AnchorButton } from '../AnchorButton';
 import { SocialLink } from '../SocialLink';
+import { getShortUrl } from './utils';
 
 interface SpotlightShareProps {
-  maxHeight?: string;
-  minHeight?: string;
-  className?: string;
+  buttonCaption?: string;
+  location?: SpotlightLocation;
+  countryName: string;
 }
-import { BitlyClient } from 'bitly';
-const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
-  const [isOpen, setIsOpen] = useState(false);
+
+const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption, ...props }) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const [url, setUrl] = useState('');
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
-  const location = window.location.pathname.split('-')[1];
-  const capitalizedLocation = location.charAt(0).toUpperCase() + location.substr(1).toLowerCase();
-  const getUrl = async () => {
-    const bitly = new BitlyClient(`${process.env.BITLY_API_KEY}`);
-    const href = window.location.href;
-    let shortUrl;
-    if (href.indexOf('localhost') > -1) {
-      const Url = href.replace('localhost', '127.0.0.1');
-      shortUrl = await bitly.shorten(Url);
-      return shortUrl;
-    } else {
-      shortUrl = await bitly.shorten(href);
-      return shortUrl;
+  const toggleModalOpen = (): void => {
+    if (!modalOpen) {
+      getShortUrl()
+        .then(url => setUrl(url.link))
+        .catch(error => console.log('Error while generating short URL: ', error.message));
     }
+    setModalOpen(!modalOpen);
   };
-  getUrl()
-    .then(url => setUrl(url.link))
-    .catch(error => console.log(error));
+
   return (
-    <div>
-      <Button onClick={toggleModal}>Share visualisation</Button>
+    <>
+      <AnchorButton onClick={toggleModalOpen}>{buttonCaption}</AnchorButton>
       <Modal
-        isOpen={isOpen}
-        onRequestClose={toggleModal}
+        isOpen={modalOpen}
+        onRequestClose={toggleModalOpen}
         ariaHideApp={false}
         shouldCloseOnOverlayClick={false}
         className="modal__content modal__content--minor"
@@ -71,15 +61,15 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
             socialSource="email"
             url={
               'mailto:?subject=Development Initiatives: ' +
-              capitalizedLocation +
+              toCamelCase(props.location ? props.location.name : props.countryName) +
               '&body=Development Initiatives:' +
-              capitalizedLocation +
+              toCamelCase(props.location ? props.location.name : props.countryName) +
               '%0A%0A' +
               url
             }
           />
         </form>
-        <button className="modal-button-close js-modal-trigger" onClick={toggleModal}>
+        <button className="modal-button-close js-modal-trigger" onClick={toggleModalOpen}>
           x
         </button>
       </Modal>
@@ -88,12 +78,12 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
           margin-right: 1em !important;
         }
       `}</style>
-    </div>
+    </>
   );
 };
 
 SpotlightShare.defaultProps = {
-  minHeight: '500px'
+  buttonCaption: 'Share this visualisation'
 };
 
 export { SpotlightShare };
