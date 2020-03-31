@@ -1,7 +1,8 @@
 // tslint:disable no-console
 import { config } from 'dotenv';
 config();
-import { createServer } from 'http';
+import { BitlyClient } from 'bitly';
+import express from 'express';
 import { parse } from 'url';
 import next from 'next';
 
@@ -14,24 +15,44 @@ const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
-    const server = createServer((req, res) => {
-      // Be sure to pass `true` as the second argument to `url.parse`.
-      // This tells it to parse the query portion of the URL.
+    const server = express();
+    server.get('/bitly', (req, res) => {
       const parsedUrl = parse(req.url as string, true);
-      handle(req, res, parsedUrl);
-    });
-    server.on('error', (err: Error & { code: string }) => {
-      if (err.code === 'EADDRINUSE') {
-        console.log('Address in use, retrying...');
-        setTimeout(() => {
-          server.close();
-          server.listen(PORT, HOST);
-        }, 1000);
+      const { query } = parsedUrl;
+      if (query.longUrl && !Array.isArray(query.longUrl)) {
+        if (process.env.BITLY_API_KEY) {
+          const bitly = new BitlyClient(process.env.BITLY_API_KEY);
+
+          return bitly
+            .shorten(query.longUrl.replace('localhost', '127.0.0.1'))
+            .then(shortUrl => res.json({ code: 200, shortUrl }))
+            .catch(error => res.json({ code: 401, error: error.message }));
+        } else {
+          return res.json({ code: 401, error: 'BITLY_API_KEY is missing' });
+        }
       }
-      console.log('ERROR: %s', err.message);
+
+      return res.json({ code: 400, error: 'Please provide a single URL' });
     });
-    server.listen(PORT, () => {
-      console.log('> Ready on http://localhost:3000');
+
+    server.all('*', (req, res) => {
+      const parsedUrl = parse(req.url as string, true);
+
+      return handle(req, res, parsedUrl);
+    });
+
+    server.listen(PORT, err => {
+      if (err) {
+        if (err.code === 'EADDRINUSE') {
+          console.log('Address in use, retrying...');
+          setTimeout(() => {
+            server.listen(PORT, HOST);
+          }, 1000);
+        }
+        console.log('ERROR: %s', err.message);
+      } else {
+        console.log('> Ready on http://localhost:3000');
+      }
     });
   })
   .catch(ex => {
