@@ -3,12 +3,13 @@
 exports[`FormFieldRadioGroup renders correctly 1`] = `
 <div
   className="form-radio-group cp-form-radio-group-share"
+  onClick={[Function]}
 >
   <input
     className="form-radio"
+    defaultValue="this-that"
     name="that"
     type="radio"
-    value="this-that"
   />
   <label
     className="form-label"
