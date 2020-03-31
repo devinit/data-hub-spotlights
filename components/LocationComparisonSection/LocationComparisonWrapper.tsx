@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { getDefaults, SpotlightLocation, SpotlightOptions, SpotlightTheme } from '../../utils';
+import { getDefaultsByIndex, SpotlightLocation, SpotlightOptions, SpotlightTheme } from '../../utils';
 import { LocationComparisonChartDataHandler } from '../LocationComparisonChartDataHandler';
 import { LocationComparisonDataLoader } from '../LocationComparisonDataLoader';
 import { SpaceSectionBottom } from '../SpaceSectionBottom';
@@ -14,7 +14,7 @@ interface ComponentProps {
 }
 
 const LocationComparisonWrapper: FunctionComponent<ComponentProps> = ({ themes, locations, countryCode }) => {
-  const { selected: defaultSelected } = getDefaults(themes);
+  const { selected: defaultSelected } = getDefaultsByIndex(themes);
   const [selections, setSelections] = useState<SpotlightOptions>(defaultSelected);
   const [loading, setLoading] = useState(false);
   useEffect(() => setLoading(true), [locations, selections]);
