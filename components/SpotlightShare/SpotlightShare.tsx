@@ -8,10 +8,7 @@ interface SpotlightShareProps {
   minHeight?: string;
   className?: string;
 }
-//const BitlyClient = require('bitly').BitlyClient;
-
 import { BitlyClient } from 'bitly';
-
 const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [url, setUrl] = useState('');
@@ -22,7 +19,6 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
   const capitalizedLocation = location.charAt(0).toUpperCase() + location.substr(1).toLowerCase();
   const getUrl = async () => {
     const bitly = new BitlyClient(`${process.env.BITLY_API_KEY}`);
-    console.log(bitly);
     const href = window.location.href;
     let shortUrl;
     if (href.indexOf('localhost') > -1) {
@@ -66,7 +62,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = () => {
             As I configured it
           </label>
           <br />
-          <input className="form-item" type="text" id="urllink" name="urllink" value="hello" />
+          <input className="form-item" type="text" id="urllink" name="urllink" value={url} />
           <br />
           <br />
           <SocialLink socialSource="twitter" url={'https://twitter.com/intent/tweet?text=' + url} />
