@@ -1,6 +1,7 @@
 import { SpotlightTheme } from '.';
 
-export const LOCATION_QUERY = 'l';
+export const LOCATION_NAME_QUERY = 'ln';
+export const LOCATION_CODE_QUERY = 'lc';
 export const THEME_QUERY = 't'; // topic
 export const INDICATOR_QUERY = 'i'; // indicator
 export const YEAR_QUERY = 'y'; // year

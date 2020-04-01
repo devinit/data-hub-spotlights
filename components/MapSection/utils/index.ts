@@ -6,7 +6,8 @@ import {
   INDICATOR_QUERY,
   YEAR_QUERY,
   SpotlightLocation,
-  LOCATION_QUERY
+  LOCATION_NAME_QUERY,
+  LOCATION_CODE_QUERY
 } from '../../../utils';
 import { NextRouter } from 'next/router';
 
@@ -39,9 +40,10 @@ export const getDataSuffix = ({ indicator, year }: SpotlightOptions): string | u
 export const setQuery = (router: NextRouter, options: SpotlightOptions, location?: SpotlightLocation): void => {
   const { route, push } = router;
   const { pathname } = window.location;
-  const as = `${pathname}?${THEME_QUERY}=${options.theme?.slug}&${INDICATOR_QUERY}=${options.indicator?.ddw_id}&${YEAR_QUERY}=${options.year}`;
+  let as = `${pathname}?${THEME_QUERY}=${options.theme?.slug}&${INDICATOR_QUERY}=${options.indicator?.ddw_id}&${YEAR_QUERY}=${options.year}`;
   if (location) {
-    push(route, `${as}&${LOCATION_QUERY}=${location.name.toLowerCase()}`, { shallow: true });
+    as = `${as}&${LOCATION_CODE_QUERY}=${location.geocode}&${LOCATION_NAME_QUERY}=${location.name.toLowerCase()}`;
+    push(route, as, { shallow: true });
   } else {
     push(route, as, { shallow: true });
   }
