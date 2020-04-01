@@ -1,15 +1,16 @@
 import chroma, { scale } from 'chroma-js';
+import { NextRouter } from 'next/router';
+import { ParsedUrlQuery } from 'querystring';
 import {
+  INDICATOR_QUERY,
+  LOCATION_CODE_QUERY,
+  LOCATION_NAME_QUERY,
   SpotlightIndicator,
+  SpotlightLocation,
   SpotlightOptions,
   THEME_QUERY,
-  INDICATOR_QUERY,
-  YEAR_QUERY,
-  SpotlightLocation,
-  LOCATION_NAME_QUERY,
-  LOCATION_CODE_QUERY
+  YEAR_QUERY
 } from '../../../utils';
-import { NextRouter } from 'next/router';
 
 export * from './types';
 
@@ -46,5 +47,13 @@ export const setQuery = (router: NextRouter, options: SpotlightOptions, location
     push(route, as, { shallow: true });
   } else {
     push(route, as, { shallow: true });
+  }
+};
+
+export const getDefaultLocationFromQuery = (query: ParsedUrlQuery): SpotlightLocation | undefined => {
+  const name = query[LOCATION_NAME_QUERY];
+  const code = query[LOCATION_CODE_QUERY];
+  if (name && code) {
+    return { name: Array.isArray(name) ? name[0] : name, geocode: Array.isArray(code) ? code[0] : code };
   }
 };

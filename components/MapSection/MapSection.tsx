@@ -1,6 +1,6 @@
 import { useRouter } from 'next/dist/client/router';
 import dynamic from 'next/dynamic';
-import React, { FunctionComponent, ReactNode, useState } from 'react';
+import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
 import { SpotlightLocation, SpotlightOptions } from '../../utils';
 import { AnchorButton } from '../AnchorButton';
 import { ErrorBoundary } from '../ErrorBoundary';
@@ -20,7 +20,8 @@ import {
   MapSectionProps,
   parseIndicator,
   splitByComma,
-  setQuery
+  setQuery,
+  getDefaultLocationFromQuery
 } from './utils';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
@@ -48,7 +49,15 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
 const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeLocation, ...props }) => {
   const router = useRouter();
   const [options, setOptions] = useState<SpotlightOptions>({});
-  const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(undefined);
+  const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(
+    router ? getDefaultLocationFromQuery(router.query) : undefined
+  );
+  useEffect(() => {
+    if (onChangeLocation) {
+      onChangeLocation(activeLocation);
+    }
+  }, []);
+
   const onOptionsChange = (optns: SpotlightOptions): void => {
     setQuery(router, optns, activeLocation);
     setOptions(optns);
