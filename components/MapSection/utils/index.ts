@@ -1,5 +1,6 @@
 import chroma, { scale } from 'chroma-js';
-import { SpotlightIndicator, SpotlightOptions } from '../../../utils';
+import { NextRouter } from 'next/router';
+import { INDICATOR_QUERY, SpotlightIndicator, SpotlightOptions, THEME_QUERY, YEAR_QUERY } from '../../../utils';
 
 export * from './types';
 
@@ -26,3 +27,10 @@ export const getDataPrefix = (options: SpotlightOptions): string | undefined =>
   options.indicator && `${options.indicator.name}: ${options.indicator.value_prefix || ''}`;
 export const getDataSuffix = ({ indicator, year }: SpotlightOptions): string | undefined =>
   indicator ? (year ? `${indicator.value_suffix} in ${year}` : indicator.value_suffix || '') : undefined;
+
+export const setQuery = (router: NextRouter, options: SpotlightOptions): void => {
+  const { route, push } = router;
+  const { pathname } = window.location;
+  const as = `${pathname}?${THEME_QUERY}=${options.theme?.slug}&${INDICATOR_QUERY}=${options.indicator?.ddw_id}&${YEAR_QUERY}=${options.year}`;
+  push(route, as, { shallow: true });
+};

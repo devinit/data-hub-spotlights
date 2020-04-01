@@ -19,7 +19,8 @@ import {
   getIndicatorColours,
   MapSectionProps,
   parseIndicator,
-  splitByComma
+  splitByComma,
+  setQuery
 } from './utils';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
@@ -47,8 +48,11 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
 const MapSection: FunctionComponent<MapSectionProps> = ({ countryCode, onChangeLocation, ...props }) => {
   const router = useRouter();
   const [options, setOptions] = useState<SpotlightOptions>({});
-  const onOptionsChange = (optns: SpotlightOptions): void => setOptions(optns);
   const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(undefined);
+  const onOptionsChange = (optns: SpotlightOptions): void => {
+    setQuery(router, optns);
+    setOptions(optns);
+  };
   const onSelectLocation = (location?: SpotlightLocation): void => {
     setActiveLocation(location);
     if (onChangeLocation) {
