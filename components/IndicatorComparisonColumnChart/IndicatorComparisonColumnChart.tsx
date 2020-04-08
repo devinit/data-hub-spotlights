@@ -22,11 +22,12 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
   const options: EChartOption = {
     tooltip: {
       formatter: (params: EChartOption.Tooltip.Format): string => {
-        const { seriesName, name, seriesIndex, value } = params;
+        const { seriesName, seriesIndex, value } = params;
+        console.log(params); //FIXME:
 
         return seriesIndex === 1
-          ? formatSeries(name, seriesName, value as number, valueOptions[1])
-          : formatSeries(name, seriesName, value as number, valueOptions[0]);
+          ? formatSeries('', seriesName, value as number, valueOptions[1])
+          : formatSeries('', seriesName, value as number, valueOptions[0]);
       }
     },
     legend: { show: false },
