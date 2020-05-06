@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { SpotlightLocation, SpotlightTheme } from '../../utils';
 import { CurrencySelector } from '../CurrencySelector';
 import { KeyFactIndicator } from '../KeyFactIndicator';
@@ -16,15 +16,23 @@ interface KeyFactTabProps {
 
 const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, theme, onActivate, currencyCode }) => {
   const [useLocalValue, setUseLocalValue] = useState(false);
+  const [showCurrencySelector, setShowCurrencySelector] = useState(
+    !!theme.indicators.find(indicator => indicator.data_format === 'currency')
+  );
+  useEffect(() => {
+    setShowCurrencySelector(!!theme.indicators.find(indicator => indicator.data_format === 'currency'));
+  }, [theme.name]);
 
   const onChangeCurrency = (isLocal: boolean): void => setUseLocalValue(isLocal);
 
   return (
     <TabContainer key={theme.slug} id={theme.slug} label={theme.name} active={active} onActivate={onActivate}>
       <TabContent>
-        <TabContentHeader>
-          <CurrencySelector currencyCode={currencyCode} onChange={onChangeCurrency} />
-        </TabContentHeader>
+        {showCurrencySelector ? (
+          <TabContentHeader>
+            <CurrencySelector currencyCode={currencyCode} onChange={onChangeCurrency} />
+          </TabContentHeader>
+        ) : null}
         {active ? (
           <div className="l-2up-3up">
             {theme.indicators.map((indicator, index) => (
