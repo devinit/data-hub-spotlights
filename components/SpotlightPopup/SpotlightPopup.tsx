@@ -36,8 +36,12 @@ const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = props => {
           <style jsx>{`
             .spotlight__stat-icon {
               display: inline-block;
-              margin-left: 10px;
+              margin-left: 2px;
               cursor: pointer;
+            }
+
+            .spotlight__stat-icon i {
+              top: -1px;
             }
           `}</style>
         </span>
