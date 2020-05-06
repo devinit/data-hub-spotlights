@@ -40,7 +40,7 @@ const SpotlightPopupContent: FunctionComponent<SpotlightPopupContentProps> = ({ 
           cursor: pointer;
           position: absolute;
           display: block;
-          padding: 5px 5px;
+          padding: 5px 10px;
           line-height: 20px;
           right: 0px;
           top: 0px;
