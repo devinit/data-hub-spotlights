@@ -20,22 +20,24 @@ const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, them
   const onChangeCurrency = (isLocal: boolean): void => setUseLocalValue(isLocal);
 
   return (
-    <TabContainer key={theme.slug} id={theme.slug} label={theme.name} active={active}>
+    <TabContainer key={theme.slug} id={theme.slug} label={theme.name} active={active} onActivate={onActivate}>
       <TabContent>
-        <TabContentHeader onClick={onActivate}>
+        <TabContentHeader>
           <CurrencySelector currencyCode={currencyCode} onChange={onChangeCurrency} />
         </TabContentHeader>
-        <div className="l-2up-3up">
-          {theme.indicators.map((indicator, index) => (
-            <KeyFactIndicator
-              key={index}
-              location={location}
-              indicator={indicator}
-              currencyCode={currencyCode}
-              useLocalValue={useLocalValue}
-            />
-          ))}
-        </div>
+        {active ? (
+          <div className="l-2up-3up">
+            {theme.indicators.map((indicator, index) => (
+              <KeyFactIndicator
+                key={index}
+                location={location}
+                indicator={indicator}
+                currencyCode={currencyCode}
+                useLocalValue={useLocalValue}
+              />
+            ))}
+          </div>
+        ) : null}
       </TabContent>
     </TabContainer>
   );

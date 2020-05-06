@@ -1,21 +1,21 @@
-import React, { Children, FunctionComponent, isValidElement } from 'react';
+import React, { Children, FunctionComponent, isValidElement, ReactNode } from 'react';
 import { TabContent } from './TabContent';
 
 interface TabContainerProps {
   id: string;
   label: string;
   active?: boolean;
+  onActivate?: () => void;
 }
 
-const TabContainer: FunctionComponent<TabContainerProps> = ({ id, active, label, children }) => {
-  const renderContent = () => {
-    return Children.map(children, child => (isValidElement(child) && child.type === TabContent ? child : null));
-  };
+const TabContainer: FunctionComponent<TabContainerProps> = ({ id, active, label, children, onActivate }) => {
+  const renderContent = (): ReactNode =>
+    Children.map(children, child => (isValidElement(child) && child.type === TabContent ? child : null));
 
   return (
     <section className="tabs__container" id={id}>
       <input className="tabs__input" type="radio" name="sections" id={`${id}-option`} defaultChecked={active} />
-      <label className="tabs__label" htmlFor={`${id}-option`}>
+      <label className="tabs__label" htmlFor={`${id}-option`} onClick={onActivate}>
         {label}
       </label>
       {renderContent()}
