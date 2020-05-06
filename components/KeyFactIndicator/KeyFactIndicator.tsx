@@ -107,7 +107,8 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
           dataOptions={{
             indicators: [indicator.ddw_id],
             geocodes: [location.geocode],
-            startYear: indicator.start_year || indicator.end_year
+            startYear: indicator.start_year || indicator.end_year,
+            endYear: indicator.end_year || indicator.start_year
           }}
           valueOptions={{
             location,
