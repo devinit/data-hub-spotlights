@@ -18,16 +18,12 @@ const getFieldValue = (data: LocationDataIndex, field: string): string | number 
   return value || null;
 };
 
-const extractDataByField = (data: LocationDataIndex[], field: string): string[] => {
-  return data.reduce((prev: string[], curr) => {
+const extractDataByField = (data: LocationDataIndex[], field: string, allowDuplicates = false): string[] =>
+  data.reduce((prev: string[], curr) => {
     const value = getFieldValue(curr, field);
-    if (value && prev.indexOf(`${value}`) === -1) {
-      return prev.concat([`${value}`]);
-    }
 
-    return prev;
+    return allowDuplicates || (value && prev.indexOf(`${value}`) === -1) ? prev.concat([`${value}`]) : prev;
   }, []);
-};
 
 const getLegendOptions = (
   data: LocationData[],
@@ -57,7 +53,7 @@ const getBasicSeriesOptions = (
   series: (EChartOption.SeriesLine | EChartOption.SeriesBar)[]
 ): (EChartOption.SeriesLine | EChartOption.SeriesBar)[] => {
   fields.forEach((field, index) => {
-    const yAxisData = extractDataByField(data as any, field);
+    const yAxisData = extractDataByField(data as any, field, true); // eslint-disable-line @typescript-eslint/no-explicit-any
     if (series[index]) {
       const _series = series[index];
       _series.data = yAxisData;
@@ -140,7 +136,8 @@ export const generateChartOptions = (configs: IndicatorChart, data: LocationIndi
       options.grid = options.grid || { bottom: 20, top: 40, right: 0, left: 40 };
 
       return { ...options, ...createBarLineOptions(data[0].data, bar, options, configs.aggregation) };
-    } else if (line) {
+    }
+    if (line) {
       options.grid = options.grid || { bottom: 20, top: 40, right: 20, left: 40 };
 
       return { ...options, ...createBarLineOptions(data[0].data, line, options, configs.aggregation) };
