@@ -11,8 +11,10 @@ export interface LayerConfig {
   maxZoom?: number;
   nameProperty: string; // the data property on the layer that corresponds to the location's name
   codeProperty: string; // the data property on the layer that corresponds to the location's code,
-  formatter?: (value: string, target?: 'map' | 'boundary') => string | number; // when there's a mismatch between API data & map data, this aligns them
+  formatter?: (value: string, target?: FormatterTarget) => string | number; // when there's a mismatch between API data & map data, this aligns them
 }
+
+export type FormatterTarget = 'map' | 'boundary' | 'tooltip';
 
 interface MapConfig {
   layers: LayerConfig[];
@@ -32,7 +34,20 @@ export const config: { [key: string]: MapConfig } = {
         maxZoom: 8,
         nameProperty: 'DName2019',
         codeProperty: 'dc2018',
-        formatter: (value: string): string => value.toUpperCase()
+        formatter: (value, target = 'map'): string => {
+          if (target === 'map') {
+            if (value.toLowerCase() === 'sembabule') {
+              return 'SSEMBABULE';
+            }
+          }
+          if (target === 'tooltip') {
+            if (value.toLowerCase() === 'ssembabule') {
+              return 'SEMBABULE';
+            }
+          }
+
+          return value.toUpperCase();
+        }
       }
     ]
   },
@@ -58,7 +73,7 @@ export const config: { [key: string]: MapConfig } = {
               return 'Tharaka-Nithi';
             }
           }
-          if (target === 'boundary') {
+          if (target === 'tooltip' || target === 'boundary') {
             if (value.toLowerCase() === 'trans nzoia') {
               return 'Trans-Nzoia';
             }
