@@ -1,5 +1,5 @@
 import { EChartOption } from 'echarts';
-import { Aggregation, IndicatorChart, LocationData, LocationIndicatorData, BarLineOptions } from '../../../utils';
+import { Aggregation, BarLineOptions, IndicatorChart, LocationData, LocationIndicatorData } from '../../../utils';
 import { toBasicAxisData } from '../../EChartsBaseChart/utils';
 
 type LocationDataIndex = { [key: string]: string | number };
@@ -40,7 +40,7 @@ const getXAxisOptions = (
   field: string,
   defaultOptions?: EChartOption.XAxis
 ): EChartOption.XAxis => {
-  const xAxisData = extractDataByField(data as any, field);
+  const xAxisData = extractDataByField(data as any, field); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return defaultOptions
     ? { ...defaultOptions, data: toBasicAxisData(xAxisData) }
@@ -53,7 +53,7 @@ const getBasicSeriesOptions = (
   series: (EChartOption.SeriesLine | EChartOption.SeriesBar)[]
 ): (EChartOption.SeriesLine | EChartOption.SeriesBar)[] => {
   fields.forEach((field, index) => {
-    const yAxisData = extractDataByField(data as any, field, true); // eslint-disable-line @typescript-eslint/no-explicit-any
+    const yAxisData = extractDataByField(data as any, field, true).map(_data => parseFloat(_data).toFixed(1)); // eslint-disable-line @typescript-eslint/no-explicit-any
     if (series[index]) {
       const _series = series[index];
       _series.data = yAxisData;
