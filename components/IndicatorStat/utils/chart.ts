@@ -30,7 +30,7 @@ const getLegendOptions = (
   field: string,
   defaultOptions?: EChartOption.Legend
 ): EChartOption.Legend => {
-  const legendData = extractDataByField(data as any, field);
+  const legendData = extractDataByField(data as any, field); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return defaultOptions ? { ...defaultOptions, data: legendData } : { show: true, data: legendData };
 };
@@ -74,7 +74,7 @@ const getAggregatedSeriesOptions = (
   if (aggregation === 'PERCENT') {
     data.forEach(_data => {
       const values = fields.reduce((prev: number[], curr) => {
-        const value = getFieldValue(_data as any, curr);
+        const value = getFieldValue(_data as any, curr); // eslint-disable-line @typescript-eslint/no-explicit-any
 
         return prev.concat([parseFloat(`${value || 0}`)]);
       }, []);
@@ -84,7 +84,7 @@ const getAggregatedSeriesOptions = (
         if (series[index]) {
           const _series = series[index];
           if (_series.data) {
-            _series.data.push(percentage as any);
+            _series.data.push(percentage as any); // eslint-disable-line @typescript-eslint/no-explicit-any
           } else {
             _series.data = [percentage];
           }
