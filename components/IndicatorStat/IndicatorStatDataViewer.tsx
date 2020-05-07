@@ -1,13 +1,12 @@
 import React, { FunctionComponent, ReactText } from 'react';
 import { ContentNote } from '../../utils';
-import { Icon } from '../Icon';
+import { SpotlightPopup } from '../SpotlightPopup';
 
 interface IndicatorStatDataProps {
   note?: ContentNote;
   value?: ReactText;
 }
 
-// TODO: implement proper tooltip handling
 const IndicatorStatDataViewer: FunctionComponent<IndicatorStatDataProps> = ({ value, note }) => {
   return (
     <p className="spotlight__stat-data">
@@ -15,11 +14,12 @@ const IndicatorStatDataViewer: FunctionComponent<IndicatorStatDataProps> = ({ va
       {note && note.content ? (
         <span className="spotlight__stat-data__note">
           {note.content}{' '}
-          {note.meta ? (
-            <span className="spotlight__stat-icon">
-              <Icon name="info-slate" className="ico--12" />
-            </span>
-          ) : null}
+          {note.meta ? <SpotlightPopup description={note.meta.description} source={note.meta.source} /> : null}
+          <style jsx>{`
+            transform: none;
+            position: relative;
+            top: -10px;
+          `}</style>
         </span>
       ) : null}
     </p>

@@ -15,17 +15,19 @@ const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = props => {
     });
   };
   const popUpContentStyles = {
-    maxWidth: '250px',
+    zIndex: 200,
+    width: '350px',
     background: '#fff',
     fontWeight: 400,
     fontStyle: 'normal',
     fontSize: '12px',
     color: '#60575d',
+    border: 0,
     borderRadius: '0.28571429rem',
     boxShadow: '0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15)'
   };
   const customArrowStyle = {
-    left: '175px'
+    left: '155px'
   };
 
   return (
@@ -36,15 +38,19 @@ const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = props => {
           <style jsx>{`
             .spotlight__stat-icon {
               display: inline-block;
-              margin-left: 10px;
+              margin-left: 2px;
               cursor: pointer;
+            }
+
+            .spotlight__stat-icon i {
+              top: -1px;
             }
           `}</style>
         </span>
       }
       offsetX={20}
       arrowStyle={customArrowStyle}
-      position="top right"
+      position="bottom center"
       closeOnDocumentClick
       contentStyle={popUpContentStyles}
     >

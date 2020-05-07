@@ -18,6 +18,15 @@ exports[`IndicatorStatDataViewer renders a value and a note correctly 1`] = `
   >
     My Note
      
+    <style
+      jsx={true}
+    >
+      
+            transform: none;
+            position: relative;
+            top: -10px;
+          
+    </style>
   </span>
 </p>
 `;

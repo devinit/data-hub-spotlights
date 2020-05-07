@@ -9,7 +9,7 @@ interface IndicatorStatChartProps {
 const IndicatorStatChart: FunctionComponent<IndicatorStatChartProps> = ({ options }) => {
   return (
     <div>
-      <EChartsBaseChart options={options} width="240px" height="230px" />
+      <EChartsBaseChart options={options} width="100%" height="230px" />
       <style jsx>{`
         position: relative;
         min-height: 250px;

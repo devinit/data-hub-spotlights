@@ -1,5 +1,5 @@
 import { EChartOption } from 'echarts';
-import { Aggregation, IndicatorChart, LocationData, LocationIndicatorData, BarLineOptions } from '../../../utils';
+import { Aggregation, BarLineOptions, IndicatorChart, LocationData, LocationIndicatorData } from '../../../utils';
 import { toBasicAxisData } from '../../EChartsBaseChart/utils';
 
 type LocationDataIndex = { [key: string]: string | number };
@@ -18,23 +18,19 @@ const getFieldValue = (data: LocationDataIndex, field: string): string | number 
   return value || null;
 };
 
-const extractDataByField = (data: LocationDataIndex[], field: string): string[] => {
-  return data.reduce((prev: string[], curr) => {
+const extractDataByField = (data: LocationDataIndex[], field: string, allowDuplicates = false): string[] =>
+  data.reduce((prev: string[], curr) => {
     const value = getFieldValue(curr, field);
-    if (value && prev.indexOf(`${value}`) === -1) {
-      return prev.concat([`${value}`]);
-    }
 
-    return prev;
+    return allowDuplicates || (value && prev.indexOf(`${value}`) === -1) ? prev.concat([`${value}`]) : prev;
   }, []);
-};
 
 const getLegendOptions = (
   data: LocationData[],
   field: string,
   defaultOptions?: EChartOption.Legend
 ): EChartOption.Legend => {
-  const legendData = extractDataByField(data as any, field);
+  const legendData = extractDataByField(data as any, field); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return defaultOptions ? { ...defaultOptions, data: legendData } : { show: true, data: legendData };
 };
@@ -44,7 +40,7 @@ const getXAxisOptions = (
   field: string,
   defaultOptions?: EChartOption.XAxis
 ): EChartOption.XAxis => {
-  const xAxisData = extractDataByField(data as any, field);
+  const xAxisData = extractDataByField(data as any, field); // eslint-disable-line @typescript-eslint/no-explicit-any
 
   return defaultOptions
     ? { ...defaultOptions, data: toBasicAxisData(xAxisData) }
@@ -57,7 +53,7 @@ const getBasicSeriesOptions = (
   series: (EChartOption.SeriesLine | EChartOption.SeriesBar)[]
 ): (EChartOption.SeriesLine | EChartOption.SeriesBar)[] => {
   fields.forEach((field, index) => {
-    const yAxisData = extractDataByField(data as any, field);
+    const yAxisData = extractDataByField(data as any, field, true).map(_data => parseFloat(_data).toFixed(1)); // eslint-disable-line @typescript-eslint/no-explicit-any
     if (series[index]) {
       const _series = series[index];
       _series.data = yAxisData;
@@ -78,7 +74,7 @@ const getAggregatedSeriesOptions = (
   if (aggregation === 'PERCENT') {
     data.forEach(_data => {
       const values = fields.reduce((prev: number[], curr) => {
-        const value = getFieldValue(_data as any, curr);
+        const value = getFieldValue(_data as any, curr); // eslint-disable-line @typescript-eslint/no-explicit-any
 
         return prev.concat([parseFloat(`${value || 0}`)]);
       }, []);
@@ -88,7 +84,7 @@ const getAggregatedSeriesOptions = (
         if (series[index]) {
           const _series = series[index];
           if (_series.data) {
-            _series.data.push(percentage as any);
+            _series.data.push(percentage as any); // eslint-disable-line @typescript-eslint/no-explicit-any
           } else {
             _series.data = [percentage];
           }
@@ -140,7 +136,8 @@ export const generateChartOptions = (configs: IndicatorChart, data: LocationIndi
       options.grid = options.grid || { bottom: 20, top: 40, right: 0, left: 40 };
 
       return { ...options, ...createBarLineOptions(data[0].data, bar, options, configs.aggregation) };
-    } else if (line) {
+    }
+    if (line) {
       options.grid = options.grid || { bottom: 20, top: 40, right: 20, left: 40 };
 
       return { ...options, ...createBarLineOptions(data[0].data, line, options, configs.aggregation) };

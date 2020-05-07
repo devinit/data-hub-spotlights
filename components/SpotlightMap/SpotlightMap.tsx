@@ -101,12 +101,10 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
 
       if (!loading && location && data) {
         timeoutID = setTimeout(() => {
-          renderTooltipFromLocation(
-            map,
-            location?.name as string,
-            options,
-            getTooltipOptions(popup, locationData, props, options)
-          );
+          const locationName = options.formatter
+            ? (options.formatter(location?.name as string, 'tooltip') as string)
+            : (location?.name as string);
+          renderTooltipFromLocation(map, locationName, options, getTooltipOptions(popup, locationData, props, options));
         }, 1000);
       }
 

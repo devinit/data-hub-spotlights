@@ -88,24 +88,22 @@ const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): n
 
       return sum / data.length;
     }
-    if (options.aggregation === 'POSN ASC' && options.location) {
-      const position = data
-        .sort((a, b) => a.value - b.value)
-        .findIndex(d =>
-          d.geocode && options.location?.geocode ? options.location?.geocode.includes(d.geocode) : false
-        );
+    if ((options.aggregation === 'POSN ASC' || options.aggregation === 'POSN DESC') && options.location) {
+      const value = data.find(d =>
+        d.geocode && options.location?.geocode ? options.location?.geocode.includes(d.geocode) : false
+      );
+      if (value) {
+        const orderedData = data
+          .map(d => d.value)
+          .sort((a, b) => a - b)
+          .reduce<number[]>((prev, curr) => (prev.indexOf(curr) > -1 ? prev : prev.concat(curr)), []);
+        const position =
+          options.aggregation === 'POSN ASC'
+            ? orderedData.findIndex(d => d === value.value)
+            : orderedData.reverse().findIndex(d => d === value.value);
 
-      return position > -1 ? position : data;
-    }
-    if (options.aggregation === 'POSN DESC' && options.location) {
-      const position = data
-        .sort((a, b) => a.value - b.value)
-        .reverse()
-        .findIndex(d =>
-          d.geocode && options.location?.geocode ? options.location?.geocode.includes(d.geocode) : false
-        );
-
-      return position > -1 ? position : data;
+        return position > -1 ? position : data;
+      }
     }
   }
 

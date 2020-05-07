@@ -3,7 +3,15 @@
 exports[`TabContent renders correctly 1`] = `
 <article
   className="tabs__content"
-/>
+>
+  <style
+    jsx={true}
+  >
+    
+        z-index: 200;
+      
+  </style>
+</article>
 `;
 
 exports[`TabContent renders with children 1`] = `
@@ -13,5 +21,12 @@ exports[`TabContent renders with children 1`] = `
   <div>
     My Child
   </div>
+  <style
+    jsx={true}
+  >
+    
+        z-index: 200;
+      
+  </style>
 </article>
 `;

@@ -40,18 +40,18 @@ const SpotlightPopupContent: FunctionComponent<SpotlightPopupContentProps> = ({ 
           cursor: pointer;
           position: absolute;
           display: block;
-          padding: 10px 10px;
+          padding: 5px 10px;
           line-height: 20px;
           right: 0px;
           top: 0px;
-          font-size: 26px;
+          font-size: 20px;
           background: transparent;
           color: #333131;
           font-weight: 900;
         }
         .spotlight-modal > .content {
           width: 100%;
-          padding: 35px 14px 5px 14px;
+          padding: 20px 5px 5px 5px;
         }
         .content > .description {
           font-size: 14px;

@@ -2,7 +2,7 @@ import center from '@turf/center';
 import { Feature, featureCollection, point, Point, Position, Properties } from '@turf/helpers';
 import { LngLat, Map, MapboxGeoJSONFeature, MapMouseEvent, Popup } from 'mapbox-gl';
 import { formatNumber, LocationData } from '../../../utils';
-import { LayerConfig } from './config';
+import { FormatterTarget, LayerConfig } from './config';
 
 type LocationStyle = [string | number, string];
 
@@ -53,7 +53,7 @@ export interface TooltipOptions {
   data: LocationData[];
   dataPrefix?: string;
   dataSuffix?: string;
-  formatter?: (value: string, target?: 'map' | 'boundary') => string | number;
+  formatter?: (value: string, target?: FormatterTarget) => string | number;
 }
 
 export type TooltipEvent = MapMouseEvent & { features?: MapboxGeoJSONFeature[] };
@@ -169,7 +169,7 @@ export const renderTooltipFromEvent = (map: Map, event: TooltipEvent, options: T
   const { popup, nameProperty, formatter, data } = options;
   const locationName = getLocationNameFromEvent(event, nameProperty);
   if (locationName) {
-    const boundaryName = formatter ? (formatter(locationName, 'boundary') as string) : locationName;
+    const boundaryName = formatter ? (formatter(locationName, 'tooltip') as string) : locationName;
     const location = findLocationData(boundaryName, data);
     renderPopup(map, popup, event.lngLat, boundaryName, getTooltipValue(options, location));
   }

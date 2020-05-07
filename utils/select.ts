@@ -110,15 +110,16 @@ export const getDefaultsFromQuery = (themes: SpotlightTheme[], query: ParsedUrlQ
     ...defaultSelectOptions,
     themes: createThemeOptions(themes)
   };
-  const themeSlug = Array.isArray(query[THEME_QUERY]) ? query[THEME_QUERY][0] : (query[THEME_QUERY] as string);
+  const themeQuery = query[THEME_QUERY];
+  const themeSlug = Array.isArray(themeQuery) ? themeQuery[0] : (themeQuery as string);
   const defaultTheme = themes.find(theme => theme.slug === themeSlug);
   if (defaultTheme) {
-    const indicatorSlug = Array.isArray(query[INDICATOR_QUERY])
-      ? query[INDICATOR_QUERY][0]
-      : (query[INDICATOR_QUERY] as string);
+    const indicatorQuery = query[INDICATOR_QUERY];
+    const indicatorSlug = Array.isArray(indicatorQuery) ? indicatorQuery[0] : (indicatorQuery as string);
 
+    const yearQuery = query[YEAR_QUERY];
     const themeDefaults = getThemeDefaultsBySlug(defaultTheme, defaultOptions, indicatorSlug);
-    const year = Array.isArray(query[YEAR_QUERY]) ? query[YEAR_QUERY][0] : (query[YEAR_QUERY] as string);
+    const year = Array.isArray(yearQuery) ? yearQuery[0] : (yearQuery as string);
     themeDefaults.selected.year = year ? parseInt(year) : themeDefaults.selected.year;
 
     return themeDefaults;
