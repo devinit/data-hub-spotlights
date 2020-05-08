@@ -41,7 +41,7 @@ export const createYearOptionsFromRange = (startYear = 0, endYear = 0, excludedY
     }
   }
 
-  return options;
+  return options.reverse();
 };
 
 export const createYearOptionsFromIndicator = ({
