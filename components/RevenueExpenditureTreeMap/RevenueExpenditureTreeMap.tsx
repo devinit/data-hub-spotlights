@@ -58,7 +58,7 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
             const { name, treePathInfo, value } = info as any; // eslint-disable-line @typescript-eslint/no-explicit-any
             const percentage = `${formatNumber((value / treePathInfo[0].value) * 100, 1)}%`;
 
-            return `${name} - ${percentage} | ${addPrefixAndSuffix(formatNumber(value, 1), valueOptions)}`;
+            return `${toCamelCase(name)} - ${percentage} | ${addPrefixAndSuffix(formatNumber(value, 1), valueOptions)}`;
           }
         },
         breadcrumb: {
@@ -75,11 +75,11 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
             const percentage = `${formatNumber((value / treePathInfo[0].value) * 100, 1)}%`;
 
             return !data.children || data.children.length === 0
-              ? `${name || ''}\n{a|${percentage} | ${addPrefixAndSuffix(
+              ? `${toCamelCase(name || '')}\n{a|${percentage} | ${addPrefixAndSuffix(
                   formatNumber(value as number, 1),
                   valueOptions
                 )}}`
-              : `${name || ''}\n    {a|${percentage} | ${addPrefixAndSuffix(
+              : `${toCamelCase(name || '')}\n    {a|${percentage} | ${addPrefixAndSuffix(
                   formatNumber(value as number, 1),
                   valueOptions
                 )}}`;

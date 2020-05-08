@@ -13,6 +13,9 @@ export const processTemplateString = (text: string, values: TemplateOptions): st
 };
 
 export const toCamelCase = (text: string): string => {
+  if (!text) {
+    return text;
+  }
   if (text.includes('-')) {
     const textArray = text.toLowerCase().split('-');
 
