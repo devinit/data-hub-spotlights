@@ -59,7 +59,7 @@ export interface TooltipOptions {
 export type TooltipEvent = MapMouseEvent & { features?: MapboxGeoJSONFeature[] };
 
 const getTooltipValue = (options: TooltipOptions, location?: LocationData): string =>
-  location && location.value
+  location && typeof location.value === 'number'
     ? `${options.dataPrefix || ''}<span style="font-size: 1em; font-weight: 700; color:#EA7600">${formatNumber(
         location.value
       )}</span>${options.dataSuffix || ''}`
