@@ -25,7 +25,7 @@ type REConfig = RevenueExpenditureConfig;
 
 export const processRevenueExpenditureData = (data: LocationData[], configs?: REConfig): RevenueExpenditureData[] => {
   const processedData = data
-    .filter(_data => _data.value)
+    .filter(_data => typeof _data.value === 'number')
     .map(_data => ({
       year: _data.year,
       value: _data.value,

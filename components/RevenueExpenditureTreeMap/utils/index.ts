@@ -56,34 +56,39 @@ export const createDataTreeByIndex = (
 export const createDataTreeByAggregation = (
   data: RevenueExpenditureData[],
   rootLevel: string,
-  index = 0,
   useLocalCurrency = false
-): TreemapDataObject => {
-  const node = data.reduce(
-    (previous: TreemapDataObject, current) => {
-      const child = current.levels[index + 1];
-      const exists = previous.children?.find(_child => _child.name === child);
-      if (current.levels[index] === rootLevel && child && !exists) {
-        // is it the last child?
-        if (current.levels.indexOf(child) === current.levels.length - 1) {
-          previous.children?.push({
-            name: child,
-            value: useLocalCurrency ? current.valueLocalCurrency : current.value,
-            children: []
-          });
-        } else {
-          previous.children?.push(createDataTreeByAggregation(data, child, index + 1, useLocalCurrency));
-        }
-      }
+): TreemapDataObject[] => {
+  /**
+   * 1. Get current root level
+   * 2. Get index of the current root level from any of the levels e.g. data[0].levels
+   * 3. Get all data that has the root level in their tree, at that index, with that parent
+   * 4. For each of the above, build their trees by going through steps 1-3, with each as the root level
+   * 5. For each completed tree, aggregate their values to get the value of the root level
+   */
+  if (data && data.length) {
+    const index = data[0].levels.indexOf(rootLevel);
+    if (index !== data[0].levels.length - 1) {
+      const childrenNames = data
+        .filter(child => child.levels.indexOf(rootLevel) === index)
+        .reduce((prev: string[], curr) => {
+          const childLevel = curr.levels[index + 1];
 
-      return previous;
-    },
-    { name: rootLevel, children: [] }
-  );
-  // calculate node value by aggregation (SUM)
-  node.value = node.children?.reduce((prev, curr) => prev + ((curr.value as number) || 0), 0);
+          return prev.includes(childLevel) ? prev : prev.concat(childLevel);
+        }, []);
 
-  return node;
+      return childrenNames.map(child => {
+        const childData = data.filter(_data => _data.levels[index + 1] === child);
+
+        return {
+          name: child,
+          value: childData.reduce((prev, curr) => prev + (useLocalCurrency ? curr.valueLocalCurrency : curr.value), 0),
+          children: createDataTreeByAggregation(childData, child, useLocalCurrency)
+        };
+      });
+    }
+  }
+
+  return [];
 };
 
 export const getSeriesData = (
@@ -97,7 +102,15 @@ export const getSeriesData = (
       return createDataTreeByIndex(data, rootLevel[0], 0, useLocalCurrency);
     }
     if (config) {
-      return [createDataTreeByAggregation(data, config.root, 0, useLocalCurrency)];
+      const children = createDataTreeByAggregation(data, config.root, useLocalCurrency);
+
+      return [
+        {
+          name: config.root,
+          value: children.reduce((prev, curr) => prev + (curr.value as number), 0),
+          children
+        }
+      ];
     } else {
       console.log('Configure root in CMS');
     }
