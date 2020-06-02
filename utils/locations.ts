@@ -79,4 +79,4 @@ export const findBoundaryByName = (
 };
 
 export const getBasePathFromContext = (): string =>
-  process.env.NODE_ENV === 'production' ? '/data/spotlight-on-kenya-and-uganda/' : '/spotlight/';
+  process.env.NODE_ENV === 'production' ? '/data/spotlights-on-kenya-and-uganda/' : '/spotlight/';
