@@ -22,7 +22,7 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightPageProps> => {
   const { slug, topic } = context.query;
 
   if (context.res) {
-    (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}/?t=${topic}`);
+    (context.res as Response).redirect(`${getBasePathFromContext()}${slug}/?t=${topic}`);
   }
 
   return { slug: slug as string, topic: topic as string };

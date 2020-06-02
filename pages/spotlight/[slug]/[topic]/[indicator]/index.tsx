@@ -28,13 +28,13 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightPageProps> => {
       const matchingIndicator = matchingTopic.indicators.find(_indicator => _indicator.slug === indicator);
       if (matchingIndicator) {
         (context.res as Response).redirect(
-          `${getBasePathFromContext(context)}${slug}/?t=${topic}&i=${matchingIndicator.ddw_id}`
+          `${getBasePathFromContext()}${slug}/?t=${topic}&i=${matchingIndicator.ddw_id}`
         );
       } else {
-        (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}/?t=${topic}`);
+        (context.res as Response).redirect(`${getBasePathFromContext()}${slug}/?t=${topic}`);
       }
     } else {
-      (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}`);
+      (context.res as Response).redirect(`${getBasePathFromContext()}${slug}`);
     }
   }
 

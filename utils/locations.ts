@@ -1,9 +1,8 @@
+import { sortBy as _sortBy } from 'underscore';
 import { SelectOption, SelectOptions } from '../components/Select';
 import { getLocationIDFromGeoCode } from '../components/SpotlightMap/utils';
 import { SpotlightLocation } from './data';
 import { toCamelCase } from './strings';
-import { sortBy as _sortBy } from 'underscore';
-import { NextPageContext } from 'next';
 
 export interface SpotlightBoundary extends SpotlightLocation {
   code: string;
@@ -79,5 +78,5 @@ export const findBoundaryByName = (
   return boundary;
 };
 
-export const getBasePathFromContext = (context: NextPageContext): string =>
-  context.asPath?.includes('spotlight-on-kenya-and-uganda') ? '/data/spotlight-on-kenya-and-uganda/' : '/spotlight/';
+export const getBasePathFromContext = (): string =>
+  process.env.NODE_ENV === 'production' ? '/data/spotlight-on-kenya-and-uganda/' : '/spotlight/';
