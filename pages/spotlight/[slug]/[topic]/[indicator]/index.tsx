@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { NextPage } from 'next';
 import React from 'react';
 import { PageSection } from '../../../../../components/PageSection';
-import { fetchSpotlightPage } from '../../../../../utils';
+import { fetchSpotlightPage, getBasePathFromContext } from '../../../../../utils';
 
 interface SpotlightPageProps {
   slug: string;
@@ -27,12 +27,14 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightPageProps> => {
     if (matchingTopic) {
       const matchingIndicator = matchingTopic.indicators.find(_indicator => _indicator.slug === indicator);
       if (matchingIndicator) {
-        (context.res as Response).redirect(`/spotlight/${slug}/?t=${topic}&i=${matchingIndicator.ddw_id}`);
+        (context.res as Response).redirect(
+          `${getBasePathFromContext(context)}${slug}/?t=${topic}&i=${matchingIndicator.ddw_id}`
+        );
       } else {
-        (context.res as Response).redirect(`/spotlight/${slug}/?t=${topic}`);
+        (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}/?t=${topic}`);
       }
     } else {
-      (context.res as Response).redirect(`/spotlight/${slug}`);
+      (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}`);
     }
   }
 

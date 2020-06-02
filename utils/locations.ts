@@ -3,6 +3,7 @@ import { getLocationIDFromGeoCode } from '../components/SpotlightMap/utils';
 import { SpotlightLocation } from './data';
 import { toCamelCase } from './strings';
 import { sortBy as _sortBy } from 'underscore';
+import { NextPageContext } from 'next';
 
 export interface SpotlightBoundary extends SpotlightLocation {
   code: string;
@@ -77,3 +78,6 @@ export const findBoundaryByName = (
 
   return boundary;
 };
+
+export const getBasePathFromContext = (context: NextPageContext): string =>
+  context.asPath?.includes('spotlight-on-kenya-and-uganda') ? '/data/spotlight-on-kenya-and-uganda/' : '/spotlight/';

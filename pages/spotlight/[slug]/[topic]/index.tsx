@@ -2,6 +2,7 @@ import { Response } from 'express';
 import { NextPage } from 'next';
 import React from 'react';
 import { PageSection } from '../../../../components/PageSection';
+import { getBasePathFromContext } from '../../../../utils';
 
 interface SpotlightPageProps {
   slug: string;
@@ -21,7 +22,7 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightPageProps> => {
   const { slug, topic } = context.query;
 
   if (context.res) {
-    (context.res as Response).redirect(`/spotlight/${slug}/?t=${topic}`);
+    (context.res as Response).redirect(`${getBasePathFromContext(context)}${slug}/?t=${topic}`);
   }
 
   return { slug: slug as string, topic: topic as string };
