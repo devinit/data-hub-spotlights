@@ -9,6 +9,7 @@ import next from 'next';
 const PORT = 3000;
 const HOST = process.env.HOST || 'localhost';
 const dev = process.env.NODE_ENV !== 'production';
+const ROOT = process.env.SPOTLIGHTS_ROOT_PAGE || 'https://devinit.org/data/';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
@@ -16,7 +17,7 @@ app
   .prepare()
   .then(() => {
     const server = express();
-    server.get('/', (_req, res) => res.redirect('https://devinit.org/data/spotlights-on-kenya-and-uganda')); // TODO: change this to the country spotlights page
+    server.get('/', (_req, res) => res.redirect(ROOT)); // TODO: change this to the country spotlights page
     server.get('/bitly', (req, res) => {
       const longUrl = req.url.split('longUrl=')[1];
       if (longUrl) {
