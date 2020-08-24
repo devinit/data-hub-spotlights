@@ -16,7 +16,7 @@ export * from './types';
 export const parseIndicator = (indicator: SpotlightIndicator): string | undefined => {
   const split = indicator.ddw_id.split('.');
 
-  return split.length ? split[1] : split[0];
+  return split.length > 1 ? split[1] : split[0];
 };
 export const splitByComma = (text?: string): string[] => (text ? text.split(',') : []);
 export const generateColours = (colours: string[], range: string[]): string[] => {
