@@ -102,13 +102,13 @@ const DDWDataLoader: FunctionComponent<DataLoaderProps & { boundaries: Spotlight
   if (props.onLoad && !loading && data) {
     props.onLoad(data.data);
   }
-  if (data) {
+  if (data && boundaries) {
     const updatedData = alignDataToBoundaries(data.data, boundaries, startYear || props.endYear);
 
     return <>{renderChildren(loading, updatedData)}</>;
   }
 
-  return <>{renderChildren(loading)}</>;
+  return <>{renderChildren(loading, data && data.data)}</>;
 };
 
 DDWDataLoader.defaultProps = { limit: 100 };
