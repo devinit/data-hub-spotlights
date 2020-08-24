@@ -8,7 +8,9 @@ export interface SpotlightBoundary extends SpotlightLocation {
   code: string;
   geocode: string;
   name: string;
+  created?: string;
   children: SpotlightBoundary[];
+  parent?: string;
 }
 
 export const getBoundariesByCountryCode = async (countryCode: string): Promise<SpotlightBoundary[]> =>

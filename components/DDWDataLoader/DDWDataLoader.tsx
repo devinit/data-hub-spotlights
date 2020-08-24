@@ -1,7 +1,23 @@
 import { useQuery } from '@apollo/client';
-import React, { Children, cloneElement, FunctionComponent, isValidElement, ReactNode } from 'react';
-import { DataFilter, GET_INDICATOR_DATA, LocationIndicatorData } from '../../utils';
+import React, {
+  Children,
+  cloneElement,
+  FunctionComponent,
+  isValidElement,
+  ReactNode,
+  useEffect,
+  useState
+} from 'react';
+import {
+  DataFilter,
+  getBoundariesByDepth,
+  GET_INDICATOR_DATA,
+  LocationIndicatorData,
+  SpotlightBoundary,
+  toCamelCase
+} from '../../utils';
 import { Alert } from '../Alert';
+import { getLocationIDFromGeoCode } from '../SpotlightMap/utils';
 
 export interface DataLoaderProps {
   indicators?: string[];
@@ -13,7 +29,48 @@ export interface DataLoaderProps {
   onLoad?: (data: LocationIndicatorData[]) => void;
 }
 
-const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocodes, startYear, limit, ...props }) => {
+const alignDataToBoundaries = (
+  data: LocationIndicatorData[],
+  boundaries: SpotlightBoundary[],
+  year?: number
+): LocationIndicatorData[] => {
+  return data.map(indicator => {
+    const indicatorData = indicator.data.slice();
+    if (indicatorData.length < boundaries.length) {
+      const missingLocations = boundaries.filter(boundary => {
+        const missing = !indicatorData.find(d => boundary.geocode.includes(d.geocode));
+
+        return year && missing ? missing && parseInt(boundary.created || '0') > year : missing;
+      });
+
+      missingLocations
+        .filter(d => d.parent)
+        .forEach(boundary => {
+          const parent = indicatorData.find(d => boundary.parent?.includes(d.geocode));
+          if (parent) {
+            const location = {
+              ...parent,
+              geocode: getLocationIDFromGeoCode(boundary.geocode, '.'),
+              name: toCamelCase(boundary.name)
+            };
+
+            indicatorData.push(location);
+          }
+        });
+    }
+
+    return { ...indicator, data: indicatorData };
+  });
+};
+
+const DDWDataLoader: FunctionComponent<DataLoaderProps & { boundaries: SpotlightBoundary[] }> = ({
+  indicators,
+  geocodes,
+  startYear,
+  limit,
+  ...props
+}) => {
+  const [boundaries, setBoundaries] = useState(props.boundaries);
   const renderChildren = (dataLoading: boolean, data?: LocationIndicatorData[]): ReactNode =>
     Children.map(props.children, (child) =>
       isValidElement(child) ? cloneElement(child, { data, dataLoading }) : null
@@ -22,6 +79,10 @@ const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocode
   if (!indicators || !indicators.length) {
     return <>{renderChildren(false)}</>;
   }
+  useEffect(() => {
+    const districts = getBoundariesByDepth(props.boundaries, 'd');
+    setBoundaries(districts);
+  }, [props.boundaries]);
 
   const { data, loading, error } = useQuery<{ data: LocationIndicatorData[] }>(GET_INDICATOR_DATA, {
     variables: {
@@ -41,8 +102,13 @@ const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocode
   if (props.onLoad && !loading && data) {
     props.onLoad(data.data);
   }
+  if (data) {
+    const updatedData = alignDataToBoundaries(data.data, boundaries, startYear || props.endYear);
 
-  return <>{renderChildren(loading, data && data.data)}</>;
+    return <>{renderChildren(loading, updatedData)}</>;
+  }
+
+  return <>{renderChildren(loading)}</>;
 };
 
 DDWDataLoader.defaultProps = { limit: 100 };

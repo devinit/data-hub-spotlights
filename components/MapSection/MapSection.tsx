@@ -162,6 +162,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
             ) : null}
             <ErrorBoundary>
               <DynamicMapDataLoader
+                boundaries={boundaries}
                 indicators={indicatorID ? [indicatorID] : undefined}
                 geocodes={activeLocation && [activeLocation.geocode]}
                 startYear={options.year ? options.year : options.indicator && options.indicator.start_year}
