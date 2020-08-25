@@ -61,7 +61,7 @@
     "@types/mapbox-gl": "^1.7.0",
     "@types/node": "^13.7.1",
     "@types/node-fetch": "^2.5.4",
-    "@types/react": "^16.9.19",
+    "@types/react": "^16.9.47",
     "@types/react-modal": "^3.10.5",
     "@types/react-resize-detector": "^4.2.0",
     "@types/react-select": "^3.0.10",
