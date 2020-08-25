@@ -28,7 +28,7 @@ const Hero: FunctionComponent<HeroProps> = ({ children, excerpt, title }) => {
             </p>
           ) : null}
         </div>
-        {Children.map(children, child => (isValidElement(child) && child.type === HeroAside ? child : null))}
+        {Children.map(children, (child) => (isValidElement(child) && child.type === HeroAside ? child : null))}
       </div>
     </section>
   );

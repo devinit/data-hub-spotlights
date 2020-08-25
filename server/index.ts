@@ -1,4 +1,4 @@
-// tslint:disable no-console
+/** eslint-disable no-console **/
 import { config } from 'dotenv';
 config();
 import { BitlyClient } from 'bitly';
@@ -26,8 +26,8 @@ app
 
           return bitly
             .shorten(longUrl.replace('localhost', '127.0.0.1'))
-            .then(shortUrl => res.json({ code: 200, shortUrl }))
-            .catch(error => res.json({ code: 401, error: error.message }));
+            .then((shortUrl) => res.json({ code: 200, shortUrl }))
+            .catch((error) => res.json({ code: 401, error: error.message }));
         } else {
           return res.json({ code: 401, error: 'BITLY_API_KEY is missing' });
         }
@@ -42,7 +42,7 @@ app
       return handle(req, res, parsedUrl);
     });
 
-    server.listen(PORT, err => {
+    server.listen(PORT, (err) => {
       if (err) {
         if (err.code === 'EADDRINUSE') {
           console.log('Address in use, retrying...');
@@ -56,7 +56,7 @@ app
       }
     });
   })
-  .catch(ex => {
+  .catch((ex) => {
     console.error(ex.stack);
     process.exit(1);
   });

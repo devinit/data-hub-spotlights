@@ -23,6 +23,6 @@ export const addGTMEvent = (
     budgetType,
     currency,
     year,
-    country
+    country,
   });
 };

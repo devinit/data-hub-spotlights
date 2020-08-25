@@ -12,13 +12,13 @@ const items: NavigationItemProps[] = [
   {
     title: 'Nav 1',
     url: 'https://localhost:3000/nav-1',
-    active: false
+    active: false,
   },
   {
     title: 'Nav 2',
     url: 'https://localhost:3000/nav-2',
-    active: true
-  }
+    active: true,
+  },
 ];
 
 describe('SecondaryNavigation', () => {

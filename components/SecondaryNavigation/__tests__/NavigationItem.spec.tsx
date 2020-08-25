@@ -10,7 +10,7 @@ import { NavigationItem, NavigationItemProps } from '../NavigationItem';
 const item: NavigationItemProps = {
   title: 'Spotlight on Uganda',
   url: '/spotlight/spotlight-uganda',
-  active: false
+  active: false,
 };
 
 describe('NavigationItem', () => {

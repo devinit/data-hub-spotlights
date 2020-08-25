@@ -5,7 +5,7 @@ import {
   SpotlightMenu,
   SpotlightMenuList,
   SpotlightMenuListItem,
-  SpotlightMenuToggle
+  SpotlightMenuToggle,
 } from '../SpotlightMenu';
 import SpotlightMenuNav from '../SpotlightMenu/SpotlightMenuNav';
 

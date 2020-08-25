@@ -11,7 +11,7 @@ export const getDefaultStyles = (theme: SelectTheme, borderColor: string): Style
       borderColor: '#ddd',
       boxShadow: 'none',
       height: '48px',
-      borderRadius: '0'
+      borderRadius: '0',
     } as CSSProperties),
   menu: (provided): CSSProperties =>
     ({
@@ -20,12 +20,12 @@ export const getDefaultStyles = (theme: SelectTheme, borderColor: string): Style
       backgroundColor: theme === 'dark' ? '#443e42' : '#FFFFFF',
       borderRadius: '0',
       'z-index': 15000,
-      textTransform: 'capitalize'
+      textTransform: 'capitalize',
     } as CSSProperties),
   option: (provided, state): CSSProperties =>
     ({
       ...provided,
       ':hover': theme === 'dark' ? { cursor: 'pointer' } : { backgroundColor: '#f0826d' },
-      backgroundColor: state.isSelected && theme !== 'dark' ? borderColor : 'transparent'
-    } as CSSProperties)
+      backgroundColor: state.isSelected && theme !== 'dark' ? borderColor : 'transparent',
+    } as CSSProperties),
 });

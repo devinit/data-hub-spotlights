@@ -8,13 +8,13 @@ export type TreemapDataObject = EChartOption.SeriesTreemap.DataObject;
  * Checks whether the data levels are index based or by aggregation
  * @param data - RevenueExpenditureData Array
  */
-export const isIndexBased = (data: RevenueExpenditureData[]): boolean => !!data.find(d => d.levels.length === 1);
+export const isIndexBased = (data: RevenueExpenditureData[]): boolean => !!data.find((d) => d.levels.length === 1);
 
 export const getRootLevelByLength = (
   data: RevenueExpenditureData[],
   useLocalCurrency = false
 ): [string, number] | null => {
-  const rootData = data.find(d => d.levels.length === 1);
+  const rootData = data.find((d) => d.levels.length === 1);
 
   return rootData ? [rootData.levels[0], useLocalCurrency ? rootData.valueLocalCurrency : rootData.value] : null;
 };
@@ -45,11 +45,11 @@ export const createDataTreeByIndex = (
   useLocalCurrency = false
 ): TreemapDataObject[] => {
   return data
-    .filter(item => item.levels[index] === level && item.levels.length === index + 2)
-    .map(item => ({
+    .filter((item) => item.levels[index] === level && item.levels.length === index + 2)
+    .map((item) => ({
       name: toCamelCase(item.levels[item.levels.length - 1].split('-').join(' ')),
       value: useLocalCurrency ? item.valueLocalCurrency : item.value,
-      children: createDataTreeByIndex(data, item.levels[item.levels.length - 1], index + 1, useLocalCurrency)
+      children: createDataTreeByIndex(data, item.levels[item.levels.length - 1], index + 1, useLocalCurrency),
     }));
 };
 
@@ -69,20 +69,20 @@ export const createDataTreeByAggregation = (
     const index = data[0].levels.indexOf(rootLevel);
     if (index !== data[0].levels.length - 1) {
       const childrenNames = data
-        .filter(child => child.levels.indexOf(rootLevel) === index)
+        .filter((child) => child.levels.indexOf(rootLevel) === index)
         .reduce((prev: string[], curr) => {
           const childLevel = curr.levels[index + 1];
 
           return prev.includes(childLevel) ? prev : prev.concat(childLevel);
         }, []);
 
-      return childrenNames.map(child => {
-        const childData = data.filter(_data => _data.levels[index + 1] === child);
+      return childrenNames.map((child) => {
+        const childData = data.filter((_data) => _data.levels[index + 1] === child);
 
         return {
           name: child,
           value: childData.reduce((prev, curr) => prev + (useLocalCurrency ? curr.valueLocalCurrency : curr.value), 0),
-          children: createDataTreeByAggregation(childData, child, useLocalCurrency)
+          children: createDataTreeByAggregation(childData, child, useLocalCurrency),
         };
       });
     }
@@ -108,8 +108,8 @@ export const getSeriesData = (
         {
           name: config.root,
           value: children.reduce((prev, curr) => prev + (curr.value as number), 0),
-          children
-        }
+          children,
+        },
       ];
     } else {
       console.log('Configure root in CMS');

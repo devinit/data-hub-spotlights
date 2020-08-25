@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable @typescript-eslint/naming-convention */
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import * as TestRenderer from 'react-test-renderer';
@@ -14,14 +14,14 @@ const items: NavigationItem[] = [
     title: 'Nav 1',
     full_url: 'https://localhost:3000/nav-1',
     active: false,
-    relative_url: '/nav-1'
+    relative_url: '/nav-1',
   },
   {
     title: 'Nav 2',
     full_url: 'https://localhost:3000/nav-2',
     active: true,
-    relative_url: '/nav-2'
-  }
+    relative_url: '/nav-2',
+  },
 ];
 
 describe('PrimaryNavigation', () => {

@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useRef,
   useState,
-  ReactNode
+  ReactNode,
 } from 'react';
 import { GeoJSONLayer } from './GeoJSONLayer';
 import { TileLayer } from './TileLayer';
@@ -22,7 +22,7 @@ const LeafletMap: FunctionComponent<MapProps> = ({ children, onCreate, width, he
   const [map, setMap] = useState<Map | undefined>(undefined);
   const mapRef = useRef<HTMLDivElement>(null);
   const renderLayers = (): ReactNode => {
-    return Children.map(children, child => {
+    return Children.map(children, (child) => {
       if (isValidElement(child) && (child.type === TileLayer || child.type === GeoJSONLayer)) {
         return cloneElement(child, { map });
       }
@@ -48,7 +48,7 @@ const LeafletMap: FunctionComponent<MapProps> = ({ children, onCreate, width, he
 LeafletMap.defaultProps = {
   width: '100%',
   height: '600px',
-  zoom: 7
+  zoom: 7,
 };
 
 export { LeafletMap };

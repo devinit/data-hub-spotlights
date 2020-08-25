@@ -10,7 +10,7 @@ export interface PrimaryNavigationProps {
 const PrimaryNavigation: FunctionComponent<PrimaryNavigationProps> = ({ items }) => {
   const [showMenu, setShowMenu] = useState(false);
   const renderNavigationItems = (): ReactNode =>
-    items.map(item => (
+    items.map((item) => (
       <NavigationListItem key={item.title} title={item.title} active={item.active} url={item.full_url} />
     ));
 

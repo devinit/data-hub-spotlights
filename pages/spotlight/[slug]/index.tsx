@@ -17,7 +17,7 @@ import {
   getSlugFromURL,
   LocationContext,
   SpotlightLocation,
-  SpotlightPage
+  SpotlightPage,
 } from '../../../utils';
 
 interface SpotlightProps {
@@ -48,9 +48,9 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
           <MapSection themes={mapThemes} onChangeLocation={onChangeLocation} />
           <KeyFactsSection themes={filterThemesBySection(page.themes, location ? 'facts' : 'country-facts')} />
           <IndicatorComparisonSection themes={mapThemes} />
-          {filterThemesBySection(page.themes, 'revenue-expenditure').map(theme =>
+          {filterThemesBySection(page.themes, 'revenue-expenditure').map((theme) =>
             theme.indicators
-              .filter(indicator =>
+              .filter((indicator) =>
                 !location ? indicator.slug.includes('country') : !indicator.slug.includes('country')
               )
               .map((indicator, index) => (

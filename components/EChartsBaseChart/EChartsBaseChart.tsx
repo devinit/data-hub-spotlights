@@ -15,21 +15,21 @@ interface EChartBaseChartProps {
 
 const setOptions = (chart: ECharts, options: EChartOption, media?: EChartsMediaOption[], notMerge = false): void => {
   if (options.xAxis && Array.isArray(options.xAxis)) {
-    options.xAxis = options.xAxis.map(axis => merge(axisDefaults, axis));
+    options.xAxis = options.xAxis.map((axis) => merge(axisDefaults, axis));
   }
   if (options.yAxis && Array.isArray(options.yAxis)) {
-    options.yAxis = options.yAxis.map(axis => merge(axisDefaults, axis));
+    options.yAxis = options.yAxis.map((axis) => merge(axisDefaults, axis));
   }
   chart.setOption(
     {
       baseOption: merge(defaults, options, { arrayMerge: (_destinationArray, sourceArray) => sourceArray }),
-      media
+      media,
     },
     notMerge
   );
 };
 
-const EChartsBaseChart: FunctionComponent<EChartBaseChartProps> = props => {
+const EChartsBaseChart: FunctionComponent<EChartBaseChartProps> = (props) => {
   const chartNode = useRef<HTMLDivElement>(null);
   const [baseChart, setBaseChart] = useState<ECharts | undefined>(undefined);
   useEffect(() => {
@@ -66,7 +66,7 @@ const EChartsBaseChart: FunctionComponent<EChartBaseChartProps> = props => {
 EChartsBaseChart.defaultProps = {
   width: '100%',
   height: '400px',
-  notMerge: false
+  notMerge: false,
 };
 
 export { EChartsBaseChart as default, EChartsBaseChart };

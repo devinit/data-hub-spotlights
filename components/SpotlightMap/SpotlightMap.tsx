@@ -14,7 +14,7 @@ import {
   COLOURED_LAYER,
   setZoomByContainerWidth,
   renderTooltipFromLocation,
-  TooltipOptions
+  TooltipOptions,
 } from './utils/mapbox';
 import { SpotlightMapProps, config, LayerConfig } from './utils';
 
@@ -29,10 +29,10 @@ const getTooltipOptions = (
   data,
   dataPrefix: props.dataPrefix,
   dataSuffix: props.dataSuffix,
-  formatter: configs.formatter
+  formatter: configs.formatter,
 });
 
-const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
+const SpotlightMap: FunctionComponent<SpotlightMapProps> = (props) => {
   const { level, data, dataLoading, range, colours, location } = props;
   const { countryCode } = useContext(CountryContext);
   const [loading, setLoading] = useState<boolean>(true);
@@ -169,10 +169,10 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
               property: options.nameProperty,
               type: 'categorical',
               default: '#D1CBCF',
-              stops: getLocationStyles(locationData, range, colours, options.formatter)
+              stops: getLocationStyles(locationData, range, colours, options.formatter),
             },
             'fill-opacity': 0.75,
-            'fill-outline-color': '#ffffff'
+            'fill-outline-color': '#ffffff',
           }}
           onAdd={onAddLayer}
         />
@@ -189,7 +189,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
         paint={{
           'fill-color': '#D1CBCF',
           'fill-opacity': 0.75,
-          'fill-outline-color': '#ffffff'
+          'fill-outline-color': '#ffffff',
         }}
         onAdd={onAddLayer}
       />
@@ -206,7 +206,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
           minZoom: options.minZoom || 6,
           zoom: options.zoom || 6.1,
           maxZoom: options.maxZoom || 7,
-          scrollZoom: false
+          scrollZoom: false,
         }}
         style={{ width: '100%', background: '#ffffff' }}
         onLoad={onLoad}
@@ -220,7 +220,7 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = props => {
 SpotlightMap.defaultProps = {
   level: 0,
   dataLoading: false,
-  locationHandling: 'highlight-only'
+  locationHandling: 'highlight-only',
 };
 
 export { SpotlightMap };

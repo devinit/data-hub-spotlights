@@ -19,17 +19,17 @@ const getYears = (data: LocationData[]): number[] =>
 
 const getDataLoaderOptions = (indicator: SpotlightIndicator, locations: SpotlightLocation[]): DataLoaderProps => ({
   indicators: [parseIndicator(indicator) as string],
-  geocodes: locations.map(location => location.geocode),
+  geocodes: locations.map((location) => location.geocode),
   startYear: indicator.start_year,
   endYear: indicator.end_year,
-  limit: 10000
+  limit: 10000,
 });
 
 const processData = (data: LocationData[]): FormattedData => {
-  const groupedByLocation: { [location: string]: LocationData[] } = groupBy(data, _data => _data.name);
+  const groupedByLocation: { [location: string]: LocationData[] } = groupBy(data, (_data) => _data.name);
   const groupedByYear: { [location: string]: { [year: string]: LocationData[] } } = {};
-  Object.keys(groupedByLocation).forEach(location => {
-    const groupedByBudgetType = groupBy(groupedByLocation[location], processedData => processedData.year);
+  Object.keys(groupedByLocation).forEach((location) => {
+    const groupedByBudgetType = groupBy(groupedByLocation[location], (processedData) => processedData.year);
     groupedByYear[location] = groupedByBudgetType;
   });
 
@@ -38,8 +38,8 @@ const processData = (data: LocationData[]): FormattedData => {
 
 const renderMissingDataAlert = (data: LocationData[], locations: SpotlightLocation[]): ReactNode => {
   const noDataLocations = locations
-    .filter(location => !data.find(_data => _data.geocode === location.geocode))
-    .map(location => toCamelCase(location.name));
+    .filter((location) => !data.find((_data) => _data.geocode === location.geocode))
+    .map((location) => toCamelCase(location.name));
 
   return noDataLocations.length ? (
     <div>
@@ -56,7 +56,7 @@ const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({
   const valueOptions = {
     dataFormat: indicator.data_format,
     prefix: indicator.value_prefix,
-    suffix: indicator.value_suffix
+    suffix: indicator.value_suffix,
   };
 
   if (!locations || locations.length === 0) {

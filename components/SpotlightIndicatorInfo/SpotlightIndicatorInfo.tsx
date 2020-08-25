@@ -5,7 +5,7 @@ interface SpotlightIndicatorInfoProps {
   description?: string;
 }
 
-const SpotlightIndicatorInfo: FunctionComponent<SpotlightIndicatorInfoProps> = props => {
+const SpotlightIndicatorInfo: FunctionComponent<SpotlightIndicatorInfoProps> = (props) => {
   return (
     <>
       <div className="spotlight__subheading">{props.heading}</div>

@@ -17,7 +17,13 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": [0],
-    "@typescript-eslint/camelcase":[1],
+    '@typescript-eslint/naming-convention': [
+      1,
+      { selector: 'function', format: ['camelCase', 'PascalCase'] },
+      { selector: 'variable', format: ['camelCase', 'PascalCase'] },
+      { selector: 'parameter', format: ['camelCase'] },
+      { selector: 'typeLike', format: ['StrictPascalCase'] },
+    ],
     "newline-before-return": "error",
     "eqeqeq": ["error", "always"]
   },

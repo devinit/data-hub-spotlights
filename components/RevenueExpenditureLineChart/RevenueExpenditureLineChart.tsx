@@ -20,7 +20,7 @@ interface ComponentProps {
  */
 const formatData = (data: YearData, budgetType?: BudgetType, useLocalCurrency = false): [number, number][] => {
   const formattedData: [number, number][] = [];
-  Object.keys(data).forEach(year => {
+  Object.keys(data).forEach((year) => {
     const yearData = data[year];
     if (budgetType && yearData.hasOwnProperty(budgetType)) {
       const rootData = fetchRootData(yearData[budgetType], useLocalCurrency);
@@ -54,8 +54,8 @@ const RevenueExpenditureLineChart: FunctionComponent<ComponentProps> = ({ valueO
           show: true,
           backgroundColor: '#E84439',
           formatter: ({ axisDimension, value }: { axisDimension: 'x' | 'y'; value: number }): string =>
-            axisDimension === 'x' ? `${value}` : `${formatNumber(value)}`
-        }
+            axisDimension === 'x' ? `${value}` : `${formatNumber(value)}`,
+        },
       },
       formatter: (params: EChartOption.Tooltip.Format[]): string => {
         const { value } = params[0] as { value: [number, number] };
@@ -64,21 +64,21 @@ const RevenueExpenditureLineChart: FunctionComponent<ComponentProps> = ({ valueO
           formatNumber(value[1], 1),
           valueOptions
         )}</div>`;
-      }
+      },
     },
     xAxis: {
       type: 'value',
       min: data.length && data[0].length ? data[0][0] : undefined,
       axisLabel: { formatter: (value: number): number => value },
-      interval: data && data.length <= 12 ? 1 : 4
+      interval: data && data.length <= 12 ? 1 : 4,
     },
     yAxis: {
       splitLine: { show: false },
       axisLabel: {
         formatter: (value: number): string => {
           return formatNumber(value, 0);
-        }
-      }
+        },
+      },
     },
     series: [
       {
@@ -95,27 +95,27 @@ const RevenueExpenditureLineChart: FunctionComponent<ComponentProps> = ({ valueO
                   show: true,
                   backgroundColor: '#E84439',
                   padding: 8,
-                  color: '#fff'
+                  color: '#fff',
                 },
-                data: [[{ name: `${selectedYear}`, xAxis: selectedYear - 0.5 }, { xAxis: selectedYear + 0.5 }]] as any // eslint-disable-line @typescript-eslint/no-explicit-any
+                data: [[{ name: `${selectedYear}`, xAxis: selectedYear - 0.5 }, { xAxis: selectedYear + 0.5 }]] as any, // eslint-disable-line @typescript-eslint/no-explicit-any
               }
-            : undefined
-      }
-    ]
+            : undefined,
+      },
+    ],
   };
   // Options for medium & large sized devices
   const mdOptions: EChartsMediaOption = {
     query: { minWidth: 450 },
     option: {
-      grid: { left: '10%' }
-    }
+      grid: { left: '10%' },
+    },
   };
   // Options for small screen devices
   const xsOptions: EChartsMediaOption = {
     query: { maxWidth: 350 },
     option: {
-      grid: { left: '15%' }
-    }
+      grid: { left: '15%' },
+    },
   };
 
   const media: EChartsMediaOption[] = [mdOptions, xsOptions];

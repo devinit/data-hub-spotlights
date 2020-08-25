@@ -10,9 +10,9 @@ interface ComponentProps {
 }
 
 const IndicatorComparisonDataLoader: FunctionComponent<ComponentProps> = ({ options: selectOptions, ...props }) => {
-  const indicators = selectOptions.map(option => parseIndicator(option.indicator as SpotlightIndicator) as string);
-  const geocodes = props.locations.map(location => location.geocode);
-  const filter = [selectOptions.map(option => ({ field: 'year', operator: '=', value: `${option.year}` }))];
+  const indicators = selectOptions.map((option) => parseIndicator(option.indicator as SpotlightIndicator) as string);
+  const geocodes = props.locations.map((location) => location.geocode);
+  const filter = [selectOptions.map((option) => ({ field: 'year', operator: '=', value: `${option.year}` }))];
   const { data, dataLoading, setOptions } = useDDWData({ indicators, geocodes, filter, limit: 1000 });
   useEffect(() => {
     setOptions({ indicators, geocodes, filter });
@@ -20,7 +20,7 @@ const IndicatorComparisonDataLoader: FunctionComponent<ComponentProps> = ({ opti
 
   return (
     <>
-      {Children.map(props.children, child =>
+      {Children.map(props.children, (child) =>
         isValidElement(child) ? cloneElement(child, { data, dataLoading }) : null
       )}
     </>
