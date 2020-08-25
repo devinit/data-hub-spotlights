@@ -1,7 +1,7 @@
 import { Feature, MultiPolygon } from 'geojson';
 import { groupBy } from 'underscore';
 import { GeoJSONProperties, MapLocations, SpotlightFC } from './types';
-import { LocationData } from '../../../utils';
+import { LocationData, SpotlightLocation } from '../../../utils';
 import { getLocationIDFromGeoCode } from '.';
 
 export const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): SpotlightFC => ({
@@ -16,12 +16,12 @@ export const filterGeoJSONByLevel = (geojson: SpotlightFC, levels: number[]): Sp
 });
 
 export const extractLocationsFromGeoJSON = (geojson: Feature<MultiPolygon, GeoJSONProperties>[]): MapLocations => {
-  const locations = geojson.map(({ properties }) => {
+  const locations: SpotlightLocation[] = geojson.map(({ properties }) => {
     const { geometry, ...data } = properties;
 
     return data;
   });
-  const { undefined: other, ...regional } = groupBy(locations, location => location.region);
+  const { undefined: other, ...regional } = groupBy(locations, location => location.region as string);
 
   return { regional, other };
 };
