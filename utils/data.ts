@@ -131,6 +131,7 @@ export interface FetchIndicatorDataOptions {
 }
 
 export interface SpotlightLocation {
+  region?: string;
   geocode: string;
   name: string;
 }
