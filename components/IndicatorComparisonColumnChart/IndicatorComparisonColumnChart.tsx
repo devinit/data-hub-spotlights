@@ -27,12 +27,12 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
         return seriesIndex === 1
           ? formatSeries('', seriesName, value as number, valueOptions[1])
           : formatSeries('', seriesName, value as number, valueOptions[0]);
-      }
+      },
     },
     legend: { show: false },
     xAxis: {
       data: toBasicAxisData(['Indicators']),
-      axisLabel: { show: false }
+      axisLabel: { show: false },
     },
     yAxis: [
       {
@@ -42,8 +42,8 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
         type: 'value',
         position: 'left',
         axisLabel: {
-          formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), valueOptions[0])
-        }
+          formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), valueOptions[0]),
+        },
       },
       {
         name: props.series.names[1],
@@ -52,9 +52,9 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
         nameLocation: 'center',
         nameTextStyle: { padding: 30, color: '#32313f' },
         axisLabel: {
-          formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), valueOptions[1])
-        }
-      }
+          formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), valueOptions[1]),
+        },
+      },
     ],
     color: ['#0089cc', '#eb642b'], // TODO: perhaps configure these in CMS
     series: [
@@ -63,7 +63,7 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
         type: 'bar',
         barWidth: 50,
         barGap: '100%',
-        data: toBasicAxisData(props.series.data[0])
+        data: toBasicAxisData(props.series.data[0]),
       },
       {
         name: props.series.names[1],
@@ -71,10 +71,10 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
         barWidth: 50,
         barGap: '100%',
         yAxisIndex: 1,
-        data: toBasicAxisData(props.series.data[1])
-      }
+        data: toBasicAxisData(props.series.data[1]),
+      },
     ] as EChartOption.SeriesBar[],
-    grid: [{ left: '20%', right: '20%' }]
+    grid: [{ left: '20%', right: '20%' }],
   };
 
   const lgOptions: EChartsMediaOption = {
@@ -83,10 +83,10 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
       legend: { show: false },
       yAxis: [
         { name: props.series.names[0], nameTextStyle: { padding: 30 } },
-        { name: props.series.names[1], nameTextStyle: { padding: 30 } }
+        { name: props.series.names[1], nameTextStyle: { padding: 30 } },
       ],
-      series: [{ barWidth: 50 }, { barWidth: 50 }]
-    }
+      series: [{ barWidth: 50 }, { barWidth: 50 }],
+    },
   };
   // Options for medium sized devices
   const mdOptions: EChartsMediaOption = {
@@ -94,8 +94,8 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
     option: {
       legend: { show: false },
       yAxis: lgOptions.option.yAxis,
-      series: [{ barWidth: 50 }, { barWidth: 50 }]
-    }
+      series: [{ barWidth: 50 }, { barWidth: 50 }],
+    },
   };
   const smOptions: EChartsMediaOption = {
     query: { maxWidth: 300 },
@@ -104,10 +104,10 @@ const IndicatorComparisonColumnChart: FunctionComponent<ComponentProps> = ({ val
       legend: { show: true },
       yAxis: [
         { name: '', nameTextStyle: { padding: 0 } },
-        { name: '', nameTextStyle: { padding: 0 } }
+        { name: '', nameTextStyle: { padding: 0 } },
       ],
-      series: [{ barWidth: 20 }, { barWidth: 20 }]
-    }
+      series: [{ barWidth: 20 }, { barWidth: 20 }],
+    },
   };
 
   const media: EChartsMediaOption[] = [lgOptions, mdOptions, smOptions];

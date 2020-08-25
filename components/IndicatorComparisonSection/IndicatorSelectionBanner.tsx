@@ -40,7 +40,7 @@ const IndicatorSelectionBanner: FunctionComponent<ComparisonWrapperProps> = ({ t
         topicTwo: filterTwo.theme?.name,
         indicatorTwo: filterTwo.indicator?.name,
         yearTwo: filterTwo.year,
-        country: countryName
+        country: countryName,
       });
       onCompare([filterOne, filterTwo]);
     }

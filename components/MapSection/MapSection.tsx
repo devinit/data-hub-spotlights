@@ -7,7 +7,7 @@ import {
   SpotlightOptions,
   useBoundaries,
   useCountryContext,
-  toCamelCase
+  toCamelCase,
 } from '../../utils';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { Legend, LegendItem } from '../Legend';
@@ -27,14 +27,14 @@ import {
   MapSectionProps,
   parseIndicator,
   setQuery,
-  splitByComma
+  splitByComma,
 } from './utils';
 import { addEvent } from '../../utils/analytics';
 
-const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
-const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
-const SpotlightShare = dynamic(() => import('../SpotlightShare').then(mod => mod.SpotlightShare), { ssr: false });
-const DynamicAnchorButton = dynamic(() => import('../AnchorButton').then(mod => mod.AnchorButton), { ssr: false });
+const DynamicMap = dynamic(() => import('../SpotlightMap').then((mod) => mod.SpotlightMap), { ssr: false });
+const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then((mod) => mod.DDWDataLoader), { ssr: false });
+const SpotlightShare = dynamic(() => import('../SpotlightShare').then((mod) => mod.SpotlightShare), { ssr: false });
+const DynamicAnchorButton = dynamic(() => import('../AnchorButton').then((mod) => mod.AnchorButton), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   if (range && colours) {
@@ -47,7 +47,7 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
       .concat([
         <LegendItem bgColor={colours[colours.length - 1]} key={range.length}>
           {`> ${range[range.length - 1]}`}
-        </LegendItem>
+        </LegendItem>,
       ]);
   }
 
@@ -86,14 +86,14 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
       topic: optns.theme?.name,
       indicator: optns.indicator?.name,
       year: optns.year,
-      country: countryName
+      country: countryName,
     });
   };
   const onSelectLocation = (location?: SpotlightLocation): void => {
     setQuery(options, location && [location]);
     setActiveLocation(location);
     addEvent('locationChangedUsingMenuOrSearch', {
-      locationName: location ? toCamelCase(location.name) : countryName
+      locationName: location ? toCamelCase(location.name) : countryName,
     });
     if (onChangeLocation) {
       onChangeLocation(location);
@@ -102,7 +102,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
   const onSelectLocationFromMap = (locationName?: string): void => {
     onSelectLocation(locationName ? findBoundaryByName(boundaries, locationName.toLowerCase()) : undefined);
     addEvent('locationChangedUsingMapClick', {
-      locationName: locationName ? toCamelCase(locationName) : countryName
+      locationName: locationName ? toCamelCase(locationName) : countryName,
     });
   };
 

@@ -22,8 +22,8 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption 
     if (modalOpen) {
       setUrl('');
       getShortUrl(radioValue === 'default')
-        .then(url => setUrl(url.link))
-        .catch(error => {
+        .then((url) => setUrl(url.link))
+        .catch((error) => {
           console.log('Error while generating short URL: ', error.message);
           setUrl('Error');
         });
@@ -34,8 +34,8 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption 
     setUrl('');
     if (!modalOpen) {
       getShortUrl(radioValue === 'default')
-        .then(url => setUrl(url.link))
-        .catch(error => {
+        .then((url) => setUrl(url.link))
+        .catch((error) => {
           console.log('Error while generating short URL: ', error.message);
           setUrl('Error');
         });
@@ -123,7 +123,7 @@ const SpotlightShare: FunctionComponent<SpotlightShareProps> = ({ buttonCaption 
 };
 
 SpotlightShare.defaultProps = {
-  buttonCaption: 'Share this visualisation'
+  buttonCaption: 'Share this visualisation',
 };
 
 export { SpotlightShare };

@@ -5,7 +5,7 @@ import {
   SpotlightTheme,
   toCamelCase,
   LocationContext,
-  CountryContext
+  CountryContext,
 } from '../../utils';
 import { ComparisonChartDataHandler } from '../ComparisonChartDataHandler';
 import { IndicatorComparisonDataLoader } from '../IndicatorComparisonDataLoader';
@@ -16,7 +16,7 @@ export interface IndicatorComparisonSectionProps {
   themes: SpotlightTheme[];
 }
 
-const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionProps> = props => {
+const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionProps> = (props) => {
   const { themes } = props;
   const { countryName } = useContext(CountryContext);
   const location = useContext(LocationContext);
@@ -50,7 +50,7 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
         <IndicatorComparisonDataLoader options={selections} loading={loading} locations={location ? [location] : []}>
           <ComparisonChartDataHandler
             location={location}
-            indicators={selections.map(sel => sel.indicator) as [SpotlightIndicator, SpotlightIndicator]}
+            indicators={selections.map((sel) => sel.indicator) as [SpotlightIndicator, SpotlightIndicator]}
           />
         </IndicatorComparisonDataLoader>
       ) : (

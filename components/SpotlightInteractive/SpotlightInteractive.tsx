@@ -9,7 +9,7 @@ interface SpotlightInteractiveProps {
   background?: string;
 }
 
-const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = props => {
+const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = (props) => {
   return (
     <div className={classNames(props.className)}>
       {props.children}
@@ -32,7 +32,7 @@ const SpotlightInteractive: FunctionComponent<SpotlightInteractiveProps> = props
 SpotlightInteractive.defaultProps = {
   minHeight: '500px',
   height: 'auto',
-  background: 'inherit'
+  background: 'inherit',
 };
 
 export { SpotlightInteractive };

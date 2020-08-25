@@ -5,7 +5,7 @@ import ReactSelect, {
   OptionProps,
   OptionsType,
   OptionTypeBase,
-  Props as SelectProps
+  Props as SelectProps,
 } from 'react-select';
 import { getDefaultStyles } from './utils';
 
@@ -74,7 +74,7 @@ const Select: FunctionComponent<ExtendedSelectProps> = ({ chooseTheme: theme, st
 };
 
 Select.defaultProps = {
-  chooseTheme: 'light'
+  chooseTheme: 'light',
 };
 
 export { Select };

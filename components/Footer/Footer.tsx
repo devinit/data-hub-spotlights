@@ -5,7 +5,7 @@ import { FooterSection } from './FooterSection';
 
 type FooterProps = Partial<FooterData> & { primaryNavigation: NavigationItem[] };
 
-const Footer: FunctionComponent<FooterProps> = props => {
+const Footer: FunctionComponent<FooterProps> = (props) => {
   const createMarkup = (html: string) => {
     return { __html: html };
   };
@@ -16,7 +16,7 @@ const Footer: FunctionComponent<FooterProps> = props => {
         <div className="l-footer">
           <div className="l-footer__col">
             {props.newsletters
-              ? props.newsletters.map(letter => <Newsletter key={letter.caption} {...letter} />)
+              ? props.newsletters.map((letter) => <Newsletter key={letter.caption} {...letter} />)
               : null}
           </div>
           {props.sections &&

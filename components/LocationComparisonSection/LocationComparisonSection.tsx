@@ -43,11 +43,11 @@ const LocationComparisonSection: FunctionComponent<P> = ({ themes, ...props }) =
     if (!chartIDs || chartIDs.length === 0) {
       setChartIDs(chartIDs.concat(generateUniqueRandomID([])));
     }
-    addEvent('locationsCompared', { locations: locations.map(item => item.name).join(', ') });
+    addEvent('locationsCompared', { locations: locations.map((item) => item.name).join(', ') });
   };
   const onRemove = (key: string) => (): void => {
     if (chartIDs.length > 1) {
-      setChartIDs(chartIDs.slice().filter(_key => _key !== key));
+      setChartIDs(chartIDs.slice().filter((_key) => _key !== key));
     }
   };
 
@@ -57,7 +57,7 @@ const LocationComparisonSection: FunctionComponent<P> = ({ themes, ...props }) =
         <PageSectionHeading>Location Comparison</PageSectionHeading>
         <LocationComparisonBanner onCompare={onCompare} locations={locations} />
       </PageSection>
-      {chartIDs.map(key => (
+      {chartIDs.map((key) => (
         <LocationComparisonChartSection
           key={key}
           themes={themes}

@@ -15,7 +15,9 @@ export interface DataLoaderProps {
 
 const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocodes, startYear, limit, ...props }) => {
   const renderChildren = (dataLoading: boolean, data?: LocationIndicatorData[]): ReactNode =>
-    Children.map(props.children, child => (isValidElement(child) ? cloneElement(child, { data, dataLoading }) : null));
+    Children.map(props.children, (child) =>
+      isValidElement(child) ? cloneElement(child, { data, dataLoading }) : null
+    );
 
   if (!indicators || !indicators.length) {
     return <>{renderChildren(false)}</>;
@@ -28,8 +30,8 @@ const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocode
       startYear,
       endYear: props.endYear || startYear,
       filter: props.filter || [],
-      limit
-    }
+      limit,
+    },
   });
   if (error) {
     console.log('DDWDataLoader:', error.message);

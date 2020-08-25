@@ -12,7 +12,7 @@ interface ComparisonWrapperProps {
   locations?: SpotlightLocation[];
 }
 
-const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = props => {
+const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = (props) => {
   const boundaries = useBoundaries();
   const [locations, setLocations] = useState<SpotlightLocation[]>(props.locations ? props.locations : []);
   useEffect(() => {
@@ -24,14 +24,14 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = prop
   const onSelectLocation = (location?: SpotlightLocation): void => {
     if (
       location &&
-      locations.findIndex(_location => _location.name.toLowerCase() === location.name.toLowerCase()) === -1
+      locations.findIndex((_location) => _location.name.toLowerCase() === location.name.toLowerCase()) === -1
     ) {
       const updatedLocations = locations.concat(location);
       setLocations(updatedLocations);
     }
   };
   const onCloseTag = (tagName: string): void => {
-    const updatedLocations = locations.filter(location => location.name.toLowerCase() !== tagName.toLowerCase());
+    const updatedLocations = locations.filter((location) => location.name.toLowerCase() !== tagName.toLowerCase());
     setLocations(updatedLocations);
   };
   const onClickCompare = (): void => {
@@ -50,8 +50,8 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = prop
             ...provided,
             maxWidth: '300px',
             fontSize: '1.6rem',
-            width: '100%'
-          })
+            width: '100%',
+          }),
         }}
         heading="Add Location"
         canReset={false}
@@ -59,7 +59,7 @@ const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = prop
       {locations.length ? (
         <SpotlightBanner>
           <TagList>
-            {locations.map(location => (
+            {locations.map((location) => (
               <TagListItem key={location.geocode} label={location.name} onRemove={onCloseTag} />
             ))}
           </TagList>

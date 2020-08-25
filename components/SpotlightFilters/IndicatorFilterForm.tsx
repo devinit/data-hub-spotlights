@@ -16,7 +16,7 @@ interface FormProps {
   yearClassName?: string; // for the form field
 }
 
-const DynamicSelect = dynamic(() => import('../Select').then(mod => mod.Select), { ssr: false });
+const DynamicSelect = dynamic(() => import('../Select').then((mod) => mod.Select), { ssr: false });
 
 const IndicatorFilterForm: FunctionComponent<FormProps> = ({
   indicators,

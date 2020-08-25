@@ -19,7 +19,7 @@ export const FooterSocialLink: FunctionComponent<SocialLink> = ({ social_platfor
   </FooterSectionLink>
 );
 
-const FooterSection: FunctionComponent<FooterSectionProps> = props => {
+const FooterSection: FunctionComponent<FooterSectionProps> = (props) => {
   return (
     <div className="l-footer__col">
       <h4 className="footer__title">{props.title}</h4>

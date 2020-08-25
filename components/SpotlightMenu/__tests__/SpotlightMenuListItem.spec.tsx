@@ -33,7 +33,7 @@ describe('SpotlightMenuListItem', () => {
       [3, 'countries-menu-list__item--parent-third'],
       [4, 'countries-menu-list__item--parent-fourth'],
       [5, 'countries-menu-list__item--parent-fifth'],
-      [6, 'countries-menu-list__item--parent-sixth']
+      [6, 'countries-menu-list__item--parent-sixth'],
     ].forEach((depth: [number, string]) => {
       rerender(<SpotlightMenuListItem item={item} depth={depth[0]} />);
 

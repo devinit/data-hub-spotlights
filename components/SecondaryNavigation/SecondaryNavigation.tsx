@@ -10,7 +10,7 @@ interface SecondaryNavigationProps {
 const SecondaryNavigation: FunctionComponent<SecondaryNavigationProps> = ({ children, className, items }) => (
   <nav className={classNames('navigation-secondary', className)}>
     <ul className="navigation-secondary__items" data-testid="navigation-secondary-ul">
-      {items?.map(item => (
+      {items?.map((item) => (
         <NavigationItem key={item.title} {...item} />
       ))}
       {children}

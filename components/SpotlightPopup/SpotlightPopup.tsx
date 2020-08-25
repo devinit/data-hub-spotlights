@@ -7,10 +7,10 @@ interface SpotlightPopupProps {
   source?: string;
 }
 
-const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = props => {
+const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = (props) => {
   const hideAllPopups = (): void => {
     const popups = document.querySelectorAll('.popup-content ');
-    popups.forEach(function(popup) {
+    popups.forEach(function (popup) {
       popup.setAttribute('style', 'display:none;');
     });
   };
@@ -24,10 +24,10 @@ const SpotlightPopup: FunctionComponent<SpotlightPopupProps> = props => {
     color: '#60575d',
     border: 0,
     borderRadius: '0.28571429rem',
-    boxShadow: '0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15)'
+    boxShadow: '0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15)',
   };
   const customArrowStyle = {
-    left: '155px'
+    left: '155px',
   };
 
   return (

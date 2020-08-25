@@ -13,7 +13,7 @@ interface ComponentProps {
 
 export type FormattedData = { [location: string]: { [year: string]: LocationData[] } };
 
-const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => {
+const LocationComparisonLineChart: FunctionComponent<ComponentProps> = (props) => {
   const options: EChartOption<EChartOption.SeriesLine | EChartOption.SeriesBar> = {
     tooltip: {
       trigger: 'axis',
@@ -22,7 +22,7 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
 
         return `<div style="text-align:center;font-size:1.6rem;">${name}</div>${params
           .map(
-            param =>
+            (param) =>
               `<div>${param.marker}${param.seriesName}: ${
                 typeof param.value === 'number'
                   ? addPrefixAndSuffix(formatNumber(param.value as number, 0), props.valueOptions)
@@ -30,28 +30,28 @@ const LocationComparisonLineChart: FunctionComponent<ComponentProps> = props => 
               }</div>`
           )
           .join('')}`;
-      }
+      },
     },
     legend: { show: true },
     xAxis: {
       data: toBasicAxisData(props.years ? props.years : []),
       interval: props.years.length <= 12 ? 1 : 4,
-      boundaryGap: props.years.length <= 2
+      boundaryGap: props.years.length <= 2,
     },
     yAxis: {
       axisLabel: {
-        formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), props.valueOptions)
-      }
+        formatter: (value: number): string => addPrefixAndSuffix(formatNumber(value, 0), props.valueOptions),
+      },
     },
-    series: Object.keys(props.data).map<EChartOption.SeriesLine | EChartOption.SeriesBar>(location => ({
+    series: Object.keys(props.data).map<EChartOption.SeriesLine | EChartOption.SeriesBar>((location) => ({
       name: location,
-      data: props.years.map(year => (props.data[location][year] ? props.data[location][year][0].value : 0)),
+      data: props.years.map((year) => (props.data[location][year] ? props.data[location][year][0].value : 0)),
       type: props.years.length > 2 ? 'line' : 'bar',
       connectNulls: true,
       smooth: true,
       symbol: 'circle',
-      barWidth: 40
-    }))
+      barWidth: 40,
+    })),
   };
 
   return <EChartsBaseChart options={options} height={props.height} notMerge={true} />;

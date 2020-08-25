@@ -5,7 +5,7 @@ interface SpotlightSidebarInfoProps {
   description?: string;
 }
 
-const SpotlightSidebarInfo: FunctionComponent<SpotlightSidebarInfoProps> = props => {
+const SpotlightSidebarInfo: FunctionComponent<SpotlightSidebarInfoProps> = (props) => {
   return (
     <div className="spotlight-description">
       <h3 className="spotlight__subheading">{props.heading}</h3>

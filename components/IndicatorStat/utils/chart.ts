@@ -53,7 +53,7 @@ const getBasicSeriesOptions = (
   series: (EChartOption.SeriesLine | EChartOption.SeriesBar)[]
 ): (EChartOption.SeriesLine | EChartOption.SeriesBar)[] => {
   fields.forEach((field, index) => {
-    const yAxisData = extractDataByField(data as any, field, true).map(_data => parseFloat(_data).toFixed(1)); // eslint-disable-line @typescript-eslint/no-explicit-any
+    const yAxisData = extractDataByField(data as any, field, true).map((_data) => parseFloat(_data).toFixed(1)); // eslint-disable-line @typescript-eslint/no-explicit-any
     if (series[index]) {
       const _series = series[index];
       _series.data = yAxisData;
@@ -72,7 +72,7 @@ const getAggregatedSeriesOptions = (
   aggregation: Aggregation
 ): (EChartOption.SeriesLine | EChartOption.SeriesBar)[] => {
   if (aggregation === 'PERCENT') {
-    data.forEach(_data => {
+    data.forEach((_data) => {
       const values = fields.reduce((prev: number[], curr) => {
         const value = getFieldValue(_data as any, curr); // eslint-disable-line @typescript-eslint/no-explicit-any
 

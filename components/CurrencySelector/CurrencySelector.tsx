@@ -12,7 +12,7 @@ interface CurrencySelectorProps {
 
 const getOptions = (currencyCode: string): SelectOption[] => [
   { label: 'Constant 2015 USD', value: '$' },
-  { label: `Current ${currencyCode}`, value: 'local' }
+  { label: `Current ${currencyCode}`, value: 'local' },
 ];
 
 const CurrencySelector: FunctionComponent<CurrencySelectorProps> = ({ onChange, currencyCode, ...props }) => {
@@ -42,7 +42,7 @@ const CurrencySelector: FunctionComponent<CurrencySelectorProps> = ({ onChange, 
 CurrencySelector.defaultProps = {
   width: '300px',
   label: 'Currency',
-  placeholder: 'Select Currency'
+  placeholder: 'Select Currency',
 };
 
 export { CurrencySelector };

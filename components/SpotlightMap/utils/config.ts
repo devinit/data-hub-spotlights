@@ -47,9 +47,9 @@ export const config: { [key: string]: MapConfig } = {
           }
 
           return value.toUpperCase();
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
   KE: {
     layers: [
@@ -83,8 +83,8 @@ export const config: { [key: string]: MapConfig } = {
           }
 
           return toCamelCase(value);
-        }
-      }
-    ]
-  }
+        },
+      },
+    ],
+  },
 };
