@@ -9,7 +9,6 @@ import {
   useCountryContext,
   toCamelCase
 } from '../../utils';
-import { AnchorButton } from '../AnchorButton';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { Legend, LegendItem } from '../Legend';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
@@ -35,6 +34,7 @@ import { addEvent } from '../../utils/analytics';
 const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
 const SpotlightShare = dynamic(() => import('../SpotlightShare').then(mod => mod.SpotlightShare), { ssr: false });
+const DynamicAnchorButton = dynamic(() => import('../AnchorButton').then(mod => mod.AnchorButton), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   if (range && colours) {
@@ -55,10 +55,14 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
 };
 
 const getComparePath = (): string => {
-  const pathname = window.location.pathname.split('?')[0].split('#')[0];
-  const queryString = window.location.search;
+  if (typeof window !== 'undefined') {
+    const pathname = window.location.pathname.split('?')[0].split('#')[0];
+    const queryString = window.location.search;
 
-  return `${pathname}${pathname.endsWith('/') ? '' : '/'}compare${queryString}`;
+    return `${pathname}${pathname.endsWith('/') ? '' : '/'}compare${queryString}`;
+  }
+
+  return '';
 };
 
 const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...props }) => {
@@ -145,9 +149,9 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
           <SpotlightInteractive height="100%">
             {router ? (
               <div>
-                <AnchorButton className="button button--secondary--fill" href={getComparePath()}>
+                <DynamicAnchorButton className="button button--secondary--fill" href={getComparePath()}>
                   Compare this location to others
-                </AnchorButton>
+                </DynamicAnchorButton>
                 <style jsx>{`
                   position: absolute;
                   top: 1.75em;
