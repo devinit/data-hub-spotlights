@@ -94,16 +94,19 @@ jobs:
       if: endsWith(github.ref, '/feature/setup_dev_server')
       run: |
         echo "::set-env name=HOST::${{ secrets.TEST_HOST }}"
+        echo "::set-env name=CMS_URL::${{ secrets.DEV_CMS_URL }}"
 
     - name: Set env for develop branch
       if: endsWith(github.ref, '/develop')
       run: |
         echo "::set-env name=HOST::${{ secrets.DEV_HOST }}"
+        echo "::set-env name=CMS_URL::${{ secrets.DEV_CMS_URL }}"
 
     - name: Set env for master branch
       if: endsWith(github.ref, '/master')
       run: |
         echo "::set-env name=HOST::${{ secrets.PROD_HOST }}"
+        echo "::set-env name=CMS_URL::${{ secrets.PROD_CMS_URL }}"
 
     - name: copy deploy_file via ssh
       uses: appleboy/scp-action@master
@@ -118,7 +121,7 @@ jobs:
     - name: executing remote ssh commands using ssh
       uses: appleboy/ssh-action@master
       env:
-        CMS_URL: ${{ secrets.CMS_URL }}
+        CMS_URL: ${{ env.CMS_URL }}
         BITLY_API_KEY: ${{ secrets.BITLY_API_KEY }}
       with:
         host: ${{ env.HOST }}
