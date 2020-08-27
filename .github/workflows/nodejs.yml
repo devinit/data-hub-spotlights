@@ -32,7 +32,7 @@ jobs:
       contains('
         refs/heads/master
         refs/heads/develop
-        refs/heads/setup_dev_server
+        refs/heads/feature/setup_dev_server
       ', github.ref)
     steps:
     - uses: actions/checkout@v1
@@ -75,7 +75,7 @@ jobs:
       contains('
         refs/heads/master
         refs/heads/develop
-        refs/heads/setup_dev_server
+        refs/heads/feature/setup_dev_server
       ', github.ref)
     runs-on: ubuntu-latest
     steps:
