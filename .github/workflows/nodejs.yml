@@ -32,7 +32,6 @@ jobs:
       contains('
         refs/heads/master
         refs/heads/develop
-        refs/heads/feature/setup_dev_server
       ', github.ref)
     steps:
     - uses: actions/checkout@v1
@@ -75,7 +74,6 @@ jobs:
       contains('
         refs/heads/master
         refs/heads/develop
-        refs/heads/feature/setup_dev_server
       ', github.ref)
     runs-on: ubuntu-latest
     steps:
@@ -89,12 +87,6 @@ jobs:
       with:
         name: build
         path: ./build.zip
-
-    - name: Set env for test branch
-      if: endsWith(github.ref, '/feature/setup_dev_server')
-      run: |
-        echo "::set-env name=HOST::${{ secrets.TEST_HOST }}"
-        echo "::set-env name=CMS_URL::${{ secrets.DEV_CMS_URL }}"
 
     - name: Set env for develop branch
       if: endsWith(github.ref, '/develop')
