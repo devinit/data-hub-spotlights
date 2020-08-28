@@ -44,7 +44,7 @@ jobs:
 
     - name: Bundling
       run: |
-        mkdir build && mv .next build/ && mv public build/ && mv dist/* build/ && mv package.json build/ && mv package-lock.lock build/ && mv Dockerfile build/ && mv docker-compose.yml build/ && mv pages/ build/ && mv nginx/ build/
+        mkdir build && mv .next build/ && mv public build/ && mv dist/* build/ && mv package.json build/ && mv package-lock.json build/ && mv Dockerfile build/ && mv docker-compose.yml build/ && mv pages/ build/ && mv nginx/ build/
         zip -q -r build.zip build
 
     - name: Upload build Artifacts
