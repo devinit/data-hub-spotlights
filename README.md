@@ -2,14 +2,14 @@
 
 Contains re-designed spotlights on Uganda and Kenya, perhaps others
 
-### Development
+## Development
 
 - Install dependencies with:
 
       yarn install
 
 - Create a `.env` file and add CMS_URL, setting it to the most updated version of the DI Website. Defaults to `http://devinit.org/`.
-If the dependent spotlights code has not been pushed to the live website, defer to either the dev server `http://178.128.102.213/` or your own local copy on the `develop` branch
+If the dependent spotlights code has not been pushed to the live website, defer to either the dev server `http://dev.devinit.org/` or your own local copy on the `develop` branch
 
 - When pointing to your local copy of the website, spotlight assets must be imported from the [DataHub CMS](https://github.com/devinit/datahub-cms) repo.
 This requires two commands:
@@ -26,6 +26,7 @@ This requires two commands:
 - [At the Moment] Initial view is the playground. To view the spotlight page, go to `https://localhost:3000/spotlight/[SpotlightPage Slug]/`
 
 ### Run application with docker
+
 - In the application's root directory run the following command to build an image:
 
       docker build -t <image_name> .
