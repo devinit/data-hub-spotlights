@@ -6,7 +6,7 @@ yarn build
 
 echo "build complete... bundling"
 
-mkdir build && mv .next build/ && mv public build/ && mv dist/* build/ && mv package.json build/ && mv yarn.lock build/ && mv Dockerfile build/
+mkdir build && mv .next build/ && mv public build/ && mv dist/* build/ && mv package.json build/ && mv package-lock.json build/ && mv Dockerfile build/
 
 zip -q -r build.zip build
 

@@ -10,9 +10,7 @@ ENV BITLY_API_KEY=$BITLY_API_KEY
 
 COPY package*.json ./
 
-COPY yarn.lock ./
-
-RUN yarn install
+RUN npm ci
 
 COPY . .
 
