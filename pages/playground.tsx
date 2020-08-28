@@ -16,7 +16,7 @@ import {
   SpotlightMenu,
   SpotlightMenuList,
   SpotlightMenuListItem,
-  SpotlightMenuToggle
+  SpotlightMenuToggle,
 } from '../components/SpotlightMenu';
 import SpotlightMenuNav from '../components/SpotlightMenu/SpotlightMenuNav';
 import { SpotlightTab } from '../components/SpotlightTab';
@@ -30,8 +30,8 @@ interface PlaygroundProps {
   scaffold: PageScaffoldData;
 }
 
-const BaseMap = dynamic(() => import('../components/BaseMap').then(mod => mod.BaseMap), {
-  ssr: false
+const BaseMap = dynamic(() => import('../components/BaseMap').then((mod) => mod.BaseMap), {
+  ssr: false,
 });
 
 const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
@@ -43,37 +43,37 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
 
   const options1: EChartOption<EChartOption.SeriesBar> = {
     title: {
-      text: 'Basic Bar Chart'
+      text: 'Basic Bar Chart',
     },
     tooltip: {},
     legend: {
-      data: ['Sales', 'Expenses']
+      data: ['Sales', 'Expenses'],
     },
     xAxis: {
-      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
+      data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks']),
     },
     yAxis: {},
     series: [
       {
         name: 'Sales',
         type: 'bar',
-        data: [5, 20, 36, 15, 10, 25]
+        data: [5, 20, 36, 15, 10, 25],
       },
       {
         name: 'Expenses',
         type: 'bar',
-        data: [2, 30, 3, 40, 20, 36]
-      }
-    ]
+        data: [2, 30, 3, 40, 20, 36],
+      },
+    ],
   };
 
   const options2: EChartOption = {
     title: {
-      text: 'Inverted Bar Chart - Via Dataset'
+      text: 'Inverted Bar Chart - Via Dataset',
     },
     tooltip: {},
     legend: {
-      data: ['Sales', 'Expenses']
+      data: ['Sales', 'Expenses'],
     },
     xAxis: { type: 'value' },
     yAxis: { type: 'category' },
@@ -84,33 +84,33 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         ['Shirt', 5, 2],
         ['Cardigan', 20, 30],
         ['Chiffon Shirt', 34, 23],
-        ['Pants', 56, 12]
-      ]
-    }
+        ['Pants', 56, 12],
+      ],
+    },
   };
 
   const options3 = merge<EChartOption>(options2, {
     title: {
-      text: 'Bar Chart - Reverse Axis'
+      text: 'Bar Chart - Reverse Axis',
     },
     xAxis: { inverse: true },
-    yAxis: { position: 'right' }
+    yAxis: { position: 'right' },
   });
 
   const options4 = merge<EChartOption>(options2, {
     title: {
-      text: 'Bar Chart Grid v1'
+      text: 'Bar Chart Grid v1',
     },
     legend: {},
     xAxis: [
       { type: 'value', gridIndex: 0 },
-      { type: 'value', gridIndex: 1 }
+      { type: 'value', gridIndex: 1 },
     ],
     yAxis: [
       { type: 'category', gridIndex: 0 },
-      { type: 'category', gridIndex: 1 }
+      { type: 'category', gridIndex: 1 },
     ],
-    grid: [{ bottom: '55%' }, { top: '55%' }]
+    grid: [{ bottom: '55%' }, { top: '55%' }],
   });
   options4.legend = {};
   options4.series = [
@@ -119,65 +119,65 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     { type: 'bar', seriesLayoutBy: 'row' },
     { type: 'bar', seriesLayoutBy: 'row' },
     { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
-    { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 }
+    { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
   ];
 
   const options5 = merge<EChartOption<EChartOption.SeriesBar>>(options1, {
     title: {
-      text: 'Bar Chart Grid - Cool Data Comparison'
+      text: 'Bar Chart Grid - Cool Data Comparison',
     },
     xAxis: [
       {
         type: 'value',
-        position: 'top'
+        position: 'top',
       },
       {
         type: 'value',
         gridIndex: 1,
         position: 'top',
-        inverse: true
-      }
+        inverse: true,
+      },
     ],
     yAxis: [
       {
         show: false,
         type: 'category',
-        data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks'])
+        data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks']),
       },
       {
         type: 'category',
         gridIndex: 1,
         data: toBasicAxisData(['Shirt', 'Cardign', 'Chiffon Shirt', 'Pants', 'Heels', 'Socks']),
         offset: 20,
-        axisTick: { show: false }
-      }
+        axisTick: { show: false },
+      },
     ],
-    grid: [{ left: '50%' }, { right: '50%' }]
+    grid: [{ left: '50%' }, { right: '50%' }],
   });
   options5.legend = {};
   options5.series = [
     {
       type: 'bar',
-      data: toBasicAxisData([5, 20, 36, 15, 10, 25])
+      data: toBasicAxisData([5, 20, 36, 15, 10, 25]),
     },
     {
       type: 'bar',
       data: toBasicAxisData([2, 30, 3, 40, 20, 36]),
       xAxisIndex: 1,
-      yAxisIndex: 1
-    }
+      yAxisIndex: 1,
+    },
   ] as EChartOption.SeriesBar[];
 
   const options6: EChartOption = {
     title: {
-      text: 'Basic Pie Chart'
+      text: 'Basic Pie Chart',
     },
     tooltip: {
       trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)'
+      formatter: '{a} <br/>{b} : {c} ({d}%)',
     },
     legend: {
-      data: ['Apples']
+      data: ['Apples'],
     },
     xAxis: undefined,
     yAxis: undefined,
@@ -186,40 +186,40 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
         name: 'Sales',
         type: 'pie',
         label: {
-          normal: { show: true, formatter: '{a} - {b} : {c} ({d}%)' }
+          normal: { show: true, formatter: '{a} - {b} : {c} ({d}%)' },
         },
         data: [
           {
             name: 'Apples',
-            value: 70
+            value: 70,
           },
           {
             name: 'Strawberries',
-            value: 68
+            value: 68,
           },
           {
             name: 'Bananas',
-            value: 48
+            value: 48,
           },
           {
             name: 'Oranges',
-            value: 40
+            value: 40,
           },
           {
             name: 'Pears',
-            value: 32
+            value: 32,
           },
           {
             name: 'Pineapples',
-            value: 27
+            value: 27,
           },
           {
             name: 'Grapes',
-            value: 18
-          }
-        ]
-      }
-    ]
+            value: 18,
+          },
+        ],
+      },
+    ],
   };
 
   const renderLegendItems = () => {
@@ -241,7 +241,7 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     center: [32.655221, 1.344666],
     minZoom: 6,
     zoom: 6.1,
-    maxZoom: 7
+    maxZoom: 7,
   };
 
   const onMapLoad = (map: Map): void => {
@@ -259,12 +259,12 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
           default: '#b3adad',
           stops: [
             ['KOTIDO', '#8f1b13'],
-            ['KALANGALA', '#333']
-          ]
+            ['KALANGALA', '#333'],
+          ],
         },
         'fill-opacity': 0.75,
-        'fill-outline-color': '#ffffff'
-      }
+        'fill-outline-color': '#ffffff',
+      },
     });
   };
 
@@ -278,25 +278,25 @@ const Playground: NextPage<PlaygroundProps> = ({ setData, scaffold }) => {
     { value: 'green', label: 'Green', url: '#' },
     { value: 'forest', label: 'Forest', url: '#' },
     { value: 'slate', label: 'Slate', url: '#' },
-    { value: 'silver', label: 'Silver', url: '#' }
+    { value: 'silver', label: 'Silver', url: '#' },
   ];
 
   const flavourOptions = [
     { value: 'vanilla', label: 'Vanilla', url: '#' },
     { value: 'chocolate', label: 'Chocolate', url: '#' },
     { value: 'strawberry', label: 'Strawberry', url: '#' },
-    { value: 'salted-caramel', label: 'Salted Caramel', url: '#' }
+    { value: 'salted-caramel', label: 'Salted Caramel', url: '#' },
   ];
 
   const groupedOptions = [
     {
       label: 'Colours',
-      options: colourOptions
+      options: colourOptions,
     },
     {
       label: 'Flavours',
-      options: flavourOptions
-    }
+      options: flavourOptions,
+    },
   ];
 
   const [showMenu, setShowMenu] = useState(false);

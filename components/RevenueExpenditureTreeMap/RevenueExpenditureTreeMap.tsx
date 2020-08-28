@@ -6,7 +6,7 @@ import {
   toCamelCase,
   RevenueExpenditureConfig,
   ValueOptions,
-  addPrefixAndSuffix
+  addPrefixAndSuffix,
 } from '../../utils';
 import { EChartsBaseChart } from '../EChartsBaseChart';
 import { RevenueExpenditureData } from '../RevenueExpenditureSection/utils';
@@ -30,7 +30,7 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
         const percentage = `${formatNumber((value / treePathInfo[0].value) * 100, 1)}%`;
 
         return `${name} - ${percentage} | ${addPrefixAndSuffix(formatNumber(value, 1), valueOptions)}`;
-      }
+      },
     },
     xAxis: { show: false },
     yAxis: { show: false },
@@ -47,7 +47,7 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
         leafDepth: 1,
         roam: 'move',
         itemStyle: {
-          borderWidth: 0.5
+          borderWidth: 0.5,
         },
         upperLabel: {
           show: true,
@@ -59,15 +59,15 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
             const percentage = `${formatNumber((value / treePathInfo[0].value) * 100, 1)}%`;
 
             return `${toCamelCase(name)} - ${percentage} | ${addPrefixAndSuffix(formatNumber(value, 1), valueOptions)}`;
-          }
+          },
         },
         breadcrumb: {
           height: 30,
           itemStyle: {
             color: '#8f1b13',
             borderColor: '#FFFFFF',
-            shadowBlur: 0
-          }
+            shadowBlur: 0,
+          },
         },
         label: {
           formatter: (info: EChartOption.Tooltip.Format): string => {
@@ -88,18 +88,18 @@ const RevenueExpenditureTreeMap: FunctionComponent<ComponentProps> = ({ data, va
             a: {
               fontSize: 14,
               lineHeight: 30,
-              color: '#FFFFFF'
-            }
-          }
+              color: '#FFFFFF',
+            },
+          },
         },
         levels: [
           {
-            upperLabel: { show: false }
-          }
+            upperLabel: { show: false },
+          },
         ] as any, // eslint-disable-line @typescript-eslint/no-explicit-any
-        data: data ? (isIndexBased(data) ? seriesData : seriesData[0].children) : []
-      }
-    ]
+        data: data ? (isIndexBased(data) ? seriesData : seriesData[0].children) : [],
+      },
+    ],
   };
 
   return <EChartsBaseChart options={options} height={props.height} />;

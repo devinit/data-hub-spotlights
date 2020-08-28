@@ -15,10 +15,10 @@ const footer: FooterType = {
     {
       caption: 'Sign up for our newsletters',
       link_label: 'Sign up',
-      link_url: 'http://localhost:3000/newsletter'
-    }
+      link_url: 'http://localhost:3000/newsletter',
+    },
   ],
-  sections: [section]
+  sections: [section],
 };
 
 describe('Footer', () => {

@@ -26,9 +26,9 @@ export const useDDWData = (_options: DataLoaderProps): DDWData => {
           startYear: typeof startYear === 'number' ? startYear : undefined,
           endYear: typeof endYear === 'number' ? endYear : undefined,
           filter,
-          limit
+          limit,
         },
-        notifyOnNetworkStatusChange: true
+        notifyOnNetworkStatusChange: true,
       }
     );
 

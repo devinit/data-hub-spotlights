@@ -23,9 +23,9 @@ Spotlight.getInitialProps = async (context): Promise<SpotlightPageProps> => {
 
   if (context.res) {
     const page = await fetchSpotlightPage(slug as string);
-    const matchingTopic = page.themes.find(theme => theme.slug === topic);
+    const matchingTopic = page.themes.find((theme) => theme.slug === topic);
     if (matchingTopic) {
-      const matchingIndicator = matchingTopic.indicators.find(_indicator => _indicator.slug === indicator);
+      const matchingIndicator = matchingTopic.indicators.find((_indicator) => _indicator.slug === indicator);
       if (matchingIndicator) {
         (context.res as Response).redirect(
           `${getBasePathFromContext()}${slug}/?t=${topic}&i=${matchingIndicator.ddw_id}`

@@ -4,7 +4,7 @@ import {
   LocationData,
   LocationDataMeta,
   LocationIndicatorData,
-  ProcessedData
+  ProcessedData,
 } from '../../../utils';
 import { addPrefixAndSuffix, DEFAULT_VALUE, ValueOptions } from '../../../utils';
 
@@ -18,7 +18,7 @@ const getLocalValue = (data: LocationData, options: ValueOptions): string => {
 
   return addPrefixAndSuffix(formatNumber(data.value, options.decimalCount), {
     ...options,
-    prefix: options.dataFormat === 'currency' ? 'US$' : options.prefix
+    prefix: options.dataFormat === 'currency' ? 'US$' : options.prefix,
   });
 };
 
@@ -36,7 +36,7 @@ const getValue = (data: LocationData, options: ValueOptions): string => {
  * @param budgetType - The budget type to find
  */
 const filterDataByBudgetType = (data: LocationData[], budgetType: BudgetType): LocationData | undefined => {
-  return data.find(_data => {
+  return data.find((_data) => {
     if (_data.meta) {
       try {
         const meta: LocationDataMeta = JSON.parse(_data.meta);
@@ -65,7 +65,7 @@ const locationDataToProcessedData = ({ name, value, geocode, meta }: LocationDat
   name,
   geocode,
   value: value || 0,
-  meta: meta ? JSON.parse(meta) : {}
+  meta: meta ? JSON.parse(meta) : {},
 });
 
 const getSum = (data: ProcessedData[], options: ValueOptions): number => {
@@ -89,18 +89,18 @@ const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): n
       return sum / data.length;
     }
     if ((options.aggregation === 'POSN ASC' || options.aggregation === 'POSN DESC') && options.location) {
-      const value = data.find(d =>
+      const value = data.find((d) =>
         d.geocode && options.location?.geocode ? options.location?.geocode.includes(d.geocode) : false
       );
       if (value) {
         const orderedData = data
-          .map(d => d.value)
+          .map((d) => d.value)
           .sort((a, b) => a - b)
           .reduce<number[]>((prev, curr) => (prev.indexOf(curr) > -1 ? prev : prev.concat(curr)), []);
         const position =
           options.aggregation === 'POSN ASC'
-            ? orderedData.findIndex(d => d === value.value)
-            : orderedData.reverse().findIndex(d => d === value.value);
+            ? orderedData.findIndex((d) => d === value.value)
+            : orderedData.reverse().findIndex((d) => d === value.value);
 
         return position > -1 ? position : data;
       }
@@ -112,7 +112,7 @@ const aggregateProcessedData = (data: ProcessedData[], options: ValueOptions): n
 
 const processMultipleData = (data: LocationData[], options: ValueOptions = { dataFormat: 'plain' }): string => {
   const sortedData = data.slice().sort((a, b) => a.year - b.year);
-  const latest = sortedData.filter(d => d.year === sortedData[data.length - 1].year);
+  const latest = sortedData.filter((d) => d.year === sortedData[data.length - 1].year);
   if (latest && latest.length > 1) {
     const _data = getOneFromMultipleBudgetTypes(data);
     if (_data) {
@@ -151,7 +151,7 @@ export const getIndicatorsValue = (
   options: ValueOptions = { dataFormat: 'plain' }
 ): string => {
   if (options.aggregation) {
-    const values: ProcessedData[] = data.map(_data => {
+    const values: ProcessedData[] = data.map((_data) => {
       if (_data.data.length > 1) {
         const requiredData = getOneFromMultipleBudgetTypes(_data.data);
         if (requiredData) {

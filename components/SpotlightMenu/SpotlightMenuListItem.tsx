@@ -29,7 +29,7 @@ const SpotlightMenuListItem: FunctionComponent<ComponentProps> = ({ item, childr
       className={classNames({
         'countries-menu-list--has-children': children,
         'countries-menu-list__countries': !children,
-        'js-profile-country-item': !children
+        'js-profile-country-item': !children,
       })}
     >
       <a
@@ -41,7 +41,7 @@ const SpotlightMenuListItem: FunctionComponent<ComponentProps> = ({ item, childr
           'countries-menu-list__item--parent-third': depth === 3,
           'countries-menu-list__item--parent-fourth': depth === 4,
           'countries-menu-list__item--parent-fifth': depth === 5,
-          'countries-menu-list__item--parent-sixth': depth === 6
+          'countries-menu-list__item--parent-sixth': depth === 6,
         })}
         onClick={onClick}
         data-testid="spotlight-menu-list-item-link"
@@ -53,7 +53,7 @@ const SpotlightMenuListItem: FunctionComponent<ComponentProps> = ({ item, childr
           }
         `}</style>
       </a>
-      {Children.map(children, child => isValidElement(child) && cloneElement(child, { active: open }))}
+      {Children.map(children, (child) => isValidElement(child) && cloneElement(child, { active: open }))}
     </li>
   );
 };

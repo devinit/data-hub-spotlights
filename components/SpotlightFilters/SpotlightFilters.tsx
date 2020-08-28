@@ -7,14 +7,14 @@ import {
   getOptionByIndexOrValue,
   getThemeDefaultsByIndex,
   parseIndicatorToOption,
-  SpotlightOptions
+  SpotlightOptions,
 } from '../../utils';
 import { FormField } from '../FormField';
 import { SelectOption } from '../Select';
 import IndicatorFilterForm from './IndicatorFilterForm';
 import { defaultSelectOptions, FilterSelectOptions, SpotlightFilterProps } from './utils';
 
-const DynamicSelect = dynamic(() => import('../Select').then(mod => mod.Select), { ssr: false });
+const DynamicSelect = dynamic(() => import('../Select').then((mod) => mod.Select), { ssr: false });
 
 const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultIndexes, ...props }) => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
 
   const onSelectTheme = (option?: SelectOption): void => {
     if (option) {
-      const selectedTheme = props.themes.find(theme => theme.slug === option.value);
+      const selectedTheme = props.themes.find((theme) => theme.slug === option.value);
       if (selectedTheme) {
         const { options: themeOptions, selected: themeSelected } = getThemeDefaultsByIndex(selectedTheme, options);
         setSelected(themeSelected);
@@ -46,12 +46,12 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
 
   const onSelectIndicator = (option?: SelectOption): void => {
     if (option && activeTheme) {
-      const selectedIndicator = activeTheme.indicators.find(indicator => indicator.ddw_id === option.value);
+      const selectedIndicator = activeTheme.indicators.find((indicator) => indicator.ddw_id === option.value);
       const yearOptions = selectedIndicator ? createYearOptionsFromIndicator(selectedIndicator) : undefined;
       setSelected({
         ...selected,
         indicator: selectedIndicator,
-        year: yearOptions && parseInt(yearOptions[0].value, 10)
+        year: yearOptions && parseInt(yearOptions[0].value, 10),
       });
       setOptions({ ...options, years: yearOptions });
     } else if (activeIndicator) {
@@ -108,7 +108,7 @@ const SpotlightFilters: FunctionComponent<SpotlightFilterProps> = ({ defaultInde
 SpotlightFilters.defaultProps = {
   topicLabel: 'Select a topic to explore',
   indicatorLabel: 'Choose an indicator',
-  yearLabel: 'Choose a year'
+  yearLabel: 'Choose a year',
 };
 
 export { SpotlightFilters };

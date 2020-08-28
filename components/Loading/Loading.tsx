@@ -15,7 +15,7 @@ const Loading: FunctionComponent<LoadingProps> = ({ children, active, text }) =>
 };
 
 Loading.defaultProps = {
-  text: 'Loading ...'
+  text: 'Loading ...',
 };
 
 export { Loading };

@@ -17,10 +17,10 @@ interface KeyFactTabProps {
 const KeyFactTab: FunctionComponent<KeyFactTabProps> = ({ active, location, theme, onActivate, currencyCode }) => {
   const [useLocalValue, setUseLocalValue] = useState(false);
   const [showCurrencySelector, setShowCurrencySelector] = useState(
-    !!theme.indicators.find(indicator => indicator.data_format === 'currency')
+    !!theme.indicators.find((indicator) => indicator.data_format === 'currency')
   );
   useEffect(() => {
-    setShowCurrencySelector(!!theme.indicators.find(indicator => indicator.data_format === 'currency'));
+    setShowCurrencySelector(!!theme.indicators.find((indicator) => indicator.data_format === 'currency'));
   }, [theme.name]);
 
   const onChangeCurrency = (isLocal: boolean): void => setUseLocalValue(isLocal);

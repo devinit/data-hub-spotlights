@@ -18,7 +18,7 @@ interface ComponentProps {
   onRemove?: () => void;
 }
 
-const LocationComparisonChartSection: FunctionComponent<ComponentProps> = props => {
+const LocationComparisonChartSection: FunctionComponent<ComponentProps> = (props) => {
   const { selected: defaultSelected } = getDefaultsByIndex(props.themes);
   const [selections, setSelections] = useState<SpotlightOptions>(defaultSelected);
   useEffect(() => {
@@ -31,7 +31,7 @@ const LocationComparisonChartSection: FunctionComponent<ComponentProps> = props 
       setQuery(options, props.locations);
       addEvent('locationComparisonOptionsChanged', {
         topic: options.theme?.name,
-        indicator: options.indicator.name
+        indicator: options.indicator.name,
       });
     }
   };

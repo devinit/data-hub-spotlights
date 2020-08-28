@@ -5,7 +5,7 @@ import { VisualisationSectionMain } from './VisualisationSectionMain';
 
 const VisualisationSection: FunctionComponent<{ className?: string }> = ({ children, className }) => {
   const renderContent = (): ReactNode =>
-    Children.map(children, child => {
+    Children.map(children, (child) => {
       if (isValidElement(child) && (child.type === SpotlightSidebar || child.type === VisualisationSectionMain)) {
         return child;
       }

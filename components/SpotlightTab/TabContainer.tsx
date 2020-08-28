@@ -10,7 +10,7 @@ interface TabContainerProps {
 
 const TabContainer: FunctionComponent<TabContainerProps> = ({ id, active, label, children, onActivate }) => {
   const renderContent = (): ReactNode =>
-    Children.map(children, child => (isValidElement(child) && child.type === TabContent ? child : null));
+    Children.map(children, (child) => (isValidElement(child) && child.type === TabContent ? child : null));
 
   return (
     <section className="tabs__container" id={id}>

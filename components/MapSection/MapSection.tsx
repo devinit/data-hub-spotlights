@@ -7,9 +7,8 @@ import {
   SpotlightOptions,
   useBoundaries,
   useCountryContext,
-  toCamelCase
+  toCamelCase,
 } from '../../utils';
-import { AnchorButton } from '../AnchorButton';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { Legend, LegendItem } from '../Legend';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
@@ -28,13 +27,14 @@ import {
   MapSectionProps,
   parseIndicator,
   setQuery,
-  splitByComma
+  splitByComma,
 } from './utils';
 import { addEvent } from '../../utils/analytics';
 
-const DynamicMap = dynamic(() => import('../SpotlightMap').then(mod => mod.SpotlightMap), { ssr: false });
-const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then(mod => mod.DDWDataLoader), { ssr: false });
-const SpotlightShare = dynamic(() => import('../SpotlightShare').then(mod => mod.SpotlightShare), { ssr: false });
+const DynamicMap = dynamic(() => import('../SpotlightMap').then((mod) => mod.SpotlightMap), { ssr: false });
+const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then((mod) => mod.DDWDataLoader), { ssr: false });
+const SpotlightShare = dynamic(() => import('../SpotlightShare').then((mod) => mod.SpotlightShare), { ssr: false });
+const DynamicAnchorButton = dynamic(() => import('../AnchorButton').then((mod) => mod.AnchorButton), { ssr: false });
 
 const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
   if (range && colours) {
@@ -47,7 +47,7 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
       .concat([
         <LegendItem bgColor={colours[colours.length - 1]} key={range.length}>
           {`> ${range[range.length - 1]}`}
-        </LegendItem>
+        </LegendItem>,
       ]);
   }
 
@@ -55,10 +55,14 @@ const renderLegendItems = (range?: string[], colours?: string[]): ReactNode => {
 };
 
 const getComparePath = (): string => {
-  const pathname = window.location.pathname.split('?')[0].split('#')[0];
-  const queryString = window.location.search;
+  if (typeof window !== 'undefined') {
+    const pathname = window.location.pathname.split('?')[0].split('#')[0];
+    const queryString = window.location.search;
 
-  return `${pathname}${pathname.endsWith('/') ? '' : '/'}compare${queryString}`;
+    return `${pathname}${pathname.endsWith('/') ? '' : '/'}compare${queryString}`;
+  }
+
+  return '';
 };
 
 const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...props }) => {
@@ -82,14 +86,14 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
       topic: optns.theme?.name,
       indicator: optns.indicator?.name,
       year: optns.year,
-      country: countryName
+      country: countryName,
     });
   };
   const onSelectLocation = (location?: SpotlightLocation): void => {
     setQuery(options, location && [location]);
     setActiveLocation(location);
     addEvent('locationChangedUsingMenuOrSearch', {
-      locationName: location ? toCamelCase(location.name) : countryName
+      locationName: location ? toCamelCase(location.name) : countryName,
     });
     if (onChangeLocation) {
       onChangeLocation(location);
@@ -98,7 +102,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
   const onSelectLocationFromMap = (locationName?: string): void => {
     onSelectLocation(locationName ? findBoundaryByName(boundaries, locationName.toLowerCase()) : undefined);
     addEvent('locationChangedUsingMapClick', {
-      locationName: locationName ? toCamelCase(locationName) : countryName
+      locationName: locationName ? toCamelCase(locationName) : countryName,
     });
   };
 
@@ -145,9 +149,9 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
           <SpotlightInteractive height="100%">
             {router ? (
               <div>
-                <AnchorButton className="button button--secondary--fill" href={getComparePath()}>
+                <DynamicAnchorButton className="button button--secondary--fill" href={getComparePath()}>
                   Compare this location to others
-                </AnchorButton>
+                </DynamicAnchorButton>
                 <style jsx>{`
                   position: absolute;
                   top: 1.75em;

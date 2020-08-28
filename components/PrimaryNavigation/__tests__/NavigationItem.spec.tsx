@@ -10,7 +10,7 @@ import { NavigationItem, NavigationItemProps } from '../NavigationItem';
 const item: NavigationItemProps = {
   title: 'Home',
   url: '/dashboard',
-  active: false
+  active: false,
 };
 
 describe('NavigationItem', () => {

@@ -19,7 +19,7 @@ interface LocationSelectionBannerProps {
 const noOptionsMessage = (obj: { inputValue: string }): string =>
   obj.inputValue ? `No results for ${obj.inputValue}` : 'Type to search ...';
 
-const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> = props => {
+const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> = (props) => {
   const [options, setOptions] = useState<SelectOptions>([]);
   useEffect(() => {
     setOptions(createLocationOptions(props.boundaries, 'd')); // TODO: allow greater depth when sub-county data comes in
@@ -30,7 +30,7 @@ const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> =
   };
   const loadOptions = async (inputValue: string): Promise<SelectOptions> =>
     options && inputValue
-      ? await options.filter(option => option.label.toLowerCase().includes(inputValue.toLowerCase()))
+      ? await options.filter((option) => option.label.toLowerCase().includes(inputValue.toLowerCase()))
       : [];
 
   return (
@@ -53,7 +53,7 @@ const LocationSelectionBanner: FunctionComponent<LocationSelectionBannerProps> =
                 dropdownIndicator: (provided): CSSProperties => ({ ...provided, display: 'none' }),
                 indicatorSeparator: (provided): CSSProperties => ({ ...provided, display: 'none' }),
                 singleValue: (provided): CSSProperties => ({ ...provided, textTransform: 'capitalize' }),
-                ...props.selectStyles
+                ...props.selectStyles,
               }}
               noOptionsMessage={noOptionsMessage}
               onChange={onSelectLocation as (options: ValueType<OptionTypeBase>) => void}

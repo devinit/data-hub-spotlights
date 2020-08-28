@@ -8,7 +8,7 @@ import {
   SpotlightLocation,
   toCamelCase,
   useBoundaries,
-  CountryContext
+  CountryContext,
 } from '../../utils';
 import { Alert } from '../Alert';
 import { Icon } from '../Icon';
@@ -28,8 +28,8 @@ interface ComponentProps {
 }
 
 const getLocationData = (locations: string[], data: LocationData[]): number[] =>
-  locations.map(location => {
-    const match = data.find(_data => _data.name.toLowerCase() === location.toLowerCase());
+  locations.map((location) => {
+    const match = data.find((_data) => _data.name.toLowerCase() === location.toLowerCase());
 
     return match && match.value > 0 ? match.value : 0; // FIXME: how do we handle -ve values?
   });
@@ -84,12 +84,12 @@ const ComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data, l
                 height="500px"
                 series={{
                   names: [props.indicators[0].name, props.indicators[1].name],
-                  data: [getLocationData(locations, data[0].data), getLocationData(locations, data[1].data)]
+                  data: [getLocationData(locations, data[0].data), getLocationData(locations, data[1].data)],
                 }}
-                valueOptions={props.indicators.map(indicator => ({
+                valueOptions={props.indicators.map((indicator) => ({
                   dataFormat: indicator.data_format,
                   prefix: indicator.value_prefix,
-                  suffix: indicator.value_suffix
+                  suffix: indicator.value_suffix,
                 }))}
               />
             </Loading>
@@ -110,13 +110,13 @@ const ComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data, l
                 labels={locations}
                 series={{
                   names: [props.indicators[0].name, props.indicators[1].name],
-                  data: [getLocationData(locations, data[0].data), getLocationData(locations, data[1].data)]
+                  data: [getLocationData(locations, data[0].data), getLocationData(locations, data[1].data)],
                 }}
                 height={getHeightFromCount(locations.length)}
-                valueOptions={props.indicators.map(indicator => ({
+                valueOptions={props.indicators.map((indicator) => ({
                   dataFormat: indicator.data_format,
                   prefix: indicator.value_prefix,
-                  suffix: indicator.value_suffix
+                  suffix: indicator.value_suffix,
                 }))}
               />
             </Loading>

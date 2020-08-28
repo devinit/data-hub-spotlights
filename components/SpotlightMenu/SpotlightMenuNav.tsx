@@ -29,7 +29,7 @@ const SpotlightMenuNav: FunctionComponent<ComponentProps> = ({ active, caption, 
       <style jsx>{`
         cursor: pointer;
       `}</style>
-      {Children.map(children, child => isValidElement(child) && cloneElement(child, { active }))}
+      {Children.map(children, (child) => isValidElement(child) && cloneElement(child, { active }))}
     </nav>
   );
 };

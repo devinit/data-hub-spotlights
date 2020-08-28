@@ -23,10 +23,10 @@ export const useRevenueExpenditureData = (optns: DataLoaderProps, indicator: Spo
   if (!dataLoading && data && data.length) {
     const configs = getIndicatorContentOptions(indicator);
     const processedData = processRevenueExpenditureData(data[0].data, configs);
-    const groupedByYear = groupBy(processedData, processedData => processedData.year);
+    const groupedByYear = groupBy(processedData, (processedData) => processedData.year);
     const groupedByYearAndBudgetType: { [key: string]: BudgetTypeData } = {};
-    Object.keys(groupedByYear).forEach(year => {
-      const groupedByBudgetType = groupBy(groupedByYear[year], processedData => processedData.budgetType);
+    Object.keys(groupedByYear).forEach((year) => {
+      const groupedByBudgetType = groupBy(groupedByYear[year], (processedData) => processedData.budgetType);
       groupedByYearAndBudgetType[year] = groupedByBudgetType;
     });
 
@@ -35,7 +35,7 @@ export const useRevenueExpenditureData = (optns: DataLoaderProps, indicator: Spo
       dataLoading: false,
       options,
       refetch,
-      setOptions
+      setOptions,
     };
   }
 

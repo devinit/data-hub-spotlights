@@ -6,7 +6,7 @@ import React, {
   ReactNode,
   isValidElement,
   cloneElement,
-  useState
+  useState,
 } from 'react';
 import mapbox, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -28,10 +28,10 @@ const defaultStyles: React.CSSProperties = {
   position: 'absolute',
   top: 0,
   bottom: 0,
-  background: '#F3F3F3' // spotlights default
+  background: '#F3F3F3', // spotlights default
 };
 
-const BaseMap: FunctionComponent<BaseMapProps> = props => {
+const BaseMap: FunctionComponent<BaseMapProps> = (props) => {
   mapbox.accessToken = props.accessToken;
   const mapNode = useRef<HTMLDivElement>(null);
   const [baseMap, setBaseMap] = useState<Map | undefined>(undefined);
@@ -40,14 +40,14 @@ const BaseMap: FunctionComponent<BaseMapProps> = props => {
     if (mapNode && mapNode.current) {
       const map = new mapbox.Map({
         container: mapNode.current,
-        ...props.options
+        ...props.options,
       });
 
       if (props.showNavigationControls) {
         map.addControl(new mapbox.NavigationControl());
       }
 
-      map.on('load', event => {
+      map.on('load', (event) => {
         setBaseMap(map);
         if (props.onLoad) {
           props.onLoad(map, event);
@@ -57,7 +57,7 @@ const BaseMap: FunctionComponent<BaseMapProps> = props => {
   }, []);
 
   const renderLayers = (): ReactNode => {
-    return Children.map(props.children, child => {
+    return Children.map(props.children, (child) => {
       if (isValidElement(child) && child.type === BaseMapLayer) {
         return cloneElement(child, { map: baseMap });
       }
@@ -112,10 +112,10 @@ BaseMap.defaultProps = {
   style: defaultStyles,
   options: {
     minZoom: 6,
-    zoom: 6.1
+    zoom: 6.1,
   },
   showNavigationControls: true,
-  background: 'inherit'
+  background: 'inherit',
 };
 
 export { BaseMap };

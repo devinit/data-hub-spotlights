@@ -10,7 +10,7 @@ import {
   fetchSpotlightPage,
   filterThemesBySection,
   getSlugFromURL,
-  SpotlightPage
+  SpotlightPage,
 } from '../../../utils';
 
 interface CompareProps {
