@@ -134,31 +134,44 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = (props) => {
     }
   });
 
-  const onLoad = (_map: Map): void => {
+  const onLoad = (map: Map): void => {
     setLoading(false);
-    setMap(_map);
-    setZoomByContainerWidth(_map, _map.getContainer(), options);
+    setMap(map);
+    setZoomByContainerWidth(map, map.getContainer(), options);
     if (props.onLoad) {
-      props.onLoad(_map);
+      props.onLoad(map);
     }
   };
-  const onAddLayer = (_map: Map, layerID: string): void => {
+  const onAddLayer = (map: Map, layerID: string): void => {
     if (location) {
-      _map.setFilter(layerID, ['==', options.nameProperty, getProperLocationName(location.name, options.formatter)]);
-      _map.setPaintProperty(options.layerName, 'fill-color', '#d1d1d1');
+      map.setFilter(layerID, ['==', options.nameProperty, getProperLocationName(location.name, options.formatter)]);
+      map.setPaintProperty(options.layerName, 'fill-color', '#d1d1d1');
       if (props.locationHandling === 'flyto') {
         setTimeout(() => {
           const locationName = options.formatter ? options.formatter(location?.name as string) : location?.name;
-          flyToLocation(_map, locationName as string, options);
+          flyToLocation(map, locationName as string, options);
         }, 500);
       }
     }
   };
 
   const renderLayers = (): ReactNode => {
-    if (!dataLoading && locationData.length) {
-      return (
+    const hiddenLayers = layers
+      .filter((layer) => layer.sourceLayer !== options.sourceLayer)
+      .map((layer, index) => (
         <BaseMapLayer
+          key={`${COLOURED_LAYER}-${index}`}
+          id={layer.layerName}
+          source="composite"
+          source-layer={layer.sourceLayer}
+          show={false}
+        />
+      ));
+
+    if (!dataLoading && locationData.length) {
+      return hiddenLayers.concat(
+        <BaseMapLayer
+          key={COLOURED_LAYER}
           id={COLOURED_LAYER}
           source="composite"
           source-layer={options.sourceLayer}
@@ -179,8 +192,9 @@ const SpotlightMap: FunctionComponent<SpotlightMapProps> = (props) => {
       );
     }
 
-    return (
+    return hiddenLayers.concat(
       <BaseMapLayer
+        key={COLOURED_LAYER}
         id={COLOURED_LAYER}
         source="composite"
         source-layer={options.sourceLayer}
