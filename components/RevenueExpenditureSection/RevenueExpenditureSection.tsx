@@ -73,6 +73,8 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
       indicators: [indicator.ddw_id],
     });
     setYear(indicator.end_year);
+    setBudgetTypes([]);
+    setSelectedBudgetType(undefined);
   }, [location]);
   useEffect(() => {
     if (!dataLoading) {
