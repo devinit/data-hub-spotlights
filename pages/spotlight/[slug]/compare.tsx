@@ -5,6 +5,7 @@ import { PageScaffoldData } from '../../../components/DefaultLayout';
 import { LocationComparisonSection } from '../../../components/LocationComparisonSection';
 import { PageSection } from '../../../components/PageSection';
 import {
+  BoundaryDepthContext,
   CountryContext,
   fetchScaffoldData,
   fetchSpotlightPage,
@@ -33,10 +34,12 @@ const Compare: NextPage<CompareProps> = ({ setData, scaffold, page }) => {
   if (page.themes && page.country_code) {
     return (
       <CountryContext.Provider value={countryInfo}>
-        <Head>
-          <title>{`${page.title} | Compare`}</title>
-        </Head>
-        <LocationComparisonSection themes={mapThemes} defaultLocations={page.compare.default_locations} />
+        <BoundaryDepthContext.Provider value="d">
+          <Head>
+            <title>{`${page.title} | Compare`}</title>
+          </Head>
+          <LocationComparisonSection themes={mapThemes} defaultLocations={page.compare.default_locations} />
+        </BoundaryDepthContext.Provider>
       </CountryContext.Provider>
     );
   }

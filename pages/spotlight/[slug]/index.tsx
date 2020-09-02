@@ -10,6 +10,7 @@ import { MapSection } from '../../../components/MapSection';
 import { PageSection } from '../../../components/PageSection';
 import { RevenueExpenditureSection } from '../../../components/RevenueExpenditureSection';
 import {
+  BoundaryDepthContext,
   CountryContext,
   fetchScaffoldData,
   fetchSpotlightPage,
@@ -42,24 +43,26 @@ const Spotlight: NextPage<SpotlightProps> = ({ setData, scaffold, page }) => {
     return (
       <LocationContext.Provider value={location}>
         <CountryContext.Provider value={countryInfo}>
-          <Head>
-            <title>{page.title}</title>
-          </Head>
-          <MapSection themes={mapThemes} onChangeLocation={onChangeLocation} />
-          <KeyFactsSection themes={filterThemesBySection(page.themes, location ? 'facts' : 'country-facts')} />
-          <IndicatorComparisonSection themes={mapThemes} />
-          {filterThemesBySection(page.themes, 'revenue-expenditure').map((theme) =>
-            theme.indicators
-              .filter((indicator) =>
-                !location ? indicator.slug.includes('country') : !indicator.slug.includes('country')
-              )
-              .map((indicator, index) => (
-                <ErrorBoundary key={index}>
-                  <RevenueExpenditureSection indicator={indicator} />
-                </ErrorBoundary>
-              ))
-          )}
-          <DataSourcesSection description={page.datasources_description} dataSourceLinks={page.datasource_links} />
+          <BoundaryDepthContext.Provider value="d">
+            <Head>
+              <title>{page.title}</title>
+            </Head>
+            <MapSection themes={mapThemes} onChangeLocation={onChangeLocation} />
+            <KeyFactsSection themes={filterThemesBySection(page.themes, location ? 'facts' : 'country-facts')} />
+            <IndicatorComparisonSection themes={mapThemes} />
+            {filterThemesBySection(page.themes, 'revenue-expenditure').map((theme) =>
+              theme.indicators
+                .filter((indicator) =>
+                  !location ? indicator.slug.includes('country') : !indicator.slug.includes('country')
+                )
+                .map((indicator, index) => (
+                  <ErrorBoundary key={index}>
+                    <RevenueExpenditureSection indicator={indicator} />
+                  </ErrorBoundary>
+                ))
+            )}
+            <DataSourcesSection description={page.datasources_description} dataSourceLinks={page.datasource_links} />
+          </BoundaryDepthContext.Provider>
         </CountryContext.Provider>
       </LocationContext.Provider>
     );

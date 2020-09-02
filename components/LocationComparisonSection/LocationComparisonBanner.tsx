@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { CSSProperties, default as React, FunctionComponent, useEffect, useState } from 'react';
-import { SpotlightLocation } from '../../utils';
-import { useBoundaries } from '../../utils';
+import { SpotlightLocation, useBoundaries, useBoundaryDepthContext } from '../../utils';
 import { Button } from '../Button';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
 import { SpotlightBanner } from '../SpotlightBanner';
@@ -13,7 +12,7 @@ interface ComparisonWrapperProps {
 }
 
 const LocationComparisonBanner: FunctionComponent<ComparisonWrapperProps> = (props) => {
-  const boundaries = useBoundaries();
+  const [boundaries] = useBoundaries(useBoundaryDepthContext());
   const [locations, setLocations] = useState<SpotlightLocation[]>(props.locations ? props.locations : []);
   useEffect(() => {
     if (locations.length < 2 && props.onCompare) {
