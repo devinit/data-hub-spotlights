@@ -13,7 +13,7 @@ const getLevels = (data: LocationData): string[] => {
   const levels: string[] = [];
   ['l1', 'l2', 'l3', 'l4', 'l5', 'l6'].forEach((level) => {
     const value = extraValueFromMeta(data.meta, level) as string;
-    if (value) {
+    if (value && levels.indexOf(value) === -1) {
       levels.push(value);
     }
   });

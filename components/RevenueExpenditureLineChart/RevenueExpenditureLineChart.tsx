@@ -1,6 +1,6 @@
 import { EChartOption, EChartsMediaOption } from 'echarts';
 import React, { FunctionComponent } from 'react';
-import { BudgetType, formatNumber, ValueOptions, addPrefixAndSuffix } from '../../utils';
+import { BudgetType, formatNumber, ValueOptions, addPrefixAndSuffix, getPriorityBudgetType } from '../../utils';
 import { EChartsBaseChart } from '../EChartsBaseChart';
 import { YearData, fetchRootData } from '../RevenueExpenditureSection/utils';
 
@@ -18,19 +18,25 @@ interface ComponentProps {
  * @param budgetType - actual | proposed | projected
  * @param useLocalCurrency - whether to use data in local currency or USD
  */
-const formatData = (data: YearData, budgetType?: BudgetType, useLocalCurrency = false): [number, number][] => {
+const formatData = (
+  data: YearData,
+  selectedYear?: number,
+  budgetType?: BudgetType,
+  useLocalCurrency = false
+): [number, number][] => {
   const formattedData: [number, number][] = [];
   Object.keys(data).forEach((year) => {
     const yearData = data[year];
-    if (budgetType && yearData.hasOwnProperty(budgetType)) {
+    if (selectedYear && `${selectedYear}` === year && budgetType && yearData.hasOwnProperty(budgetType)) {
       const rootData = fetchRootData(yearData[budgetType], useLocalCurrency);
       if (rootData) {
         formattedData.push([parseInt(year), rootData]);
       }
     } else {
-      const _budgetType = Object.keys(yearData)[0] as BudgetType | undefined;
-      if (_budgetType) {
-        const rootData = fetchRootData(yearData[_budgetType], useLocalCurrency);
+      const yearBudgetTypes = Object.keys(yearData) as BudgetType[];
+      if (yearBudgetTypes.length) {
+        const priorityBudgetType = getPriorityBudgetType(yearBudgetTypes);
+        const rootData = fetchRootData(yearData[priorityBudgetType], useLocalCurrency);
         if (rootData) {
           formattedData.push([parseInt(year), rootData]);
         }
@@ -42,7 +48,7 @@ const formatData = (data: YearData, budgetType?: BudgetType, useLocalCurrency = 
 };
 
 const RevenueExpenditureLineChart: FunctionComponent<ComponentProps> = ({ valueOptions, selectedYear, ...props }) => {
-  const data = formatData(props.data, props.budgetType, valueOptions.useLocalValue);
+  const data = formatData(props.data, selectedYear, props.budgetType, valueOptions.useLocalValue);
 
   const options: EChartOption<EChartOption.SeriesLine> = {
     legend: { show: false },

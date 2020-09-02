@@ -147,7 +147,7 @@ export interface LocationIndicatorData {
   data: LocationData[];
 }
 
-export type BudgetType = 'actual' | 'approved' | 'proposed';
+export type BudgetType = 'actual' | 'approved' | 'proposed' | 'budget' | 'projected' | 'proj' | '';
 
 export interface LocationDataMeta extends Object {
   budgetType?: BudgetType;
@@ -198,15 +198,44 @@ export const extraValueFromMeta = (meta: string, field: string, defaultValue = '
 export const hasData = (data: LocationIndicatorData[]): boolean =>
   !!data.reduce((prev, curr) => prev + curr.data.length, 0);
 
-export const extractRelevantDataByBudgetType = (data: LocationData[]): LocationData[] => {
-  const budgetTypeOrderOfPrecedence = ['actual', 'approved', 'proposed', ''];
+export const budgetTypeOrderOfPrecedence: BudgetType[] = [
+  'actual',
+  'approved',
+  'proposed',
+  'budget',
+  'projected',
+  'proj',
+  '',
+];
+export const getPriorityBudgetType = (budgetTypes: BudgetType[]): BudgetType => {
+  let budgetType: BudgetType = '';
+  budgetTypeOrderOfPrecedence.forEach((type) => {
+    if (!budgetType && budgetTypes.indexOf(type) > -1) {
+      budgetType = type;
+    }
+  });
 
+  return budgetType;
+};
+
+export const sortBudgetTypeByPriority = (budgetTypes: BudgetType[]): BudgetType[] => {
+  const sortedBudgetTypes: BudgetType[] = [];
+  budgetTypeOrderOfPrecedence.forEach((type) => {
+    if (budgetTypes.indexOf(type) > -1) {
+      sortedBudgetTypes.push(type);
+    }
+  });
+
+  return sortedBudgetTypes.concat(budgetTypes.filter((type) => sortedBudgetTypes.indexOf(type) === -1));
+};
+
+export const extractRelevantDataByBudgetType = (data: LocationData[]): LocationData[] => {
   return data.reduce<LocationData[]>((prev, curr) => {
-    const matchingIndex = prev.findIndex(location => location.name === curr.name);
+    const matchingIndex = prev.findIndex((location) => location.name === curr.name);
     if (matchingIndex > -1) {
       const matchingLocation = prev[matchingIndex];
-      const prevBudgetType = extraValueFromMeta(matchingLocation.meta, 'budgetType') as string;
-      const currBudgetType = extraValueFromMeta(curr.meta, 'budgetType') as string;
+      const prevBudgetType = extraValueFromMeta(matchingLocation.meta, 'budgetType') as BudgetType;
+      const currBudgetType = extraValueFromMeta(curr.meta, 'budgetType') as BudgetType;
       if (budgetTypeOrderOfPrecedence.indexOf(currBudgetType) < budgetTypeOrderOfPrecedence.indexOf(prevBudgetType)) {
         prev.splice(matchingIndex, 1, curr);
       }

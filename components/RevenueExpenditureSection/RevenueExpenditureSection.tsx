@@ -7,6 +7,7 @@ import {
   processTemplateString,
   SpotlightIndicator,
   toCamelCase,
+  sortBudgetTypeByPriority,
 } from '../../utils';
 import { Alert } from '../Alert';
 import { CurrencySelector } from '../CurrencySelector';
@@ -58,11 +59,11 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
     indicator
   );
 
-  const setYearBudgetTypes = (): void => {
+  const setYearBudgetTypes = (year?: number | string): void => {
     if (year && data.hasOwnProperty(year)) {
-      const _budgetTypes = Object.keys(data[year]) as BudgetType[];
-      setBudgetTypes(_budgetTypes);
-      setSelectedBudgetType(_budgetTypes[0]);
+      const budgetTypes = sortBudgetTypeByPriority(Object.keys(data[year]) as BudgetType[]);
+      setBudgetTypes(budgetTypes);
+      setSelectedBudgetType(budgetTypes[0]);
     }
   };
   useEffect(() => {
@@ -72,10 +73,12 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
       indicators: [indicator.ddw_id],
     });
     setYear(indicator.end_year);
+    setBudgetTypes([]);
+    setSelectedBudgetType(undefined);
   }, [location]);
   useEffect(() => {
     if (!dataLoading) {
-      setYearBudgetTypes();
+      setYearBudgetTypes(year);
     }
   }, [dataLoading]);
   const sectionHeading = processTemplateString(indicator.name, {
@@ -83,7 +86,7 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
   });
 
   if (!dataLoading && !selectedBudgetType) {
-    setYearBudgetTypes();
+    setYearBudgetTypes(year);
   }
 
   const onChangeCurrency = (isLocal: boolean): void => {
@@ -95,11 +98,9 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
     if (option) {
       setYear(parseInt(option.value));
       if (data && data[option.value]) {
-        const _budgetTypes = Object.keys(data[option.value]) as BudgetType[];
-        setBudgetTypes(_budgetTypes);
-        setSelectedBudgetType(_budgetTypes[0]);
+        setYearBudgetTypes(option.value);
         const currency = useLocalValue ? currencyCode : 'US$';
-        addGTMEvent(sectionHeading, countryName, currency, option.value, parseBudgetType(_budgetTypes[0]));
+        addGTMEvent(sectionHeading, countryName, currency, option.value, parseBudgetType(budgetTypes[0]));
       }
     } else {
       setYear(undefined);
