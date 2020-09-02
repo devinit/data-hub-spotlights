@@ -3,12 +3,15 @@ import dynamic from 'next/dynamic';
 import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react';
 import {
   findBoundaryByName,
+  SpotlightBoundary,
   SpotlightLocation,
   SpotlightOptions,
-  useBoundaries,
-  useCountryContext,
   toCamelCase,
+  useBoundaries,
+  useBoundaryDepthContext,
+  useCountryContext,
 } from '../../utils';
+import { addEvent } from '../../utils/analytics';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { Legend, LegendItem } from '../Legend';
 import { LocationSelectionBanner } from '../LocationSelectionBanner';
@@ -29,7 +32,6 @@ import {
   setQuery,
   splitByComma,
 } from './utils';
-import { addEvent } from '../../utils/analytics';
 
 const DynamicMap = dynamic(() => import('../SpotlightMap').then((mod) => mod.SpotlightMap), { ssr: false });
 const DynamicMapDataLoader = dynamic(() => import('../DDWDataLoader').then((mod) => mod.DDWDataLoader), { ssr: false });
@@ -65,9 +67,20 @@ const getComparePath = (): string => {
   return '';
 };
 
+const getGeoCodes = (boundaries: SpotlightBoundary[], location?: SpotlightLocation): string[] | undefined => {
+  if (location) {
+    const locationBoundary = boundaries.find((boundary) => boundary.geocode.includes(location?.geocode));
+    if (locationBoundary && locationBoundary.parent) {
+      return [location.geocode, locationBoundary.parent];
+    }
+
+    return [location.geocode];
+  }
+};
+
 const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...props }) => {
   const router = useRouter();
-  const boundaries = useBoundaries();
+  const [boundaries, levelBoundaries] = useBoundaries(useBoundaryDepthContext());
   const { countryName } = useCountryContext();
   const [options, setOptions] = useState<SpotlightOptions>({});
   const [activeLocation, setActiveLocation] = useState<SpotlightLocation | undefined>(
@@ -164,7 +177,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
               <DynamicMapDataLoader
                 boundaries={boundaries}
                 indicators={indicatorID ? [indicatorID] : undefined}
-                geocodes={activeLocation && [activeLocation.geocode]}
+                geocodes={getGeoCodes(levelBoundaries, activeLocation)}
                 startYear={options.year ? options.year : options.indicator && options.indicator.start_year}
                 limit={10000}
               >

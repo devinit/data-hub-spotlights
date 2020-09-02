@@ -1,6 +1,6 @@
-import React, { FunctionComponent, ReactNode, useEffect, useState, useContext } from 'react';
+import React, { FunctionComponent, ReactNode, useContext, useEffect, useState } from 'react';
 import {
-  getBoundariesByDepth,
+  CountryContext,
   hasData,
   LocationData,
   LocationIndicatorData,
@@ -8,17 +8,17 @@ import {
   SpotlightLocation,
   toCamelCase,
   useBoundaries,
-  CountryContext,
+  useBoundaryDepthContext,
 } from '../../utils';
 import { Alert } from '../Alert';
 import { Icon } from '../Icon';
 import { IndicatorComparisonColumnChart } from '../IndicatorComparisonColumnChart';
+import { Loading } from '../Loading';
 import { LocationComparisonBarChart } from '../LocationComparisonBarChart';
 import { SpotlightHeading } from '../SpotlightHeading';
 import { SpotlightInteractive } from '../SpotlightInteractive';
 import { SpotlightSidebar } from '../SpotlightSidebar';
 import { VisualisationSection, VisualisationSectionMain } from '../VisualisationSection';
-import { Loading } from '../Loading';
 
 interface ComponentProps {
   data?: LocationIndicatorData[];
@@ -52,14 +52,13 @@ const renderPaddedAlert = (message: string): ReactNode => (
 
 const ComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({ data, location, ...props }) => {
   const [locations, setLocations] = useState<string[]>([]);
-  const boundaries = useBoundaries();
+  const [boundaries, depthBoundaries] = useBoundaries(useBoundaryDepthContext());
   const { countryName } = useContext(CountryContext);
 
   useEffect(() => {
     if (!location) {
-      const requiredBoundaries = getBoundariesByDepth(boundaries, 'd');
       setLocations(
-        requiredBoundaries
+        depthBoundaries
           .map(({ name }) => name)
           .sort()
           .reverse()
