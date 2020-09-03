@@ -25,6 +25,7 @@ jobs:
       env:
         CI: true
   build:
+    needs: test
     runs-on: ubuntu-latest
     if:
       contains('
