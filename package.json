@@ -1,6 +1,6 @@
 {
   "name": "data-hub-spotlights",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "private": true,
   "scripts": {
     "dev": "nodemon",
@@ -12,8 +12,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint",
-      "pre-push": "yarn test"
+      "pre-push": "yarn lint && yarn test"
     }
   },
   "dependencies": {
