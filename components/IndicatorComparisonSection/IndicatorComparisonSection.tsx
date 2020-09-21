@@ -47,7 +47,7 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
       </PageSectionHeading>
       <IndicatorSelectionBanner themes={themes} onCompare={onCompare} compareOnLoad />
       {selections ? (
-        <IndicatorComparisonDataLoader options={selections} loading={loading} locations={location ? [location] : []}>
+        <IndicatorComparisonDataLoader options={selections} loading={loading} location={location}>
           <ComparisonChartDataHandler
             location={location}
             indicators={selections.map((sel) => sel.indicator) as [SpotlightIndicator, SpotlightIndicator]}
