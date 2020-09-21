@@ -84,3 +84,17 @@ export const findBoundaryByName = (
 
 export const getBasePathFromContext = (): string =>
   process.env.NODE_ENV === 'production' ? '/data/spotlights-on-kenya-and-uganda/' : '/spotlight/';
+
+export const getLocationGeoCodes = (
+  boundaries: SpotlightBoundary[],
+  location?: SpotlightLocation
+): string[] | undefined => {
+  if (location) {
+    const locationBoundary = boundaries.find((boundary) => boundary.geocode.includes(location?.geocode));
+    if (locationBoundary && locationBoundary.parent) {
+      return [location.geocode, locationBoundary.parent];
+    }
+
+    return [location.geocode];
+  }
+};

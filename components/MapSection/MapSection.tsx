@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react';
 import {
   findBoundaryByName,
-  SpotlightBoundary,
+  getLocationGeoCodes,
   SpotlightLocation,
   SpotlightOptions,
   toCamelCase,
@@ -65,17 +65,6 @@ const getComparePath = (): string => {
   }
 
   return '';
-};
-
-const getGeoCodes = (boundaries: SpotlightBoundary[], location?: SpotlightLocation): string[] | undefined => {
-  if (location) {
-    const locationBoundary = boundaries.find((boundary) => boundary.geocode.includes(location?.geocode));
-    if (locationBoundary && locationBoundary.parent) {
-      return [location.geocode, locationBoundary.parent];
-    }
-
-    return [location.geocode];
-  }
 };
 
 const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...props }) => {
@@ -177,7 +166,7 @@ const MapSection: FunctionComponent<MapSectionProps> = ({ onChangeLocation, ...p
               <DynamicMapDataLoader
                 boundaries={boundaries}
                 indicators={indicatorID ? [indicatorID] : undefined}
-                geocodes={getGeoCodes(levelBoundaries, activeLocation)}
+                geocodes={getLocationGeoCodes(levelBoundaries, activeLocation)}
                 startYear={options.year ? options.year : options.indicator && options.indicator.start_year}
                 limit={10000}
               >
