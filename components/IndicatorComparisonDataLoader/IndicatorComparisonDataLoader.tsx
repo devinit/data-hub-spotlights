@@ -51,7 +51,17 @@ const IndicatorComparisonDataLoader: FunctionComponent<ComponentProps> = ({ opti
     if (!dataLoading && data && boundaries) {
       setProcessedData(
         alignDataToBoundaries(
-          data,
+          data.map((d) => {
+            // filter data to remove irrelevant years for indicator
+            if (d.data.length) {
+              const option = selectOptions.find((o) => o.indicator?.ddw_id.includes(d.indicator));
+              const filteredData = d.data.filter((item) => item.year === option?.year);
+
+              return { ...d, data: filteredData };
+            }
+
+            return d;
+          }),
           boundaries[1],
           getMinIndicatorYear(selectOptions.map((option) => option.indicator) as SpotlightIndicator[])
         )
