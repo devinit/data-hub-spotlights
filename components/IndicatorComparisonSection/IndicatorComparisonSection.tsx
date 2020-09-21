@@ -22,19 +22,19 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
   const location = useContext(LocationContext);
   const [loading, setLoading] = useState(false);
   const [selections, setSelections] = useState<[SpotlightOptions, SpotlightOptions] | undefined>(undefined);
-  const onCompare = (_selections: [SpotlightOptions, SpotlightOptions]): void => {
+  const onCompare = (selections: [SpotlightOptions, SpotlightOptions]): void => {
     if (selections) {
       if (
-        _selections[0].indicator?.name !== selections[0].indicator?.name ||
-        _selections[1].indicator?.name !== selections[1].indicator?.name ||
-        _selections[0].year !== selections[0].year ||
-        _selections[1].year !== selections[1].year
+        selections[0].indicator?.name !== selections[0].indicator?.name ||
+        selections[1].indicator?.name !== selections[1].indicator?.name ||
+        selections[0].year !== selections[0].year ||
+        selections[1].year !== selections[1].year
       ) {
-        setSelections(_selections);
+        setSelections(selections);
         setLoading(true);
       }
     } else {
-      setSelections(_selections);
+      setSelections(selections);
       setLoading(true);
     }
   };
