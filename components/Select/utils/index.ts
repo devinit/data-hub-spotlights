@@ -20,7 +20,6 @@ export const getDefaultStyles = (theme: SelectTheme, borderColor: string): Style
       backgroundColor: theme === 'dark' ? '#443e42' : '#FFFFFF',
       borderRadius: '0',
       'z-index': 15000,
-      textTransform: 'capitalize',
     } as CSSProperties),
   option: (provided, state): CSSProperties =>
     ({
