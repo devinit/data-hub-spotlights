@@ -8,6 +8,8 @@ import {
   SpotlightIndicator,
   toCamelCase,
   sortBudgetTypeByPriority,
+  useBoundaries,
+  useBoundaryDepthContext,
 } from '../../utils';
 import { Alert } from '../Alert';
 import { CurrencySelector } from '../CurrencySelector';
@@ -44,6 +46,7 @@ const renderPaddedAlert = (message: string): ReactNode => (
 );
 
 const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ indicator }) => {
+  const boundaries = useBoundaries(useBoundaryDepthContext());
   const { countryCode, countryName, currencyCode } = useContext(CountryContext);
   const location = useContext(LocationContext);
   const [useLocalValue, setUseLocalValue] = useState(false);
@@ -52,6 +55,7 @@ const RevenueExpenditureSection: FunctionComponent<RevenueSectionProps> = ({ ind
   const [selectedBudgetType, setSelectedBudgetType] = useState<BudgetType | undefined>(undefined);
   const { data, dataLoading, options, setOptions, error } = useRevenueExpenditureData(
     {
+      boundaries: boundaries[1],
       indicators: [indicator.ddw_id],
       geocodes: location ? [location.geocode] : [countryCode],
       limit: 10000,

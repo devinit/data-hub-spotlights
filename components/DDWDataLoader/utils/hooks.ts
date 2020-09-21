@@ -1,7 +1,7 @@
 import { ApolloError, useQuery } from '@apollo/client';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { DataLoaderProps } from '..';
-import { GET_INDICATOR_DATA, LocationIndicatorData, DataFilter } from '../../../utils';
+import { DataFilter, GET_INDICATOR_DATA, LocationIndicatorData } from '../../../utils';
 
 interface DDWData {
   data?: LocationIndicatorData[];

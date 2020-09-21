@@ -1,6 +1,15 @@
 import React, { FunctionComponent, ReactNode, useEffect } from 'react';
 import { groupBy } from 'underscore';
-import { LocationData, LocationIndicatorData, SpotlightIndicator, SpotlightLocation, toCamelCase } from '../../utils';
+import {
+  LocationData,
+  LocationIndicatorData,
+  SpotlightIndicator,
+  SpotlightLocation,
+  toCamelCase,
+  SpotlightBoundary,
+  useBoundaries,
+  useBoundaryDepthContext,
+} from '../../utils';
 import { Alert } from '../Alert';
 import { DataLoaderProps, useDDWData } from '../DDWDataLoader';
 import { Loading } from '../Loading';
@@ -17,7 +26,12 @@ interface ComponentProps {
 const getYears = (data: LocationData[]): number[] =>
   data.reduce((prev: number[], curr) => (prev.indexOf(curr.year) === -1 ? prev.concat(curr.year) : prev), []).sort();
 
-const getDataLoaderOptions = (indicator: SpotlightIndicator, locations: SpotlightLocation[]): DataLoaderProps => ({
+const getDataLoaderOptions = (
+  indicator: SpotlightIndicator,
+  locations: SpotlightLocation[],
+  boundaries: SpotlightBoundary[]
+): DataLoaderProps => ({
+  boundaries,
   indicators: [parseIndicator(indicator) as string],
   geocodes: locations.map((location) => location.geocode),
   startYear: indicator.start_year,
@@ -66,10 +80,11 @@ const LocationComparisonChartDataHandler: FunctionComponent<ComponentProps> = ({
       </SpotlightInteractive>
     );
   }
+  const boundaries = useBoundaries(useBoundaryDepthContext());
 
-  const { data, dataLoading, setOptions } = useDDWData(getDataLoaderOptions(indicator, locations));
+  const { data, dataLoading, setOptions } = useDDWData(getDataLoaderOptions(indicator, locations, boundaries[1]));
   useEffect(() => {
-    setOptions(getDataLoaderOptions(indicator, locations));
+    setOptions(getDataLoaderOptions(indicator, locations, boundaries[1]));
   }, [locations, indicator]);
 
   if (!data) {

@@ -6,6 +6,8 @@ import {
   SpotlightLocation,
   TemplateOptions,
   toCamelCase,
+  useBoundaries,
+  useBoundaryDepthContext,
 } from '../../utils';
 import { IndicatorChartDataHandler, IndicatorStat, IndicatorStatDataHandler } from '../IndicatorStat';
 import { setDecimalCount } from '../IndicatorStat/utils';
@@ -19,6 +21,7 @@ interface KeyFactIndicatorProps {
 }
 
 const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator, location, ...props }) => {
+  const boundaries = useBoundaries(useBoundaryDepthContext());
   const templateOptions: TemplateOptions = {
     location: toCamelCase(location.name),
   };
@@ -42,6 +45,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                   <ErrorBoundary>
                     <IndicatorStatDataHandler
                       dataOptions={{
+                        boundaries: boundaries[1],
                         indicators: stat.indicators,
                         geocodes: !stat.fetchAll ? [location.geocode] : undefined,
                         startYear: stat.startYear || stat.endYear || indicator.start_year || indicator.end_year,
@@ -75,6 +79,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
                 >
                   <IndicatorChartDataHandler
                     dataOptions={{
+                      boundaries: boundaries[1],
                       indicators: chart.indicators,
                       geocodes: !chart.fetchAll ? [location.geocode] : undefined,
                       startYear: chart.startYear || chart.endYear || indicator.start_year || indicator.end_year,
@@ -105,6 +110,7 @@ const KeyFactIndicator: FunctionComponent<KeyFactIndicatorProps> = ({ indicator,
       >
         <IndicatorStatDataHandler
           dataOptions={{
+            boundaries: boundaries[1],
             indicators: [indicator.ddw_id],
             geocodes: [location.geocode],
             startYear: indicator.start_year || indicator.end_year,

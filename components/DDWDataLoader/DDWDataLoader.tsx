@@ -19,6 +19,7 @@ import { Alert } from '../Alert';
 import { alignDataToBoundaries } from './utils';
 
 export interface DataLoaderProps {
+  boundaries: SpotlightBoundary[];
   indicators?: string[];
   geocodes?: string[];
   startYear?: number;
@@ -28,13 +29,7 @@ export interface DataLoaderProps {
   onLoad?: (data: LocationIndicatorData[]) => void;
 }
 
-const DDWDataLoader: FunctionComponent<DataLoaderProps & { boundaries: SpotlightBoundary[] }> = ({
-  indicators,
-  geocodes,
-  startYear,
-  limit,
-  ...props
-}) => {
+const DDWDataLoader: FunctionComponent<DataLoaderProps> = ({ indicators, geocodes, startYear, limit, ...props }) => {
   const [boundaries, setBoundaries] = useState(props.boundaries);
   const renderChildren = (dataLoading: boolean, data?: LocationIndicatorData[]): ReactNode =>
     Children.map(props.children, (child) =>

@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useEffect, useState, useContext } from 'react';
+import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
 import {
+  CountryContext,
+  LocationContext,
   SpotlightIndicator,
   SpotlightOptions,
   SpotlightTheme,
   toCamelCase,
-  LocationContext,
-  CountryContext,
 } from '../../utils';
 import { ComparisonChartDataHandler } from '../ComparisonChartDataHandler';
 import { IndicatorComparisonDataLoader } from '../IndicatorComparisonDataLoader';
@@ -22,19 +22,19 @@ const IndicatorComparisonSection: FunctionComponent<IndicatorComparisonSectionPr
   const location = useContext(LocationContext);
   const [loading, setLoading] = useState(false);
   const [selections, setSelections] = useState<[SpotlightOptions, SpotlightOptions] | undefined>(undefined);
-  const onCompare = (selections: [SpotlightOptions, SpotlightOptions]): void => {
+  const onCompare = (selectns: [SpotlightOptions, SpotlightOptions]): void => {
     if (selections) {
       if (
-        selections[0].indicator?.name !== selections[0].indicator?.name ||
-        selections[1].indicator?.name !== selections[1].indicator?.name ||
-        selections[0].year !== selections[0].year ||
-        selections[1].year !== selections[1].year
+        selectns[0].indicator?.name !== selections[0].indicator?.name ||
+        selectns[1].indicator?.name !== selections[1].indicator?.name ||
+        selectns[0].year !== selections[0].year ||
+        selectns[1].year !== selections[1].year
       ) {
-        setSelections(selections);
+        setSelections(selectns);
         setLoading(true);
       }
     } else {
-      setSelections(selections);
+      setSelections(selectns);
       setLoading(true);
     }
   };
