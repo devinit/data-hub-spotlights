@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import LoadingOverlay from 'react-loading-overlay';
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 interface LoadingProps {
   active: boolean;
@@ -8,7 +8,12 @@ interface LoadingProps {
 
 const Loading: FunctionComponent<LoadingProps> = ({ children, active, text }) => {
   return (
-    <LoadingOverlay active={active} spinner text={text} styles={{ wrapper: { height: '100%' } }}>
+    <LoadingOverlay
+      active={active}
+      spinner
+      text={text}
+      styles={{ wrapper: { height: '100%' }, spinner: {}, overlay: {}, content: {} }}
+    >
       {children}
     </LoadingOverlay>
   );
