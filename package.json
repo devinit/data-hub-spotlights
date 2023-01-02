@@ -33,7 +33,7 @@
     "leaflet": "^1.6.0",
     "mapbox-gl": "^1.13.2",
     "mmenu-js": "^8.4.6",
-    "next": "^12.0.7",
+    "next": "^12.3.4",
     "node-fetch": "^2.6.0",
     "plottable": "^3.8.6",
     "react": "^17.0.2",
@@ -44,7 +44,7 @@
     "react-select": "^3.2.0",
     "reactjs-popup": "^1.5.0",
     "styled-components": "^5.0.1",
-    "styled-jsx": "^3.2.4",
+    "styled-jsx": "^5.1.1",
     "underscore": "^1.9.2"
   },
   "devDependencies": {
