@@ -1,13 +1,22 @@
 name: Node CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+    paths-ignore: # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+      - '**/README.md'
+      - '**/dependabot.yml'
+      - '.github/workflows/nodejs.yml'
+      - '.github/workflows/deploy.yml'
+
+concurrency: nodejs
 
 jobs:
   test:
+    name: Lint & Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -17,7 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: npm install, lint
         run: |
-          npm ci
+          npm i
           npm run lint
       - name: npm test
         run: |
@@ -25,12 +34,9 @@ jobs:
         env:
           CI: true
   build:
+    name: Build
     needs: test
     runs-on: ubuntu-latest
-    if: contains('
-      refs/heads/master
-      refs/heads/develop
-      ', github.ref)
     steps:
       - uses: actions/checkout@v3
       - name: clear old build files
@@ -42,83 +48,13 @@ jobs:
         run: |
           npm run build
 
-      - name: Bundling
-        run: |
-          mkdir build && mv .next build/ && mv public build/ && mv dist/* build/ && mv package.json build/ && mv package-lock.json build/ && mv Dockerfile build/ && mv docker-compose.yml build/ && mv pages/ build/ && mv nginx/ build/
-          zip -q -r build.zip build
-
-      - name: Upload build Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          path: ./build.zip
-
-      - name: Upload deploy script as an artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: deploy
-          path: ./deploy_script.sh
-
-      - name: Return to original state
-        run: |
-          git reset .
-          git checkout .
-          rm -rf build
-          echo "DONE!"
-
-  deploy:
-    needs: build
-    if: contains('
-      refs/heads/master
-      refs/heads/develop
-      ', github.ref)
+  automerge:
+    needs: [test, build]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
-      - uses: actions/download-artifact@v1
+      - uses: fastify/github-action-merge-dependabot@v3.2.0
         with:
-          name: deploy
-          path: ./deploy_script.sh
-
-      - name: download build artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: build
-          path: ./build.zip
-
-      - name: Set env for develop branch
-        if: endsWith(github.ref, '/develop')
-        run: |
-          echo "::set-env name=HOST::${{ secrets.DEV_HOST }}"
-          echo "::set-env name=CMS_URL::${{ secrets.DEV_CMS_URL }}"
-
-      - name: Set env for master branch
-        if: endsWith(github.ref, '/master')
-        run: |
-          echo "::set-env name=HOST::${{ secrets.PROD_HOST }}"
-          echo "::set-env name=CMS_URL::${{ secrets.PROD_CMS_URL }}"
-
-      - name: copy deploy_file via ssh
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ env.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.KEY }}
-        with:
-          source: './deploy_script.sh,./build.zip'
-          target: 'deploy_spotlights'
-      - name: executing remote ssh commands using ssh
-        uses: appleboy/ssh-action@master
-        env:
-          CMS_URL: ${{ env.CMS_URL }}
-          BITLY_API_KEY: ${{ secrets.BITLY_API_KEY }}
-        with:
-          host: ${{ env.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          envs: CMS_URL,BITLY_API_KEY
-          script: |
-            export CMS_URL=$CMS_URL
-            export BITLY_API_KEY=$BITLY_API_KEY
-            cd ./deploy_spotlights/deploy_script.sh && chmod +x deploy_script.sh && bash deploy_script.sh
+          github-token: ${{secrets.GITHUB_TOKEN}}

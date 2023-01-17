@@ -8,11 +8,12 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "test": "jest --coverage",
     "lint": "eslint 'pages/**/*.{ts,tsx}' 'components/**/*.{ts,tsx}' 'scripts/**/*.ts' 'server/**/*.ts' --quiet && tsc --noEmit",
-    "geojson-converter": "ts-node --project tsconfig.server.json scripts/geojson-converter.ts"
+    "geojson-converter": "ts-node --project tsconfig.server.json scripts/geojson-converter.ts",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint && yarn test"
+      "pre-push": "npm lint && npm test"
     }
   },
   "dependencies": {
@@ -39,7 +40,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loading-overlay-ts": "^1.0.4",
-    "react-modal": "^3.11.2",
+    "react-modal": "^3.16.1",
     "react-resize-detector": "^5.0.7",
     "react-select": "^3.2.0",
     "reactjs-popup": "^1.5.0",
@@ -74,7 +75,7 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react": "^7.27.1",
-    "husky": "^4.2.3",
+    "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.5",
     "nodemon": "^2.0.15",

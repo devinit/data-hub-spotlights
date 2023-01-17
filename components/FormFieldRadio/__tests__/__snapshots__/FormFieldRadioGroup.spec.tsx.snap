@@ -9,6 +9,7 @@ exports[`FormFieldRadioGroup renders correctly 1`] = `
     className="form-radio"
     defaultValue="this-that"
     name="that"
+    onChange={[Function]}
     type="radio"
   />
   <label

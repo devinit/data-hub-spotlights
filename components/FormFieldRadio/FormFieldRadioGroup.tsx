@@ -17,7 +17,14 @@ const FormFieldRadioGroup: FunctionComponent<ComponentProps> = ({ label, name, v
 
   return (
     <div className="form-radio-group cp-form-radio-group-share" onClick={onClick}>
-      <input className="form-radio" type="radio" name={name} defaultValue={value} checked={checked} />
+      <input
+        className="form-radio"
+        type="radio"
+        name={name}
+        defaultValue={value}
+        checked={checked}
+        onChange={onClick}
+      />
       <label className="form-label" htmlFor={name}>
         {label}
       </label>
